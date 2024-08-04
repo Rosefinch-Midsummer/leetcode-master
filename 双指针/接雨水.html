@@ -3,8 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Leetcode——剑指 Offer</title>
-        <meta name="robots" content="noindex">
+        <title>接雨水 - Leetcode——剑指 Offer</title>
 
 
         <!-- Custom HTML head -->
@@ -13,21 +12,21 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff">
 
-        <link rel="icon" href="favicon.svg">
-        <link rel="shortcut icon" href="favicon.png">
-        <link rel="stylesheet" href="css/variables.css">
-        <link rel="stylesheet" href="css/general.css">
-        <link rel="stylesheet" href="css/chrome.css">
-        <link rel="stylesheet" href="css/print.css" media="print">
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
 
         <!-- Fonts -->
-        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
-        <link rel="stylesheet" href="fonts/fonts.css">
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" href="highlight.css">
-        <link rel="stylesheet" href="tomorrow-night.css">
-        <link rel="stylesheet" href="ayu-highlight.css">
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
 
@@ -36,7 +35,7 @@
     <div id="body-container">
         <!-- Provide site root to javascript -->
         <script>
-            var path_to_root = "";
+            var path_to_root = "../";
             var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
         </script>
 
@@ -89,7 +88,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="数组.html"><strong aria-hidden="true">1.</strong> 数组</a></li><li class="chapter-item expanded "><a href="链表.html"><strong aria-hidden="true">2.</strong> 链表</a></li><li class="chapter-item expanded "><a href="哈希表.html"><strong aria-hidden="true">3.</strong> 哈希表</a></li><li class="chapter-item expanded "><a href="字符串.html"><strong aria-hidden="true">4.</strong> 字符串</a></li><li class="chapter-item expanded "><a href="双指针.html"><strong aria-hidden="true">5.</strong> 双指针</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="双指针/移动元素.html"><strong aria-hidden="true">5.1.</strong> 移动元素</a></li><li class="chapter-item expanded "><a href="双指针/三数之和.html"><strong aria-hidden="true">5.2.</strong> 三数之和</a></li><li class="chapter-item expanded "><a href="双指针/接雨水.html"><strong aria-hidden="true">5.3.</strong> 接雨水</a></li></ol></li><li class="chapter-item expanded "><a href="栈与队列.html"><strong aria-hidden="true">6.</strong> 栈与队列</a></li><li class="chapter-item expanded "><a href="二叉树.html"><strong aria-hidden="true">7.</strong> 二叉树</a></li><li class="chapter-item expanded "><a href="回溯.html"><strong aria-hidden="true">8.</strong> 回溯</a></li><li class="chapter-item expanded "><a href="贪心.html"><strong aria-hidden="true">9.</strong> 贪心</a></li><li class="chapter-item expanded "><a href="动态规划.html"><strong aria-hidden="true">10.</strong> 动态规划</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../数组.html"><strong aria-hidden="true">1.</strong> 数组</a></li><li class="chapter-item expanded "><a href="../链表.html"><strong aria-hidden="true">2.</strong> 链表</a></li><li class="chapter-item expanded "><a href="../哈希表.html"><strong aria-hidden="true">3.</strong> 哈希表</a></li><li class="chapter-item expanded "><a href="../字符串.html"><strong aria-hidden="true">4.</strong> 字符串</a></li><li class="chapter-item expanded "><a href="../双指针.html"><strong aria-hidden="true">5.</strong> 双指针</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../双指针/移动元素.html"><strong aria-hidden="true">5.1.</strong> 移动元素</a></li><li class="chapter-item expanded "><a href="../双指针/三数之和.html"><strong aria-hidden="true">5.2.</strong> 三数之和</a></li><li class="chapter-item expanded "><a href="../双指针/接雨水.html" class="active"><strong aria-hidden="true">5.3.</strong> 接雨水</a></li></ol></li><li class="chapter-item expanded "><a href="../栈与队列.html"><strong aria-hidden="true">6.</strong> 栈与队列</a></li><li class="chapter-item expanded "><a href="../二叉树.html"><strong aria-hidden="true">7.</strong> 二叉树</a></li><li class="chapter-item expanded "><a href="../回溯.html"><strong aria-hidden="true">8.</strong> 回溯</a></li><li class="chapter-item expanded "><a href="../贪心.html"><strong aria-hidden="true">9.</strong> 贪心</a></li><li class="chapter-item expanded "><a href="../动态规划.html"><strong aria-hidden="true">10.</strong> 动态规划</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle">
                 <div class="sidebar-resize-indicator"></div>
@@ -145,7 +144,7 @@
                     <h1 class="menu-title">Leetcode——剑指 Offer</h1>
 
                     <div class="right-buttons">
-                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
 
@@ -175,48 +174,22 @@
                 <div id="content" class="content">
                     <main>
                         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
-<h1 id="数组"><a class="header" href="#数组">数组</a></h1>
-<div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
-<h1 id="链表"><a class="header" href="#链表">链表</a></h1>
-<div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
-<h1 id="哈希表"><a class="header" href="#哈希表">哈希表</a></h1>
-<div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
-<h1 id="字符串"><a class="header" href="#字符串">字符串</a></h1>
-<div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
-<h1 id="双指针"><a class="header" href="#双指针">双指针</a></h1>
-<p>双指针法是一种常用的解决编程问题的技巧，它通常分为快慢指针和左右指针两种类型。</p>
-<h2 id="左右指针"><a class="header" href="#左右指针">左右指针</a></h2>
-<ul>
-<li>左右双指针通常用于解决数组或字符串相关问题，例如寻找两数之和、反转字符串等。</li>
-<li>典型应用：求解数组或字符串相关问题。左右双指针可以在不同方向上同时进行移动，并通过特定条件来更新左右边界。</li>
-</ul>
-<h2 id="快慢指针"><a class="header" href="#快慢指针">快慢指针</a></h2>
-<ul>
-<li>快慢指针法通常用于解决链表中的问题，如判定链表中是否有环、找到链表的中间节点等。快指针每次移动两步，慢指针每次移动一步。</li>
-<li>典型应用：判断链表是否有环。当存在环时，快慢指针最终会相遇；找到链表中间节点时，快指针到达末尾时慢指针正好在中间位置。</li>
-</ul>
-<p>总结来说，在编程中使用双指针法可帮助我们降低时间复杂度，并且适合处理循环、交错等特殊情况。</p>
-<div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
-<h1 id="移动元素"><a class="header" href="#移动元素">移动元素</a></h1>
-<div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
-<h1 id="三数之和"><a class="header" href="#三数之和">三数之和</a></h1>
-<div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
 <h1 id="接雨水"><a class="header" href="#接雨水">接雨水</a></h1>
 <ul>
-<li><a href="%E5%8F%8C%E6%8C%87%E9%92%88/%E6%8E%A5%E9%9B%A8%E6%B0%B4.html#11-container-with-most-water">11. Container With Most Water</a>
+<li><a href="#11-container-with-most-water">11. Container With Most Water</a>
 <ul>
-<li><a href="%E5%8F%8C%E6%8C%87%E9%92%88/%E6%8E%A5%E9%9B%A8%E6%B0%B4.html#%E6%80%9D%E8%B7%AF">思路</a></li>
-<li><a href="%E5%8F%8C%E6%8C%87%E9%92%88/%E6%8E%A5%E9%9B%A8%E6%B0%B4.html#c-%E8%A7%A3%E6%B3%95">C++ 解法</a></li>
-<li><a href="%E5%8F%8C%E6%8C%87%E9%92%88/%E6%8E%A5%E9%9B%A8%E6%B0%B4.html#java-%E8%A7%A3%E6%B3%95">Java 解法</a></li>
-<li><a href="%E5%8F%8C%E6%8C%87%E9%92%88/%E6%8E%A5%E9%9B%A8%E6%B0%B4.html#python-%E8%A7%A3%E6%B3%95">Python 解法</a></li>
+<li><a href="#%E6%80%9D%E8%B7%AF">思路</a></li>
+<li><a href="#c-%E8%A7%A3%E6%B3%95">C++ 解法</a></li>
+<li><a href="#java-%E8%A7%A3%E6%B3%95">Java 解法</a></li>
+<li><a href="#python-%E8%A7%A3%E6%B3%95">Python 解法</a></li>
 </ul>
 </li>
-<li><a href="%E5%8F%8C%E6%8C%87%E9%92%88/%E6%8E%A5%E9%9B%A8%E6%B0%B4.html#42-trapping-rain-water">42. Trapping Rain Water</a>
+<li><a href="#42-trapping-rain-water">42. Trapping Rain Water</a>
 <ul>
-<li><a href="%E5%8F%8C%E6%8C%87%E9%92%88/%E6%8E%A5%E9%9B%A8%E6%B0%B4.html#%E6%80%9D%E8%B7%AF-1">思路</a></li>
-<li><a href="%E5%8F%8C%E6%8C%87%E9%92%88/%E6%8E%A5%E9%9B%A8%E6%B0%B4.html#c-%E8%A7%A3%E6%B3%95-1">C++ 解法</a></li>
-<li><a href="%E5%8F%8C%E6%8C%87%E9%92%88/%E6%8E%A5%E9%9B%A8%E6%B0%B4.html#java-%E8%A7%A3%E6%B3%95-1">Java 解法</a></li>
-<li><a href="%E5%8F%8C%E6%8C%87%E9%92%88/%E6%8E%A5%E9%9B%A8%E6%B0%B4.html#python-%E8%A7%A3%E6%B3%95-1">Python 解法</a></li>
+<li><a href="#%E6%80%9D%E8%B7%AF-1">思路</a></li>
+<li><a href="#c-%E8%A7%A3%E6%B3%95-1">C++ 解法</a></li>
+<li><a href="#java-%E8%A7%A3%E6%B3%95-1">Java 解法</a></li>
+<li><a href="#python-%E8%A7%A3%E6%B3%95-1">Python 解法</a></li>
 </ul>
 </li>
 </ul>
@@ -390,22 +363,18 @@ public:
                 right_max = max(right_max, height[j])
         return sum
 </code></pre>
-<div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
-<h1 id="栈与队列"><a class="header" href="#栈与队列">栈与队列</a></h1>
-<div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
-<h1 id="二叉树"><a class="header" href="#二叉树">二叉树</a></h1>
-<div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
-<h1 id="回溯"><a class="header" href="#回溯">回溯</a></h1>
-<div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
-<h1 id="贪心"><a class="header" href="#贪心">贪心</a></h1>
-<div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
-<h1 id="动态规划"><a class="header" href="#动态规划">动态规划</a></h1>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../双指针/三数之和.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
 
+                            <a rel="next prefetch" href="../栈与队列.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
 
                         <div style="clear: both"></div>
                     </nav>
@@ -413,7 +382,13 @@ public:
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../双指针/三数之和.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
 
+                    <a rel="next prefetch" href="../栈与队列.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
             </nav>
 
         </div>
@@ -426,21 +401,16 @@ public:
         </script>
 
 
-        <script src="elasticlunr.min.js"></script>
-        <script src="mark.min.js"></script>
-        <script src="searcher.js"></script>
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
 
-        <script src="clipboard.min.js"></script>
-        <script src="highlight.js"></script>
-        <script src="book.js"></script>
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
 
         <!-- Custom JS scripts -->
 
-        <script>
-        window.addEventListener('load', function() {
-            window.setTimeout(window.print, 100);
-        });
-        </script>
 
     </div>
     </body>
