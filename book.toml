@@ -3,7 +3,7 @@ authors = ["RM"]
 language = "en"
 multilingual = false
 src = "src"
-title = "Mdbook Template"
+title = "Leetcode——剑指 Offer"
 [preprocessor.toc]
 command = "mdbook-toc"
 renderer = ["html"]
