@@ -88,7 +88,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="数组.html" class="active"><strong aria-hidden="true">1.</strong> 数组</a></li><li class="chapter-item expanded "><a href="链表.html"><strong aria-hidden="true">2.</strong> 链表</a></li><li class="chapter-item expanded "><a href="哈希表.html"><strong aria-hidden="true">3.</strong> 哈希表</a></li><li class="chapter-item expanded "><a href="字符串.html"><strong aria-hidden="true">4.</strong> 字符串</a></li><li class="chapter-item expanded "><a href="双指针.html"><strong aria-hidden="true">5.</strong> 双指针</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="双指针/移动元素.html"><strong aria-hidden="true">5.1.</strong> 移动元素</a></li><li class="chapter-item expanded "><a href="双指针/三数之和.html"><strong aria-hidden="true">5.2.</strong> 三数之和</a></li><li class="chapter-item expanded "><a href="双指针/接雨水.html"><strong aria-hidden="true">5.3.</strong> 接雨水</a></li></ol></li><li class="chapter-item expanded "><a href="栈与队列.html"><strong aria-hidden="true">6.</strong> 栈与队列</a></li><li class="chapter-item expanded "><a href="二叉树.html"><strong aria-hidden="true">7.</strong> 二叉树</a></li><li class="chapter-item expanded "><a href="回溯.html"><strong aria-hidden="true">8.</strong> 回溯</a></li><li class="chapter-item expanded "><a href="贪心.html"><strong aria-hidden="true">9.</strong> 贪心</a></li><li class="chapter-item expanded "><a href="动态规划.html"><strong aria-hidden="true">10.</strong> 动态规划</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="数组/数组.html" class="active"><strong aria-hidden="true">1.</strong> 数组</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="数组/二分查找.html"><strong aria-hidden="true">1.1.</strong> 二分查找</a></li><li class="chapter-item expanded "><a href="数组/旋转数组.html"><strong aria-hidden="true">1.2.</strong> 旋转数组</a></li><li class="chapter-item expanded "><a href="数组/矩阵.html"><strong aria-hidden="true">1.3.</strong> 矩阵</a></li></ol></li><li class="chapter-item expanded "><a href="链表/链表.html"><strong aria-hidden="true">2.</strong> 链表</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="链表/反转链表.html"><strong aria-hidden="true">2.1.</strong> 反转链表</a></li></ol></li><li class="chapter-item expanded "><a href="哈希表.html"><strong aria-hidden="true">3.</strong> 哈希表</a></li><li class="chapter-item expanded "><a href="字符串.html"><strong aria-hidden="true">4.</strong> 字符串</a></li><li class="chapter-item expanded "><a href="双指针/双指针.html"><strong aria-hidden="true">5.</strong> 双指针</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="双指针/移动元素.html"><strong aria-hidden="true">5.1.</strong> 移动元素</a></li><li class="chapter-item expanded "><a href="双指针/三数之和.html"><strong aria-hidden="true">5.2.</strong> 三数之和</a></li><li class="chapter-item expanded "><a href="双指针/接雨水.html"><strong aria-hidden="true">5.3.</strong> 接雨水</a></li></ol></li><li class="chapter-item expanded "><a href="栈与队列.html"><strong aria-hidden="true">6.</strong> 栈与队列</a></li><li class="chapter-item expanded "><a href="二叉树/二叉树.html"><strong aria-hidden="true">7.</strong> 二叉树</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="二叉树/二叉树遍历.html"><strong aria-hidden="true">7.1.</strong> 二叉树遍历</a></li><li class="chapter-item expanded "><a href="二叉树/路径之和.html"><strong aria-hidden="true">7.2.</strong> 路径之和</a></li><li class="chapter-item expanded "><a href="二叉树/二叉树半径.html"><strong aria-hidden="true">7.3.</strong> 二叉树半径</a></li><li class="chapter-item expanded "><a href="二叉树/二叉树右视图.html"><strong aria-hidden="true">7.4.</strong> 二叉树右视图</a></li></ol></li><li class="chapter-item expanded "><a href="回溯.html"><strong aria-hidden="true">8.</strong> 回溯</a></li><li class="chapter-item expanded "><a href="贪心.html"><strong aria-hidden="true">9.</strong> 贪心</a></li><li class="chapter-item expanded "><a href="动态规划.html"><strong aria-hidden="true">10.</strong> 动态规划</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle">
                 <div class="sidebar-resize-indicator"></div>
@@ -175,13 +175,28 @@
                     <main>
                         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
 <h1 id="数组"><a class="header" href="#数组">数组</a></h1>
+<ul>
+<li><a href="#%E6%95%B0%E7%BB%84%E7%90%86%E8%AE%BA%E5%9F%BA%E7%A1%80">数组理论基础</a></li>
+</ul>
+<h1 id="数组理论基础"><a class="header" href="#数组理论基础">数组理论基础</a></h1>
+<p><strong>数组是存放在连续内存空间上的相同类型数据的集合。</strong></p>
+<p>数组可以方便的通过下标索引的方式获取到下标对应的数据。</p>
+<p>需要两点注意的是</p>
+<ul>
+<li><strong>数组下标都是从0开始的。</strong></li>
+<li><strong>数组内存空间的地址是连续的</strong></li>
+</ul>
+<p>正是<strong>因为数组在内存空间的地址是连续的，所以我们在删除或者增添元素的时候，就难免要移动其他元素的地址。</strong></p>
+<p><strong>数组的元素是不能删的，只能覆盖。</strong></p>
+<p><strong>那么二维数组在内存的空间地址是连续的么？</strong></p>
+<p>不同编程语言的内存管理是不一样的，以C++为例，在C++中二维数组是连续分布的。</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
 
-                            <a rel="next prefetch" href="链表.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="数组/二分查找.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -192,7 +207,7 @@
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
 
-                    <a rel="next prefetch" href="链表.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="数组/二分查找.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

@@ -1,0 +1,730 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>二分查找 - Leetcode——剑指 Offer</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+    </head>
+    <body class="sidebar-visible no-js">
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('light')
+            html.classList.add(theme);
+            var body = document.querySelector('body');
+            body.classList.remove('no-js')
+            body.classList.add('js');
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var body = document.querySelector('body');
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            body.classList.remove('sidebar-visible');
+            body.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../数组/数组.html"><strong aria-hidden="true">1.</strong> 数组</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../数组/二分查找.html" class="active"><strong aria-hidden="true">1.1.</strong> 二分查找</a></li><li class="chapter-item expanded "><a href="../数组/旋转数组.html"><strong aria-hidden="true">1.2.</strong> 旋转数组</a></li><li class="chapter-item expanded "><a href="../数组/矩阵.html"><strong aria-hidden="true">1.3.</strong> 矩阵</a></li></ol></li><li class="chapter-item expanded "><a href="../链表/链表.html"><strong aria-hidden="true">2.</strong> 链表</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../链表/反转链表.html"><strong aria-hidden="true">2.1.</strong> 反转链表</a></li></ol></li><li class="chapter-item expanded "><a href="../哈希表.html"><strong aria-hidden="true">3.</strong> 哈希表</a></li><li class="chapter-item expanded "><a href="../字符串.html"><strong aria-hidden="true">4.</strong> 字符串</a></li><li class="chapter-item expanded "><a href="../双指针/双指针.html"><strong aria-hidden="true">5.</strong> 双指针</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../双指针/移动元素.html"><strong aria-hidden="true">5.1.</strong> 移动元素</a></li><li class="chapter-item expanded "><a href="../双指针/三数之和.html"><strong aria-hidden="true">5.2.</strong> 三数之和</a></li><li class="chapter-item expanded "><a href="../双指针/接雨水.html"><strong aria-hidden="true">5.3.</strong> 接雨水</a></li></ol></li><li class="chapter-item expanded "><a href="../栈与队列.html"><strong aria-hidden="true">6.</strong> 栈与队列</a></li><li class="chapter-item expanded "><a href="../二叉树/二叉树.html"><strong aria-hidden="true">7.</strong> 二叉树</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../二叉树/二叉树遍历.html"><strong aria-hidden="true">7.1.</strong> 二叉树遍历</a></li><li class="chapter-item expanded "><a href="../二叉树/路径之和.html"><strong aria-hidden="true">7.2.</strong> 路径之和</a></li><li class="chapter-item expanded "><a href="../二叉树/二叉树半径.html"><strong aria-hidden="true">7.3.</strong> 二叉树半径</a></li><li class="chapter-item expanded "><a href="../二叉树/二叉树右视图.html"><strong aria-hidden="true">7.4.</strong> 二叉树右视图</a></li></ol></li><li class="chapter-item expanded "><a href="../回溯.html"><strong aria-hidden="true">8.</strong> 回溯</a></li><li class="chapter-item expanded "><a href="../贪心.html"><strong aria-hidden="true">9.</strong> 贪心</a></li><li class="chapter-item expanded "><a href="../动态规划.html"><strong aria-hidden="true">10.</strong> 动态规划</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Leetcode——剑指 Offer</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
+<h1 id="二分查找"><a class="header" href="#二分查找">二分查找</a></h1>
+<ul>
+<li><a href="#%E6%9D%A5%E6%BA%90%E8%AF%B4%E6%98%8E">来源说明</a></li>
+<li><a href="#704-binary-search">704. Binary Search</a>
+<ul>
+<li><a href="#%E6%80%9D%E8%B7%AF">思路</a></li>
+<li><a href="#c-%E5%86%99%E6%B3%95">C++ 写法</a>
+<ul>
+<li><a href="#%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE%E7%AC%AC%E4%B8%80%E7%A7%8D%E5%86%99%E6%B3%95">二分查找第一种写法</a></li>
+<li><a href="#%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE%E7%AC%AC%E4%BA%8C%E7%A7%8D%E5%86%99%E6%B3%95">二分查找第二种写法</a></li>
+</ul>
+</li>
+<li><a href="#%E6%80%BB%E7%BB%93">总结</a></li>
+</ul>
+</li>
+<li><a href="#35-search-insert-position">35. Search Insert Position</a>
+<ul>
+<li><a href="#%E6%80%9D%E8%B7%AF-1">思路</a></li>
+<li><a href="#c-%E8%A7%A3%E6%B3%95">C++ 解法</a></li>
+<li><a href="#java-%E8%A7%A3%E6%B3%95">Java 解法</a></li>
+<li><a href="#python-%E8%A7%A3%E6%B3%95">Python 解法</a></li>
+</ul>
+</li>
+<li><a href="#34-find-first-and-last-position-of-element-in-sorted-array">34. Find First and Last Position of Element in Sorted Array</a>
+<ul>
+<li><a href="#%E6%80%9D%E8%B7%AF-2">思路</a></li>
+<li><a href="#c-%E8%A7%A3%E6%B3%951">C++ 解法1</a></li>
+<li><a href="#c-%E8%A7%A3%E6%B3%952">C++ 解法2</a></li>
+<li><a href="#java-%E8%A7%A3%E6%B3%95-1">Java 解法</a></li>
+<li><a href="#python-%E8%A7%A3%E6%B3%95-1">Python 解法</a></li>
+</ul>
+</li>
+<li><a href="#162-find-peak-element">162. Find Peak Element</a>
+<ul>
+<li><a href="#%E6%80%9D%E8%B7%AF-3">思路</a></li>
+<li><a href="#c-%E8%A7%A3%E6%B3%95-1">C++ 解法</a></li>
+<li><a href="#java-%E8%A7%A3%E6%B3%95-2">Java 解法</a></li>
+<li><a href="#python-%E8%A7%A3%E6%B3%95-2">Python 解法</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="来源说明"><a class="header" href="#来源说明">来源说明</a></h2>
+<p><a href="https://programmercarl.com/0704.%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE.html">二分查找来源于编程随想录</a></p>
+<h1 id="704-binary-search"><a class="header" href="#704-binary-search"><a href="https://leetcode.com/problems/binary-search/">704. Binary Search</a></a></h1>
+<p>Given an array of integers <code>nums</code> which is sorted in ascending order, and an integer <code>target</code>, write a function to search <code>target</code> in <code>nums</code>. If <code>target</code> exists, then return its index. Otherwise, return <code>-1</code>.</p>
+<p>You must write an algorithm with <code>O(log n)</code> runtime complexity.</p>
+<p><strong>Example 1:</strong></p>
+<blockquote>
+<p><strong>Input:</strong> nums = [-1,0,3,5,9,12], target = 9
+<strong>Output:</strong> 4
+<strong>Explanation:</strong> 9 exists in nums and its index is 4</p>
+</blockquote>
+<p><strong>Example 2:</strong></p>
+<blockquote>
+<p><strong>Input:</strong> nums = [-1,0,3,5,9,12], target = 2
+<strong>Output:</strong> -1
+<strong>Explanation:</strong> 2 does not exist in nums so return -1</p>
+</blockquote>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= nums.length &lt;= 10^4</code></li>
+<li><code>-10^4 &lt; nums[i], target &lt; 10^4</code></li>
+<li>All the integers in <code>nums</code> are <strong>unique</strong>.</li>
+<li><code>nums</code> is sorted in ascending order.</li>
+</ul>
+<h2 id="思路"><a class="header" href="#思路">思路</a></h2>
+<p><strong>这道题目的前提是数组为有序数组</strong>，同时题目还强调<strong>数组中无重复元素</strong>，因为一旦有重复元素，使用二分查找法返回的元素下标可能不是唯一的，这些都是使用二分法的前提条件，当大家看到题目描述满足如上条件的时候，可要想一想是不是可以用二分法了。</p>
+<p>二分查找涉及的很多的边界条件，逻辑比较简单，但就是写不好。例如到底是 <code>while(left &lt; right)</code> 还是 <code>while(left &lt;= right)</code>，到底是<code>right = middle</code>呢，还是要<code>right = middle - 1</code>呢？</p>
+<p>大家写二分法经常写乱，主要是因为<strong>对区间的定义没有想清楚，区间的定义就是不变量</strong>。要在二分查找的过程中，保持不变量，就是在while寻找中每一次边界的处理都要坚持根据区间的定义来操作，这就是<strong>循环不变量</strong>规则。</p>
+<p>写二分法，区间的定义一般为两种，左闭右闭即<code>[left, right]</code>，或者左闭右开即<code>[left, right)</code>。</p>
+<p>下面我用这两种区间的定义分别讲解两种不同的二分查找写法。</p>
+<h2 id="c-写法"><a class="header" href="#c-写法">C++ 写法</a></h2>
+<h3 id="二分查找第一种写法"><a class="header" href="#二分查找第一种写法">二分查找第一种写法</a></h3>
+<p>第一种写法，我们定义 target 是在一个在左闭右闭的区间里，<strong>也就是<code>[left, right]</code> （这个很重要非常重要）</strong>。</p>
+<p>区间的定义这就决定了二分法的代码应该如何写，<strong>因为定义target在<code>[left, right]</code>区间，所以有如下两点：</strong></p>
+<ul>
+<li>while (left &lt;= right) 要使用 &lt;= ，因为left == right是有意义的，所以使用 &lt;=</li>
+<li>if (nums[middle] &gt; target) right 要赋值为 middle - 1，因为当前这个nums[middle]一定不是target，那么接下来要查找的左区间结束下标位置就是 middle - 1</li>
+</ul>
+<p>代码如下：</p>
+<pre><code class="language-cpp">// 版本一
+class Solution {
+public:
+    int search(vector&lt;int&gt;&amp; nums, int target) {
+        int left = 0;
+        int right = nums.size() - 1; // 定义target在左闭右闭的区间里，[left, right]
+        while (left &lt;= right) { // 当left==right，区间[left, right]依然有效，所以用 &lt;=
+            int middle = left + ((right - left) / 2);// 防止溢出 等同于(left + right)/2
+            if (nums[middle] &gt; target) {
+                right = middle - 1; // target 在左区间，所以[left, middle - 1]
+            } else if (nums[middle] &lt; target) {
+                left = middle + 1; // target 在右区间，所以[middle + 1, right]
+            } else { // nums[middle] == target
+                return middle; // 数组中找到目标值，直接返回下标
+            }
+        }
+        // 未找到目标值
+        return -1;
+    }
+};
+</code></pre>
+<ul>
+<li>时间复杂度：O(log n)</li>
+<li>空间复杂度：O(1)</li>
+</ul>
+<h3 id="二分查找第二种写法"><a class="header" href="#二分查找第二种写法">二分查找第二种写法</a></h3>
+<p>如果说定义 target 是在一个在左闭右开的区间里，也就是<code>[left, right)</code> ，那么二分法的边界处理方式则截然不同。</p>
+<p>有如下两点：</p>
+<ul>
+<li>while (left &lt; right)，这里使用 &lt; ,因为left == right在区间<code>[left, right)</code>是没有意义的</li>
+<li>if (nums[middle] &gt; target) right 更新为 middle，因为当前nums[middle]不等于target，去左区间继续寻找，而寻找区间是左闭右开区间，所以right更新为middle，即：下一个查询区间不会去比较nums[middle]</li>
+</ul>
+<p>代码如下：（详细注释）</p>
+<pre><code class="language-cpp">// 版本二
+class Solution {
+public:
+    int search(vector&lt;int&gt;&amp; nums, int target) {
+        int left = 0;
+        int right = nums.size(); // 定义target在左闭右开的区间里，即：[left, right)
+        while (left &lt; right) { // 因为left == right的时候，在[left, right)是无效的空间，所以使用 &lt;
+            int middle = left + ((right - left) &gt;&gt; 1);
+            if (nums[middle] &gt; target) {
+                right = middle; // target 在左区间，在[left, middle)中
+            } else if (nums[middle] &lt; target) {
+                left = middle + 1; // target 在右区间，在[middle + 1, right)中
+            } else { // nums[middle] == target
+                return middle; // 数组中找到目标值，直接返回下标
+            }
+        }
+        // 未找到目标值
+        return -1;
+    }
+};
+</code></pre>
+<ul>
+<li>时间复杂度：O(log n)</li>
+<li>空间复杂度：O(1)</li>
+</ul>
+<h2 id="总结"><a class="header" href="#总结">总结</a></h2>
+<p>二分法是非常重要的基础算法，为什么很多同学对于二分法都是<strong>一看就会，一写就废</strong>？</p>
+<p>其实主要就是对区间的定义没有理解清楚，在循环中没有始终坚持根据查找区间的定义来做边界处理。</p>
+<p>区间的定义就是不变量，那么在循环中坚持根据查找区间的定义来做边界处理，就是循环不变量规则。</p>
+<p>本篇根据两种常见的区间定义，给出了两种二分法的写法，每一个边界为什么这么处理，都根据区间的定义做了详细介绍。</p>
+<p>相信看完本篇应该对二分法有更深刻的理解了。</p>
+<h1 id="35-search-insert-position"><a class="header" href="#35-search-insert-position"><a href="https://leetcode.com/problems/search-insert-position/">35. Search Insert Position</a></a></h1>
+<p>Given a sorted array of distinct integers and a target value, return the index if the target is found. If not, return the index where it would be if it were inserted in order.</p>
+<p>You must write an algorithm with <code>O(log n)</code> runtime complexity.</p>
+<p><strong>Example 1:</strong></p>
+<p><strong>Input:</strong> nums = [1,3,5,6], target = 5<br />
+<strong>Output:</strong> 2</p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> nums = [1,3,5,6], target = 2<br />
+<strong>Output:</strong> 1</p>
+<p><strong>Example 3:</strong></p>
+<p><strong>Input:</strong> nums = [1,3,5,6], target = 7<br />
+<strong>Output:</strong> 4</p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= nums.length &lt;= 10^4</code></li>
+<li><code>-10^4 &lt;= nums[i] &lt;= 10^4</code></li>
+<li><code>nums</code> contains <strong>distinct</strong> values sorted in <strong>ascending</strong> order.</li>
+<li><code>-10^4 &lt;= target &lt;= 10^4</code></li>
+</ul>
+<h2 id="思路-1"><a class="header" href="#思路-1">思路</a></h2>
+<p>先看在不在数组里，在的话输出下标；不在的话看是不是比前一个大，比后一个小，注意数组越界的问题。</p>
+<p>要是上来就比第一个数小就输出零，比最后一个大输出数组长度。</p>
+<p>不管 target 是在一个左闭右闭的区间里还在在一个左闭右开的区间里，在数组中找不到 target 时，都需要<code>return left</code>。</p>
+<h2 id="c-解法"><a class="header" href="#c-解法">C++ 解法</a></h2>
+<p>假设target 是在一个在左闭右闭的区间里，也就是<code>[left, right]</code></p>
+<pre><code class="language-cpp">class Solution {
+public:
+    int searchInsert(vector&lt;int&gt;&amp; nums, int target) {
+        int left = 0;
+        int right = nums.size() - 1;
+        while(left &lt;= right){
+            int mid = (right + left) / 2;
+            if(nums[mid] &lt; target){
+                left = mid + 1;
+            }else if(nums[mid] &gt; target){
+                right = mid - 1;
+            }else{
+                return mid;
+            }
+        }
+        return left;
+
+    }
+};
+</code></pre>
+<h2 id="java-解法"><a class="header" href="#java-解法">Java 解法</a></h2>
+<p>假设target 是在一个在左闭右闭的区间里，也就是<code>[left, right]</code></p>
+<pre><code class="language-java">class Solution {
+    public int searchInsert(int[] nums, int target) {
+        int left = 0;
+        int right = nums.length - 1;
+        while(left &lt;= right){
+            int mid = left + (right - left) / 2;
+            if(nums[mid] &lt; target){
+                left = mid + 1;
+            }else if(nums[mid] &gt; target){
+                right = mid - 1;
+            }else{
+                return mid;
+            }
+        }
+        return left;
+    }
+}
+</code></pre>
+<h2 id="python-解法"><a class="header" href="#python-解法">Python 解法</a></h2>
+<p>假设target 是在一个在左闭右闭的区间里，也就是<code>[left, right]</code></p>
+<pre><code class="language-python">class Solution:
+    def searchInsert(self, nums: List[int], target: int) -&gt; int:
+        left = 0
+        right = len(nums) - 1
+
+        while left &lt;= right:
+            mid = (left + right) // 2
+
+            if nums[mid] == target:
+                return mid
+            elif nums[mid] &gt; target:
+                right = mid - 1
+            else:
+                left = mid + 1
+        
+        return left
+</code></pre>
+<h1 id="34-find-first-and-last-position-of-element-in-sorted-array"><a class="header" href="#34-find-first-and-last-position-of-element-in-sorted-array"><a href="https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/">34. Find First and Last Position of Element in Sorted Array</a></a></h1>
+<p>Given an array of integers <code>nums</code> sorted in non-decreasing order, find the starting and ending position of a given <code>target</code> value.</p>
+<p>If <code>target</code> is not found in the array, return <code>[-1, -1]</code>.</p>
+<p>You must write an algorithm with <code>O(log n)</code> runtime complexity.</p>
+<p><strong>Example 1:</strong></p>
+<p><strong>Input:</strong> nums = [5,7,7,8,8,10], target = 8<br />
+<strong>Output:</strong> [3,4]</p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> nums = [5,7,7,8,8,10], target = 6<br />
+<strong>Output:</strong> [-1,-1]</p>
+<p><strong>Example 3:</strong></p>
+<p><strong>Input:</strong> nums = [], target = 0<br />
+<strong>Output:</strong> [-1,-1]</p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>0 &lt;= nums.length &lt;= 10^5</code></li>
+<li><code>-10^9 &lt;= nums[i] &lt;= 10^9</code></li>
+<li><code>nums</code> is a non-decreasing array.</li>
+<li><code>-10^9 &lt;= target &lt;= 10^9</code></li>
+</ul>
+<h2 id="思路-2"><a class="header" href="#思路-2">思路</a></h2>
+<p>寻找target在数组里的左右边界，有如下三种情况：</p>
+<ul>
+<li>情况一：target 在数组范围的右边或者左边，例如数组{3, 4, 5}，target为2或者数组{3, 4, 5},target为6，此时应该返回{-1, -1}</li>
+<li>情况二：target 在数组范围中，且数组中不存在target，例如数组{3,6,7},target为5，此时应该返回{-1, -1}</li>
+<li>情况三：target 在数组范围中，且数组中存在target，例如数组{3,6,7},target为6，此时应该返回{1, 1}</li>
+</ul>
+<p>这三种情况都考虑到，说明就想的很清楚了。</p>
+<p>接下来，在去寻找左边界，和右边界了。</p>
+<p>方法1：一次二分查找，再扩展区间</p>
+<p>方法2：使用两次二分查找，分别查找<code>lower_bound</code>和<code>upper_bound</code>。</p>
+<p><strong>刚刚接触二分搜索的同学不建议上来就想用一个二分来查找左右边界，很容易把自己绕进去，建议扎扎实实的写两个二分分别找左边界和右边界</strong></p>
+<p>确定好：计算出来的右边界是不包含target的右边界，左边界同理。</p>
+<h2 id="c-解法1"><a class="header" href="#c-解法1">C++ 解法1</a></h2>
+<p>假设target 是在一个在左闭右闭的区间里，也就是<code>[left, right]</code></p>
+<pre><code class="language-cpp">class Solution {
+public:
+    vector&lt;int&gt; searchRange(vector&lt;int&gt;&amp; nums, int target) {
+        int leftBorder = getLeftBorder(nums, target);
+        int rightBorder = getRightBorder(nums, target);
+        // 情况一
+        if (leftBorder == -2 || rightBorder == -2) return {-1, -1};
+        // 情况三
+        if (rightBorder - leftBorder &gt; 1) return {leftBorder + 1, rightBorder - 1};
+        // 情况二
+        return {-1, -1};
+    }
+private:
+     int getRightBorder(vector&lt;int&gt;&amp; nums, int target) {
+        int left = 0;
+        int right = nums.size() - 1;
+        int rightBorder = -2; // 记录一下rightBorder没有被赋值的情况
+        while (left &lt;= right) {
+            int middle = left + ((right - left) / 2);
+            if (nums[middle] &gt; target) {
+                right = middle - 1;
+            } else { // 寻找右边界，nums[middle] == target的时候更新left
+                left = middle + 1;
+                rightBorder = left;
+            }
+        }
+        return rightBorder;
+    }
+    int getLeftBorder(vector&lt;int&gt;&amp; nums, int target) {
+        int left = 0;
+        int right = nums.size() - 1;
+        int leftBorder = -2; // 记录一下leftBorder没有被赋值的情况
+        while (left &lt;= right) {
+            int middle = left + ((right - left) / 2);
+            if (nums[middle] &gt;= target) { // 寻找左边界，nums[middle] == target的时候更新right
+                right = middle - 1;
+                leftBorder = right;
+            } else {
+                left = middle + 1;
+            }
+        }
+        return leftBorder;
+    }
+};
+</code></pre>
+<h2 id="c-解法2"><a class="header" href="#c-解法2">C++ 解法2</a></h2>
+<p>lower_bound倾向于找左边的元素，所以只有<code>nums[mid] &lt; target</code>时才移动左指针；而upper_bound倾向于找右边的元素，所以当<code>nums[mid] &lt;= target</code>就向右移动左指针了。</p>
+<p>lower_bound返回的是开始的第一个满足条件的位置，而upper_bound返回的是第一个不满足条件的位置。所以，当两个相等的时候代表没有找到，如果找到了的话，需要返回的是<code>[left, right - 1]</code>。</p>
+<pre><code class="language-cpp">class Solution {
+public:
+    int lower_bound(vector&lt;int&gt;&amp; nums, int target) {
+        int left = 0;
+        int right = nums.size();
+        while(left &lt; right){
+            int mid = (right + left) / 2;
+            if(nums[mid] &lt; target){
+                left = mid + 1;
+            }else{
+                right = mid;
+            }
+        }
+        return left;
+
+    }
+
+    int upper_bound(vector&lt;int&gt;&amp; nums, int target){
+        int left = 0;
+        int right = nums.size();
+        while(left &lt; right){
+            int mid = (right + left) / 2;
+            if(nums[mid] &lt;= target){
+                left = mid + 1;
+            }else {
+                right = mid;
+            }
+        }
+        return left;
+
+    }
+    vector&lt;int&gt; searchRange(vector&lt;int&gt;&amp; nums, int target) {
+        int leftBorder = lower_bound(nums, target);
+        int rightBorder = upper_bound(nums, target);
+
+        if (leftBorder == rightBorder) 
+            return {-1, -1};
+        else
+            return {leftBorder, rightBorder - 1};
+    }
+};
+</code></pre>
+<h2 id="java-解法-1"><a class="header" href="#java-解法-1">Java 解法</a></h2>
+<p>假设target 是在一个在左闭右开的区间里，也就是<code>[left, right)</code></p>
+<p>先尝试找到一个target，找不到则返回<code>{-1, -1}</code>，找到时则向两边扩展得结果</p>
+<pre><code class="language-java">class Solution {
+    public int[] searchRange(int[] nums, int target) {
+        int[] result = {-1, -1};
+        int left = 0;
+        int right = nums.length;
+        boolean isExist = false;
+        while(left &lt; right){
+            int mid = left + (right - left) / 2;
+            if(nums[mid] &lt; target){
+                left = mid + 1;
+            }else if(nums[mid] &gt; target){
+                right = mid;
+            }else{
+                isExist = true;
+                break;
+            }
+        }
+        if(isExist){
+            int mid = left + (right - left) / 2;
+            int i = mid;
+            int j = mid;
+            while(i &gt;= 0 &amp;&amp; nums[i] == target){
+                i--;
+            }
+            while(j &lt; nums.length &amp;&amp; nums[j] == target){
+                j++;
+            }
+            result[0] = i + 1;
+            result[1] = j - 1;
+        }
+         return result;
+    }
+}
+</code></pre>
+<h2 id="python-解法-1"><a class="header" href="#python-解法-1">Python 解法</a></h2>
+<p>假设target 是在一个在左闭右开的区间里，也就是<code>[left, right)</code></p>
+<pre><code class="language-python">class Solution(object):
+    def searchRange(self, nums, target):
+        """
+        :type nums: List[int]
+        :type target: int
+        :rtype: List[int]
+        """
+        left = bisect.bisect_left(nums, target)
+        right = bisect.bisect_right(nums, target)
+        if left == right:
+            return [-1, -1]
+        return [left, right - 1]
+</code></pre>
+<h1 id="162-find-peak-element"><a class="header" href="#162-find-peak-element"><a href="https://leetcode.com/problems/find-peak-element/">162. Find Peak Element</a></a></h1>
+<p>A peak element is an element that is strictly greater than its neighbors.</p>
+<p>Given a <strong>0-indexed</strong> integer array <code>nums</code>, find a peak element, and return its index. If the array contains multiple peaks, return the index to <strong>any of the peaks</strong>.</p>
+<p>You may imagine that <code>nums[-1] = nums[n] = -∞</code>. In other words, an element is always considered to be strictly greater than a neighbor that is outside the array.</p>
+<p>You must write an algorithm that runs in <code>O(log n)</code> time.</p>
+<p><strong>Example 1:</strong></p>
+<p><strong>Input:</strong> nums = [1,2,3,1]<br />
+<strong>Output:</strong> 2<br />
+<strong>Explanation:</strong> 3 is a peak element and your function should return the index number 2.</p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> nums = [1,2,1,3,5,6,4]<br />
+<strong>Output:</strong> 5<br />
+<strong>Explanation:</strong> Your function can return either index number 1 where the peak element is 2, or index number 5 where the peak element is 6.</p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= nums.length &lt;= 1000</code></li>
+<li><code>-2^31 &lt;= nums[i] &lt;= 2^31 - 1</code></li>
+<li><code>nums[i] != nums[i + 1]</code> for all valid <code>i</code>.</li>
+</ul>
+<h2 id="思路-3"><a class="header" href="#思路-3">思路</a></h2>
+<p>给一个数组，找出其中的峰顶数据，就是大于两个邻居的数的index，如果有多个答案，任意一个都可以。</p>
+<p>这个题可以直接使用最简单的暴力搜索，遍历整个数组，时间复杂度为O(n).虽然题目要求是log时间，但是这样也可以AC。</p>
+<p>但是也可以实现O(logn)的时间复杂度。可以用binary search。每次寻找中间的数，如果恰好是峰顶数据，就返回index。如果不是，就查看其与中间元素相邻的左边和右边的值，选取大于中间元素的那边的一半数组继续遍历，如果两边都大于，就随便选一个。注意，这里是没有考虑相同的数据挨着的情况的。</p>
+<h2 id="c-解法-1"><a class="header" href="#c-解法-1">C++ 解法</a></h2>
+<pre><code class="language-cpp">class Solution {
+public:
+    int findPeakElement(vector&lt;int&gt;&amp; nums) {
+        int size = nums.size();
+        if(size &lt;= 1 || nums[0] &gt; nums[1])
+            return 0;
+        if(nums[size - 2] &lt; nums[size - 1]){
+            return size - 1;
+        }
+        for(int i = 1; i &lt; nums.size() - 1; i++){
+            if(nums[i] &gt; nums[i - 1] &amp;&amp; nums[i] &gt; nums[i + 1]){
+                return i;
+            }
+        }
+        return -1;
+    }
+};
+</code></pre>
+<h2 id="java-解法-2"><a class="header" href="#java-解法-2">Java 解法</a></h2>
+<p>分治策略</p>
+<p>二分查找区间类型为左闭右闭</p>
+<pre><code class="language-java">class Solution {
+    public int findPeakElement(int[] nums) {
+        return binarySearchToFindPeakElement(nums, 0, nums.length - 1);
+    }
+    public int binarySearchToFindPeakElement(int[] nums, int left, int right){
+        if(left &gt; right)
+            return -1;
+        if(left == right)
+            return left;
+        if(left + 1 == right) 
+            return nums[left] &gt; nums[right] ? left : right;
+        int mid = left + (right - left) / 2;
+        if(nums[mid] &lt; nums[mid + 1]){
+            return binarySearchToFindPeakElement(nums, mid + 1, right);
+        }else if(nums[mid] &lt; nums[mid - 1] ){
+            return binarySearchToFindPeakElement(nums, left, mid -1);
+        }else{
+            return mid;
+        }
+    }
+}
+</code></pre>
+<h2 id="python-解法-2"><a class="header" href="#python-解法-2">Python 解法</a></h2>
+<p>二分查找区间类型为左闭右闭</p>
+<pre><code class="language-python">class Solution:
+    def findPeakElement(self, nums: List[int]) -&gt; int:
+        left, right = 0, len(nums) - 1
+        while left &lt; right:
+            mid = (left + right)  &gt;&gt; 1
+            if nums[mid - 1] &lt;= nums[mid] &gt;= nums[mid + 1]:
+                return mid
+            elif nums[mid] &lt; nums[mid + 1]:
+                left = mid + 1
+            else:
+                right = mid
+        return left
+        
+</code></pre>
+<p>更精简的写法如下：</p>
+<pre><code class="language-python">class Solution:
+    def findPeakElement(self, nums: List[int]) -&gt; int:
+        left, right = 0, len(nums) - 1
+        while left &lt; right:
+            mid = (left + right) &gt;&gt; 1
+            if nums[mid] &lt; nums[mid + 1]:
+                left = mid + 1
+            else:
+                right = mid
+        return right
+</code></pre>
+<p>最后返回<code>right</code>或<code>left</code>均可。</p>
+<p>注意：这里和C++写法存在较大差异。</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../数组/数组.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../数组/旋转数组.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../数组/数组.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../数组/旋转数组.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>
