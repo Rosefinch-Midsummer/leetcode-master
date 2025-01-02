@@ -1,13 +1,13 @@
 <!DOCTYPE HTML>
-<html lang="en" class="light" dir="ltr">
+<html lang="en" class="light sidebar-visible" dir="ltr">
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>数组 - Leetcode——剑指 Offer</title>
+        <title>数组 - 剑指Offer</title>
 
 
         <!-- Custom HTML head -->
-        
+
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff">
@@ -30,15 +30,17 @@
 
         <!-- Custom theme stylesheets -->
 
-    </head>
-    <body class="sidebar-visible no-js">
-    <div id="body-container">
+
         <!-- Provide site root to javascript -->
         <script>
             var path_to_root = "../";
             var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
         </script>
-
+        <!-- Start loading toc.js asap -->
+        <script src="../toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
         <script>
             try {
@@ -60,19 +62,16 @@
             var theme;
             try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
             if (theme === null || theme === undefined) { theme = default_theme; }
-            var html = document.querySelector('html');
+            const html = document.documentElement;
             html.classList.remove('light')
             html.classList.add(theme);
-            var body = document.querySelector('body');
-            body.classList.remove('no-js')
-            body.classList.add('js');
+            html.classList.add("js");
         </script>
 
         <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
 
         <!-- Hide / unhide sidebar before it is displayed -->
         <script>
-            var body = document.querySelector('body');
             var sidebar = null;
             var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
             if (document.body.clientWidth >= 1080) {
@@ -82,45 +81,25 @@
                 sidebar = 'hidden';
             }
             sidebar_toggle.checked = sidebar === 'visible';
-            body.classList.remove('sidebar-visible');
-            body.classList.add("sidebar-" + sidebar);
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
-            <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="../数组/数组.html" class="active"><strong aria-hidden="true">1.</strong> 数组</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../数组/二分查找.html"><strong aria-hidden="true">1.1.</strong> 二分查找</a></li><li class="chapter-item expanded "><a href="../数组/旋转数组.html"><strong aria-hidden="true">1.2.</strong> 旋转数组</a></li><li class="chapter-item expanded "><a href="../数组/矩阵.html"><strong aria-hidden="true">1.3.</strong> 矩阵</a></li></ol></li><li class="chapter-item expanded "><a href="../链表/链表.html"><strong aria-hidden="true">2.</strong> 链表</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../链表/反转链表.html"><strong aria-hidden="true">2.1.</strong> 反转链表</a></li></ol></li><li class="chapter-item expanded "><a href="../哈希表.html"><strong aria-hidden="true">3.</strong> 哈希表</a></li><li class="chapter-item expanded "><a href="../字符串.html"><strong aria-hidden="true">4.</strong> 字符串</a></li><li class="chapter-item expanded "><a href="../双指针/双指针.html"><strong aria-hidden="true">5.</strong> 双指针</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../双指针/移动元素.html"><strong aria-hidden="true">5.1.</strong> 移动元素</a></li><li class="chapter-item expanded "><a href="../双指针/三数之和.html"><strong aria-hidden="true">5.2.</strong> 三数之和</a></li><li class="chapter-item expanded "><a href="../双指针/接雨水.html"><strong aria-hidden="true">5.3.</strong> 接雨水</a></li></ol></li><li class="chapter-item expanded "><a href="../栈与队列.html"><strong aria-hidden="true">6.</strong> 栈与队列</a></li><li class="chapter-item expanded "><a href="../二叉树/二叉树.html"><strong aria-hidden="true">7.</strong> 二叉树</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../二叉树/二叉树遍历.html"><strong aria-hidden="true">7.1.</strong> 二叉树遍历</a></li><li class="chapter-item expanded "><a href="../二叉树/路径之和.html"><strong aria-hidden="true">7.2.</strong> 路径之和</a></li><li class="chapter-item expanded "><a href="../二叉树/二叉树半径.html"><strong aria-hidden="true">7.3.</strong> 二叉树半径</a></li><li class="chapter-item expanded "><a href="../二叉树/二叉树右视图.html"><strong aria-hidden="true">7.4.</strong> 二叉树右视图</a></li></ol></li><li class="chapter-item expanded "><a href="../回溯.html"><strong aria-hidden="true">8.</strong> 回溯</a></li><li class="chapter-item expanded "><a href="../贪心.html"><strong aria-hidden="true">9.</strong> 贪心</a></li><li class="chapter-item expanded "><a href="../动态规划.html"><strong aria-hidden="true">10.</strong> 动态规划</a></li></ol>
-            </div>
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle">
                 <div class="sidebar-resize-indicator"></div>
             </div>
         </nav>
 
-        <!-- Track and set sidebar scroll position -->
-        <script>
-            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
-            sidebarScrollbox.addEventListener('click', function(e) {
-                if (e.target.tagName === 'A') {
-                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
-                }
-            }, { passive: true });
-            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
-            sessionStorage.removeItem('sidebar-scroll');
-            if (sidebarScrollTop) {
-                // preserve sidebar scroll position when navigating via links within sidebar
-                sidebarScrollbox.scrollTop = sidebarScrollTop;
-            } else {
-                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
-                var activeSection = document.querySelector('#sidebar .active');
-                if (activeSection) {
-                    activeSection.scrollIntoView({ block: 'center' });
-                }
-            }
-        </script>
-
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
-                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar-hover-placeholder"></div>
                 <div id="menu-bar" class="menu-bar sticky">
                     <div class="left-buttons">
                         <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
@@ -141,7 +120,7 @@
                         </button>
                     </div>
 
-                    <h1 class="menu-title">Leetcode——剑指 Offer</h1>
+                    <h1 class="menu-title">剑指Offer</h1>
 
                     <div class="right-buttons">
                         <a href="../print.html" title="Print this book" aria-label="Print this book">
@@ -177,6 +156,42 @@
 <h1 id="数组"><a class="header" href="#数组">数组</a></h1>
 <ul>
 <li><a href="#%E6%95%B0%E7%BB%84%E7%90%86%E8%AE%BA%E5%9F%BA%E7%A1%80">数组理论基础</a></li>
+<li><a href="#26-remove-duplicates-from-sorted-array">26. Remove Duplicates from Sorted Array</a>
+<ul>
+<li><a href="#%E6%80%9D%E8%B7%AF">思路</a></li>
+<li><a href="#c%E8%A7%A3%E6%B3%95">C++解法</a></li>
+<li><a href="#java%E8%A7%A3%E6%B3%95">Java解法</a></li>
+<li><a href="#python3%E8%A7%A3%E6%B3%95">Python3解法</a></li>
+<li><a href="#go%E8%A7%A3%E6%B3%95">Go解法</a></li>
+</ul>
+</li>
+<li><a href="#27-remove-element">27. Remove Element</a>
+<ul>
+<li><a href="#%E6%80%9D%E8%B7%AF-1">思路</a></li>
+<li><a href="#c%E8%A7%A3%E6%B3%95-1">C++解法</a></li>
+<li><a href="#java%E8%A7%A3%E6%B3%95-1">Java解法</a></li>
+<li><a href="#python3%E8%A7%A3%E6%B3%95-1">Python3解法</a></li>
+<li><a href="#go%E8%A7%A3%E6%B3%95-1">Go解法</a></li>
+</ul>
+</li>
+<li><a href="#88-merge-sorted-array">88. Merge Sorted Array</a>
+<ul>
+<li><a href="#%E6%80%9D%E8%B7%AF-2">思路</a></li>
+<li><a href="#c%E8%A7%A3%E6%B3%95-2">C++解法</a></li>
+<li><a href="#java%E8%A7%A3%E6%B3%95-2">Java解法</a></li>
+<li><a href="#python3%E8%A7%A3%E6%B3%95-2">Python3解法</a></li>
+<li><a href="#go%E8%A7%A3%E6%B3%95-2">Go解法</a></li>
+</ul>
+</li>
+<li><a href="#977-squares-of-a-sorted-array">977. Squares of a Sorted Array</a>
+<ul>
+<li><a href="#%E6%80%9D%E8%B7%AF-3">思路</a></li>
+<li><a href="#c%E8%A7%A3%E6%B3%95-3">C++解法</a></li>
+<li><a href="#java%E8%A7%A3%E6%B3%95-3">Java解法</a></li>
+<li><a href="#python3%E8%A7%A3%E6%B3%95-3">Python3解法</a></li>
+<li><a href="#go%E8%A7%A3%E6%B3%95-3">Go解法</a></li>
+</ul>
+</li>
 </ul>
 <h1 id="数组理论基础"><a class="header" href="#数组理论基础">数组理论基础</a></h1>
 <p><strong>数组是存放在连续内存空间上的相同类型数据的集合。</strong></p>
@@ -190,6 +205,369 @@
 <p><strong>数组的元素是不能删的，只能覆盖。</strong></p>
 <p><strong>那么二维数组在内存的空间地址是连续的么？</strong></p>
 <p>不同编程语言的内存管理是不一样的，以C++为例，在C++中二维数组是连续分布的。</p>
+<h1 id="26-remove-duplicates-from-sorted-array"><a class="header" href="#26-remove-duplicates-from-sorted-array"><a href="https://leetcode.com/problems/remove-duplicates-from-sorted-array/">26. Remove Duplicates from Sorted Array</a></a></h1>
+<p>Given an integer array <code>nums</code> sorted in <strong>non-decreasing order</strong>, remove the duplicates <a href="https://en.wikipedia.org/wiki/In-place_algorithm"><strong>in-place</strong></a> such that each unique element appears only <strong>once</strong>. The <strong>relative order</strong> of the elements should be kept the <strong>same</strong>. Then return <em>the number of unique elements in</em> <code>nums</code>.</p>
+<p>Consider the number of unique elements of <code>nums</code> to be <code>k</code>, to get accepted, you need to do the following things:</p>
+<ul>
+<li>Change the array <code>nums</code> such that the first <code>k</code> elements of <code>nums</code> contain the unique elements in the order they were present in <code>nums</code> initially. The remaining elements of <code>nums</code> are not important as well as the size of <code>nums</code>.</li>
+<li>Return <code>k</code>.</li>
+</ul>
+<p><strong>Example 1:</strong></p>
+<pre><code>**Input:** nums = [1,1,2]
+**Output:** 2, nums = [1,2,_]
+**Explanation:** Your function should return k = 2, with the first two elements of nums being 1 and 2 respectively.
+It does not matter what you leave beyond the returned k (hence they are underscores).
+</code></pre>
+<p><strong>Example 2:</strong></p>
+<pre><code>**Input:** nums = [0,0,1,1,1,2,2,3,3,4]
+**Output:** 5, nums = [0,1,2,3,4,_,_,_,_,_]
+**Explanation:** Your function should return k = 5, with the first five elements of nums being 0, 1, 2, 3, and 4 respectively.
+It does not matter what you leave beyond the returned k (hence they are underscores).
+</code></pre>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= nums.length &lt;= 3 * 104</code></li>
+<li><code>-100 &lt;= nums[i] &lt;= 100</code></li>
+<li><code>nums</code> is sorted in <strong>non-decreasing</strong> order.</li>
+</ul>
+<h2 id="思路"><a class="header" href="#思路">思路</a></h2>
+<p>仿照移除元素，使用快慢指针移除重复元素</p>
+<h2 id="c解法"><a class="header" href="#c解法">C++解法</a></h2>
+<pre><code class="language-cpp">class Solution {
+public:
+    int removeDuplicates(vector&lt;int&gt;&amp; nums) {
+        int j = 1;
+        for(int i = 1; i &lt; nums.size(); i++){
+            if(nums[i] != nums[i - 1]){
+                nums[j] = nums[i];
+                j++;
+            }
+        }
+        return j;
+    }
+};
+</code></pre>
+<h2 id="java解法"><a class="header" href="#java解法">Java解法</a></h2>
+<pre><code class="language-java">class Solution {
+    public int removeDuplicates(int[] nums) {
+        int j = 1;
+        for (int i = 1; i &lt; nums.length; i++) {
+            if (nums[i] != nums[i - 1]) {
+                nums[j] = nums[i];
+                j++;
+            }
+        }
+        return j;
+    }
+}
+</code></pre>
+<h2 id="python3解法"><a class="header" href="#python3解法">Python3解法</a></h2>
+<pre><code class="language-python">class Solution:
+    def removeDuplicates(self, nums: List[int]) -&gt; int:
+        j = 1
+        for i in range(1, len(nums)):
+            if nums[i] != nums[i - 1]:
+                nums[j] = nums[i]
+                j += 1
+        return j
+</code></pre>
+<h2 id="go解法"><a class="header" href="#go解法">Go解法</a></h2>
+<pre><code class="language-go">func removeDuplicates(nums []int) int {
+    slow := 1
+    for fast := 1; fast &lt; len(nums); fast = fast + 1{
+        if nums[fast] != nums[fast - 1]{
+            nums[slow] = nums[fast]
+            slow = slow + 1
+        }
+    }
+    return slow
+}
+</code></pre>
+<p>注意：这里LeetCode背后的数组格式是左闭右开的，即返回数组的索引范围是<code>[0, slow-1]</code></p>
+<h1 id="27-remove-element"><a class="header" href="#27-remove-element"><a href="https://leetcode.com/problems/remove-element/">27. Remove Element</a></a></h1>
+<p>Given an integer array <code>nums</code> and an integer <code>val</code>, remove all occurrences of <code>val</code> in <code>nums</code> <a href="https://en.wikipedia.org/wiki/In-place_algorithm"><strong>in-place</strong></a>. The order of the elements may be changed. Then return <em>the number of elements in</em> <code>nums</code> <em>which are not equal to</em> <code>val</code>.</p>
+<p>Consider the number of elements in <code>nums</code> which are not equal to <code>val</code> be <code>k</code>, to get accepted, you need to do the following things:</p>
+<ul>
+<li>Change the array <code>nums</code> such that the first <code>k</code> elements of <code>nums</code> contain the elements which are not equal to <code>val</code>. The remaining elements of <code>nums</code> are not important as well as the size of <code>nums</code>.</li>
+<li>Return <code>k</code>.</li>
+</ul>
+<p><strong>Example 1:</strong></p>
+<pre><code>**Input:** nums = [3,2,2,3], val = 3
+**Output:** 2, nums = [2,2,_,_]
+**Explanation:** Your function should return k = 2, with the first two elements of nums being 2.
+It does not matter what you leave beyond the returned k (hence they are underscores).
+</code></pre>
+<p><strong>Example 2:</strong></p>
+<pre><code>**Input:** nums = [0,1,2,2,3,0,4,2], val = 2
+**Output:** 5, nums = [0,1,4,0,3,_,_,_]
+**Explanation:** Your function should return k = 5, with the first five elements of nums containing 0, 0, 1, 3, and 4.
+Note that the five elements can be returned in any order.
+It does not matter what you leave beyond the returned k (hence they are underscores).
+</code></pre>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>0 &lt;= nums.length &lt;= 100</code></li>
+<li><code>0 &lt;= nums[i] &lt;= 50</code></li>
+<li><code>0 &lt;= val &lt;= 100</code></li>
+</ul>
+<h2 id="思路-1"><a class="header" href="#思路-1">思路</a></h2>
+<p>双指针（快慢指针）</p>
+<h2 id="c解法-1"><a class="header" href="#c解法-1">C++解法</a></h2>
+<pre><code class="language-cpp">class Solution {
+public:
+    int removeElement(vector&lt;int&gt;&amp; nums, int val) {
+        int size = nums.size();
+        int slow = 0;
+        for(int fast = 0; fast &lt; size; fast++)
+        {
+            if(nums[fast] != val)
+            {
+                nums[slow++] = nums[fast];
+            }  
+        }
+        return slow;
+    }
+    
+};
+</code></pre>
+<h2 id="java解法-1"><a class="header" href="#java解法-1">Java解法</a></h2>
+<pre><code class="language-java">class Solution {
+    public int removeElement(int[] nums, int val) {
+        int index = 0;
+        for (int i = 0; i &lt; nums.length; i++) {
+            if (nums[i] != val) {
+                nums[index] = nums[i];
+                index++;
+            }
+        }
+        return index;
+    }
+}
+</code></pre>
+<h2 id="python3解法-1"><a class="header" href="#python3解法-1">Python3解法</a></h2>
+<pre><code class="language-python">class Solution:
+    def removeElement(self, nums: List[int], val: int) -&gt; int:
+        index = 0
+        for i in range(len(nums)):
+            if nums[i] != val:
+                nums[index] = nums[i]
+                index += 1
+        return index
+</code></pre>
+<h2 id="go解法-1"><a class="header" href="#go解法-1">Go解法</a></h2>
+<pre><code class="language-go">func removeElement(nums []int, val int) int {
+    slow := 0
+    for fast := 0; fast &lt; len(nums); fast = fast + 1{
+        if nums[fast] != val{
+            nums[slow] = nums[fast]
+            slow = slow + 1
+        }
+    }
+    return slow
+}
+</code></pre>
+<p>另一种解法：</p>
+<pre><code class="language-go">func removeElement(nums []int, val int) int {
+    i := 0
+    for _, v := range nums {
+        if v != val {
+            nums[i] = v
+            i++
+        }
+    }
+    return i
+}
+</code></pre>
+<h1 id="88-merge-sorted-array"><a class="header" href="#88-merge-sorted-array"><a href="https://leetcode.com/problems/merge-sorted-array/">88. Merge Sorted Array</a></a></h1>
+<p>You are given two integer arrays <code>nums1</code> and <code>nums2</code>, sorted in <strong>non-decreasing order</strong>, and two integers <code>m</code> and <code>n</code>, representing the number of elements in <code>nums1</code> and <code>nums2</code> respectively.</p>
+<p><strong>Merge</strong> <code>nums1</code> and <code>nums2</code> into a single array sorted in <strong>non-decreasing order</strong>.</p>
+<p>The final sorted array should not be returned by the function, but instead be <em>stored inside the array</em> <code>nums1</code>. To accommodate this, <code>nums1</code> has a length of <code>m + n</code>, where the first <code>m</code> elements denote the elements that should be merged, and the last <code>n</code> elements are set to <code>0</code> and should be ignored. <code>nums2</code> has a length of <code>n</code>.</p>
+<p><strong>Example 1:</strong></p>
+<pre><code>**Input:** nums1 = [1,2,3,0,0,0], m = 3, nums2 = [2,5,6], n = 3
+**Output:** [1,2,2,3,5,6]
+**Explanation:** The arrays we are merging are [1,2,3] and [2,5,6].
+The result of the merge is [1,2,2,3,5,6] with the underlined elements coming from nums1.
+</code></pre>
+<p><strong>Example 2:</strong></p>
+<pre><code>**Input:** nums1 = [1], m = 1, nums2 = [], n = 0
+**Output:** [1]
+**Explanation:** The arrays we are merging are [1] and [].
+The result of the merge is [1].
+</code></pre>
+<p><strong>Example 3:</strong></p>
+<pre><code>**Input:** nums1 = [0], m = 0, nums2 = [1], n = 1
+**Output:** [1]
+**Explanation:** The arrays we are merging are [] and [1].
+The result of the merge is [1].
+Note that because m = 0, there are no elements in nums1. The 0 is only there to ensure the merge result can fit in nums1.
+</code></pre>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>nums1.length == m + n</code></li>
+<li><code>nums2.length == n</code></li>
+<li><code>0 &lt;= m, n &lt;= 200</code></li>
+<li><code>1 &lt;= m + n &lt;= 200</code></li>
+<li><code>-10^9 &lt;= nums1[i], nums2[j] &lt;= 10^9</code></li>
+</ul>
+<p><strong>Follow up:</strong> Can you come up with an algorithm that runs in <code>O(m + n)</code> time?</p>
+<h2 id="思路-2"><a class="header" href="#思路-2">思路</a></h2>
+<p>基本解法：复制nums2的内容到nums1中，然后排序，此时Time Complexity为<span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">O</span><span class="mopen">((</span><span class="mord mathnormal" style="margin-right:0.10903em;">M</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span><span class="mclose">)</span><span class="mord mathnormal">L</span><span class="mord mathnormal">o</span><span class="mord mathnormal" style="margin-right:0.03588em;">g</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.10903em;">M</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span><span class="mclose">))</span></span></span></span></p>
+<h2 id="c解法-2"><a class="header" href="#c解法-2">C++解法</a></h2>
+<pre><code class="language-cpp">class Solution {
+public:
+    void merge(vector&lt;int&gt;&amp; nums1, int m, vector&lt;int&gt;&amp; nums2, int n) {
+        for(int i = m, j = 0; i&lt; nums1.size() &amp;&amp; j &lt; n; i++, j++){
+            nums1[i] = nums2[j];
+        }
+        sort(nums1.begin(), nums1.end());
+    }
+};
+</code></pre>
+<h2 id="java解法-2"><a class="header" href="#java解法-2">Java解法</a></h2>
+<pre><code class="language-java">class Solution {
+    public void merge(int[] nums1, int m, int[] nums2, int n) {
+        for (int j = 0, i = m; j &lt; n; j++) {
+            nums1[i] = nums2[j];
+            i++;
+        }
+        Arrays.sort(nums1);
+    }
+}
+
+</code></pre>
+<h2 id="python3解法-2"><a class="header" href="#python3解法-2">Python3解法</a></h2>
+<pre><code class="language-python">class Solution:
+    def merge(self, nums1: List[int], m: int, nums2: List[int], n: int) -&gt; None:
+        """
+        Do not return anything, modify nums1 in-place instead.
+        """
+        for j in range(n):
+            nums1[m + j] = nums2[j]
+        nums1.sort()
+        
+</code></pre>
+<h2 id="go解法-2"><a class="header" href="#go解法-2">Go解法</a></h2>
+<pre><code class="language-go">func merge(nums1 []int, m int, nums2 []int, n int)  {
+    for i, j := m, 0; i &lt; len(nums1) &amp;&amp; j &lt; n; i, j = i + 1, j + 1{
+        nums1[i] = nums2[j]
+    }
+    sort.Ints(nums1)
+}
+</code></pre>
+<h1 id="977-squares-of-a-sorted-array"><a class="header" href="#977-squares-of-a-sorted-array"><a href="https://leetcode.com/problems/squares-of-a-sorted-array/">977. Squares of a Sorted Array</a></a></h1>
+<p>Given an integer array <code>nums</code> sorted in <strong>non-decreasing</strong> order, return <em>an array of <strong>the squares of each number</strong> sorted in non-decreasing order</em>.</p>
+<p><strong>Example 1:</strong></p>
+<pre><code>**Input:** nums = [-4,-1,0,3,10]
+**Output:** [0,1,9,16,100]
+**Explanation:** After squaring, the array becomes [16,1,0,9,100].
+After sorting, it becomes [0,1,9,16,100].
+</code></pre>
+<p><strong>Example 2:</strong></p>
+<pre><code>**Input:** nums = [-7,-3,2,3,11]
+**Output:** [4,9,9,49,121]
+</code></pre>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= nums.length &lt;= 10^4</code></li>
+<li><code>-10^4 &lt;= nums[i] &lt;= 10^4</code></li>
+<li><code>nums</code> is sorted in <strong>non-decreasing</strong> order.</li>
+</ul>
+<h2 id="思路-3"><a class="header" href="#思路-3">思路</a></h2>
+<p>方法一：原地平方然后排序</p>
+<p>方法二：双指针（左右指针）</p>
+<h2 id="c解法-3"><a class="header" href="#c解法-3">C++解法</a></h2>
+<p>方法一：</p>
+<pre><code class="language-cpp">class Solution {
+public:
+    vector&lt;int&gt; sortedSquares(vector&lt;int&gt;&amp; nums) {
+        for (int i = 0; i &lt; nums.size(); i++) {
+            nums[i] *= nums[i];
+        }
+        sort(nums.begin(), nums.end()); 
+        return nums;
+    }
+};
+</code></pre>
+<p>方法二：</p>
+<pre><code class="language-cpp">class Solution {
+public:
+    vector&lt;int&gt; sortedSquares(vector&lt;int&gt;&amp; nums) {
+        vector&lt;int&gt; results(nums.size());
+        int k = nums.size() - 1;
+        int left = 0;
+        int right = nums.size() - 1;
+        while(left &lt;= right)
+        {
+            if(nums[left] * nums[left] &gt; nums[right] * nums[right])
+            {
+                results[k--] = nums[left] * nums[left];
+                left++;
+            }
+            else
+            {
+                results[k--] = nums[right] * nums[right];
+                right--;
+            }
+        }
+        return results;
+    }
+};
+</code></pre>
+<h2 id="java解法-3"><a class="header" href="#java解法-3">Java解法</a></h2>
+<pre><code class="language-java">class Solution {
+    public int[] sortedSquares(int[] nums) {
+        int left = 0;
+        int right = nums.length - 1;
+        int[] result = new int[nums.length];
+        int index = nums.length - 1;
+        while(left &lt;= right){
+            if(Math.abs(nums[left]) &gt; Math.abs(nums[right])){
+                result[index--] = nums[left] * nums[left];
+                left++;
+            }else{
+                result[index--] = nums[right] * nums[right];
+                right--;
+            }
+        }
+        return result;
+    }
+}
+</code></pre>
+<h2 id="python3解法-3"><a class="header" href="#python3解法-3">Python3解法</a></h2>
+<pre><code class="language-python">class Solution:
+    def sortedSquares(self, nums: List[int]) -&gt; List[int]:
+        n = len(nums)
+        ans = [0] * n
+        start, end = 0, n - 1
+        for i in range(n - 1, -1, -1):
+            if abs(nums[start]) &gt;= abs(nums[end]):
+                ans[i] = nums[start] * nums[start]
+                start += 1
+            else:
+                ans[i] = nums[end] * nums[end]
+                end -= 1
+        return ans
+</code></pre>
+<h2 id="go解法-3"><a class="header" href="#go解法-3">Go解法</a></h2>
+<pre><code class="language-go">func sortedSquares(nums []int) []int {
+    n := len(nums)
+    results := make([]int, n)
+    k := n-1
+    left, right := 0, n - 1
+
+    for left &lt;= right {
+        if nums[left]*nums[left] &gt; nums[right]*nums[right] {  
+            results[k] = nums[left] * nums[left]  
+            left++  
+        } else {  
+            results[k] = nums[right] * nums[right]  
+            right--  
+        }  
+        k--  
+    }
+    return results;
+}
+</code></pre>
 
                     </main>
 
