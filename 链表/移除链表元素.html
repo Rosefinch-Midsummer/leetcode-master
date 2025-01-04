@@ -153,14 +153,50 @@
                 <div id="content" class="content">
                     <main>
                         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
-<h1 id="203-remove-linked-list-elements"><a class="header" href="#203-remove-linked-list-elements"><a href="https://leetcode.com/problems/remove-linked-list-elements/">203. Remove Linked List Elements</a></a></h1>
+<h1 id="移除链表元素"><a class="header" href="#移除链表元素">移除链表元素</a></h1>
+<ul>
+<li><a href="#203-remove-linked-list-elements">203. Remove Linked List Elements</a>
 <ul>
 <li><a href="#description">Description</a></li>
 <li><a href="#%E6%80%9D%E8%B7%AF">思路</a></li>
 <li><a href="#c%E8%A7%A3%E6%B3%95">C++解法</a></li>
 <li><a href="#java%E8%A7%A3%E6%B3%95">Java解法</a></li>
 <li><a href="#python3%E8%A7%A3%E6%B3%95">Python3解法</a></li>
+<li><a href="#go%E8%A7%A3%E6%B3%95">Go解法</a></li>
 </ul>
+</li>
+<li><a href="#237-delete-node-in-a-linked-list">237. Delete Node in a Linked List</a>
+<ul>
+<li><a href="#%E6%80%9D%E8%B7%AF-1">思路</a></li>
+<li><a href="#c%E8%A7%A3%E6%B3%95-1">C++解法</a></li>
+<li><a href="#java%E8%A7%A3%E6%B3%95-1">Java解法</a></li>
+<li><a href="#python3%E8%A7%A3%E6%B3%95-1">Python3解法</a></li>
+<li><a href="#go%E8%A7%A3%E6%B3%95-1">Go解法</a></li>
+</ul>
+</li>
+<li><a href="#876-middle-of-the-linked-list">876. Middle of the Linked List</a>
+<ul>
+<li><a href="#%E6%80%9D%E8%B7%AF-2">思路</a></li>
+<li><a href="#c%E8%A7%A3%E6%B3%95-2">C++解法</a></li>
+</ul>
+</li>
+<li><a href="#2095-delete-the-middle-node-of-a-linked-list">2095. Delete the Middle Node of a Linked List</a>
+<ul>
+<li><a href="#%E6%80%9D%E8%B7%AF-3">思路</a></li>
+<li><a href="#c%E8%A7%A3%E6%B3%95-3">C++解法</a></li>
+<li><a href="#java%E8%A7%A3%E6%B3%95-2">Java解法</a></li>
+<li><a href="#python%E8%A7%A3%E6%B3%95">Python解法</a></li>
+</ul>
+</li>
+<li><a href="#3217-delete-nodes-from-linked-list-present-in-array">3217. Delete Nodes From Linked List Present in Array</a>
+<ul>
+<li><a href="#%E6%80%9D%E8%B7%AF-4">思路</a></li>
+<li><a href="#c%E8%A7%A3%E6%B3%95-4">C++解法</a></li>
+</ul>
+</li>
+</ul>
+<p>要点：需要处理头节点时，使用虚拟头节点。</p>
+<h1 id="203-remove-linked-list-elements"><a class="header" href="#203-remove-linked-list-elements"><a href="https://leetcode.com/problems/remove-linked-list-elements/">203. Remove Linked List Elements</a></a></h1>
 <h2 id="description"><a class="header" href="#description">Description</a></h2>
 <p>Given the <code>head</code> of a linked list and an integer <code>val</code>, remove all the nodes of the linked list that has <code>Node.val == val</code>, and return <em>the new head</em>.</p>
 <p><strong>Example 1:</strong></p>
@@ -248,11 +284,6 @@ class Solution {
 #     def __init__(self, val=0, next=None):
 #         self.val = val
 #         self.next = next
-# Definition for singly-linked list.
-# class ListNode:
-#     def __init__(self, val=0, next=None):
-#         self.val = val
-#         self.next = next
 class Solution:
     def removeElements(self, head: Optional[ListNode], val: int) -&gt; Optional[ListNode]:
         temp = ListNode(0)
@@ -266,12 +297,433 @@ class Solution:
             curr = curr.next
         return temp.next
 </code></pre>
+<h2 id="go解法"><a class="header" href="#go解法">Go解法</a></h2>
+<pre><code class="language-go">/**
+ * Definition for singly-linked list.
+ * type ListNode struct {
+ *     Val int
+ *     Next *ListNode
+ * }
+ */
+func removeElements(head *ListNode, val int) *ListNode {
+    dummyHead := &amp;ListNode{Val:0, Next: head}
+    pre := dummyHead
+    cur := pre.Next
+
+    for cur != nil {
+        if cur.Val == val{
+            pre.Next = cur.Next
+            cur = pre.Next
+        }else{
+            pre = cur
+            cur = cur.Next
+        }
+    }
+    return dummyHead.Next
+}
+</code></pre>
+<h1 id="237-delete-node-in-a-linked-list"><a class="header" href="#237-delete-node-in-a-linked-list"><a href="https://leetcode.com/problems/delete-node-in-a-linked-list/">237. Delete Node in a Linked List</a></a></h1>
+<p>There is a singly-linked list <code>head</code> and we want to delete a node <code>node</code> in it.</p>
+<p>You are given the node to be deleted <code>node</code>. You will <strong>not be given access</strong> to the first node of <code>head</code>.</p>
+<p>All the values of the linked list are <strong>unique</strong>, and it is guaranteed that the given node <code>node</code> is not the last node in the linked list.</p>
+<p>Delete the given node. Note that by deleting the node, we do not mean removing it from memory. We mean:</p>
+<ul>
+<li>The value of the given node should not exist in the linked list.</li>
+<li>The number of nodes in the linked list should decrease by one.</li>
+<li>All the values before <code>node</code> should be in the same order.</li>
+<li>All the values after <code>node</code> should be in the same order.</li>
+</ul>
+<p><strong>Custom testing:</strong></p>
+<ul>
+<li>For the input, you should provide the entire linked list <code>head</code> and the node to be given <code>node</code>. <code>node</code> should not be the last node of the list and should be an actual node in the list.</li>
+<li>We will build the linked list and pass the node to your function.</li>
+<li>The output will be the entire list after calling your function.</li>
+</ul>
+<p><strong>Example 1:</strong></p>
+<p><img src="https://assets.leetcode.com/uploads/2020/09/01/node1.jpg" alt="" /></p>
+<p><strong>Input:</strong> <code>head = [4,5,1,9], node = 5</code><br />
+<strong>Output:</strong> <code>[4,1,9]</code><br />
+<strong>Explanation:</strong> You are given the second node with value 5, the linked list should become 4 -&gt; 1 -&gt; 9 after calling your function.</p>
+<p><strong>Example 2:</strong></p>
+<p><img src="https://assets.leetcode.com/uploads/2020/09/01/node2.jpg" alt="" /></p>
+<p><strong>Input:</strong> <code>head = [4,5,1,9], node = 1</code><br />
+<strong>Output:</strong> <code>[4,5,9]</code><br />
+<strong>Explanation:</strong> You are given the third node with value 1, the linked list should become 4 -&gt; 5 -&gt; 9 after calling your function.</p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li>The number of the nodes in the given list is in the range <code>[2, 1000]</code>.</li>
+<li><code>-1000 &lt;= Node.val &lt;= 1000</code></li>
+<li>The value of each node in the list is <strong>unique</strong>.</li>
+<li>The <code>node</code> to be deleted is <strong>in the list</strong> and is <strong>not a tail</strong> node.</li>
+</ul>
+<h2 id="思路-1"><a class="header" href="#思路-1">思路</a></h2>
+<p>Approach: Data Overwriting</p>
+<p><strong>Note:</strong> This method will not work if we need to delete the last node of the linked list since there is no immediate successor. However, the problem description explicitly states that the node to be deleted is not the tail node in the list.</p>
+<p>Algorithm</p>
+<ol>
+<li>Copy the data from the successor node into the current node to be deleted.</li>
+<li>Update the <code>next</code> pointer of the current node to reference the <code>next</code> pointer of the successor node.</li>
+</ol>
+<p>用待删除结点下一个节点覆盖待删除结点，此时删除原待删除结点下一个节点即可</p>
+<p>Complexity Analysis</p>
+<ul>
+<li>
+<p>Time Complexity: O(1)</p>
+<ul>
+<li>The method involves a constant number of operations: updating the data of the current node and altering its <code>next</code> pointer. Each of these operations requires a fixed amount of time, irrespective of the size of the linked list.</li>
+</ul>
+</li>
+<li>
+<p>Space Complexity: O(1)</p>
+<ul>
+<li>This deletion technique does not necessitate any extra memory allocation, as it operates directly on the existing nodes without creating additional data structures.</li>
+</ul>
+</li>
+</ul>
+<h2 id="c解法-1"><a class="header" href="#c解法-1">C++解法</a></h2>
+<pre><code class="language-cpp">/**
+ * Definition for singly-linked list.  //单链表的定义
+ * struct ListNode {
+ *     int val;                 //当前结点的值(数据域)
+ *     ListNode *next;          //指向下一个结点的指针(指针域)
+ *     ListNode(int x) : val(x), next(NULL) {}     //初始化当前结点的值为x,指针为空
+ * };
+ */
+class Solution {
+public:
+    void deleteNode(ListNode* node) {
+        // Overwrite data of next node on current node.
+        node-&gt;val = node-&gt;next-&gt;val;
+        // Make current node point to next of next node.
+        node-&gt;next = node-&gt;next-&gt;next;
+    }
+};
+</code></pre>
+<h2 id="java解法-1"><a class="header" href="#java解法-1">Java解法</a></h2>
+<pre><code class="language-java">/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+
+    public void deleteNode(ListNode node) {
+        // Overwrite data of next node on current node.
+        node.val = node.next.val;
+        // Make current node point to next of next node.
+        node.next = node.next.next;
+    }
+}
+</code></pre>
+<h2 id="python3解法-1"><a class="header" href="#python3解法-1">Python3解法</a></h2>
+<pre><code class="language-python"># Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.next = None
+
+class Solution:
+    def deleteNode(self, node):
+        """
+        :type node: ListNode
+        :rtype: void Do not return anything, modify node in-place instead.
+        """
+        # Overwrite data of next node on current node.
+        node.val = node.next.val
+        # Make current node point to next of next node.
+        node.next = node.next.next
+        
+</code></pre>
+<h2 id="go解法-1"><a class="header" href="#go解法-1">Go解法</a></h2>
+<h1 id="876-middle-of-the-linked-list"><a class="header" href="#876-middle-of-the-linked-list"><a href="https://leetcode.com/problems/middle-of-the-linked-list/">876. Middle of the Linked List</a></a></h1>
+<p>Given the <code>head</code> of a singly linked list, return <em>the middle node of the linked list</em>.</p>
+<p>If there are two middle nodes, return <strong>the second middle</strong> node.</p>
+<p><strong>Example 1:</strong></p>
+<p><img src="https://assets.leetcode.com/uploads/2021/07/23/lc-midlist1.jpg" alt="" /></p>
+<p><strong>Input:</strong> <code>head = [1,2,3,4,5]</code><br />
+<strong>Output:</strong> <code>[3,4,5]</code><br />
+<strong>Explanation:</strong> The middle node of the list is node 3.</p>
+<p><strong>Example 2:</strong></p>
+<p><img src="https://assets.leetcode.com/uploads/2021/07/23/lc-midlist2.jpg" alt="" /></p>
+<p><strong>Input:</strong> <code>head = [1,2,3,4,5,6]</code><br />
+<strong>Output:</strong> <code>[4,5,6]</code><br />
+<strong>Explanation:</strong> Since the list has two middle nodes with values 3 and 4, we return the second one.</p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li>The number of nodes in the list is in the range <code>[1, 100]</code>.</li>
+<li><code>1 &lt;= Node.val &lt;= 100</code></li>
+</ul>
+<h2 id="思路-2"><a class="header" href="#思路-2">思路</a></h2>
+<p>双指针，快慢指针</p>
+<h2 id="c解法-2"><a class="header" href="#c解法-2">C++解法</a></h2>
+<pre><code class="language-cpp">/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* middleNode(ListNode* head) {
+        if(head == NULL){
+            return NULL;
+        }
+        ListNode* dummyHead = new ListNode(0);
+        dummyHead-&gt;next = head;
+        ListNode* slow = dummyHead;
+        ListNode* fast = head;
+        while(fast != NULL &amp;&amp; fast-&gt;next != NULL){
+            fast = fast-&gt;next-&gt;next;
+            slow = slow-&gt;next;
+        }
+        return slow-&gt;next;
+    }
+};
+</code></pre>
+<h1 id="2095-delete-the-middle-node-of-a-linked-list"><a class="header" href="#2095-delete-the-middle-node-of-a-linked-list"><a href="https://leetcode.com/problems/delete-the-middle-node-of-a-linked-list/">2095. Delete the Middle Node of a Linked List</a></a></h1>
+<p>You are given the <code>head</code> of a linked list. <strong>Delete</strong> the <strong>middle node</strong>, and return <em>the</em> <code>head</code> <em>of the modified linked list</em>.</p>
+<p>The <strong>middle node</strong> of a linked list of size <code>n</code> is the <code>⌊n / 2⌋th</code> node from the <strong>start</strong> using <strong>0-based indexing</strong>, where <code>⌊x⌋</code> denotes the largest integer less than or equal to <code>x</code>.</p>
+<ul>
+<li>For <code>n</code> = <code>1</code>, <code>2</code>, <code>3</code>, <code>4</code>, and <code>5</code>, the middle nodes are <code>0</code>, <code>1</code>, <code>1</code>, <code>2</code>, and <code>2</code>, respectively.</li>
+</ul>
+<p><strong>Example 1:</strong></p>
+<p><img src="https://assets.leetcode.com/uploads/2021/11/16/eg1drawio.png" alt="" /></p>
+<p><strong>Input:</strong> <code>head = [1,3,4,7,1,2,6]</code><br />
+<strong>Output:</strong> <code>[1,3,4,1,2,6]</code><br />
+<strong>Explanation:</strong>
+The above figure represents the given linked list. The indices of the nodes are written below.
+Since n = 7, node 3 with value 7 is the middle node, which is marked in red.
+We return the new list after removing this node.</p>
+<p><strong>Example 2:</strong></p>
+<p><img src="https://assets.leetcode.com/uploads/2021/11/16/eg2drawio.png" alt="" /></p>
+<p><strong>Input:</strong> <code>head = [1,2,3,4]</code><br />
+<strong>Output:</strong> <code>[1,2,4]</code><br />
+<strong>Explanation:</strong>
+The above figure represents the given linked list.
+For n = 4, node 2 with value 3 is the middle node, which is marked in red.</p>
+<p><strong>Example 3:</strong></p>
+<p><img src="https://assets.leetcode.com/uploads/2021/11/16/eg3drawio.png" alt="" /></p>
+<p><strong>Input:</strong> <code>head = [2,1]</code><br />
+<strong>Output:</strong> <code>[2]</code><br />
+<strong>Explanation:</strong>
+The above figure represents the given linked list.
+For n = 2, node 1 with value 1 is the middle node, which is marked in red.
+Node 0 with value 2 is the only node remaining after removing node 1.</p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li>The number of nodes in the list is in the range <code>[1, 10^5]</code>.</li>
+<li><code>1 &lt;= Node.val &lt;= 10^5</code></li>
+</ul>
+<h2 id="思路-3"><a class="header" href="#思路-3">思路</a></h2>
+<p>普通解法：求长度的一半然后遍历到这里并删除该节点，需要考虑只有一个节点的情况</p>
+<p>双指针解法：快指针比慢指针的速度快一倍，快指针到头说明慢指针到达了一半的位置，跳过该节点即可。Complexity 👈</p>
+<ul>
+<li>Time complexity: O(n)</li>
+<li>Space complexity: O(1)</li>
+</ul>
+<h2 id="c解法-3"><a class="header" href="#c解法-3">C++解法</a></h2>
+<p>双指针解法：</p>
+<pre><code class="language-cpp">/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* deleteMiddle(ListNode* head) {
+        if(head == NULL || head-&gt;next == NULL){
+            return NULL;
+        }
+        ListNode* dummyHead = new ListNode(0);
+        dummyHead-&gt;next = head;
+        ListNode* slow = dummyHead;
+        ListNode* fast = head;
+        while(fast != NULL &amp;&amp; fast-&gt;next != NULL){
+            fast = fast-&gt;next-&gt;next;
+            slow = slow-&gt;next;
+        }
+        slow-&gt;next = slow-&gt;next-&gt;next;
+        return dummyHead-&gt;next;
+    }
+};
+</code></pre>
+<p>普通解法：</p>
+<pre><code class="language-cpp">/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* deleteMiddle(ListNode* head) {
+        int length = 0;
+        ListNode* pMove = head;
+        while(pMove){
+            length += 1;
+            pMove = pMove-&gt;next;
+        }
+        if(length &lt;= 1){
+            return NULL;
+        }
+        int index = length % 2 == 1 ? (length - 1) / 2 : length / 2;
+        ListNode* pre = NULL;
+        ListNode* cur = head;
+        for(; index &gt; 0; index--){
+            pre = cur;
+            cur = cur-&gt;next;
+        }
+        if(pre-&gt;next){
+            pre-&gt;next = cur-&gt;next;
+        }
+        return head;
+    }
+};
+</code></pre>
+<h2 id="java解法-2"><a class="header" href="#java解法-2">Java解法</a></h2>
+<pre><code class="language-java">/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode deleteMiddle(ListNode head) {
+        if(head == null)return null;
+        ListNode prev = new ListNode(0);
+        prev.next = head;
+        ListNode slow = prev;
+        ListNode fast = head;
+        while(fast != null &amp;&amp; fast.next != null){
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        slow.next = slow.next.next;
+        return prev.next;
+    }
+}
+</code></pre>
+<h2 id="python解法"><a class="header" href="#python解法">Python解法</a></h2>
+<pre><code class="language-python"># Definition for singly-linked list.
+# class ListNode(object):
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution(object):
+    def deleteMiddle(self, head):
+        """
+        :type head: Optional[ListNode]
+        :rtype: Optional[ListNode]
+        """
+        if head == None :return None
+        prev = ListNode(0)
+        prev.next = head
+        slow = prev
+        fast = head
+        while fast != None and fast.next != None:
+            slow = slow.next
+            fast = fast.next.next
+        
+        slow.next = slow.next.next
+        return prev.next
+</code></pre>
+<h1 id="3217-delete-nodes-from-linked-list-present-in-array"><a class="header" href="#3217-delete-nodes-from-linked-list-present-in-array"><a href="https://leetcode.com/problems/delete-nodes-from-linked-list-present-in-array/">3217. Delete Nodes From Linked List Present in Array</a></a></h1>
+<p>You are given an array of integers <code>nums</code> and the <code>head</code> of a linked list. Return the <code>head</code> of the modified linked list after <strong>removing</strong> all nodes from the linked list that have a value that exists in <code>nums</code>.</p>
+<p><strong>Example 1:</strong></p>
+<p><strong>Input:</strong> <code>nums = [1,2,3], head = [1,2,3,4,5]</code></p>
+<p><strong>Output:</strong> <code>[4,5]</code></p>
+<p><strong>Explanation:</strong></p>
+<p><strong><img src="https://assets.leetcode.com/uploads/2024/06/11/linkedlistexample0.png" alt="" /></strong></p>
+<p>Remove the nodes with values 1, 2, and 3.</p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> <code>nums = [1], head = [1,2,1,2,1,2]</code></p>
+<p><strong>Output:</strong> <code>[2,2,2]</code></p>
+<p><strong>Explanation:</strong></p>
+<p><img src="https://assets.leetcode.com/uploads/2024/06/11/linkedlistexample1.png" alt="" /></p>
+<p>Remove the nodes with value 1.</p>
+<p><strong>Example 3:</strong></p>
+<p><strong>Input:</strong> <code>nums = [5], head = [1,2,3,4]</code></p>
+<p><strong>Output:</strong> <code>[1,2,3,4]</code></p>
+<p><strong>Explanation:</strong></p>
+<p><strong><img src="https://assets.leetcode.com/uploads/2024/06/11/linkedlistexample2.png" alt="" /></strong></p>
+<p>No node has value 5.</p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= nums.length &lt;= 10^5</code></li>
+<li><code>1 &lt;= nums[i] &lt;= 10^5</code></li>
+<li>All elements in <code>nums</code> are unique.</li>
+<li>The number of nodes in the given list is in the range <code>[1, 10^5]</code>.</li>
+<li><code>1 &lt;= Node.val &lt;= 10^5</code></li>
+<li>The input is generated such that there is at least one node in the linked list that has a value not present in <code>nums</code>.</li>
+</ul>
+<h2 id="思路-4"><a class="header" href="#思路-4">思路</a></h2>
+<p>方法一：迭代处理数组中的元素，然后调用<code>removeElements()</code>函数，这种方法会超时。</p>
+<p>方法二：哈希数组，遍历一遍链表</p>
+<p>不要删除指针，否则容易出现悬挂指针问题，具体报错信息为<code># ERROR: AddressSanitizer: heap-use-after-free on address</code></p>
+<h2 id="c解法-4"><a class="header" href="#c解法-4">C++解法</a></h2>
+<pre><code class="language-cpp">/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* modifiedList(vector&lt;int&gt;&amp; nums, ListNode* head) {
+        if (nums.size() == 0 || head == NULL) {
+            return head;
+        }
+        bitset&lt;100001&gt; hasN = 0;
+        for(int x : nums){
+            hasN[x] = 1;
+        }
+        ListNode* dummyHead = new ListNode(0);
+        dummyHead-&gt;next = head;
+        ListNode* pre = dummyHead;
+        ListNode* cur = head;
+        while(cur){
+            if(hasN[cur-&gt;val]){
+                pre-&gt;next = cur-&gt;next;
+                cur = pre-&gt;next;
+            }else{
+                pre = cur;
+                cur = cur-&gt;next;
+            }
+        }
+        return dummyHead-&gt;next;
+    }
+};
+</code></pre>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../链表/链表.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../链表/设计链表.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
@@ -285,7 +737,7 @@ class Solution:
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../链表/链表.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../链表/设计链表.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 

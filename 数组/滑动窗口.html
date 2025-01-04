@@ -1,0 +1,688 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>滑动窗口 - 剑指Offer</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">剑指Offer</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
+<h1 id="滑动窗口"><a class="header" href="#滑动窗口">滑动窗口</a></h1>
+<ul>
+<li><a href="#209-minimum-size-subarray-sum">209. Minimum Size Subarray Sum</a>
+<ul>
+<li><a href="#%E6%80%9D%E8%B7%AF">思路</a></li>
+<li><a href="#c">C++</a></li>
+<li><a href="#java">Java</a></li>
+<li><a href="#python">Python</a></li>
+<li><a href="#go">Go</a></li>
+</ul>
+</li>
+<li><a href="#3364-minimum-positive-sum-subarray-">3364. Minimum Positive Sum Subarray </a>
+<ul>
+<li><a href="#%E6%80%9D%E8%B7%AF-1">思路</a></li>
+<li><a href="#c%E8%A7%A3%E6%B3%95">C++解法</a>
+<ul>
+<li><a href="#approach-1-brute-force">Approach 1: Brute Force</a></li>
+<li><a href="#approach-2-sliding-window-optimized">Approach 2: Sliding Window (Optimized)</a></li>
+<li><a href="#approach-3-prefix-sum-with-sliding-window">Approach 3: Prefix Sum with Sliding Window</a></li>
+<li><a href="#approach-4-optimized-sliding-window-with-fixed-size">Approach 4: Optimized Sliding Window with Fixed Size</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#643-maximum-average-subarray-i">643. Maximum Average Subarray I</a>
+<ul>
+<li><a href="#%E6%80%9D%E8%B7%AF-2">思路</a></li>
+<li><a href="#c%E8%A7%A3%E6%B3%95-1">C++解法</a></li>
+<li><a href="#java%E8%A7%A3%E6%B3%95">Java解法</a></li>
+<li><a href="#python%E8%A7%A3%E6%B3%95">Python解法</a></li>
+<li><a href="#go%E8%A7%A3%E6%B3%95">Go解法</a></li>
+</ul>
+</li>
+</ul>
+<h1 id="209-minimum-size-subarray-sum"><a class="header" href="#209-minimum-size-subarray-sum"><a href="https://leetcode.com/problems/minimum-size-subarray-sum/">209. Minimum Size Subarray Sum</a></a></h1>
+<p>Given an array of positive integers <code>nums</code> and a positive integer <code>target</code>, return <em>the <strong>minimal length</strong> of a</em> <em>subarray</em> <em>whose sum is greater than or equal to</em> <code>target</code>. If there is no such subarray, return <code>0</code> instead.</p>
+<p><strong>Example 1:</strong></p>
+<p><strong>Input:</strong> target = 7, nums = [2,3,1,2,4,3]<br />
+<strong>Output:</strong> 2<br />
+<strong>Explanation:</strong> The subarray [4,3] has the minimal length under the problem constraint.</p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> target = 4, nums = [1,4,4]<br />
+<strong>Output:</strong> 1</p>
+<p><strong>Example 3:</strong></p>
+<p><strong>Input:</strong> target = 11, nums = [1,1,1,1,1,1,1,1]<br />
+<strong>Output:</strong> 0</p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= target &lt;= 10^9</code></li>
+<li><code>1 &lt;= nums.length &lt;= 10^5</code></li>
+<li><code>1 &lt;= nums[i] &lt;= 10^4</code></li>
+</ul>
+<p><strong>Follow up:</strong> If you have figured out the <code>O(n)</code> solution, try coding another solution of which the time complexity is <code>O(n log(n))</code>.</p>
+<h2 id="思路"><a class="header" href="#思路">思路</a></h2>
+<ol>
+<li>双重for循环暴力解决</li>
+<li>单层for循环，滑动窗口</li>
+</ol>
+<p>下面代码使用滑动窗口。</p>
+<ul>
+<li>Time complexity: O(n)</li>
+<li>Space complexity: O(1)</li>
+</ul>
+<h2 id="c"><a class="header" href="#c">C++</a></h2>
+<p>滑动窗口解法：</p>
+<pre><code class="language-cpp">class Solution {
+public:
+    int minSubArrayLen(int target, vector&lt;int&gt;&amp; nums) {
+        int minLen = numeric_limits&lt;int&gt;::max();
+        int left = 0;
+        int curSum = 0;
+
+        for (int right = 0; right &lt; nums.size(); right++) {
+            curSum += nums[right];
+
+            while (curSum &gt;= target) {
+                if (right - left + 1 &lt; minLen) {
+                    minLen = right - left + 1;
+                }
+                curSum -= nums[left];
+                left++;
+            }
+        }
+
+        return minLen != numeric_limits&lt;int&gt;::max() ? minLen : 0;        
+    }
+};
+</code></pre>
+<p>暴力解法：</p>
+<pre><code class="language-cpp">class Solution {
+public:
+    int minSubArrayLen(int s, vector&lt;int&gt;&amp; nums) {
+        int result = INT32_MAX; // 最终的结果
+        int sum = 0; // 子序列的数值之和
+        int subLength = 0; // 子序列的长度
+        for (int i = 0; i &lt; nums.size(); i++) { // 设置子序列起点为i
+            sum = 0;
+            for (int j = i; j &lt; nums.size(); j++) { // 设置子序列终止位置为j
+                sum += nums[j];
+                if (sum &gt;= s) { // 一旦发现子序列和超过了s，更新result
+                    subLength = j - i + 1; // 取子序列的长度
+                    result = result &lt; subLength ? result : subLength;
+                    break; // 因为我们是找符合条件最短的子序列，所以一旦符合条件就break
+                }
+            }
+        }
+        // 如果result没有被赋值的话，就返回0，说明没有符合条件的子序列
+        return result == INT32_MAX ? 0 : result;
+    }
+};
+</code></pre>
+<ul>
+<li>时间复杂度：O(n^2)</li>
+<li>空间复杂度：O(1)</li>
+</ul>
+<p>后面力扣官方更新了数据，暴力解法已经超时了。</p>
+<h2 id="java"><a class="header" href="#java">Java</a></h2>
+<pre><code class="language-java">class Solution {
+    public int minSubArrayLen(int target, int[] nums) {
+        int minLen = Integer.MAX_VALUE;
+        int left = 0;
+        int curSum = 0;
+
+        for (int right = 0; right &lt; nums.length; right++) {
+            curSum += nums[right];
+
+            while (curSum &gt;= target) {
+                if (right - left + 1 &lt; minLen) {
+                    minLen = right - left + 1;
+                }
+                curSum -= nums[left];
+                left++;
+            }
+        }
+        
+        return minLen != Integer.MAX_VALUE ? minLen : 0;        
+    }
+}
+</code></pre>
+<h2 id="python"><a class="header" href="#python">Python</a></h2>
+<pre><code class="language-python">class Solution:
+    def minSubArrayLen(self, target: int, nums: List[int]) -&gt; int:
+        min_len = float("inf")
+        left = 0
+        cur_sum = 0
+
+        for right in range(len(nums)):
+            cur_sum += nums[right]
+
+            while cur_sum &gt;= target:
+                if right - left + 1 &lt; min_len:
+                    min_len = right - left + 1
+                cur_sum -= nums[left]
+                left += 1
+        
+        return min_len if min_len != float("inf") else 0
+</code></pre>
+<h2 id="go"><a class="header" href="#go">Go</a></h2>
+<pre><code class="language-go">func minSubArrayLen(target int, nums []int) int {
+    i := 0
+    l := len(nums)  // 数组长度
+    sum := 0        // 子数组之和
+    result := l + 1 // 初始化返回长度为l+1，目的是为了判断“不存在符合条件的子数组，返回0”的情况
+    for j := 0; j &lt; l; j++ {
+        sum += nums[j]
+        for sum &gt;= target {
+            subLength := j - i + 1
+            if subLength &lt; result {
+                result = subLength
+            }
+            sum -= nums[i]
+            i++
+        }
+    }
+    if result == l+1 {
+        return 0
+    } else {
+        return result
+    }
+}
+</code></pre>
+<p>注意：题目要求子数组的和要大于或等于target</p>
+<h1 id="3364-minimum-positive-sum-subarray"><a class="header" href="#3364-minimum-positive-sum-subarray"><a href="https://leetcode.com/problems/minimum-positive-sum-subarray/">3364. Minimum Positive Sum Subarray</a> </a></h1>
+<p>You are given an integer array <code>nums</code> and <strong>two</strong> integers <code>l</code> and <code>r</code>. Your task is to find the <strong>minimum</strong> sum of a <strong>subarray</strong> whose size is between <code>l</code> and <code>r</code> (inclusive) and whose sum is greater than 0.</p>
+<p>Return the <strong>minimum</strong> sum of such a subarray. If no such subarray exists, return -1.</p>
+<p>A <strong>subarray</strong> is a contiguous <strong>non-empty</strong> sequence of elements within an array.</p>
+<p><strong>Example 1:</strong></p>
+<p><strong>Input:</strong> nums = [3, -2, 1, 4], l = 2, r = 3</p>
+<p><strong>Output:</strong> 1</p>
+<p><strong>Explanation:</strong></p>
+<p>The subarrays of length between <code>l = 2</code> and <code>r = 3</code> where the sum is greater than 0 are:</p>
+<ul>
+<li><code>[3, -2]</code> with a sum of 1</li>
+<li><code>[1, 4]</code> with a sum of 5</li>
+<li><code>[3, -2, 1]</code> with a sum of 2</li>
+<li><code>[-2, 1, 4]</code> with a sum of 3</li>
+</ul>
+<p>Out of these, the subarray <code>[3, -2]</code> has a sum of 1, which is the smallest positive sum. Hence, the answer is 1.</p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> nums = [-2, 2, -3, 1], l = 2, r = 3</p>
+<p><strong>Output:</strong> -1</p>
+<p><strong>Explanation:</strong></p>
+<p>There is no subarray of length between <code>l</code> and <code>r</code> that has a sum greater than 0. So, the answer is -1.</p>
+<p><strong>Example 3:</strong></p>
+<p><strong>Input:</strong> nums = [1, 2, 3, 4], l = 2, r = 4</p>
+<p><strong>Output:</strong> 3</p>
+<p><strong>Explanation:</strong></p>
+<p>The subarray <code>[1, 2]</code> has a length of 2 and the minimum sum greater than 0. So, the answer is 3.</p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= nums.length &lt;= 100</code></li>
+<li><code>1 &lt;= l &lt;= r &lt;= nums.length</code></li>
+<li><code>-1000 &lt;= nums[i] &lt;= 1000</code></li>
+</ul>
+<h2 id="思路-1"><a class="header" href="#思路-1">思路</a></h2>
+<p>方法一：暴力求解，二重循环</p>
+<p>方法二：可变长度的滑动窗口</p>
+<h2 id="c解法"><a class="header" href="#c解法">C++解法</a></h2>
+<h3 id="approach-1-brute-force"><a class="header" href="#approach-1-brute-force">Approach 1: <strong>Brute Force</strong></a></h3>
+<p>Steps:</p>
+<ol>
+<li>Iterate through all possible subarrays of size ( k ) where ( l &lt;= k &lt;= r ).</li>
+<li>Compute the sum of each subarray.</li>
+<li>Check if the sum is greater than ( 0 ), and keep track of the minimum valid sum.</li>
+<li>Return the minimum valid sum or (-1) if no such subarray exists.</li>
+</ol>
+<p>Complexity:</p>
+<ul>
+<li><strong>Time Complexity</strong>: (O(n^2)) (since we calculate the sum for all subarrays).</li>
+<li><strong>Space Complexity</strong>: (O(1)) (no extra space used).</li>
+</ul>
+<p>Code:</p>
+<pre><code class="language-cpp">class Solution {
+public:
+    int minSumSubarray(vector&lt;int&gt;&amp; nums, int l, int r) {
+        int n = nums.size();
+        int minSum = INT_MAX;
+        bool found = false;
+
+        for (int start = 0; start &lt; n; ++start) {
+            int sum = 0;
+            for (int end = start; end &lt; n; ++end) {
+                sum += nums[end];
+                int length = end - start + 1;
+                if (length &gt;= l &amp;&amp; length &lt;= r &amp;&amp; sum &gt; 0) {
+                    minSum = min(minSum, sum);
+                    found = true;
+                }
+            }
+        }
+
+        return found ? minSum : -1;
+    }
+};
+</code></pre>
+<hr />
+<h3 id="approach-2-sliding-window-optimized"><a class="header" href="#approach-2-sliding-window-optimized">Approach 2: <strong>Sliding Window (Optimized)</strong></a></h3>
+<p>Steps:</p>
+<ol>
+<li>Use a sliding window of size ( l ) to ( r ).</li>
+<li>Maintain the sum of elements in the current window.</li>
+<li>Check if the sum is greater than ( 0 ), and update the minimum sum if valid.</li>
+<li>Slide the window one element at a time, updating the sum in ( O(1) ).</li>
+</ol>
+<p>Complexity:</p>
+<ul>
+<li><strong>Time Complexity</strong>: (O(n X (r - l + 1))) (for sliding windows of varying sizes).</li>
+<li><strong>Space Complexity</strong>: (O(1)).</li>
+</ul>
+<p>Code:</p>
+<pre><code class="language-cpp">class Solution {
+public:
+    int minSumSubarray(vector&lt;int&gt;&amp; nums, int l, int r) {
+        int n = nums.size();
+        int minSum = INT_MAX;
+        bool found = false;
+
+        for (int k = l; k &lt;= r; ++k) {
+            int sum = 0;
+            for (int i = 0; i &lt; n; ++i) {
+                sum += nums[i];
+                if (i &gt;= k - 1) {
+                    if (sum &gt; 0) {
+                        minSum = min(minSum, sum);
+                        found = true;
+                    }
+                    sum -= nums[i - k + 1];
+                }
+            }
+        }
+
+        return found ? minSum : -1;
+    }
+};
+</code></pre>
+<hr />
+<h3 id="approach-3-prefix-sum-with-sliding-window"><a class="header" href="#approach-3-prefix-sum-with-sliding-window"><strong>Approach 3: Prefix Sum with Sliding Window</strong></a></h3>
+<p><strong>Steps</strong></p>
+<p><strong>1. Precompute Prefix Sum</strong></p>
+<ul>
+<li>Create a prefix sum array where each element at index (i) stores the sum of all elements from index (0) to (i - 1).
+<ul>
+<li>Formula: <code>prefix[i] = prefix[i - 1] + nums[i - 1]</code>.</li>
+</ul>
+</li>
+</ul>
+<p><strong>2. Iterate Over All Valid Subarray Sizes</strong></p>
+<ul>
+<li>For each (k) in the range ([l, r]):
+<ul>
+<li>Use the prefix sum array to calculate subarray sums in (O(1)).</li>
+<li>Compare each subarray sum with the current minimum.</li>
+</ul>
+</li>
+</ul>
+<p><strong>3. Check Validity</strong></p>
+<ul>
+<li>If the subarray sum is greater than (0), update the minimum sum.</li>
+</ul>
+<p><strong>4. Return the Result</strong></p>
+<ul>
+<li>If a valid subarray is found, return the minimum sum. Otherwise, return (-1).</li>
+</ul>
+<p>Complexity:</p>
+<ul>
+<li><strong>Time Complexity</strong>: (O(n X (r - l + 1))) (for sliding windows of varying sizes).</li>
+<li><strong>Space Complexity</strong>: (O(1)).</li>
+</ul>
+<p><strong>Code</strong></p>
+<pre><code class="language-cpp">class Solution {
+public:
+    int minSumSubarray(vector&lt;int&gt;&amp; nums, int l, int r) {
+        int n = nums.size();
+        vector&lt;int&gt; prefix(n + 1, 0);
+
+        // Step 1: Compute prefix sums
+        for (int i = 0; i &lt; n; ++i) {
+            prefix[i + 1] = prefix[i] + nums[i];
+        }
+
+        int minSum = INT_MAX;
+        bool found = false;
+
+        // Step 2: Iterate over all window sizes
+        for (int k = l; k &lt;= r; ++k) {
+            // Sliding window over prefix sum
+            for (int i = 0; i + k &lt;= n; ++i) {
+                int sum = prefix[i + k] - prefix[i]; // Subarray sum from i to i+k-1
+                if (sum &gt; 0) {
+                    minSum = min(minSum, sum);
+                    found = true;
+                }
+            }
+        }
+
+        // Step 3: Return result
+        return found ? minSum : -1;
+    }
+};
+</code></pre>
+<hr />
+<h3 id="approach-4-optimized-sliding-window-with-fixed-size"><a class="header" href="#approach-4-optimized-sliding-window-with-fixed-size">Approach 4: <strong>Optimized Sliding Window with Fixed Size</strong></a></h3>
+<p>The sliding window method allows us to efficiently calculate the sum of a subarray by updating the sum incrementally as we "slide" the window across the array. For every subarray of size (k), we:</p>
+<ol>
+<li>Add the element at the current end of the window.</li>
+<li>Remove the element at the start of the window if the window size exceeds (k).</li>
+</ol>
+<p><strong>Steps</strong></p>
+<p><strong>1. Iterate over all window sizes ((k))</strong></p>
+<ul>
+<li>Start by trying subarrays of size (l) (minimum valid size) and incrementally check sizes up to (r) (maximum valid size).</li>
+<li>For each (k), initialize the sliding window and calculate the sum dynamically as the window slides.</li>
+</ul>
+<p><strong>2. Use a sliding window of size (k)</strong></p>
+<ul>
+<li>Start with the first (k) elements to initialize the sum.</li>
+<li>Slide the window one element at a time:
+<ul>
+<li>Add the new element at the window's end.</li>
+<li>Remove the old element at the window's start.</li>
+</ul>
+</li>
+<li>This ensures (O(1)) updates to the sum for each new position.</li>
+</ul>
+<p><strong>3. Check validity</strong></p>
+<ul>
+<li>After updating the sum, check if it is greater than (0).</li>
+<li>If valid, compare it with the current minimum sum and update if smaller.</li>
+</ul>
+<p><strong>4. Return the result</strong></p>
+<ul>
+<li>After evaluating all possible subarray sizes, return the smallest valid sum. If no valid subarray is found, return (-1).</li>
+</ul>
+<p>Complexity:</p>
+<ul>
+<li><strong>Time Complexity</strong>: (O(n X (r - l + 1))) (for sliding windows of varying sizes).</li>
+<li><strong>Space Complexity</strong>: (O(1)).</li>
+</ul>
+<pre><code class="language-cpp">class Solution {
+public:
+    int minSumSubarray(vector&lt;int&gt;&amp; nums, int l, int r) {
+        int n = nums.size();
+        int minSum = INT_MAX;  // Stores the minimum valid sum
+        bool found = false;   // Indicates if a valid subarray is found
+
+        // Iterate over all window sizes from l to r
+        for (int k = l; k &lt;= r; ++k) {
+            int sum = 0;
+
+            // Initialize the sum for the first window of size k
+            for (int i = 0; i &lt; k; ++i) {
+                sum += nums[i];
+            }
+
+            // Check the first window
+            if (sum &gt; 0) {
+                minSum = min(minSum, sum);
+                found = true;
+            }
+
+            // Slide the window across the array
+            for (int i = k; i &lt; n; ++i) {
+                sum += nums[i];           // Add the new element at the end of the window
+                sum -= nums[i - k];       // Remove the old element at the start of the window
+
+                // Check the current window
+                if (sum &gt; 0) {
+                    minSum = min(minSum, sum);
+                    found = true;
+                }
+            }
+        }
+
+        // Return the result or -1 if no valid subarray was found
+        return found ? minSum : -1;
+    }
+};
+</code></pre>
+<h1 id="643-maximum-average-subarray-i"><a class="header" href="#643-maximum-average-subarray-i"><a href="https://leetcode.com/problems/maximum-average-subarray-i/">643. Maximum Average Subarray I</a></a></h1>
+<p>You are given an integer array <code>nums</code> consisting of <code>n</code> elements, and an integer <code>k</code>.</p>
+<p>Find a contiguous subarray whose <strong>length is equal to</strong> <code>k</code> that has the maximum average value and return <em>this value</em>. Any answer with a calculation error less than <code>10^-5</code> will be accepted.</p>
+<p><strong>Example 1:</strong></p>
+<pre><code>**Input:** nums = [1,12,-5,-6,50,3], k = 4
+**Output:** 12.75000
+**Explanation:** Maximum average is (12 - 5 - 6 + 50) / 4 = 51 / 4 = 12.75
+</code></pre>
+<p><strong>Example 2:</strong></p>
+<pre><code>**Input:** nums = [5], k = 1
+**Output:** 5.00000
+</code></pre>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>n == nums.length</code></li>
+<li><code>1 &lt;= k &lt;= n &lt;= 10^5</code></li>
+<li><code>-10^4 &lt;= nums[i] &lt;= 10^4</code></li>
+</ul>
+<h2 id="思路-2"><a class="header" href="#思路-2">思路</a></h2>
+<p>使用滑动窗口求特定长度的最大子列和</p>
+<h2 id="c解法-1"><a class="header" href="#c解法-1">C++解法</a></h2>
+<pre><code class="language-cpp">class Solution {
+public:
+    double findMaxAverage(vector&lt;int&gt;&amp; nums, int k) {
+        int left = 0;
+        double result = -10000000.0;
+        double sum = 0;
+        for(int right = 0; right &lt; nums.size(); right++){
+            sum += nums[right];
+            if(right - left + 1 == k){
+                double temp = sum / k;
+                result = result &gt; temp ? result : temp;
+                sum -= nums[left];
+                left++;
+            }
+        }
+        return result;
+    }
+};
+</code></pre>
+<h2 id="java解法"><a class="header" href="#java解法">Java解法</a></h2>
+<h2 id="python解法"><a class="header" href="#python解法">Python解法</a></h2>
+<h2 id="go解法"><a class="header" href="#go解法">Go解法</a></h2>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../数组/二分查找.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../数组/矩阵.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../数组/二分查找.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../数组/矩阵.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>
