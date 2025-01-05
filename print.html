@@ -2210,7 +2210,9 @@ public:
 <div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
 <h1 id="链表"><a class="header" href="#链表">链表</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
-<h1 id="707-design-linked-list"><a class="header" href="#707-design-linked-list"><a href="https://leetcode.com/problems/design-linked-list/">707. Design Linked List</a></a></h1>
+<h1 id="设计链表"><a class="header" href="#设计链表">设计链表</a></h1>
+<ul>
+<li><a href="%E9%93%BE%E8%A1%A8/%E8%AE%BE%E8%AE%A1%E9%93%BE%E8%A1%A8.html#707-design-linked-list">707. Design Linked List</a>
 <ul>
 <li><a href="%E9%93%BE%E8%A1%A8/%E8%AE%BE%E8%AE%A1%E9%93%BE%E8%A1%A8.html#description">Description</a></li>
 <li><a href="%E9%93%BE%E8%A1%A8/%E8%AE%BE%E8%AE%A1%E9%93%BE%E8%A1%A8.html#%E6%80%9D%E8%B7%AF">思路</a></li>
@@ -2218,6 +2220,15 @@ public:
 <li><a href="%E9%93%BE%E8%A1%A8/%E8%AE%BE%E8%AE%A1%E9%93%BE%E8%A1%A8.html#java%E8%A7%A3%E6%B3%95">Java解法</a></li>
 <li><a href="%E9%93%BE%E8%A1%A8/%E8%AE%BE%E8%AE%A1%E9%93%BE%E8%A1%A8.html#python3%E8%A7%A3%E6%B3%95">Python3解法</a></li>
 </ul>
+</li>
+<li><a href="%E9%93%BE%E8%A1%A8/%E8%AE%BE%E8%AE%A1%E9%93%BE%E8%A1%A8.html#876-middle-of-the-linked-list">876. Middle of the Linked List</a>
+<ul>
+<li><a href="%E9%93%BE%E8%A1%A8/%E8%AE%BE%E8%AE%A1%E9%93%BE%E8%A1%A8.html#%E6%80%9D%E8%B7%AF-1">思路</a></li>
+<li><a href="%E9%93%BE%E8%A1%A8/%E8%AE%BE%E8%AE%A1%E9%93%BE%E8%A1%A8.html#c%E8%A7%A3%E6%B3%95-1">C++解法</a></li>
+</ul>
+</li>
+</ul>
+<h1 id="707-design-linked-list"><a class="header" href="#707-design-linked-list"><a href="https://leetcode.com/problems/design-linked-list/">707. Design Linked List</a></a></h1>
 <h2 id="description"><a class="header" href="#description">Description</a></h2>
 <p>Design your implementation of the linked list. You can choose to use a singly or doubly linked list.<br />
 A node in a singly linked list should have two attributes: <code>val</code> and <code>next</code>. <code>val</code> is the value of the current node, and <code>next</code> is a pointer/reference to the next node.<br />
@@ -2269,6 +2280,7 @@ myLinkedList.get(1);              // return 3
 <li>设置一个虚拟头结点在进行操作。</li>
 </ol>
 <p>下面采用的设置一个虚拟头结点（这样更方便一些，大家看代码就会感受出来）。</p>
+<p>需要处理头结点时就要设置虚拟头节点。</p>
 <h2 id="c解法-6"><a class="header" href="#c解法-6">C++解法</a></h2>
 <pre><code class="language-cpp">class MyLinkedList {
 public:
@@ -2371,50 +2383,199 @@ private:
 </code></pre>
 <h2 id="java解法-5"><a class="header" href="#java解法-5">Java解法</a></h2>
 <h2 id="python3解法-4"><a class="header" href="#python3解法-4">Python3解法</a></h2>
+<h1 id="876-middle-of-the-linked-list"><a class="header" href="#876-middle-of-the-linked-list"><a href="https://leetcode.com/problems/middle-of-the-linked-list/">876. Middle of the Linked List</a></a></h1>
+<p>Given the <code>head</code> of a singly linked list, return <em>the middle node of the linked list</em>.</p>
+<p>If there are two middle nodes, return <strong>the second middle</strong> node.</p>
+<p><strong>Example 1:</strong></p>
+<p><img src="https://assets.leetcode.com/uploads/2021/07/23/lc-midlist1.jpg" alt="" /></p>
+<p><strong>Input:</strong> <code>head = [1,2,3,4,5]</code><br />
+<strong>Output:</strong> <code>[3,4,5]</code><br />
+<strong>Explanation:</strong> The middle node of the list is node 3.</p>
+<p><strong>Example 2:</strong></p>
+<p><img src="https://assets.leetcode.com/uploads/2021/07/23/lc-midlist2.jpg" alt="" /></p>
+<p><strong>Input:</strong> <code>head = [1,2,3,4,5,6]</code><br />
+<strong>Output:</strong> <code>[4,5,6]</code><br />
+<strong>Explanation:</strong> Since the list has two middle nodes with values 3 and 4, we return the second one.</p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li>The number of nodes in the list is in the range <code>[1, 100]</code>.</li>
+<li><code>1 &lt;= Node.val &lt;= 100</code></li>
+</ul>
+<h2 id="思路-17"><a class="header" href="#思路-17">思路</a></h2>
+<p>双指针，快慢指针</p>
+<h2 id="c解法-7"><a class="header" href="#c解法-7">C++解法</a></h2>
+<pre><code class="language-cpp">/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* middleNode(ListNode* head) {
+        if(head == NULL){
+            return NULL;
+        }
+        ListNode* dummyHead = new ListNode(0);
+        dummyHead-&gt;next = head;
+        ListNode* slow = dummyHead;
+        ListNode* fast = head;
+        while(fast != NULL &amp;&amp; fast-&gt;next != NULL){
+            fast = fast-&gt;next-&gt;next;
+            slow = slow-&gt;next;
+        }
+        return slow-&gt;next;
+    }
+};
+</code></pre>
 <div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
 <h1 id="移除链表元素"><a class="header" href="#移除链表元素">移除链表元素</a></h1>
 <ul>
-<li><a href="%E9%93%BE%E8%A1%A8/%E7%A7%BB%E9%99%A4%E9%93%BE%E8%A1%A8%E5%85%83%E7%B4%A0.html#203-remove-linked-list-elements">203. Remove Linked List Elements</a>
+<li><a href="%E9%93%BE%E8%A1%A8/%E7%A7%BB%E9%99%A4%E9%93%BE%E8%A1%A8%E5%85%83%E7%B4%A0.html#19-remove-nth-node-from-end-of-list">19. Remove Nth Node From End of List</a>
 <ul>
-<li><a href="%E9%93%BE%E8%A1%A8/%E7%A7%BB%E9%99%A4%E9%93%BE%E8%A1%A8%E5%85%83%E7%B4%A0.html#description">Description</a></li>
 <li><a href="%E9%93%BE%E8%A1%A8/%E7%A7%BB%E9%99%A4%E9%93%BE%E8%A1%A8%E5%85%83%E7%B4%A0.html#%E6%80%9D%E8%B7%AF">思路</a></li>
 <li><a href="%E9%93%BE%E8%A1%A8/%E7%A7%BB%E9%99%A4%E9%93%BE%E8%A1%A8%E5%85%83%E7%B4%A0.html#c%E8%A7%A3%E6%B3%95">C++解法</a></li>
 <li><a href="%E9%93%BE%E8%A1%A8/%E7%A7%BB%E9%99%A4%E9%93%BE%E8%A1%A8%E5%85%83%E7%B4%A0.html#java%E8%A7%A3%E6%B3%95">Java解法</a></li>
 <li><a href="%E9%93%BE%E8%A1%A8/%E7%A7%BB%E9%99%A4%E9%93%BE%E8%A1%A8%E5%85%83%E7%B4%A0.html#python3%E8%A7%A3%E6%B3%95">Python3解法</a></li>
+</ul>
+</li>
+<li><a href="%E9%93%BE%E8%A1%A8/%E7%A7%BB%E9%99%A4%E9%93%BE%E8%A1%A8%E5%85%83%E7%B4%A0.html#203-remove-linked-list-elements">203. Remove Linked List Elements</a>
+<ul>
+<li><a href="%E9%93%BE%E8%A1%A8/%E7%A7%BB%E9%99%A4%E9%93%BE%E8%A1%A8%E5%85%83%E7%B4%A0.html#description">Description</a></li>
+<li><a href="%E9%93%BE%E8%A1%A8/%E7%A7%BB%E9%99%A4%E9%93%BE%E8%A1%A8%E5%85%83%E7%B4%A0.html#%E6%80%9D%E8%B7%AF-1">思路</a></li>
+<li><a href="%E9%93%BE%E8%A1%A8/%E7%A7%BB%E9%99%A4%E9%93%BE%E8%A1%A8%E5%85%83%E7%B4%A0.html#c%E8%A7%A3%E6%B3%95-1">C++解法</a></li>
+<li><a href="%E9%93%BE%E8%A1%A8/%E7%A7%BB%E9%99%A4%E9%93%BE%E8%A1%A8%E5%85%83%E7%B4%A0.html#java%E8%A7%A3%E6%B3%95-1">Java解法</a></li>
+<li><a href="%E9%93%BE%E8%A1%A8/%E7%A7%BB%E9%99%A4%E9%93%BE%E8%A1%A8%E5%85%83%E7%B4%A0.html#python3%E8%A7%A3%E6%B3%95-1">Python3解法</a></li>
 <li><a href="%E9%93%BE%E8%A1%A8/%E7%A7%BB%E9%99%A4%E9%93%BE%E8%A1%A8%E5%85%83%E7%B4%A0.html#go%E8%A7%A3%E6%B3%95">Go解法</a></li>
 </ul>
 </li>
 <li><a href="%E9%93%BE%E8%A1%A8/%E7%A7%BB%E9%99%A4%E9%93%BE%E8%A1%A8%E5%85%83%E7%B4%A0.html#237-delete-node-in-a-linked-list">237. Delete Node in a Linked List</a>
 <ul>
-<li><a href="%E9%93%BE%E8%A1%A8/%E7%A7%BB%E9%99%A4%E9%93%BE%E8%A1%A8%E5%85%83%E7%B4%A0.html#%E6%80%9D%E8%B7%AF-1">思路</a></li>
-<li><a href="%E9%93%BE%E8%A1%A8/%E7%A7%BB%E9%99%A4%E9%93%BE%E8%A1%A8%E5%85%83%E7%B4%A0.html#c%E8%A7%A3%E6%B3%95-1">C++解法</a></li>
-<li><a href="%E9%93%BE%E8%A1%A8/%E7%A7%BB%E9%99%A4%E9%93%BE%E8%A1%A8%E5%85%83%E7%B4%A0.html#java%E8%A7%A3%E6%B3%95-1">Java解法</a></li>
-<li><a href="%E9%93%BE%E8%A1%A8/%E7%A7%BB%E9%99%A4%E9%93%BE%E8%A1%A8%E5%85%83%E7%B4%A0.html#python3%E8%A7%A3%E6%B3%95-1">Python3解法</a></li>
-<li><a href="%E9%93%BE%E8%A1%A8/%E7%A7%BB%E9%99%A4%E9%93%BE%E8%A1%A8%E5%85%83%E7%B4%A0.html#go%E8%A7%A3%E6%B3%95-1">Go解法</a></li>
-</ul>
-</li>
-<li><a href="%E9%93%BE%E8%A1%A8/%E7%A7%BB%E9%99%A4%E9%93%BE%E8%A1%A8%E5%85%83%E7%B4%A0.html#876-middle-of-the-linked-list">876. Middle of the Linked List</a>
-<ul>
 <li><a href="%E9%93%BE%E8%A1%A8/%E7%A7%BB%E9%99%A4%E9%93%BE%E8%A1%A8%E5%85%83%E7%B4%A0.html#%E6%80%9D%E8%B7%AF-2">思路</a></li>
 <li><a href="%E9%93%BE%E8%A1%A8/%E7%A7%BB%E9%99%A4%E9%93%BE%E8%A1%A8%E5%85%83%E7%B4%A0.html#c%E8%A7%A3%E6%B3%95-2">C++解法</a></li>
+<li><a href="%E9%93%BE%E8%A1%A8/%E7%A7%BB%E9%99%A4%E9%93%BE%E8%A1%A8%E5%85%83%E7%B4%A0.html#java%E8%A7%A3%E6%B3%95-2">Java解法</a></li>
+<li><a href="%E9%93%BE%E8%A1%A8/%E7%A7%BB%E9%99%A4%E9%93%BE%E8%A1%A8%E5%85%83%E7%B4%A0.html#python3%E8%A7%A3%E6%B3%95-2">Python3解法</a></li>
+<li><a href="%E9%93%BE%E8%A1%A8/%E7%A7%BB%E9%99%A4%E9%93%BE%E8%A1%A8%E5%85%83%E7%B4%A0.html#go%E8%A7%A3%E6%B3%95-1">Go解法</a></li>
 </ul>
 </li>
 <li><a href="%E9%93%BE%E8%A1%A8/%E7%A7%BB%E9%99%A4%E9%93%BE%E8%A1%A8%E5%85%83%E7%B4%A0.html#2095-delete-the-middle-node-of-a-linked-list">2095. Delete the Middle Node of a Linked List</a>
 <ul>
 <li><a href="%E9%93%BE%E8%A1%A8/%E7%A7%BB%E9%99%A4%E9%93%BE%E8%A1%A8%E5%85%83%E7%B4%A0.html#%E6%80%9D%E8%B7%AF-3">思路</a></li>
 <li><a href="%E9%93%BE%E8%A1%A8/%E7%A7%BB%E9%99%A4%E9%93%BE%E8%A1%A8%E5%85%83%E7%B4%A0.html#c%E8%A7%A3%E6%B3%95-3">C++解法</a></li>
-<li><a href="%E9%93%BE%E8%A1%A8/%E7%A7%BB%E9%99%A4%E9%93%BE%E8%A1%A8%E5%85%83%E7%B4%A0.html#java%E8%A7%A3%E6%B3%95-2">Java解法</a></li>
+<li><a href="%E9%93%BE%E8%A1%A8/%E7%A7%BB%E9%99%A4%E9%93%BE%E8%A1%A8%E5%85%83%E7%B4%A0.html#java%E8%A7%A3%E6%B3%95-3">Java解法</a></li>
 <li><a href="%E9%93%BE%E8%A1%A8/%E7%A7%BB%E9%99%A4%E9%93%BE%E8%A1%A8%E5%85%83%E7%B4%A0.html#python%E8%A7%A3%E6%B3%95">Python解法</a></li>
+</ul>
+</li>
+<li><a href="%E9%93%BE%E8%A1%A8/%E7%A7%BB%E9%99%A4%E9%93%BE%E8%A1%A8%E5%85%83%E7%B4%A0.html#2487-remove-nodes-from-linked-list">2487. Remove Nodes From Linked List</a>
+<ul>
+<li><a href="%E9%93%BE%E8%A1%A8/%E7%A7%BB%E9%99%A4%E9%93%BE%E8%A1%A8%E5%85%83%E7%B4%A0.html#%E6%80%9D%E8%B7%AF-4">思路</a>
+<ul>
+<li><a href="%E9%93%BE%E8%A1%A8/%E7%A7%BB%E9%99%A4%E9%93%BE%E8%A1%A8%E5%85%83%E7%B4%A0.html#approach-1-stack">Approach 1: Stack</a></li>
+<li><a href="%E9%93%BE%E8%A1%A8/%E7%A7%BB%E9%99%A4%E9%93%BE%E8%A1%A8%E5%85%83%E7%B4%A0.html#approach-2-recursion">Approach 2: Recursion</a></li>
+<li><a href="%E9%93%BE%E8%A1%A8/%E7%A7%BB%E9%99%A4%E9%93%BE%E8%A1%A8%E5%85%83%E7%B4%A0.html#approach-3-reverse-twice">Approach 3: Reverse Twice</a></li>
+</ul>
+</li>
+<li><a href="%E9%93%BE%E8%A1%A8/%E7%A7%BB%E9%99%A4%E9%93%BE%E8%A1%A8%E5%85%83%E7%B4%A0.html#c%E8%A7%A3%E6%B3%95-4">C++解法</a></li>
+<li><a href="%E9%93%BE%E8%A1%A8/%E7%A7%BB%E9%99%A4%E9%93%BE%E8%A1%A8%E5%85%83%E7%B4%A0.html#java%E8%A7%A3%E6%B3%95-4">Java解法</a></li>
+<li><a href="%E9%93%BE%E8%A1%A8/%E7%A7%BB%E9%99%A4%E9%93%BE%E8%A1%A8%E5%85%83%E7%B4%A0.html#python3%E8%A7%A3%E6%B3%95-3">Python3解法</a></li>
+<li><a href="%E9%93%BE%E8%A1%A8/%E7%A7%BB%E9%99%A4%E9%93%BE%E8%A1%A8%E5%85%83%E7%B4%A0.html#go%E8%A7%A3%E6%B3%95-2">Go解法</a></li>
 </ul>
 </li>
 <li><a href="%E9%93%BE%E8%A1%A8/%E7%A7%BB%E9%99%A4%E9%93%BE%E8%A1%A8%E5%85%83%E7%B4%A0.html#3217-delete-nodes-from-linked-list-present-in-array">3217. Delete Nodes From Linked List Present in Array</a>
 <ul>
-<li><a href="%E9%93%BE%E8%A1%A8/%E7%A7%BB%E9%99%A4%E9%93%BE%E8%A1%A8%E5%85%83%E7%B4%A0.html#%E6%80%9D%E8%B7%AF-4">思路</a></li>
-<li><a href="%E9%93%BE%E8%A1%A8/%E7%A7%BB%E9%99%A4%E9%93%BE%E8%A1%A8%E5%85%83%E7%B4%A0.html#c%E8%A7%A3%E6%B3%95-4">C++解法</a></li>
+<li><a href="%E9%93%BE%E8%A1%A8/%E7%A7%BB%E9%99%A4%E9%93%BE%E8%A1%A8%E5%85%83%E7%B4%A0.html#%E6%80%9D%E8%B7%AF-5">思路</a></li>
+<li><a href="%E9%93%BE%E8%A1%A8/%E7%A7%BB%E9%99%A4%E9%93%BE%E8%A1%A8%E5%85%83%E7%B4%A0.html#c%E8%A7%A3%E6%B3%95-5">C++解法</a></li>
 </ul>
 </li>
 </ul>
-<p>要点：需要处理头节点时，使用虚拟头节点。</p>
+<p>要点：需要处理头节点时，使用虚拟头节点。如果要删除<code>slow-&gt;next</code>，则<code>slow</code>指针要慢一步。</p>
+<h1 id="19-remove-nth-node-from-end-of-list"><a class="header" href="#19-remove-nth-node-from-end-of-list"><a href="https://leetcode.com/problems/remove-nth-node-from-end-of-list/">19. Remove Nth Node From End of List</a></a></h1>
+<p>Given the <code>head</code> of a linked list, remove the <code>nth</code> node from the end of the list and return its head.</p>
+<p><strong>Example 1:</strong></p>
+<p><img src="https://assets.leetcode.com/uploads/2020/10/03/remove_ex1.jpg" alt="" /></p>
+<p><strong>Input:</strong> <code>head = [1,2,3,4,5], n = 2</code><br />
+<strong>Output:</strong> <code>[1,2,3,5]</code></p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> <code>head = [1], n = 1</code><br />
+<strong>Output:</strong> <code>[]</code></p>
+<p><strong>Example 3:</strong></p>
+<p><strong>Input:</strong> <code>head = [1,2], n = 1</code><br />
+<strong>Output:</strong> <code>[1]</code></p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li>The number of nodes in the list is <code>sz</code>.</li>
+<li><code>1 &lt;= sz &lt;= 30</code></li>
+<li><code>0 &lt;= Node.val &lt;= 100</code></li>
+<li><code>1 &lt;= n &lt;= sz</code></li>
+</ul>
+<p><strong>Follow up:</strong> Could you do this in one pass?</p>
+<h2 id="思路-18"><a class="header" href="#思路-18">思路</a></h2>
+<p>快慢指针求解，因为要删除<code>slow-&gt;next</code>，所以<code>slow</code>指针要慢一步。</p>
+<p>Maintain two pointers and update one with a delay of n steps.</p>
+<p>Complexity</p>
+<ul>
+<li>Time complexity: O(n)</li>
+<li>Space complexity: O(1)</li>
+</ul>
+<h2 id="c解法-8"><a class="header" href="#c解法-8">C++解法</a></h2>
+<pre><code class="language-cpp">/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* removeNthFromEnd(ListNode* head, int n) {
+        ListNode* dummyHead = new ListNode(0);
+        dummyHead-&gt;next = head;
+        ListNode* slow = dummyHead;
+        ListNode* fast = head;
+        for(int i = 0; i &lt; n; i++){
+            fast = fast-&gt;next;
+        }
+        while(fast != NULL){
+            fast = fast-&gt;next;
+            slow = slow-&gt;next;
+        }
+        slow-&gt;next = slow-&gt;next-&gt;next;
+        return dummyHead-&gt;next;    
+    }
+};
+</code></pre>
+<h2 id="java解法-6"><a class="header" href="#java解法-6">Java解法</a></h2>
+<pre><code class="language-java">class Solution {
+    public ListNode removeNthFromEnd(ListNode head, int n) {
+        ListNode fast = head, slow = head;
+        for (int i = 0; i &lt; n; i++) fast = fast.next;
+        if (fast == null) return head.next;
+        while (fast.next != null) {
+            fast = fast.next;
+            slow = slow.next;
+        }
+        slow.next = slow.next.next;
+        return head;
+    }
+}
+</code></pre>
+<h2 id="python3解法-5"><a class="header" href="#python3解法-5">Python3解法</a></h2>
+<pre><code class="language-python">class Solution:
+    def removeNthFromEnd(self, head: ListNode, n: int) -&gt; ListNode:
+        fast, slow = head, head
+        for _ in range(n): fast = fast.next
+        if not fast: return head.next
+        while fast.next: fast, slow = fast.next, slow.next
+        slow.next = slow.next.next
+        return head
+</code></pre>
 <h1 id="203-remove-linked-list-elements"><a class="header" href="#203-remove-linked-list-elements"><a href="https://leetcode.com/problems/remove-linked-list-elements/">203. Remove Linked List Elements</a></a></h1>
 <h2 id="description-1"><a class="header" href="#description-1">Description</a></h2>
 <p>Given the <code>head</code> of a linked list and an integer <code>val</code>, remove all the nodes of the linked list that has <code>Node.val == val</code>, and return <em>the new head</em>.</p>
@@ -2434,13 +2595,13 @@ private:
 <li><code>1 &lt;= Node.val &lt;= 50</code></li>
 <li><code>0 &lt;= val &lt;= 50</code></li>
 </ul>
-<h2 id="思路-17"><a class="header" href="#思路-17">思路</a></h2>
+<h2 id="思路-19"><a class="header" href="#思路-19">思路</a></h2>
 <ol>
 <li>单独处理头节点</li>
 <li>使用虚拟头节点</li>
 </ol>
 <p>推荐使用虚拟头节点。</p>
-<h2 id="c解法-7"><a class="header" href="#c解法-7">C++解法</a></h2>
+<h2 id="c解法-9"><a class="header" href="#c解法-9">C++解法</a></h2>
 <pre><code class="language-cpp">/**
  * Definition for singly-linked list.
  * struct ListNode {
@@ -2470,7 +2631,7 @@ public:
     }
 };
 </code></pre>
-<h2 id="java解法-6"><a class="header" href="#java解法-6">Java解法</a></h2>
+<h2 id="java解法-7"><a class="header" href="#java解法-7">Java解法</a></h2>
 <pre><code class="language-java">/**
  * Definition for singly-linked list.
  * public class ListNode {
@@ -2497,7 +2658,7 @@ class Solution {
     }
 }
 </code></pre>
-<h2 id="python3解法-5"><a class="header" href="#python3解法-5">Python3解法</a></h2>
+<h2 id="python3解法-6"><a class="header" href="#python3解法-6">Python3解法</a></h2>
 <pre><code class="language-python"># Definition for singly-linked list.
 # class ListNode:
 #     def __init__(self, val=0, next=None):
@@ -2575,7 +2736,7 @@ func removeElements(head *ListNode, val int) *ListNode {
 <li>The value of each node in the list is <strong>unique</strong>.</li>
 <li>The <code>node</code> to be deleted is <strong>in the list</strong> and is <strong>not a tail</strong> node.</li>
 </ul>
-<h2 id="思路-18"><a class="header" href="#思路-18">思路</a></h2>
+<h2 id="思路-20"><a class="header" href="#思路-20">思路</a></h2>
 <p>Approach: Data Overwriting</p>
 <p><strong>Note:</strong> This method will not work if we need to delete the last node of the linked list since there is no immediate successor. However, the problem description explicitly states that the node to be deleted is not the tail node in the list.</p>
 <p>Algorithm</p>
@@ -2599,7 +2760,7 @@ func removeElements(head *ListNode, val int) *ListNode {
 </ul>
 </li>
 </ul>
-<h2 id="c解法-8"><a class="header" href="#c解法-8">C++解法</a></h2>
+<h2 id="c解法-10"><a class="header" href="#c解法-10">C++解法</a></h2>
 <pre><code class="language-cpp">/**
  * Definition for singly-linked list.  //单链表的定义
  * struct ListNode {
@@ -2618,7 +2779,7 @@ public:
     }
 };
 </code></pre>
-<h2 id="java解法-7"><a class="header" href="#java解法-7">Java解法</a></h2>
+<h2 id="java解法-8"><a class="header" href="#java解法-8">Java解法</a></h2>
 <pre><code class="language-java">/**
  * Definition for singly-linked list.
  * public class ListNode {
@@ -2637,7 +2798,7 @@ class Solution {
     }
 }
 </code></pre>
-<h2 id="python3解法-6"><a class="header" href="#python3解法-6">Python3解法</a></h2>
+<h2 id="python3解法-7"><a class="header" href="#python3解法-7">Python3解法</a></h2>
 <pre><code class="language-python"># Definition for singly-linked list.
 # class ListNode:
 #     def __init__(self, x):
@@ -2657,55 +2818,6 @@ class Solution:
         
 </code></pre>
 <h2 id="go解法-6"><a class="header" href="#go解法-6">Go解法</a></h2>
-<h1 id="876-middle-of-the-linked-list"><a class="header" href="#876-middle-of-the-linked-list"><a href="https://leetcode.com/problems/middle-of-the-linked-list/">876. Middle of the Linked List</a></a></h1>
-<p>Given the <code>head</code> of a singly linked list, return <em>the middle node of the linked list</em>.</p>
-<p>If there are two middle nodes, return <strong>the second middle</strong> node.</p>
-<p><strong>Example 1:</strong></p>
-<p><img src="https://assets.leetcode.com/uploads/2021/07/23/lc-midlist1.jpg" alt="" /></p>
-<p><strong>Input:</strong> <code>head = [1,2,3,4,5]</code><br />
-<strong>Output:</strong> <code>[3,4,5]</code><br />
-<strong>Explanation:</strong> The middle node of the list is node 3.</p>
-<p><strong>Example 2:</strong></p>
-<p><img src="https://assets.leetcode.com/uploads/2021/07/23/lc-midlist2.jpg" alt="" /></p>
-<p><strong>Input:</strong> <code>head = [1,2,3,4,5,6]</code><br />
-<strong>Output:</strong> <code>[4,5,6]</code><br />
-<strong>Explanation:</strong> Since the list has two middle nodes with values 3 and 4, we return the second one.</p>
-<p><strong>Constraints:</strong></p>
-<ul>
-<li>The number of nodes in the list is in the range <code>[1, 100]</code>.</li>
-<li><code>1 &lt;= Node.val &lt;= 100</code></li>
-</ul>
-<h2 id="思路-19"><a class="header" href="#思路-19">思路</a></h2>
-<p>双指针，快慢指针</p>
-<h2 id="c解法-9"><a class="header" href="#c解法-9">C++解法</a></h2>
-<pre><code class="language-cpp">/**
- * Definition for singly-linked list.
- * struct ListNode {
- *     int val;
- *     ListNode *next;
- *     ListNode() : val(0), next(nullptr) {}
- *     ListNode(int x) : val(x), next(nullptr) {}
- *     ListNode(int x, ListNode *next) : val(x), next(next) {}
- * };
- */
-class Solution {
-public:
-    ListNode* middleNode(ListNode* head) {
-        if(head == NULL){
-            return NULL;
-        }
-        ListNode* dummyHead = new ListNode(0);
-        dummyHead-&gt;next = head;
-        ListNode* slow = dummyHead;
-        ListNode* fast = head;
-        while(fast != NULL &amp;&amp; fast-&gt;next != NULL){
-            fast = fast-&gt;next-&gt;next;
-            slow = slow-&gt;next;
-        }
-        return slow-&gt;next;
-    }
-};
-</code></pre>
 <h1 id="2095-delete-the-middle-node-of-a-linked-list"><a class="header" href="#2095-delete-the-middle-node-of-a-linked-list"><a href="https://leetcode.com/problems/delete-the-middle-node-of-a-linked-list/">2095. Delete the Middle Node of a Linked List</a></a></h1>
 <p>You are given the <code>head</code> of a linked list. <strong>Delete</strong> the <strong>middle node</strong>, and return <em>the</em> <code>head</code> <em>of the modified linked list</em>.</p>
 <p>The <strong>middle node</strong> of a linked list of size <code>n</code> is the <code>⌊n / 2⌋th</code> node from the <strong>start</strong> using <strong>0-based indexing</strong>, where <code>⌊x⌋</code> denotes the largest integer less than or equal to <code>x</code>.</p>
@@ -2740,14 +2852,14 @@ Node 0 with value 2 is the only node remaining after removing node 1.</p>
 <li>The number of nodes in the list is in the range <code>[1, 10^5]</code>.</li>
 <li><code>1 &lt;= Node.val &lt;= 10^5</code></li>
 </ul>
-<h2 id="思路-20"><a class="header" href="#思路-20">思路</a></h2>
+<h2 id="思路-21"><a class="header" href="#思路-21">思路</a></h2>
 <p>普通解法：求长度的一半然后遍历到这里并删除该节点，需要考虑只有一个节点的情况</p>
 <p>双指针解法：快指针比慢指针的速度快一倍，快指针到头说明慢指针到达了一半的位置，跳过该节点即可。Complexity 👈</p>
 <ul>
 <li>Time complexity: O(n)</li>
 <li>Space complexity: O(1)</li>
 </ul>
-<h2 id="c解法-10"><a class="header" href="#c解法-10">C++解法</a></h2>
+<h2 id="c解法-11"><a class="header" href="#c解法-11">C++解法</a></h2>
 <p>双指针解法：</p>
 <pre><code class="language-cpp">/**
  * Definition for singly-linked list.
@@ -2815,7 +2927,7 @@ public:
     }
 };
 </code></pre>
-<h2 id="java解法-8"><a class="header" href="#java解法-8">Java解法</a></h2>
+<h2 id="java解法-9"><a class="header" href="#java解法-9">Java解法</a></h2>
 <pre><code class="language-java">/**
  * Definition for singly-linked list.
  * public class ListNode {
@@ -2866,6 +2978,443 @@ class Solution(object):
         slow.next = slow.next.next
         return prev.next
 </code></pre>
+<h1 id="2487-remove-nodes-from-linked-list"><a class="header" href="#2487-remove-nodes-from-linked-list"><a href="https://leetcode.com/problems/remove-nodes-from-linked-list/">2487. Remove Nodes From Linked List</a></a></h1>
+<p>You are given the <code>head</code> of a linked list.</p>
+<p>Remove every node which has a node with a greater value anywhere to the right side of it.</p>
+<p>Return <em>the</em> <code>head</code> <em>of the modified linked list.</em></p>
+<p><strong>Example 1:</strong></p>
+<p><img src="https://assets.leetcode.com/uploads/2022/10/02/drawio.png" alt="" /></p>
+<p><strong>Input:</strong> <code>head = [5,2,13,3,8]</code><br />
+<strong>Output:</strong> <code>[13,8]</code><br />
+<strong>Explanation:</strong> The nodes that should be removed are 5, 2 and 3.</p>
+<ul>
+<li>Node 13 is to the right of node 5.</li>
+<li>Node 13 is to the right of node 2.</li>
+<li>Node 8 is to the right of node 3.</li>
+</ul>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> <code>head = [1,1,1,1]</code><br />
+<strong>Output:</strong> <code>[1,1,1,1]</code><br />
+<strong>Explanation:</strong> Every node has value 1, so no nodes are removed.</p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li>The number of the nodes in the given list is in the range <code>[1, 10^5]</code>.</li>
+<li><code>1 &lt;= Node.val &lt;= 10^5</code></li>
+</ul>
+<h2 id="思路-22"><a class="header" href="#思路-22">思路</a></h2>
+<p><a href="https://leetcode.com/problems/remove-nodes-from-linked-list/solutions/5073124/remove-nodes-from-linked-list/">题解链接</a></p>
+<p>Iterate on nodes in reversed order.</p>
+<p>When iterating in reversed order, save the maximum value that was passed before.</p>
+<p>Overview</p>
+<p>Given the head of a linked list, the task is to remove every node that has a node with a greater value anywhere on its right side. This means that after processing the linked list, every node will only have nodes with smaller values to their right, or the linked list should be in decreasing order.</p>
+<p><strong>Key Observations</strong></p>
+<ol>
+<li>The nodes in the linked list have positive values.</li>
+<li>There may be duplicate values.</li>
+<li>We manipulate the list by deleting values, not by sorting it.</li>
+</ol>
+<hr />
+<h3 id="approach-1-stack"><a class="header" href="#approach-1-stack">Approach 1: Stack</a></h3>
+<p>Intuition</p>
+<p>A challenge associated with this problem is that, for a given node, we need to not only delete the node directly to the right if it has a larger value but also delete all other nodes to the right that have larger values. The brute force approach involves iterating through the linked list using nested loops, comparing the value of each node with the nodes that follow it, and deleting any nodes whose values are smaller than the following nodes. However, this approach is inefficient, with a quadratic time complexity.</p>
+<p>The resultant linked list should be in decreasing order. We can leverage this fact to develop a more efficient solution.</p>
+<p>A list in decreasing order, if reversed, is in increasing order.</p>
+<p>If we reverse the list, the node values should be in increasing order after deleting nodes. We can delete any nodes whose values are smaller than the nodes before them. This strategy ensures efficient deletion of all nodes that have nodes with a greater value to their right (in the original order) without using nested loops.</p>
+<p>The list we are given is a singly linked list, so we can't easily traverse it in reverse from tail to head.</p>
+<p>Whenever a problem requires reversing a sequence, it is worth considering using a stack.</p>
+<p>Stacks are a First-In-Last-Out (FILO) data structure, meaning that the first items added to the stack are the last ones removed. Consequently, if you push a sequence of items into a stack and then remove them, the sequence will be reversed. Learn more about stacks by reading our <a href="https://leetcode.com/explore/learn/card/queue-stack/230/usage-stack/">Stack Explore Card</a>.</p>
+<p>We start by adding all of the nodes to a stack.</p>
+<p>Next, we create a new linked list to store the result. We keep track of the maximum node value encountered so far using the variable <code>maximum</code>.</p>
+<p>Then, we pop each node from the stack. If the node's value is not smaller than the <code>maximum</code>, we create a new node with that value and add it to the <code>resultList</code>. Since the linked list is reversed, we build the <code>resultList</code> from back to front, continuously adding new nodes to the beginning.</p>
+<p>Algorithm</p>
+<ol>
+<li>Initialize an empty <code>stack</code> to be used for reversing the nodes.</li>
+<li>Set a pointer <code>current</code> to <code>head</code>.</li>
+<li>While <code>current</code> is not <code>Null</code>:
+<ul>
+<li>Add <code>current</code> to the <code>stack</code>.</li>
+<li>Set <code>current</code> to <code>current.next</code>.</li>
+</ul>
+</li>
+<li>Pop the node from the top of the <code>stack</code> and set <code>current</code> to that node.</li>
+<li>Initialize a variable <code>maximum</code> to <code>current.val</code>.</li>
+<li>Create a new ListNode <code>resultList</code> with <code>maximum</code> as its value.</li>
+<li>While the <code>stack</code> is not empty:
+<ul>
+<li>Pop the node from the top of the <code>stack</code> and set <code>current</code> to that node.</li>
+<li>If <code>current.val</code> &lt; <code>maximum</code>:
+<ul>
+<li>Continue; this node does not need to be added to the <code>resultList</code>.</li>
+</ul>
+</li>
+<li>Otherwise, add a new node to the front of the <code>resultList</code>:
+<ul>
+<li>Create a new ListNode <code>newNode</code> with <code>current.val</code> as its value.</li>
+<li>Set <code>newNode.next</code> to <code>resultList</code>.</li>
+<li>Set <code>resultList</code> to <code>newNode</code>.</li>
+<li>Update <code>maximum</code> to <code>current.val</code>.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Return <code>resultList</code>.</li>
+</ol>
+<p>Complexity Analysis</p>
+<p>Let n be the length of the original linked list.</p>
+<ul>
+<li>
+<p>Time complexity: O(n)</p>
+<p>Adding the nodes from the original linked list to the stack takes O(n).</p>
+<p>Removing nodes from the stack and adding them to the result takes O(n), as each node is popped from the stack exactly once.</p>
+<p>Therefore, the time complexity is O(2n), which simplifies to O(n).</p>
+</li>
+<li>
+<p>Space complexity: O(n)</p>
+<p>We add each of the nodes from the original linked list to the <code>stack</code>, making its size n.</p>
+<p>We only use <code>resultList</code> to store the result, so it does not contribute to the space complexity.</p>
+<p>Therefore, the space complexity is O(n).</p>
+</li>
+</ul>
+<hr />
+<h3 id="approach-2-recursion"><a class="header" href="#approach-2-recursion">Approach 2: Recursion</a></h3>
+<p>Intuition</p>
+<p>The nodes we retain in the linked list must meet the following criteria: Each node's value is not smaller than the values of the following nodes.</p>
+<p>Linked lists are often manipulated using recursion. This problem is an excellent candidate for recursion because it can be broken down into subproblems that collectively solve the main problem.</p>
+<p>Consider a node B situated in the middle of the linked list, where all subsequent nodes have values less than or equal to B's value. If node B satisfies this criterion, its value is not smaller than the values of the following nodes. For the node A directly preceding B, if A is not smaller than B, then A is also not smaller than any nodes following B. This holds due to the transitive property: if a≥b and b≥c, then a≥c.</p>
+<p>This means that if we've solved the subproblem for nodes to the right of a given node in the linked list, we can efficiently solve the problem for that node.</p>
+<p>Let`s begin by discussing the base cases:</p>
+<ol>
+<li>
+<p>The linked list is empty:</p>
+<ul>
+<li>An empty list meets the criteria, so we return the <code>head</code>.</li>
+</ul>
+</li>
+<li>
+<p>The linked list has only one node:</p>
+<ul>
+<li>A list with one node also meets the criteria, because there are no following nodes. Again, we return the <code>head</code>.</li>
+</ul>
+</li>
+</ol>
+<p>We can develop a strategy for handling longer lists by thinking about handling a linked list with two nodes.</p>
+<p>For a linked list with two nodes, there are two cases for the <code>head</code> node:</p>
+<ol>
+<li>
+<p>The <code>head</code> node's value is the same size or larger than the next node's value.</p>
+<ul>
+<li>This linked list meets the criteria. Return the list.</li>
+</ul>
+</li>
+<li>
+<p>The <code>head</code> node's value is smaller than the next node's value.</p>
+<ul>
+<li>We need to delete <code>head</code>. Return the next node.</li>
+</ul>
+</li>
+</ol>
+<p>For linked lists with more than two nodes, the main adjustment we need to make is to check the rest of the linked list.</p>
+<p>The challenge we face is ensuring that <code>head.next</code> is set to the correct next node. Does the next node also need to be deleted? Are there other nodes later in the linked list that have values that are greater than <code>head</code>?</p>
+<p>Instead of simply setting <code>head</code> to <code>head.next</code> to progress to the next node, we recursively call <code>removeNodes(head.next)</code>. This recursive function removes nodes with greater values anywhere to the right. This ensures that <code>head</code> is set to the correct node and that the rest of the linked list also meets the criteria.</p>
+<p>Algorithm</p>
+<ol>
+<li>Base Case: If <code>head</code> or <code>head.next</code> is <code>Null</code>, return <code>head</code>.</li>
+<li>Recursive Call: Set <code>nextNode</code> to <code>removeNodes(head.next)</code>.</li>
+<li>Comparison: If <code>head.val</code> is less than <code>nextNode.val</code>, we need to remove <code>head</code>. Return <code>nextNode</code>.</li>
+<li>Otherwise, set <code>head</code> to <code>head.next</code> and then return <code>head</code>.</li>
+</ol>
+<p>Complexity Analysis</p>
+<p>Let n be the length of the original linked list.</p>
+<ul>
+<li>
+<p>Time complexity: O(n)</p>
+<p>We call <code>removeNodes()</code> once for each node in the original linked list. The other operations inside the function all take constant time, so the time complexity is dominated by the recursive calls. Thus, the time complexity is O(n).</p>
+</li>
+<li>
+<p>Space complexity: O(n)</p>
+<p>Since we make n recursive calls to <code>removeNodes()</code>, the call stack can grow up to size n. Therefore, the space complexity is O(n).</p>
+</li>
+</ul>
+<hr />
+<h3 id="approach-3-reverse-twice"><a class="header" href="#approach-3-reverse-twice">Approach 3: Reverse Twice</a></h3>
+<p>Intuition</p>
+<p>The first approach used a stack to reverse the linked list, resulting in linear auxiliary space. However, instead of using a stack, we can write a function to reverse the nodes in place, avoiding the need for auxiliary space. This task is explored in the problem <a href="https://leetcode.com/problems/reverse-linked-list/description/">Reverse Linked List</a>. The basic idea is to set each node's next field to point to the previous node.</p>
+<p>After reversing the linked list, the node values will be in increasing order, allowing us to delete any nodes whose values are smaller than the nodes preceding them.</p>
+<p>To facilitate this process, we maintain the maximum node value found so far using the variable <code>maximum</code>.</p>
+<p>We traverse each node, <code>current</code>, in the reversed linked list and update the <code>maximum</code> value accordingly. If the value of the <code>current</code> node is smaller than the <code>maximum</code>, we delete <code>current</code>. Deleting nodes in place requires us to track the previous node so that we can correctly link it to the next node if we delete the <code>current</code> node.</p>
+<p>Once we have traversed the linked list to delete the nodes, we have a linked list that is in increasing order.</p>
+<p>However, since the desired result should be in decreasing order, we reverse the modified linked list and then return it.</p>
+<blockquote>
+<p><strong>Interview Tip: In-place Algorithms</strong></p>
+<p>This approach modifies the input. In-place algorithms overwrite the input to save space, but sometimes this can cause problems.</p>
+<p>Here are a couple of situations where an in-place algorithm might not be suitable.</p>
+<ol>
+<li>
+<p>The algorithm needs to run in a multi-threaded environment, without exclusive access to the array. Other threads might need to read the array too, and might not expect it to be modified.</p>
+</li>
+<li>
+<p>Even if there is only a single thread, or the algorithm has exclusive access to the array while running, the array might need to be reused later or by another thread once the lock has been released.</p>
+</li>
+</ol>
+<p>In an interview, you should always check whether the interviewer minds you overwriting the input. Be ready to explain the pros and cons of doing so if asked!</p>
+</blockquote>
+<p>Algorithm</p>
+<ol>
+<li>Define a function <code>reverseList</code> that takes the head of a linked list as input and reverses it, returning the new head.
+<ul>
+<li>Initialize three pointers, <code>prev</code> to <code>null</code>, <code>current</code> to <code>head</code>, and <code>nextTemp</code> to <code>null</code>.</li>
+<li>While <code>current</code> is not <code>null</code>:
+<ul>
+<li>Set <code>nextTemp</code> to <code>current.next</code>.</li>
+<li>Reverse the order of the nodes by setting <code>current.next</code> to <code>prev</code>.</li>
+<li>Progress both pointers by setting <code>prev</code> to <code>current</code> and <code>current</code> to <code>nextTemp</code>.</li>
+</ul>
+</li>
+<li>Return <code>prev</code>.</li>
+</ul>
+</li>
+<li>Reverse the original linked list using <code>reverseList(head)</code>. Set <code>head</code> to the reversed linked list.</li>
+<li>Initialize a variable <code>maximum</code> to <code>0</code>.</li>
+<li>Initialize two pointers, <code>prev</code> to <code>null</code> and <code>current</code> to <code>head</code>.</li>
+<li>Delete the nodes that are smaller than the node before them. While <code>current</code> is not <code>null</code>:
+<ul>
+<li>Update <code>maximum</code> to the max between <code>maximum</code> and <code>current.val</code>.</li>
+<li>If <code>current.val</code> is less than <code>maximum</code>, delete <code>current</code>.
+<ul>
+<li>Skip the current node by setting <code>prev.next</code> to <code>current.next</code>.</li>
+<li>Set a pointer <code>deleted</code> to <code>current</code>.</li>
+<li>Move <code>current</code> to <code>current.next</code> to progress to the next node.</li>
+<li>Set <code>deleted.next</code> to <code>null</code> to remove any additional pointers to the new <code>current</code> node.</li>
+</ul>
+</li>
+<li>Otherwise, if <code>current.val</code> is not less than <code>maximum</code>, retain <code>current</code> and progress both pointers by setting <code>prev</code> to <code>current</code> and <code>current</code> to <code>current.next</code>.</li>
+</ul>
+</li>
+<li>Reverse and return the modified linked list using <code>reverseList(head)</code>.</li>
+</ol>
+<p>Complexity Analysis</p>
+<p>Let n be the length of the original linked list.</p>
+<ul>
+<li>
+<p>Time complexity: O(n)</p>
+<p>Reversing the original linked list takes O(n).</p>
+<p>Traversing the reversed original linked list and removing nodes takes O(n).</p>
+<p>Reversing the modified linked list takes an additional O(n) time.</p>
+<p>Therefore, the total time complexity is O(3n), which simplifies to O(n).</p>
+</li>
+<li>
+<p>Space complexity: O(1)</p>
+<p>We use a few variables and pointers that use constant extra space. Since we don't use any data structures that grow with input size, the space complexity remains O(1).</p>
+</li>
+</ul>
+<h2 id="c解法-12"><a class="header" href="#c解法-12">C++解法</a></h2>
+<p>Approach 3: Reverse Twice</p>
+<pre><code class="language-cpp">class Solution {
+private:
+    ListNode* reverseList(ListNode* head) {
+        ListNode* prev = nullptr;
+        ListNode* current = head;
+        ListNode* nextTemp = nullptr;
+
+        // Set each node's next pointer to the previous node
+        while (current != nullptr) {
+            nextTemp = current-&gt;next;
+            current-&gt;next = prev;
+            prev = current;
+            current = nextTemp;
+        }
+        
+        return prev;
+    }
+public:
+    ListNode* removeNodes(ListNode* head) {
+        // Reverse the original linked list
+        head = reverseList(head);
+
+        int maximum = 0;
+        ListNode* prev = nullptr;
+        ListNode* current = head;
+
+        // Traverse the list deleting nodes
+        while (current != nullptr) {
+            maximum = max(maximum, current-&gt;val);
+
+            // Delete nodes that are smaller than maximum
+            if (current-&gt;val &lt; maximum) {
+                // Delete current by skipping
+                prev-&gt;next = current-&gt;next;
+                ListNode* deleted = current;
+                current = current-&gt;next;
+                deleted-&gt;next = nullptr;
+            }
+
+            // Current does not need to be deleted
+            else {
+                prev = current;
+                current = current-&gt;next;
+            }
+        }
+        
+        // Reverse and return the modified linked list
+        return reverseList(head);
+    }
+};
+</code></pre>
+<p>Approach 2: Recursion</p>
+<pre><code class="language-cpp">/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* removeNodes(ListNode* head) {
+        // Base case, reached end of the list
+        if (head == nullptr || head-&gt;next == nullptr) {
+            return head;
+        }
+
+        // Recursive call
+        ListNode* nextNode = removeNodes(head-&gt;next);
+
+        // If the next node has greater value than head delete the head
+        // Return next node, which removes the current head and makes next the new head
+        if (head-&gt;val &lt; nextNode-&gt;val) {
+            return nextNode;
+        }
+
+        // Keep the head
+        head-&gt;next = nextNode;
+        return head;
+    }
+};
+</code></pre>
+<p>Approach 1: Stack</p>
+<pre><code class="language-cpp">/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* removeNodes(ListNode* head) {
+        stack&lt;ListNode*&gt; stack;
+        ListNode* current = head;
+
+        // Add nodes to the stack
+        while (current != nullptr) {
+            stack.push(current);
+            current = current-&gt;next;
+        }
+
+        current = stack.top();
+        stack.pop();
+        int maximum = current-&gt;val;
+        ListNode* resultList = new ListNode(maximum);
+
+        // Remove nodes from the stack and add to result
+        while (!stack.empty()) {
+            current = stack.top();
+            stack.pop();
+            // Current should not be added to the result
+            if (current-&gt;val &lt; maximum) {
+                continue;
+            }
+            // Add new node with current's value to front of the result
+            else {
+                ListNode* newNode = new ListNode(current-&gt;val);
+                newNode-&gt;next = resultList;
+                resultList = newNode;
+                maximum = current-&gt;val;
+            }
+        }
+
+        return resultList;
+    }
+};
+</code></pre>
+<h2 id="java解法-10"><a class="header" href="#java解法-10">Java解法</a></h2>
+<p>Approach 2: Recursion</p>
+<pre><code class="language-java">/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+ class Solution {   
+    public ListNode removeNodes(ListNode head) {
+        // Base case, reached end of the list
+        if (head == null || head.next == null) {
+            return head;
+        }
+
+        // Recursive call
+        ListNode nextNode = removeNodes(head.next);
+
+        // If the next node has greater value than head, delete the head
+        // Return next node, which removes the current head and makes next the new head
+        if (head.val &lt; nextNode.val) {
+            return nextNode;
+        }
+
+        // Keep the head
+        head.next = nextNode;
+        return head;
+    }
+}
+</code></pre>
+<h2 id="python3解法-8"><a class="header" href="#python3解法-8">Python3解法</a></h2>
+<p>Approach 1: Stack</p>
+<pre><code class="language-python"># Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution:
+    def removeNodes(self, head: Optional[ListNode]) -&gt; Optional[ListNode]:
+        stack = []
+        current = head
+
+        # Add nodes to the stack
+        while current:
+            stack.append(current)
+            current = current.next
+
+        current = stack.pop()
+        maximum = current.val
+        result_list = ListNode(maximum)
+
+        # Remove nodes from the stack and add to result
+        while stack:
+            current = stack.pop()
+            # Current should not be added to the result
+            if current.val &lt; maximum:
+                continue
+            # Add new node with current's value to front of the result
+            else:
+                new_node = ListNode(current.val)
+                new_node.next = result_list
+                result_list = new_node
+                maximum = current.val
+
+        return result_list
+        
+</code></pre>
+<h2 id="go解法-7"><a class="header" href="#go解法-7">Go解法</a></h2>
 <h1 id="3217-delete-nodes-from-linked-list-present-in-array"><a class="header" href="#3217-delete-nodes-from-linked-list-present-in-array"><a href="https://leetcode.com/problems/delete-nodes-from-linked-list-present-in-array/">3217. Delete Nodes From Linked List Present in Array</a></a></h1>
 <p>You are given an array of integers <code>nums</code> and the <code>head</code> of a linked list. Return the <code>head</code> of the modified linked list after <strong>removing</strong> all nodes from the linked list that have a value that exists in <code>nums</code>.</p>
 <p><strong>Example 1:</strong></p>
@@ -2895,11 +3444,11 @@ class Solution(object):
 <li><code>1 &lt;= Node.val &lt;= 10^5</code></li>
 <li>The input is generated such that there is at least one node in the linked list that has a value not present in <code>nums</code>.</li>
 </ul>
-<h2 id="思路-21"><a class="header" href="#思路-21">思路</a></h2>
+<h2 id="思路-23"><a class="header" href="#思路-23">思路</a></h2>
 <p>方法一：迭代处理数组中的元素，然后调用<code>removeElements()</code>函数，这种方法会超时。</p>
 <p>方法二：哈希数组，遍历一遍链表</p>
-<p>不要删除指针，否则容易出现悬挂指针问题，具体报错信息为<code># ERROR: AddressSanitizer: heap-use-after-free on address</code></p>
-<h2 id="c解法-11"><a class="header" href="#c解法-11">C++解法</a></h2>
+<p>不要删除指针，否则容易出现悬挂指针问题，具体报错信息为<code>ERROR: AddressSanitizer: heap-use-after-free on address</code></p>
+<h2 id="c解法-13"><a class="header" href="#c解法-13">C++解法</a></h2>
 <pre><code class="language-cpp">/**
  * Definition for singly-linked list.
  * struct ListNode {
@@ -2984,7 +3533,7 @@ public:
 <li><code>-5000 &lt;= Node.val &lt;= 5000</code></li>
 </ul>
 <p><strong>Follow up:</strong> A linked list can be reversed either iteratively or recursively. Could you implement both?</p>
-<h2 id="思路-22"><a class="header" href="#思路-22">思路</a></h2>
+<h2 id="思路-24"><a class="header" href="#思路-24">思路</a></h2>
 <p>双指针</p>
 <p>迭代</p>
 <p>递归</p>
@@ -3089,7 +3638,7 @@ Output: [5]</p>
 <li>1 &lt;= left &lt;= right &lt;= n</li>
 </ul>
 <p>Follow up: Could you do it in one pass?</p>
-<h2 id="思路-23"><a class="header" href="#思路-23">思路</a></h2>
+<h2 id="思路-25"><a class="header" href="#思路-25">思路</a></h2>
 <p>链表的操作问题，一般而言面试（机试）的时候不允许我们修改节点的值，而只能修改节点的指向操作。</p>
 <p>思路通常都不难，写对链表问题的技巧是：一定要先想清楚思路，并且必要的时候在草稿纸上画图，理清「穿针引线」的先后步骤，然后再编码。</p>
 <h3 id="方法一穿针引线"><a class="header" href="#方法一穿针引线">方法一：穿针引线</a></h3>
@@ -3255,6 +3804,388 @@ class Solution {
 </code></pre>
 <h2 id="python3-解法-3"><a class="header" href="#python3-解法-3">Python3 解法</a></h2>
 <div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
+<h1 id="环形链表"><a class="header" href="#环形链表">环形链表</a></h1>
+<ul>
+<li><a href="%E9%93%BE%E8%A1%A8/%E7%8E%AF%E5%BD%A2%E9%93%BE%E8%A1%A8.html#141-linked-list-cycle">141. Linked List Cycle</a>
+<ul>
+<li><a href="%E9%93%BE%E8%A1%A8/%E7%8E%AF%E5%BD%A2%E9%93%BE%E8%A1%A8.html#%E6%80%9D%E8%B7%AF">思路</a></li>
+<li><a href="%E9%93%BE%E8%A1%A8/%E7%8E%AF%E5%BD%A2%E9%93%BE%E8%A1%A8.html#c%E8%A7%A3%E6%B3%95">C++解法</a></li>
+</ul>
+</li>
+<li><a href="%E9%93%BE%E8%A1%A8/%E7%8E%AF%E5%BD%A2%E9%93%BE%E8%A1%A8.html#142-linked-list-cycle-ii">142. Linked List Cycle II</a>
+<ul>
+<li><a href="%E9%93%BE%E8%A1%A8/%E7%8E%AF%E5%BD%A2%E9%93%BE%E8%A1%A8.html#%E6%80%9D%E8%B7%AF-1">思路</a></li>
+<li><a href="%E9%93%BE%E8%A1%A8/%E7%8E%AF%E5%BD%A2%E9%93%BE%E8%A1%A8.html#c%E8%A7%A3%E6%B3%95-1">C++解法</a></li>
+<li><a href="%E9%93%BE%E8%A1%A8/%E7%8E%AF%E5%BD%A2%E9%93%BE%E8%A1%A8.html#java%E8%A7%A3%E6%B3%95">Java解法</a></li>
+<li><a href="%E9%93%BE%E8%A1%A8/%E7%8E%AF%E5%BD%A2%E9%93%BE%E8%A1%A8.html#python%E8%A7%A3%E6%B3%95">Python解法</a></li>
+</ul>
+</li>
+</ul>
+<h1 id="141-linked-list-cycle"><a class="header" href="#141-linked-list-cycle"><a href="https://leetcode.com/problems/linked-list-cycle/">141. Linked List Cycle</a></a></h1>
+<p>Given <code>head</code>, the head of a linked list, determine if the linked list has a cycle in it.</p>
+<p>There is a cycle in a linked list if there is some node in the list that can be reached again by continuously following the <code>next</code> pointer. Internally, <code>pos</code> is used to denote the index of the node that tail's <code>next</code> pointer is connected to. <strong>Note that <code>pos</code> is not passed as a parameter</strong>.</p>
+<p>Return <code>true</code> <em>if there is a cycle in the linked list</em>. Otherwise, return <code>false</code>.</p>
+<p><strong>Example 1:</strong></p>
+<p><img src="https://assets.leetcode.com/uploads/2018/12/07/circularlinkedlist.png" alt="" /></p>
+<p><strong>Input:</strong> <code>head = [3,2,0,-4], pos = 1</code><br />
+<strong>Output:</strong> <code>true</code><br />
+<strong>Explanation:</strong> There is a cycle in the linked list, where the tail connects to the 1st node (0-indexed).</p>
+<p><strong>Example 2:</strong></p>
+<p><img src="https://assets.leetcode.com/uploads/2018/12/07/circularlinkedlist_test2.png" alt="" /></p>
+<p><strong>Input:</strong> <code>head = [1,2], pos = 0</code><br />
+<strong>Output:</strong> <code>true</code><br />
+<strong>Explanation:</strong> There is a cycle in the linked list, where the tail connects to the 0th node.</p>
+<p><strong>Example 3:</strong></p>
+<p><img src="https://assets.leetcode.com/uploads/2018/12/07/circularlinkedlist_test3.png" alt="" /></p>
+<p><strong>Input:</strong> <code>head = [1], pos = -1</code><br />
+<strong>Output:</strong> <code>false</code><br />
+<strong>Explanation:</strong> There is no cycle in the linked list.</p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li>The number of the nodes in the list is in the range <code>[0, 104]</code>.</li>
+<li><code>-10^5 &lt;= Node.val &lt;= 10^5</code></li>
+<li><code>pos</code> is <code>-1</code> or a <strong>valid index</strong> in the linked-list.</li>
+</ul>
+<p><strong>Follow up:</strong> Can you solve it using <code>O(1)</code> (i.e. constant) memory?</p>
+<h2 id="思路-26"><a class="header" href="#思路-26">思路</a></h2>
+<p>双指针，快指针比慢指针速度快一倍，有环则两者相遇，无环则自动跳出循环</p>
+<h2 id="c解法-14"><a class="header" href="#c解法-14">C++解法</a></h2>
+<pre><code class="language-cpp">/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    bool hasCycle(ListNode *head) {
+        if(head == NULL || head-&gt;next == NULL)
+            return false;
+        ListNode* slow = head;
+        ListNode* fast = head;
+        while(fast &amp;&amp; fast-&gt;next){
+            slow = slow-&gt;next;
+            fast = fast-&gt;next-&gt;next;
+            if(slow == fast)
+                return true;
+        }
+        return false;
+    }
+};
+</code></pre>
+<h1 id="142-linked-list-cycle-ii"><a class="header" href="#142-linked-list-cycle-ii"><a href="https://leetcode.com/problems/linked-list-cycle-ii/">142. Linked List Cycle II</a></a></h1>
+<p>Given the <code>head</code> of a linked list, return <em>the node where the cycle begins. If there is no cycle, return</em> <code>null</code>.</p>
+<p>There is a cycle in a linked list if there is some node in the list that can be reached again by continuously following the <code>next</code> pointer. Internally, <code>pos</code> is used to denote the index of the node that tail's <code>next</code> pointer is connected to (<strong>0-indexed</strong>). It is <code>-1</code> if there is no cycle. <strong>Note that</strong> <code>pos</code> <strong>is not passed as a parameter</strong>.</p>
+<p><strong>Do not modify</strong> the linked list.</p>
+<p><strong>Example 1:</strong></p>
+<p><img src="https://assets.leetcode.com/uploads/2018/12/07/circularlinkedlist.png" alt="" /></p>
+<p><strong>Input:</strong> <code>head = [3,2,0,-4], pos = 1</code><br />
+<strong>Output:</strong> <code>tail connects to node index 1</code><br />
+<strong>Explanation:</strong> There is a cycle in the linked list, where tail connects to the second node.</p>
+<p><strong>Example 2:</strong></p>
+<p><img src="https://assets.leetcode.com/uploads/2018/12/07/circularlinkedlist_test2.png" alt="" /></p>
+<p><strong>Input:</strong> <code>head = [1,2], pos = 0</code><br />
+<strong>Output:</strong> <code>tail connects to node index 0</code><br />
+<strong>Explanation:</strong> There is a cycle in the linked list, where tail connects to the first node.</p>
+<p><strong>Example 3:</strong></p>
+<p><img src="https://assets.leetcode.com/uploads/2018/12/07/circularlinkedlist_test3.png" alt="" /></p>
+<p><strong>Input:</strong> <code>head = [1], pos = -1</code><br />
+<strong>Output:</strong> no cycle
+<strong>Explanation:</strong> There is no cycle in the linked list.</p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li>The number of the nodes in the list is in the range <code>[0, 10^4]</code>.</li>
+<li><code>-10^5 &lt;= Node.val &lt;= 10^5</code></li>
+<li><code>pos</code> is <code>-1</code> or a <strong>valid index</strong> in the linked-list.</li>
+</ul>
+<p><strong>Follow up:</strong> Can you solve it using <code>O(1)</code> (i.e. constant) memory?</p>
+<h2 id="思路-27"><a class="header" href="#思路-27">思路</a></h2>
+<p>快慢指针相遇，相遇后新增一个指针<code>ptr</code>，由于距离关系，slow指针到环入口的距离与头指针相等，<code>ptr</code>和<code>slow</code>相遇处即为环入口。</p>
+<p>Time Complexity: O(N)</p>
+<p>Space Complexity: O(1)</p>
+<h2 id="c解法-15"><a class="header" href="#c解法-15">C++解法</a></h2>
+<pre><code class="language-cpp">/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode *detectCycle(ListNode *head) {
+        if(head == NULL || head-&gt;next == NULL)
+            return NULL;
+        ListNode* slow = head;
+        ListNode* fast = head;
+        while(fast &amp;&amp; fast-&gt;next){
+            slow = slow-&gt;next;
+            fast = fast-&gt;next-&gt;next;
+            if(slow == fast){
+                ListNode* ptr = head;
+                while(ptr != slow){
+                    ptr = ptr-&gt;next;
+                    slow = slow-&gt;next;
+                }
+                return ptr;
+            }
+        }
+        return NULL;
+    }
+};
+</code></pre>
+<h2 id="java解法-11"><a class="header" href="#java解法-11">Java解法</a></h2>
+<pre><code class="language-java">public class Solution {
+    public ListNode detectCycle(ListNode head) {
+        ListNode slow = head, fast = head;
+        while (fast != null &amp;&amp; fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+            if (slow == fast) break;
+        }
+        if (fast == null || fast.next == null) return null;
+        while (head != slow) {
+            head = head.next;
+            slow = slow.next;
+        }
+        return head;
+    }
+}
+</code></pre>
+<h2 id="python解法-2"><a class="header" href="#python解法-2">Python解法</a></h2>
+<pre><code class="language-python">class Solution(object):
+    def detectCycle(self, head):
+        slow = fast = head
+        while fast and fast.next:
+            slow, fast = slow.next, fast.next.next
+            if slow == fast: break
+        else: return None  # if not (fast and fast.next): return None
+        while head != slow:
+            head, slow = head.next, slow.next
+        return head
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
+<h1 id="交换节点"><a class="header" href="#交换节点">交换节点</a></h1>
+<ul>
+<li><a href="%E9%93%BE%E8%A1%A8/%E4%BA%A4%E6%8D%A2%E8%8A%82%E7%82%B9.html#24-swap-nodes-in-pairs">24. Swap Nodes in Pairs</a>
+<ul>
+<li><a href="%E9%93%BE%E8%A1%A8/%E4%BA%A4%E6%8D%A2%E8%8A%82%E7%82%B9.html#%E6%80%9D%E8%B7%AF">思路</a></li>
+<li><a href="%E9%93%BE%E8%A1%A8/%E4%BA%A4%E6%8D%A2%E8%8A%82%E7%82%B9.html#c%E8%A7%A3%E6%B3%95">C++解法</a></li>
+<li><a href="%E9%93%BE%E8%A1%A8/%E4%BA%A4%E6%8D%A2%E8%8A%82%E7%82%B9.html#java%E8%A7%A3%E6%B3%95">Java解法</a></li>
+<li><a href="%E9%93%BE%E8%A1%A8/%E4%BA%A4%E6%8D%A2%E8%8A%82%E7%82%B9.html#python3%E8%A7%A3%E6%B3%95">Python3解法</a></li>
+</ul>
+</li>
+<li><a href="%E9%93%BE%E8%A1%A8/%E4%BA%A4%E6%8D%A2%E8%8A%82%E7%82%B9.html#1721-swapping-nodes-in-a-linked-list">1721. Swapping Nodes in a Linked List</a>
+<ul>
+<li><a href="%E9%93%BE%E8%A1%A8/%E4%BA%A4%E6%8D%A2%E8%8A%82%E7%82%B9.html#%E6%80%9D%E8%B7%AF-1">思路</a></li>
+<li><a href="%E9%93%BE%E8%A1%A8/%E4%BA%A4%E6%8D%A2%E8%8A%82%E7%82%B9.html#c%E8%A7%A3%E6%B3%95-1">C++解法</a></li>
+</ul>
+</li>
+</ul>
+<h1 id="24-swap-nodes-in-pairs"><a class="header" href="#24-swap-nodes-in-pairs"><a href="https://leetcode.com/problems/swap-nodes-in-pairs/">24. Swap Nodes in Pairs</a></a></h1>
+<p>Given a linked list, swap every two adjacent nodes and return its head. You must solve the problem without modifying the values in the list's nodes (i.e., only nodes themselves may be changed.)</p>
+<p><strong>Example 1:</strong></p>
+<p><strong>Input:</strong> <code>head = [1,2,3,4]</code></p>
+<p><strong>Output:</strong> <code>[2,1,4,3]</code></p>
+<p><strong>Explanation:</strong></p>
+<p><img src="https://assets.leetcode.com/uploads/2020/10/03/swap_ex1.jpg" alt="" /></p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> <code>head = []</code></p>
+<p><strong>Output:</strong> <code>[]</code></p>
+<p><strong>Example 3:</strong></p>
+<p><strong>Input:</strong> <code>head = [1]</code></p>
+<p><strong>Output:</strong> <code>[1]</code></p>
+<p><strong>Example 4:</strong></p>
+<p><strong>Input:</strong> <code>head = [1,2,3]</code></p>
+<p><strong>Output:</strong> <code>[2,1,3]</code></p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li>The number of nodes in the list is in the range <code>[0, 100]</code>.</li>
+<li><code>0 &lt;= Node.val &lt;= 100</code></li>
+</ul>
+<h2 id="思路-28"><a class="header" href="#思路-28">思路</a></h2>
+<p>设置虚拟头节点，然后两两交换</p>
+<p>Complexity</p>
+<ul>
+<li>Time complexity: O(n)</li>
+<li>Space complexity: O(1)</li>
+</ul>
+<h2 id="c解法-16"><a class="header" href="#c解法-16">C++解法</a></h2>
+<pre><code class="language-cpp">/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* swapPairs(ListNode* head) {
+        if(head == NULL || head-&gt;next == NULL){
+            return head;
+        }
+        ListNode* dummyHead = new ListNode(0);
+        dummyHead-&gt;next = head;
+        ListNode* pre = dummyHead;
+        ListNode* cur = head;
+        while(cur != NULL &amp;&amp; cur-&gt;next != NULL){
+            ListNode* temp = cur-&gt;next-&gt;next;
+            cur-&gt;next-&gt;next = cur;
+            pre-&gt;next = cur-&gt;next;
+            cur-&gt;next = temp;
+            pre = cur;
+            cur = temp;
+        }
+        return dummyHead-&gt;next;
+    }
+};
+</code></pre>
+<h2 id="java解法-12"><a class="header" href="#java解法-12">Java解法</a></h2>
+<pre><code class="language-java">class Solution {
+    public ListNode swapPairs(ListNode head) {
+        ListNode dummy = new ListNode(0, head);
+        ListNode prev = dummy, cur = head;
+
+        while (cur != null &amp;&amp; cur.next != null) {
+            ListNode npn = cur.next.next;
+            ListNode second = cur.next;
+
+            second.next = cur;
+            cur.next = npn;
+            prev.next = second;
+
+            prev = cur;
+            cur = npn;
+        }
+
+        return dummy.next;        
+    }
+}
+</code></pre>
+<h2 id="python3解法-9"><a class="header" href="#python3解法-9">Python3解法</a></h2>
+<pre><code class="language-python">class Solution:
+    def swapPairs(self, head: Optional[ListNode]) -&gt; Optional[ListNode]:
+        dummy = ListNode(0, head)
+        prev, cur = dummy, head
+
+        while cur and cur.next:
+            npn = cur.next.next
+            second = cur.next
+
+            second.next = cur
+            cur.next = npn
+            prev.next = second
+
+            prev = cur
+            cur = npn
+        
+        return dummy.next
+</code></pre>
+<h1 id="1721-swapping-nodes-in-a-linked-list"><a class="header" href="#1721-swapping-nodes-in-a-linked-list"><a href="https://leetcode.com/problems/swapping-nodes-in-a-linked-list/">1721. Swapping Nodes in a Linked List</a></a></h1>
+<p>You are given the <code>head</code> of a linked list, and an integer <code>k</code>.</p>
+<p>Return <em>the head of the linked list after <strong>swapping</strong> the values of the</em> <code>kth</code> <em>node from the beginning and the</em> <code>kth</code> <em>node from the end (the list is <strong>1-indexed</strong>).</em></p>
+<p><strong>Example 1:</strong></p>
+<p><img src="https://assets.leetcode.com/uploads/2020/09/21/linked1.jpg" alt="" /></p>
+<p><strong>Input:</strong> <code>head = [1,2,3,4,5], k = 2</code><br />
+<strong>Output:</strong> <code>[1,4,3,2,5]</code></p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> <code>head = [7,9,6,6,7,8,3,0,9,5], k = 5</code><br />
+<strong>Output:</strong> <code>[7,9,6,6,8,7,3,0,9,5]</code></p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li>The number of nodes in the list is <code>n</code>.</li>
+<li><code>1 &lt;= k &lt;= n &lt;= 10^5</code></li>
+<li><code>0 &lt;= Node.val &lt;= 100</code></li>
+</ul>
+<h2 id="思路-29"><a class="header" href="#思路-29">思路</a></h2>
+<p>方法一：</p>
+<p>We can traverse the linked list and store the elements in an array.</p>
+<p>Upon conversion to an array, we can swap the required elements by indexing the array.</p>
+<p>We can rebuild the linked list using the order of the elements in the array.</p>
+<p>方法二：</p>
+<ul>
+<li>To solve this problem in one pass, we can use a two-pointer approach.</li>
+<li>First, we can initialize two pointers, left_ptr and right_ptr, both pointing to the head of the linked list. We can then move the right_ptr k-2 steps forward.</li>
+<li>After this, we can move both left_ptr and right_ptr forward simultaneously until right_ptr reaches the end of the list.</li>
+<li>At this point, left_ptr will be pointing to the kth node from the beginning, and end_ptr will be pointing to the kth node from the end.</li>
+<li>We can then swap the values of these two nodes, and return the head of the linked list.</li>
+</ul>
+<p>Complexity</p>
+<ul>
+<li>Time complexity: O(N)</li>
+<li>Space complexity: O(1)</li>
+</ul>
+<h2 id="c解法-17"><a class="header" href="#c解法-17">C++解法</a></h2>
+<p>方法一：</p>
+<pre><code class="language-cpp">/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* swapNodes(ListNode* head, int k) {
+        vector&lt;int&gt; nums;
+        ListNode* cur = head;
+        while(cur != NULL){
+            nums.push_back(cur-&gt;val);
+            cur = cur-&gt;next;
+        }
+        swap(nums[k-1], nums[nums.size()-k]);
+        ListNode* dummyHead  = new ListNode(0);
+        cur = dummyHead;
+        for(int i = 0; i &lt; nums.size(); i++){
+            ListNode* newNode = new ListNode(nums[i]);
+            cur-&gt;next = newNode;
+            cur = newNode;
+        }
+        return dummyHead-&gt;next;
+    }
+};
+</code></pre>
+<p>方法二：</p>
+<pre><code class="language-cpp">/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* swapNodes(ListNode* head, int k) {
+        ListNode* dummyHead  = new ListNode(0);
+        dummyHead-&gt;next = head;
+        ListNode* fast = dummyHead;
+        ListNode* slow = dummyHead;
+        for(int i = 0; i &lt; k; i++){
+            fast = fast-&gt;next;
+        }
+        ListNode* temp = fast;
+        while(fast != nullptr){
+            fast = fast-&gt;next;
+            slow = slow-&gt;next;
+        }
+        swap(slow-&gt;val, temp-&gt;val);
+        return dummyHead-&gt;next;
+    }
+};
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
 <h1 id="哈希表"><a class="header" href="#哈希表">哈希表</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
 <h1 id="字符串"><a class="header" href="#字符串">字符串</a></h1>
@@ -3315,7 +4246,7 @@ class Solution {
 <li><code>2 &lt;= n &lt;= 10^5</code></li>
 <li><code>0 &lt;= height[i] &lt;= 10^4</code></li>
 </ul>
-<h2 id="思路-24"><a class="header" href="#思路-24">思路</a></h2>
+<h2 id="思路-30"><a class="header" href="#思路-30">思路</a></h2>
 <p>双指针，左低移左，右低移右</p>
 <p>The two-pointer technique starts with the widest container and moves the pointers inward based on the comparison of heights.</p>
 <p>Increasing the width of the container can only lead to a larger area if the height of the new boundary is greater. By moving the pointers towards the center, we explore containers with the potential for greater areas.</p>
@@ -3391,7 +4322,7 @@ public:
 <li><code>1 &lt;= n &lt;= 2 * 10^4</code></li>
 <li><code>0 &lt;= height[i] &lt;= 10^5</code></li>
 </ul>
-<h2 id="思路-25"><a class="header" href="#思路-25">思路</a></h2>
+<h2 id="思路-31"><a class="header" href="#思路-31">思路</a></h2>
 <p>一共三种解法：双指针、单调栈和动态规划。</p>
 <h2 id="c-解法-9"><a class="header" href="#c-解法-9">C++ 解法</a></h2>
 <p>单调栈</p>
@@ -3506,7 +4437,7 @@ public:
 <li><code>-10^9 &lt;= Node.val &lt;= 10^9</code></li>
 <li><code>-1000 &lt;= targetSum &lt;= 1000</code></li>
 </ul>
-<h2 id="思路-26"><a class="header" href="#思路-26">思路</a></h2>
+<h2 id="思路-32"><a class="header" href="#思路-32">思路</a></h2>
 <h3 id="方法一深度优先搜索"><a class="header" href="#方法一深度优先搜索">方法一：深度优先搜索</a></h3>
 <p>思路与算法</p>
 <p>我们首先想到的解法是穷举所有的可能，我们访问每一个节点 node，检测以 node 为起始节点且向下延深的路径有多少种。我们递归遍历每一个节点的所有可能的路径，然后将这些路径数目加起来即为返回结果。</p>
@@ -3594,7 +4525,7 @@ public:
 <li>The number of nodes in the tree is in the range <code>[1, 10^4]</code>.</li>
 <li><code>-100 &lt;= Node.val &lt;= 100</code></li>
 </ul>
-<h2 id="思路-27"><a class="header" href="#思路-27">思路</a></h2>
+<h2 id="思路-33"><a class="header" href="#思路-33">思路</a></h2>
 <p>方法一：深度优先搜索</p>
 <p>首先我们知道一条路径的长度为该路径经过的节点数减一，所以求直径（即求路径长度的最大值）等效于求路径经过节点数的最大值减一。</p>
 <p>而任意一条路径均可以被看作由某个节点为起点，从其左儿子和右儿子向下遍历的路径拼接得到。</p>
@@ -3728,7 +4659,7 @@ private:
 <li>The number of nodes in the tree is in the range <code>[0, 100]</code>.</li>
 <li><code>-100 &lt;= Node.val &lt;= 100</code></li>
 </ul>
-<h2 id="思路-28"><a class="header" href="#思路-28">思路</a></h2>
+<h2 id="思路-34"><a class="header" href="#思路-34">思路</a></h2>
 <p>层次遍历，每层最后一个节点</p>
 <p>由于树的形状无法提前知晓，不可能设计出优于 O(n) 的算法。因此，我们应该试着寻找线性时间解。带着这个想法，我们来考虑一些同等有效的方案。</p>
 <h3 id="方法一深度优先搜索-1"><a class="header" href="#方法一深度优先搜索-1">方法一：深度优先搜索</a></h3>
@@ -3978,7 +4909,7 @@ public:
 <li>The number of nodes in the tree is in the range <code>[0, 100]</code>.</li>
 <li><code>-100 &lt;= Node.val &lt;= 100</code></li>
 </ul>
-<h2 id="思路-29"><a class="header" href="#思路-29">思路</a></h2>
+<h2 id="思路-35"><a class="header" href="#思路-35">思路</a></h2>
 <ol>
 <li>
 <p>先序遍历，左右交换</p>

@@ -1,0 +1,370 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>环形链表 - 剑指Offer</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">剑指Offer</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
+<h1 id="环形链表"><a class="header" href="#环形链表">环形链表</a></h1>
+<ul>
+<li><a href="#141-linked-list-cycle">141. Linked List Cycle</a>
+<ul>
+<li><a href="#%E6%80%9D%E8%B7%AF">思路</a></li>
+<li><a href="#c%E8%A7%A3%E6%B3%95">C++解法</a></li>
+</ul>
+</li>
+<li><a href="#142-linked-list-cycle-ii">142. Linked List Cycle II</a>
+<ul>
+<li><a href="#%E6%80%9D%E8%B7%AF-1">思路</a></li>
+<li><a href="#c%E8%A7%A3%E6%B3%95-1">C++解法</a></li>
+<li><a href="#java%E8%A7%A3%E6%B3%95">Java解法</a></li>
+<li><a href="#python%E8%A7%A3%E6%B3%95">Python解法</a></li>
+</ul>
+</li>
+</ul>
+<h1 id="141-linked-list-cycle"><a class="header" href="#141-linked-list-cycle"><a href="https://leetcode.com/problems/linked-list-cycle/">141. Linked List Cycle</a></a></h1>
+<p>Given <code>head</code>, the head of a linked list, determine if the linked list has a cycle in it.</p>
+<p>There is a cycle in a linked list if there is some node in the list that can be reached again by continuously following the <code>next</code> pointer. Internally, <code>pos</code> is used to denote the index of the node that tail's <code>next</code> pointer is connected to. <strong>Note that <code>pos</code> is not passed as a parameter</strong>.</p>
+<p>Return <code>true</code> <em>if there is a cycle in the linked list</em>. Otherwise, return <code>false</code>.</p>
+<p><strong>Example 1:</strong></p>
+<p><img src="https://assets.leetcode.com/uploads/2018/12/07/circularlinkedlist.png" alt="" /></p>
+<p><strong>Input:</strong> <code>head = [3,2,0,-4], pos = 1</code><br />
+<strong>Output:</strong> <code>true</code><br />
+<strong>Explanation:</strong> There is a cycle in the linked list, where the tail connects to the 1st node (0-indexed).</p>
+<p><strong>Example 2:</strong></p>
+<p><img src="https://assets.leetcode.com/uploads/2018/12/07/circularlinkedlist_test2.png" alt="" /></p>
+<p><strong>Input:</strong> <code>head = [1,2], pos = 0</code><br />
+<strong>Output:</strong> <code>true</code><br />
+<strong>Explanation:</strong> There is a cycle in the linked list, where the tail connects to the 0th node.</p>
+<p><strong>Example 3:</strong></p>
+<p><img src="https://assets.leetcode.com/uploads/2018/12/07/circularlinkedlist_test3.png" alt="" /></p>
+<p><strong>Input:</strong> <code>head = [1], pos = -1</code><br />
+<strong>Output:</strong> <code>false</code><br />
+<strong>Explanation:</strong> There is no cycle in the linked list.</p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li>The number of the nodes in the list is in the range <code>[0, 104]</code>.</li>
+<li><code>-10^5 &lt;= Node.val &lt;= 10^5</code></li>
+<li><code>pos</code> is <code>-1</code> or a <strong>valid index</strong> in the linked-list.</li>
+</ul>
+<p><strong>Follow up:</strong> Can you solve it using <code>O(1)</code> (i.e. constant) memory?</p>
+<h2 id="思路"><a class="header" href="#思路">思路</a></h2>
+<p>双指针，快指针比慢指针速度快一倍，有环则两者相遇，无环则自动跳出循环</p>
+<h2 id="c解法"><a class="header" href="#c解法">C++解法</a></h2>
+<pre><code class="language-cpp">/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    bool hasCycle(ListNode *head) {
+        if(head == NULL || head-&gt;next == NULL)
+            return false;
+        ListNode* slow = head;
+        ListNode* fast = head;
+        while(fast &amp;&amp; fast-&gt;next){
+            slow = slow-&gt;next;
+            fast = fast-&gt;next-&gt;next;
+            if(slow == fast)
+                return true;
+        }
+        return false;
+    }
+};
+</code></pre>
+<h1 id="142-linked-list-cycle-ii"><a class="header" href="#142-linked-list-cycle-ii"><a href="https://leetcode.com/problems/linked-list-cycle-ii/">142. Linked List Cycle II</a></a></h1>
+<p>Given the <code>head</code> of a linked list, return <em>the node where the cycle begins. If there is no cycle, return</em> <code>null</code>.</p>
+<p>There is a cycle in a linked list if there is some node in the list that can be reached again by continuously following the <code>next</code> pointer. Internally, <code>pos</code> is used to denote the index of the node that tail's <code>next</code> pointer is connected to (<strong>0-indexed</strong>). It is <code>-1</code> if there is no cycle. <strong>Note that</strong> <code>pos</code> <strong>is not passed as a parameter</strong>.</p>
+<p><strong>Do not modify</strong> the linked list.</p>
+<p><strong>Example 1:</strong></p>
+<p><img src="https://assets.leetcode.com/uploads/2018/12/07/circularlinkedlist.png" alt="" /></p>
+<p><strong>Input:</strong> <code>head = [3,2,0,-4], pos = 1</code><br />
+<strong>Output:</strong> <code>tail connects to node index 1</code><br />
+<strong>Explanation:</strong> There is a cycle in the linked list, where tail connects to the second node.</p>
+<p><strong>Example 2:</strong></p>
+<p><img src="https://assets.leetcode.com/uploads/2018/12/07/circularlinkedlist_test2.png" alt="" /></p>
+<p><strong>Input:</strong> <code>head = [1,2], pos = 0</code><br />
+<strong>Output:</strong> <code>tail connects to node index 0</code><br />
+<strong>Explanation:</strong> There is a cycle in the linked list, where tail connects to the first node.</p>
+<p><strong>Example 3:</strong></p>
+<p><img src="https://assets.leetcode.com/uploads/2018/12/07/circularlinkedlist_test3.png" alt="" /></p>
+<p><strong>Input:</strong> <code>head = [1], pos = -1</code><br />
+<strong>Output:</strong> no cycle
+<strong>Explanation:</strong> There is no cycle in the linked list.</p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li>The number of the nodes in the list is in the range <code>[0, 10^4]</code>.</li>
+<li><code>-10^5 &lt;= Node.val &lt;= 10^5</code></li>
+<li><code>pos</code> is <code>-1</code> or a <strong>valid index</strong> in the linked-list.</li>
+</ul>
+<p><strong>Follow up:</strong> Can you solve it using <code>O(1)</code> (i.e. constant) memory?</p>
+<h2 id="思路-1"><a class="header" href="#思路-1">思路</a></h2>
+<p>快慢指针相遇，相遇后新增一个指针<code>ptr</code>，由于距离关系，slow指针到环入口的距离与头指针相等，<code>ptr</code>和<code>slow</code>相遇处即为环入口。</p>
+<p>Time Complexity: O(N)</p>
+<p>Space Complexity: O(1)</p>
+<h2 id="c解法-1"><a class="header" href="#c解法-1">C++解法</a></h2>
+<pre><code class="language-cpp">/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode *detectCycle(ListNode *head) {
+        if(head == NULL || head-&gt;next == NULL)
+            return NULL;
+        ListNode* slow = head;
+        ListNode* fast = head;
+        while(fast &amp;&amp; fast-&gt;next){
+            slow = slow-&gt;next;
+            fast = fast-&gt;next-&gt;next;
+            if(slow == fast){
+                ListNode* ptr = head;
+                while(ptr != slow){
+                    ptr = ptr-&gt;next;
+                    slow = slow-&gt;next;
+                }
+                return ptr;
+            }
+        }
+        return NULL;
+    }
+};
+</code></pre>
+<h2 id="java解法"><a class="header" href="#java解法">Java解法</a></h2>
+<pre><code class="language-java">public class Solution {
+    public ListNode detectCycle(ListNode head) {
+        ListNode slow = head, fast = head;
+        while (fast != null &amp;&amp; fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+            if (slow == fast) break;
+        }
+        if (fast == null || fast.next == null) return null;
+        while (head != slow) {
+            head = head.next;
+            slow = slow.next;
+        }
+        return head;
+    }
+}
+</code></pre>
+<h2 id="python解法"><a class="header" href="#python解法">Python解法</a></h2>
+<pre><code class="language-python">class Solution(object):
+    def detectCycle(self, head):
+        slow = fast = head
+        while fast and fast.next:
+            slow, fast = slow.next, fast.next.next
+            if slow == fast: break
+        else: return None  # if not (fast and fast.next): return None
+        while head != slow:
+            head, slow = head.next, slow.next
+        return head
+</code></pre>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../链表/反转链表.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../链表/交换节点.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../链表/反转链表.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../链表/交换节点.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>
