@@ -2209,6 +2209,138 @@ public:
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
 <h1 id="链表"><a class="header" href="#链表">链表</a></h1>
+<ul>
+<li><a href="%E9%93%BE%E8%A1%A8/%E9%93%BE%E8%A1%A8.html#%E5%85%B3%E4%BA%8E%E9%93%BE%E8%A1%A8%E4%BD%A0%E8%AF%A5%E4%BA%86%E8%A7%A3%E8%BF%99%E4%BA%9B">关于链表，你该了解这些！</a>
+<ul>
+<li><a href="%E9%93%BE%E8%A1%A8/%E9%93%BE%E8%A1%A8.html#%E9%93%BE%E8%A1%A8%E7%9A%84%E7%B1%BB%E5%9E%8B">链表的类型</a>
+<ul>
+<li><a href="%E9%93%BE%E8%A1%A8/%E9%93%BE%E8%A1%A8.html#%E5%8D%95%E9%93%BE%E8%A1%A8">单链表</a></li>
+<li><a href="%E9%93%BE%E8%A1%A8/%E9%93%BE%E8%A1%A8.html#%E5%8F%8C%E9%93%BE%E8%A1%A8">双链表</a></li>
+<li><a href="%E9%93%BE%E8%A1%A8/%E9%93%BE%E8%A1%A8.html#%E5%BE%AA%E7%8E%AF%E9%93%BE%E8%A1%A8">循环链表</a></li>
+</ul>
+</li>
+<li><a href="%E9%93%BE%E8%A1%A8/%E9%93%BE%E8%A1%A8.html#%E9%93%BE%E8%A1%A8%E7%9A%84%E5%AD%98%E5%82%A8%E6%96%B9%E5%BC%8F">链表的存储方式</a></li>
+<li><a href="%E9%93%BE%E8%A1%A8/%E9%93%BE%E8%A1%A8.html#%E9%93%BE%E8%A1%A8%E7%9A%84%E5%AE%9A%E4%B9%89">链表的定义</a></li>
+<li><a href="%E9%93%BE%E8%A1%A8/%E9%93%BE%E8%A1%A8.html#%E9%93%BE%E8%A1%A8%E7%9A%84%E6%93%8D%E4%BD%9C">链表的操作</a>
+<ul>
+<li><a href="%E9%93%BE%E8%A1%A8/%E9%93%BE%E8%A1%A8.html#%E5%88%A0%E9%99%A4%E8%8A%82%E7%82%B9">删除节点</a></li>
+<li><a href="%E9%93%BE%E8%A1%A8/%E9%93%BE%E8%A1%A8.html#%E6%B7%BB%E5%8A%A0%E8%8A%82%E7%82%B9">添加节点</a></li>
+</ul>
+</li>
+<li><a href="%E9%93%BE%E8%A1%A8/%E9%93%BE%E8%A1%A8.html#%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90">性能分析</a></li>
+<li><a href="%E9%93%BE%E8%A1%A8/%E9%93%BE%E8%A1%A8.html#%E9%93%BE%E8%A1%A8%E7%BB%8F%E5%85%B8%E9%A2%98%E7%9B%AE">链表经典题目</a>
+<ul>
+<li><a href="%E9%93%BE%E8%A1%A8/%E9%93%BE%E8%A1%A8.html#%E8%99%9A%E6%8B%9F%E5%A4%B4%E7%BB%93%E7%82%B9">虚拟头结点</a></li>
+<li><a href="%E9%93%BE%E8%A1%A8/%E9%93%BE%E8%A1%A8.html#%E9%93%BE%E8%A1%A8%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C">链表的基本操作</a></li>
+<li><a href="%E9%93%BE%E8%A1%A8/%E9%93%BE%E8%A1%A8.html#%E5%8F%8D%E8%BD%AC%E9%93%BE%E8%A1%A8">反转链表</a></li>
+<li><a href="%E9%93%BE%E8%A1%A8/%E9%93%BE%E8%A1%A8.html#%E5%88%A0%E9%99%A4%E5%80%92%E6%95%B0%E7%AC%ACn%E4%B8%AA%E8%8A%82%E7%82%B9">删除倒数第N个节点</a></li>
+<li><a href="%E9%93%BE%E8%A1%A8/%E9%93%BE%E8%A1%A8.html#%E9%93%BE%E8%A1%A8%E7%9B%B8%E4%BA%A4">链表相交</a></li>
+<li><a href="%E9%93%BE%E8%A1%A8/%E9%93%BE%E8%A1%A8.html#%E7%8E%AF%E5%BD%A2%E9%93%BE%E8%A1%A8">环形链表</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><a href="https://programmercarl.com/%E9%93%BE%E8%A1%A8%E6%80%BB%E7%BB%93%E7%AF%87.html">本文来源</a></p>
+<h1 id="关于链表你该了解这些"><a class="header" href="#关于链表你该了解这些">关于链表，你该了解这些！</a></h1>
+<p>什么是链表，链表是一种通过指针串联在一起的线性结构，每一个节点由两部分组成，一个是数据域一个是指针域（存放指向下一个节点的指针），最后一个节点的指针域指向null（空指针的意思）。</p>
+<p>链表的入口节点称为链表的头结点也就是head。</p>
+<p>如图所示： <img src="https://code-thinking-1253855093.file.myqcloud.com/pics/20200806194529815.png" alt="链表1" /></p>
+<h2 id="链表的类型"><a class="header" href="#链表的类型">链表的类型</a></h2>
+<p>接下来说一下链表的几种类型:</p>
+<h3 id="单链表"><a class="header" href="#单链表">单链表</a></h3>
+<p>刚刚说的就是单链表。</p>
+<h3 id="双链表"><a class="header" href="#双链表">双链表</a></h3>
+<p>单链表中的指针域只能指向节点的下一个节点。</p>
+<p>双链表：每一个节点有两个指针域，一个指向下一个节点，一个指向上一个节点。</p>
+<p>双链表 既可以向前查询也可以向后查询。</p>
+<p>如图所示： <img src="https://code-thinking-1253855093.file.myqcloud.com/pics/20200806194559317.png" alt="链表2" /></p>
+<h3 id="循环链表"><a class="header" href="#循环链表">循环链表</a></h3>
+<p>循环链表，顾名思义，就是链表首尾相连。</p>
+<p>循环链表可以用来解决约瑟夫环问题。</p>
+<p><img src="https://code-thinking-1253855093.file.myqcloud.com/pics/20200806194629603.png" alt="链表4" /></p>
+<h2 id="链表的存储方式"><a class="header" href="#链表的存储方式">链表的存储方式</a></h2>
+<p>了解完链表的类型，再来说一说链表在内存中的存储方式。</p>
+<p>数组是在内存中是连续分布的，但是链表在内存中可不是连续分布的。</p>
+<p>链表是通过指针域的指针链接在内存中各个节点。</p>
+<p>所以链表中的节点在内存中不是连续分布的 ，而是散乱分布在内存中的某地址上，分配机制取决于操作系统的内存管理。</p>
+<p>如图所示：</p>
+<p><img src="https://code-thinking-1253855093.file.myqcloud.com/pics/20200806194613920.png" alt="链表3" /></p>
+<p>这个链表起始节点为2， 终止节点为7， 各个节点分布在内存的不同地址空间上，通过指针串联在一起。</p>
+<h2 id="链表的定义"><a class="header" href="#链表的定义">链表的定义</a></h2>
+<p>接下来说一说链表的定义。</p>
+<p>链表节点的定义，很多同学在面试的时候都写不好。</p>
+<p>这是因为平时在刷leetcode的时候，链表的节点都默认定义好了，直接用就行了，所以同学们都没有注意到链表的节点是如何定义的。</p>
+<p>而在面试的时候，一旦要自己手写链表，就写的错漏百出。</p>
+<p>这里我给出C/C++的定义链表节点方式，如下所示：</p>
+<pre><code class="language-cpp">// 单链表
+struct ListNode {
+    int val;  // 节点上存储的元素
+    ListNode *next;  // 指向下一个节点的指针
+    ListNode(int x) : val(x), next(NULL) {}  // 节点的构造函数
+};
+</code></pre>
+<p>有同学说了，我不定义构造函数行不行，答案是可以的，C++默认生成一个构造函数。</p>
+<p>但是这个构造函数不会初始化任何成员变量，下面我来举两个例子：</p>
+<p>通过自己定义构造函数初始化节点：</p>
+<pre><code class="language-cpp">ListNode* head = new ListNode(5);
+</code></pre>
+<p>使用默认构造函数初始化节点：</p>
+<pre><code class="language-cpp">ListNode* head = new ListNode();
+head-&gt;val = 5;
+</code></pre>
+<p>所以如果不定义构造函数使用默认构造函数的话，在初始化的时候就不能直接给变量赋值！</p>
+<h2 id="链表的操作"><a class="header" href="#链表的操作">链表的操作</a></h2>
+<h3 id="删除节点"><a class="header" href="#删除节点">删除节点</a></h3>
+<p>删除D节点，如图所示：</p>
+<p><img src="https://code-thinking-1253855093.file.myqcloud.com/pics/20200806195114541-20230310121459257.png" alt="链表-删除节点" /></p>
+<p>只要将C节点的next指针 指向E节点就可以了。</p>
+<p>那有同学说了，D节点不是依然存留在内存里么？只不过是没有在这个链表里而已。</p>
+<p>是这样的，所以在C++里最好是再手动释放这个D节点，释放这块内存。</p>
+<p>其他语言例如Java、Python，就有自己的内存回收机制，就不用自己手动释放了。</p>
+<h3 id="添加节点"><a class="header" href="#添加节点">添加节点</a></h3>
+<p>如图所示：</p>
+<p><img src="https://code-thinking-1253855093.file.myqcloud.com/pics/20200806195134331-20230310121503147.png" alt="链表-添加节点" /></p>
+<p>可以看出链表的增添和删除都是O(1)操作，也不会影响到其他节点。</p>
+<p>但是要注意，要是删除第五个节点，需要从头节点查找到第四个节点通过next指针进行删除操作，查找的时间复杂度是O(n)。</p>
+<h2 id="性能分析"><a class="header" href="#性能分析">性能分析</a></h2>
+<p>再把链表的特性和数组的特性进行一个对比，如图所示：</p>
+<p><img src="https://code-thinking-1253855093.file.myqcloud.com/pics/20200806195200276.png" alt="链表-链表与数据性能对比" /></p>
+<p>数组在定义的时候，长度就是固定的，如果想改动数组的长度，就需要重新定义一个新的数组。</p>
+<p>链表的长度可以是不固定的，并且可以动态增删， 适合数据量不固定，频繁增删，较少查询的场景。</p>
+<p>相信大家已经对链表足够的了解，后面我会讲解关于链表的高频面试题目，我们下期见！</p>
+<h2 id="链表经典题目"><a class="header" href="#链表经典题目">链表经典题目</a></h2>
+<h3 id="虚拟头结点"><a class="header" href="#虚拟头结点">虚拟头结点</a></h3>
+<p>在<a href="https://programmercarl.com/0203.%E7%A7%BB%E9%99%A4%E9%93%BE%E8%A1%A8%E5%85%83%E7%B4%A0.html">链表：听说用虚拟头节点会方便很多？ (opens new window)</a>中，我们讲解了链表操作中一个非常重要的技巧：虚拟头节点。</p>
+<p>链表的一大问题就是操作当前节点必须要找前一个节点才能操作。这就造成了，头结点的尴尬，因为头结点没有前一个节点了。</p>
+<p><strong>每次对应头结点的情况都要单独处理，所以使用虚拟头结点的技巧，就可以解决这个问题</strong>。</p>
+<p>在<a href="https://programmercarl.com/0203.%E7%A7%BB%E9%99%A4%E9%93%BE%E8%A1%A8%E5%85%83%E7%B4%A0.html">链表：听说用虚拟头节点会方便很多？ (opens new window)</a>中，我给出了用虚拟头结点和没用虚拟头结点的代码，大家对比一下就会发现，使用虚拟头结点的好处。</p>
+<h3 id="链表的基本操作"><a class="header" href="#链表的基本操作">链表的基本操作</a></h3>
+<p>在<a href="https://programmercarl.com/0707.%E8%AE%BE%E8%AE%A1%E9%93%BE%E8%A1%A8.html">链表：一道题目考察了常见的五个操作！ (opens new window)</a>中，我们通过设计链表把链表常见的五个操作练习了一遍。</p>
+<p>这是练习链表基础操作的非常好的一道题目，考察了：</p>
+<ul>
+<li>获取链表第index个节点的数值</li>
+<li>在链表的最前面插入一个节点</li>
+<li>在链表的最后面插入一个节点</li>
+<li>在链表第index个节点前面插入一个节点</li>
+<li>删除链表的第index个节点的数值</li>
+</ul>
+<p><strong>可以说把这道题目做了，链表基本操作就OK了，再也不用担心链表增删改查整不明白了</strong>。</p>
+<p>这里我依然使用了虚拟头结点的技巧，大家复习的时候，可以去看一下代码。</p>
+<h3 id="反转链表"><a class="header" href="#反转链表">反转链表</a></h3>
+<p>在<a href="https://programmercarl.com/0206.%E7%BF%BB%E8%BD%AC%E9%93%BE%E8%A1%A8.html">链表：听说过两天反转链表又写不出来了？ (opens new window)</a>中，讲解了如何反转链表。</p>
+<p>因为反转链表的代码相对简单，有的同学可能直接背下来了，但一写还是容易出问题。</p>
+<p>反转链表是面试中高频题目，很考察面试者对链表操作的熟练程度。</p>
+<p>我在<a href="https://programmercarl.com/0206.%E7%BF%BB%E8%BD%AC%E9%93%BE%E8%A1%A8.html">文章 (opens new window)</a>中，给出了两种反转的方式，迭代法和递归法。</p>
+<p>建议大家先学透迭代法，然后再看递归法，因为递归法比较绕，如果迭代还写不明白，递归基本也写不明白了。</p>
+<p><strong>可以先通过迭代法，彻底弄清楚链表反转的过程！</strong></p>
+<h3 id="删除倒数第n个节点"><a class="header" href="#删除倒数第n个节点">删除倒数第N个节点</a></h3>
+<p>在<a href="https://programmercarl.com/0019.%E5%88%A0%E9%99%A4%E9%93%BE%E8%A1%A8%E7%9A%84%E5%80%92%E6%95%B0%E7%AC%ACN%E4%B8%AA%E8%8A%82%E7%82%B9.html">链表：删除链表倒数第N个节点，怎么删？ (opens new window)</a>中我们结合虚拟头结点 和 双指针法来移除链表倒数第N个节点。</p>
+<h3 id="链表相交"><a class="header" href="#链表相交">链表相交</a></h3>
+<p><a href="https://programmercarl.com/%E9%9D%A2%E8%AF%95%E9%A2%9802.07.%E9%93%BE%E8%A1%A8%E7%9B%B8%E4%BA%A4.html">链表：链表相交 (opens new window)</a>使用双指针来找到两个链表的交点（引用完全相同，即：内存地址完全相同的交点）</p>
+<h3 id="环形链表"><a class="header" href="#环形链表">环形链表</a></h3>
+<p>在<a href="https://programmercarl.com/0142.%E7%8E%AF%E5%BD%A2%E9%93%BE%E8%A1%A8II.html">链表：环找到了，那入口呢？ (opens new window)</a>中，讲解了在链表如何找环，以及如何找环的入口位置。</p>
+<p>这道题目可以说是链表的比较难的题目了。 但代码却十分简洁，主要在于一些数学证明。</p>
 <div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
 <h1 id="设计链表"><a class="header" href="#设计链表">设计链表</a></h1>
 <ul>
@@ -3487,7 +3619,7 @@ public:
 };
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
-<h1 id="反转链表"><a class="header" href="#反转链表">反转链表</a></h1>
+<h1 id="反转链表-1"><a class="header" href="#反转链表-1">反转链表</a></h1>
 <ul>
 <li><a href="%E9%93%BE%E8%A1%A8/%E5%8F%8D%E8%BD%AC%E9%93%BE%E8%A1%A8.html#206-reverse-linked-list">206. Reverse Linked List</a>
 <ul>
@@ -3804,7 +3936,7 @@ class Solution {
 </code></pre>
 <h2 id="python3-解法-3"><a class="header" href="#python3-解法-3">Python3 解法</a></h2>
 <div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
-<h1 id="环形链表"><a class="header" href="#环形链表">环形链表</a></h1>
+<h1 id="环形链表-1"><a class="header" href="#环形链表-1">环形链表</a></h1>
 <ul>
 <li><a href="%E9%93%BE%E8%A1%A8/%E7%8E%AF%E5%BD%A2%E9%93%BE%E8%A1%A8.html#141-linked-list-cycle">141. Linked List Cycle</a>
 <ul>
@@ -4186,11 +4318,2483 @@ public:
 };
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
-<h1 id="哈希表"><a class="header" href="#哈希表">哈希表</a></h1>
+<h1 id="哈希法"><a class="header" href="#哈希法">哈希法</a></h1>
+<ul>
+<li><a href="%E5%93%88%E5%B8%8C%E8%A1%A8/%E5%93%88%E5%B8%8C%E8%A1%A8.html#%E5%93%88%E5%B8%8C%E8%A1%A8">哈希表</a></li>
+<li><a href="%E5%93%88%E5%B8%8C%E8%A1%A8/%E5%93%88%E5%B8%8C%E8%A1%A8.html#%E5%93%88%E5%B8%8C%E5%87%BD%E6%95%B0">哈希函数</a>
+<ul>
+<li><a href="%E5%93%88%E5%B8%8C%E8%A1%A8/%E5%93%88%E5%B8%8C%E8%A1%A8.html#%E5%93%88%E5%B8%8C%E7%A2%B0%E6%92%9E">哈希碰撞</a></li>
+<li><a href="%E5%93%88%E5%B8%8C%E8%A1%A8/%E5%93%88%E5%B8%8C%E8%A1%A8.html#%E6%8B%89%E9%93%BE%E6%B3%95">拉链法</a></li>
+<li><a href="%E5%93%88%E5%B8%8C%E8%A1%A8/%E5%93%88%E5%B8%8C%E8%A1%A8.html#%E7%BA%BF%E6%80%A7%E6%8E%A2%E6%B5%8B%E6%B3%95">线性探测法</a></li>
+</ul>
+</li>
+<li><a href="%E5%93%88%E5%B8%8C%E8%A1%A8/%E5%93%88%E5%B8%8C%E8%A1%A8.html#%E5%B8%B8%E8%A7%81%E7%9A%84%E4%B8%89%E7%A7%8D%E5%93%88%E5%B8%8C%E7%BB%93%E6%9E%84">常见的三种哈希结构</a></li>
+<li><a href="%E5%93%88%E5%B8%8C%E8%A1%A8/%E5%93%88%E5%B8%8C%E8%A1%A8.html#%E5%93%88%E5%B8%8C%E8%A1%A8%E7%BB%8F%E5%85%B8%E9%A2%98%E7%9B%AE">哈希表经典题目</a>
+<ul>
+<li><a href="%E5%93%88%E5%B8%8C%E8%A1%A8/%E5%93%88%E5%B8%8C%E8%A1%A8.html#%E6%95%B0%E7%BB%84%E4%BD%9C%E4%B8%BA%E5%93%88%E5%B8%8C%E8%A1%A8">数组作为哈希表</a></li>
+<li><a href="%E5%93%88%E5%B8%8C%E8%A1%A8/%E5%93%88%E5%B8%8C%E8%A1%A8.html#set%E4%BD%9C%E4%B8%BA%E5%93%88%E5%B8%8C%E8%A1%A8">set作为哈希表</a></li>
+<li><a href="%E5%93%88%E5%B8%8C%E8%A1%A8/%E5%93%88%E5%B8%8C%E8%A1%A8.html#map%E4%BD%9C%E4%B8%BA%E5%93%88%E5%B8%8C%E8%A1%A8">map作为哈希表</a></li>
+</ul>
+</li>
+<li><a href="%E5%93%88%E5%B8%8C%E8%A1%A8/%E5%93%88%E5%B8%8C%E8%A1%A8.html#%E6%80%BB%E7%BB%93">总结</a></li>
+</ul>
+<p><a href="https://programmercarl.com/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%90%86%E8%AE%BA%E5%9F%BA%E7%A1%80.html">本文来源</a></p>
+<h2 id="哈希表"><a class="header" href="#哈希表">哈希表</a></h2>
+<p>首先什么是哈希表，哈希表（英文名字为Hash table，国内也有一些算法书籍翻译为散列表，大家看到这两个名称知道都是指hash table就可以了）。</p>
+<blockquote>
+<p>哈希表是根据关键码的值而直接进行访问的数据结构。</p>
+</blockquote>
+<p>这么官方的解释可能有点懵，其实直白来讲其实数组就是一张哈希表。</p>
+<p>哈希表中关键码就是数组的索引下标，然后通过下标直接访问数组中的元素，如下图所示：</p>
+<p><img src="https://code-thinking-1253855093.file.myqcloud.com/pics/20210104234805168.png" alt="哈希表1" /></p>
+<p>那么哈希表能解决什么问题呢，<strong>一般哈希表都是用来快速判断一个元素是否出现集合里。</strong></p>
+<p>例如要查询一个名字是否在这所学校里。</p>
+<p>要枚举的话时间复杂度是O(n)，但如果使用哈希表的话， 只需要O(1)就可以做到。</p>
+<p>我们只需要初始化把这所学校里学生的名字都存在哈希表里，在查询的时候通过索引直接就可以知道这位同学在不在这所学校里了。</p>
+<p>将学生姓名映射到哈希表上就涉及到了<strong>hash function ，也就是哈希函数</strong>。</p>
+<h2 id="哈希函数"><a class="header" href="#哈希函数">哈希函数</a></h2>
+<p>哈希函数，把学生的姓名直接映射为哈希表上的索引，然后就可以通过查询索引下标快速知道这位同学是否在这所学校里了。</p>
+<p>哈希函数如下图所示，通过hashCode把名字转化为数值，一般hashcode是通过特定编码方式，可以将其他数据格式转化为不同的数值，这样就把学生名字映射为哈希表上的索引数字了。</p>
+<p><img src="https://code-thinking-1253855093.file.myqcloud.com/pics/2021010423484818.png" alt="哈希表2" /></p>
+<p>如果hashCode得到的数值大于 哈希表的大小了，也就是大于tableSize了，怎么办呢？</p>
+<p>此时为了保证映射出来的索引数值都落在哈希表上，我们会在再次对数值做一个取模的操作，这样我们就保证了学生姓名一定可以映射到哈希表上了。</p>
+<p>此时问题又来了，哈希表我们刚刚说过，就是一个数组。</p>
+<p>如果学生的数量大于哈希表的大小怎么办，此时就算哈希函数计算的再均匀，也避免不了会有几位学生的名字同时映射到哈希表 同一个索引下标的位置。</p>
+<p>接下来<strong>哈希碰撞</strong>登场</p>
+<h3 id="哈希碰撞"><a class="header" href="#哈希碰撞">哈希碰撞</a></h3>
+<p>如图所示，小李和小王都映射到了索引下标 1 的位置，<strong>这一现象叫做哈希碰撞</strong>。</p>
+<p><img src="https://code-thinking-1253855093.file.myqcloud.com/pics/2021010423494884.png" alt="哈希表3" /></p>
+<p>一般哈希碰撞有两种解决方法， 拉链法和线性探测法。</p>
+<h3 id="拉链法"><a class="header" href="#拉链法">拉链法</a></h3>
+<p>刚刚小李和小王在索引1的位置发生了冲突，发生冲突的元素都被存储在链表中。 这样我们就可以通过索引找到小李和小王了</p>
+<p><img src="https://code-thinking-1253855093.file.myqcloud.com/pics/20210104235015226.png" alt="哈希表4" /></p>
+<p>（数据规模是dataSize， 哈希表的大小为tableSize）</p>
+<p>其实拉链法就是要选择适当的哈希表的大小，这样既不会因为数组空值而浪费大量内存，也不会因为链表太长而在查找上浪费太多时间。</p>
+<h3 id="线性探测法"><a class="header" href="#线性探测法">线性探测法</a></h3>
+<p>使用线性探测法，一定要保证tableSize大于dataSize。 我们需要依靠哈希表中的空位来解决碰撞问题。</p>
+<p>例如冲突的位置，放了小李，那么就向下找一个空位放置小王的信息。所以要求tableSize一定要大于dataSize ，要不然哈希表上就没有空置的位置来存放 冲突的数据了。如图所示：</p>
+<p><img src="https://code-thinking-1253855093.file.myqcloud.com/pics/20210104235109950.png" alt="哈希表5" /></p>
+<p>其实关于哈希碰撞还有非常多的细节，感兴趣的同学可以再好好研究一下，这里我就不再赘述了。</p>
+<h2 id="常见的三种哈希结构"><a class="header" href="#常见的三种哈希结构">常见的三种哈希结构</a></h2>
+<p>当我们想使用哈希法来解决问题的时候，我们一般会选择如下三种数据结构。</p>
+<ul>
+<li>数组</li>
+<li>set （集合）</li>
+<li>map(映射)</li>
+</ul>
+<p>这里数组就没啥可说的了，我们来看一下set。</p>
+<p>在C++中，set 和 map 分别提供以下三种数据结构，其底层实现以及优劣如下表所示：</p>
+<div class="table-wrapper"><table><thead><tr><th>集合</th><th>底层实现</th><th>是否有序</th><th>数值是否可以重复</th><th>能否更改数值</th><th>查询效率</th><th>增删效率</th></tr></thead><tbody>
+<tr><td>std::set</td><td>红黑树</td><td>有序</td><td>否</td><td>否</td><td>O(log n)</td><td>O(log n)</td></tr>
+<tr><td>std::multiset</td><td>红黑树</td><td>有序</td><td>是</td><td>否</td><td>O(logn)</td><td>O(logn)</td></tr>
+<tr><td>std::unordered_set</td><td>哈希表</td><td>无序</td><td>否</td><td>否</td><td>O(1)</td><td>O(1)</td></tr>
+</tbody></table>
+</div>
+<p>std::unordered_set底层实现为哈希表，<code>std::set</code> 和<code>std::multiset</code> 的底层实现是红黑树，红黑树是一种平衡二叉搜索树，所以key值是有序的，但key不可以修改，改动key值会导致整棵树的错乱，所以只能删除和增加。</p>
+<div class="table-wrapper"><table><thead><tr><th>映射</th><th>底层实现</th><th>是否有序</th><th>数值是否可以重复</th><th>能否更改数值</th><th>查询效率</th><th>增删效率</th></tr></thead><tbody>
+<tr><td>std::map</td><td>红黑树</td><td>key有序</td><td>key不可重复</td><td>key不可修改</td><td>O(logn)</td><td>O(logn)</td></tr>
+<tr><td>std::multimap</td><td>红黑树</td><td>key有序</td><td>key可重复</td><td>key不可修改</td><td>O(log n)</td><td>O(log n)</td></tr>
+<tr><td>std::unordered_map</td><td>哈希表</td><td>key无序</td><td>key不可重复</td><td>key不可修改</td><td>O(1)</td><td>O(1)</td></tr>
+</tbody></table>
+</div>
+<p><code>std::unordered_map</code> 底层实现为哈希表，<code>std::map</code> 和<code>std::multimap</code> 的底层实现是红黑树。同理，<code>std::map</code> 和<code>std::multimap</code> 的key也是有序的（这个问题也经常作为面试题，考察对语言容器底层的理解）。</p>
+<p>当我们要使用集合来解决哈希问题的时候，优先使用<code>unordered_set</code>，因为它的查询和增删效率是最优的，如果需要集合是有序的，那么就用set，如果要求不仅有序还要有重复数据的话，那么就用<code>multiset</code>。</p>
+<p>那么再来看一下map ，在map 是一个key value 的数据结构，map中，对key是有限制，对value没有限制的，因为key的存储方式使用红黑树实现的。</p>
+<p>其他语言例如：Java里的HashMap ，TreeMap 都是一样的原理。可以灵活贯通。</p>
+<p>虽然<code>std::set</code>和<code>std::multiset</code> 的底层实现基于红黑树而非哈希表，它们通过红黑树来索引和存储数据。不过给我们的使用方式，还是哈希法的使用方式，即依靠键（key）来访问值（value）。所以使用这些数据结构来解决映射问题的方法，我们依然称之为哈希法。<code>std::map</code>也是一样的道理。</p>
+<p>这里在说一下，一些C++的经典书籍上 例如STL源码剖析，说到了<code>hash_set</code> 和<code>hash_map</code>，这个与<code>unordered_set</code>，<code>unordered_map</code>又有什么关系呢？</p>
+<p>实际上功能都是一样一样的， 但是<code>unordered_set</code>在C++11的时候被引入标准库了，而hash_set并没有，所以建议还是使用<code>unordered_set</code>比较好，这就好比一个是官方认证的，<code>hash_set</code>，<code>hash_map</code> 是C++11标准之前民间高手自发造的轮子。</p>
+<p><img src="https://code-thinking-1253855093.file.myqcloud.com/pics/20210104235134572.png" alt="哈希表6" /></p>
+<h2 id="哈希表经典题目"><a class="header" href="#哈希表经典题目">哈希表经典题目</a></h2>
+<h3 id="数组作为哈希表"><a class="header" href="#数组作为哈希表">数组作为哈希表</a></h3>
+<p>一些应用场景就是为数组量身定做的。</p>
+<p>在<a href="https://programmercarl.com/0242.%E6%9C%89%E6%95%88%E7%9A%84%E5%AD%97%E6%AF%8D%E5%BC%82%E4%BD%8D%E8%AF%8D.html">242.有效的字母异位词 </a>中，我们提到了数组就是简单的哈希表，但是数组的大小是受限的！</p>
+<p>这道题目包含小写字母，那么使用数组来做哈希最合适不过。</p>
+<p>在<a href="https://programmercarl.com/0383.%E8%B5%8E%E9%87%91%E4%BF%A1.html">383.赎金信 </a>中同样要求只有小写字母，那么就给我们浓浓的暗示，用数组！</p>
+<p>本题和<a href="https://programmercarl.com/0242.%E6%9C%89%E6%95%88%E7%9A%84%E5%AD%97%E6%AF%8D%E5%BC%82%E4%BD%8D%E8%AF%8D.html">242.有效的字母异位词 </a>很像，<a href="https://programmercarl.com/0242.%E6%9C%89%E6%95%88%E7%9A%84%E5%AD%97%E6%AF%8D%E5%BC%82%E4%BD%8D%E8%AF%8D.html">242.有效的字母异位词 </a>是求 字符串a 和 字符串b 是否可以相互组成，在<a href="https://programmercarl.com/0383.%E8%B5%8E%E9%87%91%E4%BF%A1.html">383.赎金信 </a>中是求字符串a能否组成字符串b，而不用管字符串b 能不能组成字符串a。</p>
+<p>一些同学可能想，用数组干啥，都用map不就完事了。</p>
+<p><strong>上面两道题目用map确实可以，但使用map的空间消耗要比数组大一些，因为map要维护红黑树或者符号表，而且还要做哈希函数的运算。所以数组更加简单直接有效！</strong></p>
+<h3 id="set作为哈希表"><a class="header" href="#set作为哈希表">set作为哈希表</a></h3>
+<p>在<a href="https://programmercarl.com/0349.%E4%B8%A4%E4%B8%AA%E6%95%B0%E7%BB%84%E7%9A%84%E4%BA%A4%E9%9B%86.html">349. 两个数组的交集 </a>中我们给出了什么时候用数组就不行了，需要用set。</p>
+<p>这道题目没有限制数值的大小，就无法使用数组来做哈希表了。</p>
+<p><strong>主要因为如下两点：</strong></p>
+<ul>
+<li>数组的大小是有限的，受到系统栈空间（不是数据结构的栈）的限制。</li>
+<li>如果数组空间够大，但哈希值比较少、特别分散、跨度非常大，使用数组就造成空间的极大浪费。</li>
+</ul>
+<p>所以此时一样的做映射的话，就可以使用set了。</p>
+<p>关于set，C++ 给提供了如下三种可用的数据结构：（详情请看<a href="https://programmercarl.com/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%90%86%E8%AE%BA%E5%9F%BA%E7%A1%80.html">关于哈希表，你该了解这些！ </a>）</p>
+<ul>
+<li>std::set</li>
+<li>std::multiset</li>
+<li>std::unordered_set</li>
+</ul>
+<p>std::set和std::multiset底层实现都是红黑树，std::unordered_set的底层实现是哈希， 使用unordered_set 读写效率是最高的，本题并不需要对数据进行排序，而且还不要让数据重复，所以选择unordered_set。</p>
+<p>在<a href="https://programmercarl.com/0202.%E5%BF%AB%E4%B9%90%E6%95%B0.html">202.快乐数 </a>中，我们再次使用了unordered_set来判断一个数是否重复出现过。</p>
+<h3 id="map作为哈希表"><a class="header" href="#map作为哈希表">map作为哈希表</a></h3>
+<p>在<a href="https://programmercarl.com/0001.%E4%B8%A4%E6%95%B0%E4%B9%8B%E5%92%8C.html">1.两数之和 </a>中map正式登场。</p>
+<p>来说一说：使用数组和set来做哈希法的局限。</p>
+<ul>
+<li>数组的大小是受限制的，而且如果元素很少，而哈希值太大会造成内存空间的浪费。</li>
+<li>set是一个集合，里面放的元素只能是一个key，而两数之和这道题目，不仅要判断y是否存在而且还要记录y的下标位置，因为要返回x 和 y的下标。所以set 也不能用。</li>
+</ul>
+<p>map是一种<code>&lt;key, value&gt;</code>的结构，本题可以用key保存数值，用value在保存数值所在的下标。所以使用map最为合适。</p>
+<p>C++提供如下三种map：（详情请看<a href="https://programmercarl.com/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%90%86%E8%AE%BA%E5%9F%BA%E7%A1%80.html">关于哈希表，你该了解这些！ </a>）</p>
+<ul>
+<li>std::map</li>
+<li>std::multimap</li>
+<li>std::unordered_map</li>
+</ul>
+<p>std::unordered_map 底层实现为哈希，std::map 和std::multimap 的底层实现是红黑树。</p>
+<p>同理，std::map 和std::multimap 的key也是有序的（这个问题也经常作为面试题，考察对语言容器底层的理解），<a href="https://programmercarl.com/0001.%E4%B8%A4%E6%95%B0%E4%B9%8B%E5%92%8C.html">1.两数之和 </a>中并不需要key有序，选择std::unordered_map 效率更高！</p>
+<p>在<a href="https://programmercarl.com/0454.%E5%9B%9B%E6%95%B0%E7%9B%B8%E5%8A%A0II.html">454.四数相加 </a>中我们提到了其实需要哈希的地方都能找到map的身影。</p>
+<p>本题咋眼一看好像和<a href="https://programmercarl.com/0018.%E5%9B%9B%E6%95%B0%E4%B9%8B%E5%92%8C.html">18. 四数之和 </a>，<a href="https://programmercarl.com/0015.%E4%B8%89%E6%95%B0%E4%B9%8B%E5%92%8C.html">15.三数之和 </a>差不多，其实差很多！</p>
+<p><strong>关键差别是本题为四个独立的数组，只要找到A[i] + B[j] + C[k] + D[l] = 0就可以，不用考虑重复问题，而<a href="https://programmercarl.com/0018.%E5%9B%9B%E6%95%B0%E4%B9%8B%E5%92%8C.html">18. 四数之和 </a>，<a href="https://programmercarl.com/0015.%E4%B8%89%E6%95%B0%E4%B9%8B%E5%92%8C.html">15.三数之和 </a>是一个数组（集合）里找到和为0的组合，可就难很多了！</strong></p>
+<p>用哈希法解决了两数之和，很多同学会感觉用哈希法也可以解决三数之和，四数之和。</p>
+<p>其实是可以解决，但是非常麻烦，需要去重导致代码效率很低。</p>
+<p>在<a href="https://programmercarl.com/0015.%E4%B8%89%E6%95%B0%E4%B9%8B%E5%92%8C.html">15.三数之和 </a>中我给出了哈希法和双指针两个解法，大家就可以体会到，使用哈希法还是比较麻烦的。</p>
+<p>所以18. 四数之和，15.三数之和都推荐使用双指针法！</p>
+<h2 id="总结-1"><a class="header" href="#总结-1">总结</a></h2>
+<p>总结一下，<strong>当我们遇到了要快速判断一个元素是否出现集合里的时候，就要考虑哈希法</strong>。</p>
+<p>但是哈希法也是<strong>牺牲了空间换取了时间</strong>，因为我们要使用额外的数组，set或者是map来存放数据，才能实现快速的查找。</p>
+<p>如果在做面试题目的时候遇到需要判断一个元素是否出现过的场景也应该第一时间想到哈希法！</p>
+<p>对于哈希表的知识相信很多同学都知道，但是没有成体系。</p>
+<p>本篇我们从哈希表的理论基础到数组、set和map的经典应用，把哈希表的整个全貌完整的呈现给大家。</p>
+<p><strong>同时也强调虽然map是万能的，详细介绍了什么时候用数组，什么时候用set</strong>。</p>
+<p>相信通过这个总结篇，大家可以对哈希表有一个全面的了解。</p>
+<div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
+<h1 id="哈希数组"><a class="header" href="#哈希数组">哈希数组</a></h1>
+<ul>
+<li><a href="%E5%93%88%E5%B8%8C%E8%A1%A8/%E5%93%88%E5%B8%8C%E6%95%B0%E7%BB%84.html#242-valid-anagram">242. Valid Anagram</a>
+<ul>
+<li><a href="%E5%93%88%E5%B8%8C%E8%A1%A8/%E5%93%88%E5%B8%8C%E6%95%B0%E7%BB%84.html#%E6%80%9D%E8%B7%AF">思路</a></li>
+<li><a href="%E5%93%88%E5%B8%8C%E8%A1%A8/%E5%93%88%E5%B8%8C%E6%95%B0%E7%BB%84.html#c%E8%A7%A3%E6%B3%95">C++解法</a></li>
+<li><a href="%E5%93%88%E5%B8%8C%E8%A1%A8/%E5%93%88%E5%B8%8C%E6%95%B0%E7%BB%84.html#java%E8%A7%A3%E6%B3%95">Java解法</a></li>
+</ul>
+</li>
+<li><a href="%E5%93%88%E5%B8%8C%E8%A1%A8/%E5%93%88%E5%B8%8C%E6%95%B0%E7%BB%84.html#438-find-all-anagrams-in-a-string">438. Find All Anagrams in a String</a>
+<ul>
+<li><a href="%E5%93%88%E5%B8%8C%E8%A1%A8/%E5%93%88%E5%B8%8C%E6%95%B0%E7%BB%84.html#%E6%80%9D%E8%B7%AF-1">思路</a></li>
+<li><a href="%E5%93%88%E5%B8%8C%E8%A1%A8/%E5%93%88%E5%B8%8C%E6%95%B0%E7%BB%84.html#c%E8%A7%A3%E6%B3%95-1">C++解法</a></li>
+<li><a href="%E5%93%88%E5%B8%8C%E8%A1%A8/%E5%93%88%E5%B8%8C%E6%95%B0%E7%BB%84.html#java%E8%A7%A3%E6%B3%95-1">Java解法</a></li>
+</ul>
+</li>
+<li><a href="%E5%93%88%E5%B8%8C%E8%A1%A8/%E5%93%88%E5%B8%8C%E6%95%B0%E7%BB%84.html#2273-find-resultant-array-after-removing-anagrams">2273. Find Resultant Array After Removing Anagrams</a>
+<ul>
+<li><a href="%E5%93%88%E5%B8%8C%E8%A1%A8/%E5%93%88%E5%B8%8C%E6%95%B0%E7%BB%84.html#%E6%80%9D%E8%B7%AF-2">思路</a></li>
+<li><a href="%E5%93%88%E5%B8%8C%E8%A1%A8/%E5%93%88%E5%B8%8C%E6%95%B0%E7%BB%84.html#c%E8%A7%A3%E6%B3%95-2">C++解法</a></li>
+<li><a href="%E5%93%88%E5%B8%8C%E8%A1%A8/%E5%93%88%E5%B8%8C%E6%95%B0%E7%BB%84.html#java%E8%A7%A3%E6%B3%95-2">Java解法</a></li>
+</ul>
+</li>
+<li><a href="%E5%93%88%E5%B8%8C%E8%A1%A8/%E5%93%88%E5%B8%8C%E6%95%B0%E7%BB%84.html#268-missing-number">268. Missing Number</a>
+<ul>
+<li><a href="%E5%93%88%E5%B8%8C%E8%A1%A8/%E5%93%88%E5%B8%8C%E6%95%B0%E7%BB%84.html#%E6%80%9D%E8%B7%AF-3">思路</a></li>
+<li><a href="%E5%93%88%E5%B8%8C%E8%A1%A8/%E5%93%88%E5%B8%8C%E6%95%B0%E7%BB%84.html#c%E8%A7%A3%E6%B3%95-3">C++解法</a></li>
+</ul>
+</li>
+<li><a href="%E5%93%88%E5%B8%8C%E8%A1%A8/%E5%93%88%E5%B8%8C%E6%95%B0%E7%BB%84.html#287-find-the-duplicate-number">287. Find the Duplicate Number</a>
+<ul>
+<li><a href="%E5%93%88%E5%B8%8C%E8%A1%A8/%E5%93%88%E5%B8%8C%E6%95%B0%E7%BB%84.html#%E6%80%9D%E8%B7%AF-4">思路</a></li>
+<li><a href="%E5%93%88%E5%B8%8C%E8%A1%A8/%E5%93%88%E5%B8%8C%E6%95%B0%E7%BB%84.html#c%E8%A7%A3%E6%B3%95-4">C++解法</a></li>
+</ul>
+</li>
+<li><a href="%E5%93%88%E5%B8%8C%E8%A1%A8/%E5%93%88%E5%B8%8C%E6%95%B0%E7%BB%84.html#349-intersection-of-two-arrays">349. Intersection of Two Arrays</a>
+<ul>
+<li><a href="%E5%93%88%E5%B8%8C%E8%A1%A8/%E5%93%88%E5%B8%8C%E6%95%B0%E7%BB%84.html#%E6%80%9D%E8%B7%AF-5">思路</a></li>
+<li><a href="%E5%93%88%E5%B8%8C%E8%A1%A8/%E5%93%88%E5%B8%8C%E6%95%B0%E7%BB%84.html#c%E8%A7%A3%E6%B3%95-5">C++解法</a></li>
+<li><a href="%E5%93%88%E5%B8%8C%E8%A1%A8/%E5%93%88%E5%B8%8C%E6%95%B0%E7%BB%84.html#java%E8%A7%A3%E6%B3%95-3">Java解法</a></li>
+<li><a href="%E5%93%88%E5%B8%8C%E8%A1%A8/%E5%93%88%E5%B8%8C%E6%95%B0%E7%BB%84.html#python%E8%A7%A3%E6%B3%95">Python解法</a></li>
+<li><a href="%E5%93%88%E5%B8%8C%E8%A1%A8/%E5%93%88%E5%B8%8C%E6%95%B0%E7%BB%84.html#go%E8%A7%A3%E6%B3%95">Go解法</a></li>
+<li><a href="%E5%93%88%E5%B8%8C%E8%A1%A8/%E5%93%88%E5%B8%8C%E6%95%B0%E7%BB%84.html#rust%E8%A7%A3%E6%B3%95">Rust解法</a></li>
+</ul>
+</li>
+<li><a href="%E5%93%88%E5%B8%8C%E8%A1%A8/%E5%93%88%E5%B8%8C%E6%95%B0%E7%BB%84.html#350-intersection-of-two-arrays-ii">350. Intersection of Two Arrays II</a>
+<ul>
+<li><a href="%E5%93%88%E5%B8%8C%E8%A1%A8/%E5%93%88%E5%B8%8C%E6%95%B0%E7%BB%84.html#%E6%80%9D%E8%B7%AF-6">思路</a></li>
+<li><a href="%E5%93%88%E5%B8%8C%E8%A1%A8/%E5%93%88%E5%B8%8C%E6%95%B0%E7%BB%84.html#c%E8%A7%A3%E6%B3%95-6">C++解法</a></li>
+</ul>
+</li>
+<li><a href="%E5%93%88%E5%B8%8C%E8%A1%A8/%E5%93%88%E5%B8%8C%E6%95%B0%E7%BB%84.html#383-ransom-note">383. Ransom Note</a>
+<ul>
+<li><a href="%E5%93%88%E5%B8%8C%E8%A1%A8/%E5%93%88%E5%B8%8C%E6%95%B0%E7%BB%84.html#%E6%80%9D%E8%B7%AF-7">思路</a></li>
+<li><a href="%E5%93%88%E5%B8%8C%E8%A1%A8/%E5%93%88%E5%B8%8C%E6%95%B0%E7%BB%84.html#c%E8%A7%A3%E6%B3%95-7">C++解法</a></li>
+<li><a href="%E5%93%88%E5%B8%8C%E8%A1%A8/%E5%93%88%E5%B8%8C%E6%95%B0%E7%BB%84.html#java%E8%A7%A3%E6%B3%95-4">Java解法</a></li>
+</ul>
+</li>
+<li><a href="%E5%93%88%E5%B8%8C%E8%A1%A8/%E5%93%88%E5%B8%8C%E6%95%B0%E7%BB%84.html#2215-find-the-difference-of-two-arrays">2215. Find the Difference of Two Arrays</a>
+<ul>
+<li><a href="%E5%93%88%E5%B8%8C%E8%A1%A8/%E5%93%88%E5%B8%8C%E6%95%B0%E7%BB%84.html#%E6%80%9D%E8%B7%AF-8">思路</a></li>
+<li><a href="%E5%93%88%E5%B8%8C%E8%A1%A8/%E5%93%88%E5%B8%8C%E6%95%B0%E7%BB%84.html#c%E8%A7%A3%E6%B3%95-8">C++解法</a></li>
+</ul>
+</li>
+<li><a href="%E5%93%88%E5%B8%8C%E8%A1%A8/%E5%93%88%E5%B8%8C%E6%95%B0%E7%BB%84.html#2248-intersection-of-multiple-arrays">2248. Intersection of Multiple Arrays</a>
+<ul>
+<li><a href="%E5%93%88%E5%B8%8C%E8%A1%A8/%E5%93%88%E5%B8%8C%E6%95%B0%E7%BB%84.html#%E6%80%9D%E8%B7%AF-9">思路</a></li>
+<li><a href="%E5%93%88%E5%B8%8C%E8%A1%A8/%E5%93%88%E5%B8%8C%E6%95%B0%E7%BB%84.html#c%E8%A7%A3%E6%B3%95-9">C++解法</a></li>
+</ul>
+</li>
+</ul>
+<h1 id="242-valid-anagram"><a class="header" href="#242-valid-anagram"><a href="https://leetcode.com/problems/valid-anagram/">242. Valid Anagram</a></a></h1>
+<p>Given two strings <code>s</code> and <code>t</code>, return <code>true</code> if <code>t</code> is an anagram of <code>s</code>, and <code>false</code> otherwise.</p>
+<p>An anagram is a word or phrase formed by rearranging the letters of a different word or phrase, using all the original letters exactly once.</p>
+<p><strong>Example 1:</strong></p>
+<p><strong>Input:</strong> s = "anagram", t = "nagaram"</p>
+<p><strong>Output:</strong> true</p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> s = "rat", t = "car"</p>
+<p><strong>Output:</strong> false</p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= s.length, t.length &lt;= 5 * 10^4</code></li>
+<li><code>s</code> and <code>t</code> consist of lowercase English letters.</li>
+</ul>
+<p><strong>Follow up:</strong> What if the inputs contain Unicode characters? How would you adapt your solution to such a case?</p>
+<h2 id="思路-30"><a class="header" href="#思路-30">思路</a></h2>
+<p>先判断两个字符串长度是否相等，然后使用哈希数组存储出现过的字母，一增一减，判断数组中元素是否全为0即可。</p>
+<h2 id="c解法-18"><a class="header" href="#c解法-18">C++解法</a></h2>
+<pre><code class="language-cpp">class Solution {
+public:
+    bool isAnagram(string s, string t) {
+        if(s.length() != t.length()){
+            return false;
+        }
+        int hash[26] = {0};
+        int i = 0;
+        while(s[i] != '\0')
+        {
+            hash[s[i] - 'a']++;
+            i++;
+        }
+        i = 0;
+        while(t[i] != '\0')
+        {
+            hash[t[i] - 'a']--;
+            i++;
+        }
+        for(int i = 0; i &lt; 26; i++)
+        {
+            if(hash[i] != 0)
+                return false;
+        }
+        return true;
+    }
+};
+</code></pre>
+<h2 id="java解法-13"><a class="header" href="#java解法-13">Java解法</a></h2>
+<p>以下是修改后的代码：</p>
+<pre><code class="language-java">class Solution {
+    public boolean isAnagram(String s, String t) {
+        // 检查两个字符串的长度是否相同
+        if (s.length() != t.length()) {
+            return false;
+        }
+
+        // 创建一个大小为26的数组来计数
+        int[] chars = new int[26];
+
+        // 遍历第一个字符串，增加字符计数
+        for (char ch : s.toCharArray()) {
+            chars[ch - 'a']++;
+        }
+
+        // 遍历第二个字符串，减少字符计数
+        for (char ch : t.toCharArray()) {
+            chars[ch - 'a']--;
+        }
+
+        // 检查所有计数是否都为0
+        for (int count : chars) {
+            if (count != 0) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+}
+</code></pre>
+<p>说明：</p>
+<ol>
+<li><strong>长度检查</strong>: 首先检查两个字符串的长度，如果不同，直接返回<code>false</code>。</li>
+<li><strong>使用数组</strong>: 使用<code>int[] chars = new int[26];</code>来记录每个字母的计数，避免了动态大小带来的问题。</li>
+<li><strong>更新字符计数</strong>: 第一个字符串的字符计数增加，第二个字符串的字符计数减少，以便最终检查结果。</li>
+<li><strong>检查计数</strong>: 最后检查计数数组，如果所有元素都是0，则两个字符串是异位词。</li>
+</ol>
+<h1 id="438-find-all-anagrams-in-a-string"><a class="header" href="#438-find-all-anagrams-in-a-string"><a href="https://leetcode.com/problems/find-all-anagrams-in-a-string/">438. Find All Anagrams in a String</a></a></h1>
+<p>Given two strings <code>s</code> and <code>p</code>, return an array of all the start indices of <code>p</code>'s anagrams in <code>s</code>. You may return the answer in <strong>any order</strong>.</p>
+<p><strong>Example 1:</strong></p>
+<p><strong>Input:</strong> <code>s = "cbaebabacd", p = "abc"</code><br />
+<strong>Output:</strong> <code>[0,6]</code></p>
+<p><strong>Explanation:</strong>
+The substring with start index = 0 is "cba", which is an anagram of "abc".
+The substring with start index = 6 is "bac", which is an anagram of "abc".</p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> <code>s = "abab", p = "ab"</code><br />
+<strong>Output:</strong> <code>[0,1,2]</code></p>
+<p><strong>Explanation:</strong>
+The substring with start index = 0 is "ab", which is an anagram of "ab".
+The substring with start index = 1 is "ba", which is an anagram of "ab".
+The substring with start index = 2 is "ab", which is an anagram of "ab".</p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= s.length, p.length &lt;= 3 * 10^4</code></li>
+<li><code>s</code> and <code>p</code> consist of lowercase English letters.</li>
+</ul>
+<h2 id="思路-31"><a class="header" href="#思路-31">思路</a></h2>
+<p>方法一：遍历，截取子字符串，判断是否是anagram。这种方式效率低下。</p>
+<p>方法二：滑动数组</p>
+<h2 id="c解法-19"><a class="header" href="#c解法-19">C++解法</a></h2>
+<p>方法二：滑动数组</p>
+<p>For 2 strings to be anagrams of each other, they should have the same elements with the same frequency.</p>
+<pre><code class="language-cpp">vector&lt;int&gt; findAnagrams(string s, string p) {
+        int s_len = s.length();
+        int p_len = p.length();
+        
+        if(s.size() &lt; p.size()) return {};
+        
+        vector&lt;int&gt; freq_p(26,0);
+        vector&lt;int&gt; window(26,0);
+        
+        //first window
+        for(int i=0;i&lt;p_len;i++){
+            freq_p[p[i]-'a']++;
+            window[s[i]-'a']++;
+        }
+        
+        vector&lt;int&gt; ans;
+        if(freq_p == window) ans.push_back(0);
+        
+        for(int i=p_len;i&lt;s_len;i++){
+            window[s[i-p_len] - 'a']--;
+            window[s[i] - 'a']++;
+            
+            if(freq_p == window) ans.push_back(i-p_len+1);
+        }
+        return ans;
+    }
+</code></pre>
+<p>**Time Complexity = O(n * 26) = O(n), n is the length of string s.</p>
+<p>Space Complexity = O(26) = O(1)</p>
+<p>这段 C++ 代码用于找到字符串 <code>s</code> 中所有与字符串 <code>p</code> 由字符组成的所有不同的字母异位词（anagrams）。下面是代码的详细解释：</p>
+<p>代码结构解析</p>
+<ol>
+<li>
+<p><strong>定义函数和参数：</strong></p>
+<pre><code class="language-cpp">vector&lt;int&gt; findAnagrams(string s, string p) {
+</code></pre>
+<p>这里定义了一个函数 <code>findAnagrams</code>，接收两个字符串 <code>s</code> 和 <code>p</code>，返回一个 <code>vector&lt;int&gt;</code> 结果，表示 <code>s</code> 中所有 <code>p</code> 的异位词的起始索引。</p>
+</li>
+<li>
+<p><strong>获取字符串长度并进行初步检查：</strong></p>
+<pre><code class="language-cpp">int s_len = s.length();
+int p_len = p.length();
+
+if(s.size() &lt; p.size()) return {};
+</code></pre>
+<ul>
+<li><code>s_len</code> 和 <code>p_len</code> 分别存储字符串 <code>s</code> 和 <code>p</code> 的长度。</li>
+<li>如果 <code>s</code> 的长度小于 <code>p</code> 的长度，则 <code>s</code> 中不可能包含 <code>p</code> 的异位词，函数直接返回一个空的 <code>vector</code>。</li>
+</ul>
+</li>
+<li>
+<p><strong>初始化频率数组：</strong></p>
+<pre><code class="language-cpp">vector&lt;int&gt; freq_p(26,0);
+vector&lt;int&gt; window(26,0);
+</code></pre>
+<ul>
+<li><code>freq_p</code> 用于存储字符串 <code>p</code> 中各个字符的频率。</li>
+<li><code>window</code> 用于记录当前窗口（即 <code>s</code> 中的一个子串）内各个字符的频率。</li>
+</ul>
+</li>
+<li>
+<p><strong>计算第一个窗口的字符频率：</strong></p>
+<pre><code class="language-cpp">for(int i=0;i&lt;p_len;i++){
+    freq_p[p[i]-'a']++;
+    window[s[i]-'a']++;
+}
+</code></pre>
+<ul>
+<li>遍历 <code>p</code> 和 <code>s</code> 的前 <code>p_len</code> 个字符，更新 <code>freq_p</code> 和 <code>window</code> 中各个字符的频率。</li>
+<li><code>p[i] - 'a'</code> 计算出字符 <code>p[i]</code> 对应的数组索引（以 <code>a</code> 为起始索引）。</li>
+</ul>
+</li>
+<li>
+<p><strong>检查第一个窗口：</strong></p>
+<pre><code class="language-cpp">vector&lt;int&gt; ans;
+if(freq_p == window) ans.push_back(0);
+</code></pre>
+<ul>
+<li>如果 <code>freq_p</code> 和 <code>window</code> 相等，则说明第一个窗口是 <code>p</code> 的一个异位词，索引 0 被加入到结果 <code>ans</code> 中。</li>
+</ul>
+</li>
+<li>
+<p><strong>滑动窗口：</strong></p>
+<pre><code class="language-cpp">for(int i=p_len;i&lt;s_len;i++){
+    window[s[i-p_len] - 'a']--;
+    window[s[i] - 'a']++;
+    
+    if(freq_p == window) ans.push_back(i-p_len+1);
+}
+</code></pre>
+<ul>
+<li>从 <code>p_len</code> 开始，遍历 <code>s</code> 的后续字符。</li>
+<li>每次滑动窗口时，<strong>移除</strong>左侧字符 <code>s[i - p_len]</code> 的频率 (因为这个字符不再在窗口中)，并 <strong>增加</strong>右侧字符 <code>s[i]</code> 的频率。</li>
+<li>在每次滑动后，检查 <code>freq_p</code> 和 <code>window</code> 是否相等，如果相等，则将当前窗口的起始索引 ( <code>i - p_len + 1</code>) 加入 <code>ans</code> 中。</li>
+</ul>
+</li>
+<li>
+<p><strong>返回结果：</strong></p>
+<pre><code class="language-cpp">return ans;
+</code></pre>
+<ul>
+<li>函数返回所有找到的索引的 <code>vector</code>。</li>
+</ul>
+</li>
+</ol>
+<p>总结</p>
+<p>这段代码使用了一个滑动窗口的技术，通过维护两个频率数组（一个用于 <code>p</code> 的字符频率，另一个用于 <code>s</code> 中当前窗口的字符频率）来高效地查找字符串 <code>s</code> 中所有 <code>p</code> 的异位词。每次窗口滑动时，只需更新频率数组，而不需要重新计算整个窗口的字符频率，从而提升了效率。整体时间复杂度为 O(n)，其中 n 是字符串 <code>s</code> 的长度。</p>
+<h2 id="java解法-14"><a class="header" href="#java解法-14">Java解法</a></h2>
+<p>方法一：</p>
+<pre><code class="language-java">class Solution {  
+    public List&lt;Integer&gt; findAnagrams(String s, String p) {  
+        List&lt;Integer&gt; result = new ArrayList&lt;&gt;();  
+        int pLength = p.length();  
+        int sLength = s.length();  
+        
+        // 仅当s的长度大于或等于p的长度时才处理  
+        if (sLength &lt; pLength) return result;  
+
+        for (int i = 0; i &lt;= sLength - pLength; i++) { // 修改为 &lt;= 确保包含最后一个可能的起点  
+            String temp = s.substring(i, i + pLength); // 修正这一行  
+            if (isAnagram(temp, p)) {  
+                result.add(i);  
+            }  
+        }  
+        return result;  
+    }  
+    
+    public boolean isAnagram(String s, String t) {  
+        // 检查两个字符串的长度是否相同  
+        if (s.length() != t.length()) {  
+            return false;  
+        }  
+
+        // 创建一个大小为26的数组来计数  
+        int[] chars = new int[26];  
+
+        // 遍历第一个字符串，增加字符计数  
+        for (char ch : s.toCharArray()) {  
+            chars[ch - 'a']++;  
+        }  
+
+        // 遍历第二个字符串，减少字符计数  
+        for (char ch : t.toCharArray()) {  
+            chars[ch - 'a']--;  
+        }  
+
+        // 检查所有计数是否都为0  
+        for (int count : chars) {  
+            if (count != 0) {  
+                return false;  
+            }  
+        }  
+
+        return true;  
+    }  
+}  
+</code></pre>
+<h1 id="2273-find-resultant-array-after-removing-anagrams"><a class="header" href="#2273-find-resultant-array-after-removing-anagrams"><a href="https://leetcode.com/problems/find-resultant-array-after-removing-anagrams/">2273. Find Resultant Array After Removing Anagrams</a></a></h1>
+<p>You are given a <strong>0-indexed</strong> string array <code>words</code>, where <code>words[i]</code> consists of lowercase English letters.</p>
+<p>In one operation, select any index <code>i</code> such that <code>0 &lt; i &lt; words.length</code> and <code>words[i - 1]</code> and <code>words[i]</code> are <strong>anagrams</strong>, and <strong>delete</strong> <code>words[i]</code> from <code>words</code>. Keep performing this operation as long as you can select an index that satisfies the conditions.</p>
+<p>Return <code>words</code> <em>after performing all operations</em>. It can be shown that selecting the indices for each operation in <strong>any</strong> arbitrary order will lead to the same result.</p>
+<p>An <strong>Anagram</strong> is a word or phrase formed by rearranging the letters of a different word or phrase using all the original letters exactly once. For example, <code>"dacb"</code> is an anagram of <code>"abdc"</code>.</p>
+<p><strong>Example 1:</strong></p>
+<p><strong>Input:</strong> <code>words = ["abba","baba","bbaa","cd","cd"]</code><br />
+<strong>Output:</strong> <code>["abba","cd"]</code><br />
+<strong>Explanation:</strong></p>
+<pre><code>One of the ways we can obtain the resultant array is by using the following operations:
+- Since words[2] = "bbaa" and words[1] = "baba" are anagrams, we choose index 2 and delete words[2].
+  Now words = ["abba","baba","cd","cd"].
+- Since words[1] = "baba" and words[0] = "abba" are anagrams, we choose index 1 and delete words[1].
+  Now words = ["abba","cd","cd"].
+- Since words[2] = "cd" and words[1] = "cd" are anagrams, we choose index 2 and delete words[2].
+  Now words = ["abba","cd"].
+We can no longer perform any operations, so ["abba","cd"] is the final answer.
+</code></pre>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> <code>words = ["a","b","c","d","e"]</code><br />
+<strong>Output:</strong> <code>["a","b","c","d","e"]</code><br />
+<strong>Explanation:</strong></p>
+<p>No two adjacent strings in words are anagrams of each other, so no operations are performed.</p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= words.length &lt;= 100</code></li>
+<li><code>1 &lt;= words[i].length &lt;= 10</code></li>
+<li><code>words[i]</code> consists of lowercase English letters.</li>
+</ul>
+<h2 id="思路-32"><a class="header" href="#思路-32">思路</a></h2>
+<p>方法一：设定prev=""，每个新元素都排序后转为字符串，然后和prev比较，不相同则加入结果集中</p>
+<p>方法二：使用栈</p>
+<h2 id="c解法-20"><a class="header" href="#c解法-20">C++解法</a></h2>
+<pre><code class="language-cpp">class Solution {
+public:
+    vector&lt;string&gt; removeAnagrams(vector&lt;string&gt;&amp; words) {
+        for(int i = 1;i&lt;words.size();i++){
+            string x = words[i];
+            sort(x.begin(),x.end());
+            string y = words[i-1];
+            sort(y.begin(),y.end());
+            if(x == y){
+                words.erase(words.begin() + i);
+                i--;
+            }
+        }
+        return words;
+    }
+};
+</code></pre>
+<h2 id="java解法-15"><a class="header" href="#java解法-15">Java解法</a></h2>
+<p>方法一完整测试代码：</p>
+<pre><code class="language-java">import java.util.*;
+
+class Solution {
+    public List&lt;String&gt; removeAnagrams(String[] words) {
+        String prev = "";
+        List&lt;String&gt; li = new ArrayList&lt;&gt;();
+        for (int i = 0; i &lt; words.length; i++) {
+            char[] ch = words[i].toCharArray();
+            Arrays.sort(ch);
+            //System.out.println("ch: " + Arrays.toString(ch));
+            String curr = String.valueOf(ch);
+            //System.out.println("curr: " + curr);
+            if (!curr.equals(prev)) {
+                li.add(words[i]);
+                prev = curr;
+            }
+        }
+        return li;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Solution solution = new Solution();
+        
+        String[] words1 = {"abba", "baba", "bbaa", "cd", "cd"};
+        System.out.println("Input: " + Arrays.toString(words1));
+        List&lt;String&gt; output = solution.removeAnagrams(words1);
+        System.out.println("Output: " + output);
+    }
+}
+</code></pre>
+<p>使用栈的解法如下所示：</p>
+<pre><code class="language-java">class Solution {
+    public List&lt;String&gt; removeAnagrams(String[] words) {
+        Stack&lt;String&gt; stack = new Stack&lt;&gt;();
+        for(int i = words.length-1;i&gt;= 0;i--){
+            String s = words[i];
+            while(!stack.isEmpty() &amp;&amp; anagram(stack.peek(),s) == true)stack.pop();
+            stack.push(s);
+        }
+        List&lt;String&gt; res = new ArrayList&lt;&gt;();
+        while(!stack.isEmpty())res.add(stack.pop());
+        return res;
+    }
+    
+    public boolean anagram(String p,String q){
+        int arr[] = new int[26];
+        for(char i : p.toCharArray())arr[i-'a']+=1;
+        for(char i : q.toCharArray())arr[i-'a']-=1;
+        for(int i : arr)if(i != 0)return false;
+        return true;
+    }
+}
+</code></pre>
+<h1 id="268-missing-number"><a class="header" href="#268-missing-number"><a href="https://leetcode.com/problems/missing-number/">268. Missing Number</a></a></h1>
+<p>Given an array <code>nums</code> containing <code>n</code> distinct numbers in the range <code>[0, n]</code>, return <em>the only number in the range that is missing from the array.</em></p>
+<p><strong>Example 1:</strong></p>
+<p><strong>Input:</strong> <code>nums = [3,0,1]</code><br />
+<strong>Output:</strong> <code>2</code><br />
+<strong>Explanation:</strong> n = 3 since there are 3 numbers, so all numbers are in the range [0,3]. 2 is the missing number in the range since it does not appear in nums.</p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> <code>nums = [0,1]</code><br />
+<strong>Output:</strong> <code>2</code><br />
+<strong>Explanation:</strong> n = 2 since there are 2 numbers, so all numbers are in the range [0,2]. 2 is the missing number in the range since it does not appear in nums.</p>
+<p><strong>Example 3:</strong></p>
+<p><strong>Input:</strong> <code>nums = [9,6,4,2,3,5,7,0,1]</code><br />
+<strong>Output:</strong> <code>8</code><br />
+<strong>Explanation:</strong> n = 9 since there are 9 numbers, so all numbers are in the range [0,9]. 8 is the missing number in the range since it does not appear in nums.</p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>n == nums.length</code></li>
+<li><code>1 &lt;= n &lt;= 10^4</code></li>
+<li><code>0 &lt;= nums[i] &lt;= n</code></li>
+<li>All the numbers of <code>nums</code> are <strong>unique</strong>.</li>
+</ul>
+<p><strong>Follow up:</strong> Could you implement a solution using only <code>O(1)</code> extra space complexity and <code>O(n)</code> runtime complexity?</p>
+<h2 id="思路-33"><a class="header" href="#思路-33">思路</a></h2>
+<p>用哈希数组判断数字是否出现过</p>
+<h2 id="c解法-21"><a class="header" href="#c解法-21">C++解法</a></h2>
+<pre><code class="language-cpp">class Solution {
+public:
+    int missingNumber(vector&lt;int&gt;&amp; nums) {
+        vector&lt;int&gt; result(10001, 0);
+        int maxValue = -1;
+        for(int num : nums){
+            result[num]++;
+            if(num &gt; maxValue){
+                maxValue = num;
+            }
+        }
+        for(int i = 0; i &lt; maxValue; i++){
+            if(result[i] == 0){
+                return i;
+            }
+        }
+        return maxValue + 1;
+    }
+};
+</code></pre>
+<h1 id="287-find-the-duplicate-number"><a class="header" href="#287-find-the-duplicate-number"><a href="https://leetcode.com/problems/find-the-duplicate-number/">287. Find the Duplicate Number</a></a></h1>
+<p>Given an array of integers <code>nums</code> containing <code>n + 1</code> integers where each integer is in the range <code>[1, n]</code> inclusive.</p>
+<p>There is only <strong>one repeated number</strong> in <code>nums</code>, return <em>this repeated number</em>.</p>
+<p>You must solve the problem <strong>without</strong> modifying the array <code>nums</code> and using only constant extra space.</p>
+<p><strong>Example 1:</strong></p>
+<p><strong>Input:</strong> <code>nums = [1,3,4,2,2]</code><br />
+<strong>Output:</strong> 2</p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> <code>nums = [3,1,3,4,2]</code><br />
+<strong>Output:</strong> 3</p>
+<p><strong>Example 3:</strong></p>
+<p><strong>Input:</strong> <code>nums = [3,3,3,3,3]</code><br />
+<strong>Output:</strong> 3</p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= n &lt;= 10^5</code></li>
+<li><code>nums.length == n + 1</code></li>
+<li><code>1 &lt;= nums[i] &lt;= n</code></li>
+<li>All the integers in <code>nums</code> appear only <strong>once</strong> except for <strong>precisely one integer</strong> which appears <strong>two or more</strong> times.</li>
+</ul>
+<p><strong>Follow up:</strong></p>
+<ul>
+<li>How can we prove that at least one duplicate number must exist in <code>nums</code>?</li>
+<li>Can you solve the problem in linear runtime complexity?</li>
+</ul>
+<h2 id="思路-34"><a class="header" href="#思路-34">思路</a></h2>
+<p>设置一个哈希数组，遍历<code>nums</code>数组，设置哈希数组，如果某个数的频率大于1，则直接结束循环</p>
+<h2 id="c解法-22"><a class="header" href="#c解法-22">C++解法</a></h2>
+<pre><code class="language-cpp">class Solution {
+public:
+    int findDuplicate(vector&lt;int&gt;&amp; nums) {
+        vector&lt;int&gt; result(100001, 0);
+        for(int num : nums){
+            result[num]++;
+            if(result[num] &gt; 1){
+                return num;
+            }
+        }
+        return -1;
+    }
+};
+</code></pre>
+<h1 id="349-intersection-of-two-arrays"><a class="header" href="#349-intersection-of-two-arrays"><a href="https://leetcode.com/problems/intersection-of-two-arrays/">349. Intersection of Two Arrays</a></a></h1>
+<p>Given two integer arrays <code>nums1</code> and <code>nums2</code>, return <em>an array of their</em> <em>intersection</em>. Each element in the result must be <strong>unique</strong> and you may return the result in <strong>any order</strong>.</p>
+<p><strong>Example 1:</strong></p>
+<p><strong>Input:</strong> <code>nums1 = [1,2,2,1], nums2 = [2,2]</code><br />
+<strong>Output:</strong> <code>[2]</code></p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> <code>nums1 = [4,9,5], nums2 = [9,4,9,8,4]</code><br />
+<strong>Output:</strong> <code>[9,4]</code><br />
+<strong>Explanation:</strong> <code>[4,9]</code> is also accepted.</p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= nums1.length, nums2.length &lt;= 1000</code></li>
+<li><code>0 &lt;= nums1[i], nums2[i] &lt;= 1000</code></li>
+</ul>
+<h2 id="思路-35"><a class="header" href="#思路-35">思路</a></h2>
+<p>方法一：因为<code>0 &lt;= nums1[i], nums2[i] &lt;= 1000</code>，所以这里可以使用哈希数组</p>
+<p>方法二：使用Hashset判断元素是否出现并去重</p>
+<h2 id="c解法-23"><a class="header" href="#c解法-23">C++解法</a></h2>
+<p>方法一：</p>
+<pre><code class="language-cpp">class Solution {
+public:
+    vector&lt;int&gt; intersection(vector&lt;int&gt;&amp; nums1, vector&lt;int&gt;&amp; nums2) {
+        vector&lt;int&gt; result;
+        int hash1[1001] = {0};
+        int hash2[1001] = {0};
+        for(int num : nums1){
+            hash1[num]++;
+        }
+        for(int num : nums2){
+            hash2[num]++;
+        }
+        for(int i = 0; i &lt; 1001; i++){
+            if(hash1[i] &gt; 0 &amp;&amp; hash2[i] &gt; 0){
+                result.push_back(i);
+            }
+        }
+        return result;
+    }
+};
+</code></pre>
+<p>方法二：</p>
+<pre><code class="language-cpp">class Solution {
+public:
+    vector&lt;int&gt; intersection(vector&lt;int&gt;&amp; nums1, vector&lt;int&gt;&amp; nums2) {
+        unordered_set&lt;int&gt; result_set; // 存放结果，之所以用set是为了给结果集去重
+        unordered_set&lt;int&gt; nums_set(nums1.begin(), nums1.end());
+        for (int num : nums2) {
+            // 发现nums2的元素 在nums_set里又出现过
+            if (nums_set.find(num) != nums_set.end()) {
+                result_set.insert(num);
+            }
+        }
+        return vector&lt;int&gt;(result_set.begin(), result_set.end());
+    }
+};
+</code></pre>
+<ul>
+<li>时间复杂度: O(n + m) m 是最后要把 set转成vector</li>
+<li>空间复杂度: O(n)</li>
+</ul>
+<h2 id="java解法-16"><a class="header" href="#java解法-16">Java解法</a></h2>
+<p>方法二：</p>
+<pre><code class="language-java">import java.util.*;
+
+class Solution {
+    public int[] intersection(int[] nums1, int[] nums2) {
+        Set&lt;Integer&gt; resultSet = new HashSet&lt;&gt;();
+        Set&lt;Integer&gt; numsSet = new HashSet&lt;&gt;();
+
+        for (int num : nums1) {
+            numsSet.add(num);
+        }
+        
+        for (int num : nums2) {
+            if (numsSet.contains(num)) {
+                resultSet.add(num);
+            }
+        }
+
+        return resultSet.stream().mapToInt(Integer::intValue).toArray();
+    }
+}
+</code></pre>
+<h2 id="python解法-3"><a class="header" href="#python解法-3">Python解法</a></h2>
+<p>方法二：</p>
+<pre><code class="language-python">from typing import List
+
+class Solution:
+    def intersection(self, nums1: List[int], nums2: List[int]) -&gt; List[int]:
+        result_set = set()
+        nums_set = set(nums1)
+
+        for num in nums2:
+            if num in nums_set:
+                result_set.add(num)
+
+        return list(result_set)
+</code></pre>
+<h2 id="go解法-8"><a class="header" href="#go解法-8">Go解法</a></h2>
+<p>方法二：</p>
+<pre><code class="language-go">package main
+
+import "fmt"
+
+func intersection(nums1 []int, nums2 []int) []int {
+    resultSet := make(map[int]struct{})
+    numsSet := make(map[int]struct{})
+
+    for _, num := range nums1 {
+        numsSet[num] = struct{}{}
+    }
+
+    for _, num := range nums2 {
+        if _, exists := numsSet[num]; exists {
+            resultSet[num] = struct{}{}
+        }
+    }
+
+    result := make([]int, 0, len(resultSet))
+    for num := range resultSet {
+        result = append(result, num)
+    }
+    
+    return result
+}
+
+func main() {
+    fmt.Println(intersection([]int{1, 2, 2, 1}, []int{2, 2})) // Example usage
+}
+</code></pre>
+<h2 id="rust解法"><a class="header" href="#rust解法">Rust解法</a></h2>
+<p>方法二：</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use std::collections::HashSet;
+
+pub struct Solution;
+
+impl Solution {
+    pub fn intersection(nums1: Vec&lt;i32&gt;, nums2: Vec&lt;i32&gt;) -&gt; Vec&lt;i32&gt; {
+        let nums_set: HashSet&lt;i32&gt; = nums1.into_iter().collect();
+        let result_set: HashSet&lt;i32&gt; = nums2.into_iter().filter(|num| nums_set.contains(num)).collect();
+        
+        result_set.into_iter().collect()
+    }
+}
+<span class="boring">}</span></code></pre></pre>
+<h1 id="350-intersection-of-two-arrays-ii"><a class="header" href="#350-intersection-of-two-arrays-ii"><a href="https://leetcode.com/problems/intersection-of-two-arrays-ii/">350. Intersection of Two Arrays II</a></a></h1>
+<p>Given two integer arrays <code>nums1</code> and <code>nums2</code>, return <em>an array of their intersection</em>. Each element in the result must appear as many times as it shows in both arrays and you may return the result in <strong>any order</strong>.</p>
+<p><strong>Example 1:</strong></p>
+<p><strong>Input:</strong> <code>nums1 = [1,2,2,1], nums2 = [2,2]</code><br />
+<strong>Output:</strong> <code>[2,2]</code></p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> <code>nums1 = [4,9,5], nums2 = [9,4,9,8,4]</code><br />
+<strong>Output:</strong><code>[4,9]</code><br />
+<strong>Explanation:</strong> <code>[9,4]</code> is also accepted.</p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= nums1.length, nums2.length &lt;= 1000</code></li>
+<li><code>0 &lt;= nums1[i], nums2[i] &lt;= 1000</code></li>
+</ul>
+<p><strong>Follow up:</strong></p>
+<ul>
+<li>What if the given array is already sorted? How would you optimize your algorithm?</li>
+<li>What if <code>nums1</code>'s size is small compared to <code>nums2</code>'s size? Which algorithm is better?</li>
+<li>What if elements of <code>nums2</code> are stored on disk, and the memory is limited such that you cannot load all elements into the memory at once?</li>
+</ul>
+<h2 id="思路-36"><a class="header" href="#思路-36">思路</a></h2>
+<p>因为<code>0 &lt;= nums1[i], nums2[i] &lt;= 1000</code>，所以这里可以使用哈希数组。对于每一个共同元素，计算其次数然后向结果中添加相应数量的元素。</p>
+<h2 id="c解法-24"><a class="header" href="#c解法-24">C++解法</a></h2>
+<pre><code class="language-cpp">class Solution {
+public:
+    vector&lt;int&gt; intersect(vector&lt;int&gt;&amp; nums1, vector&lt;int&gt;&amp; nums2) {
+        vector&lt;int&gt; result;
+        int hash1[1001] = {0};
+        int hash2[1001] = {0};
+        for(int num : nums1){
+            hash1[num]++;
+        }
+        for(int num : nums2){
+            hash2[num]++;
+        }
+        for(int i = 0; i &lt; 1001; i++){
+            if(hash1[i] &gt; 0 &amp;&amp; hash2[i] &gt; 0){
+                int times = min(hash1[i], hash2[i]);
+                for(int time = 0; time &lt; times; time++){
+                    result.push_back(i);
+                }
+            }
+        }
+        return result;
+    }
+};
+</code></pre>
+<h1 id="383-ransom-note"><a class="header" href="#383-ransom-note"><a href="https://leetcode.com/problems/ransom-note/">383. Ransom Note</a></a></h1>
+<p>Given two strings <code>ransomNote</code> and <code>magazine</code>, return <code>true</code> <em>if</em> <code>ransomNote</code> <em>can be constructed by using the letters from</em> <code>magazine</code> <em>and</em> <code>false</code> <em>otherwise</em>.</p>
+<p>Each letter in <code>magazine</code> can only be used once in <code>ransomNote</code>.</p>
+<p><strong>Example 1:</strong></p>
+<p><strong>Input:</strong> ransomNote = "a", magazine = "b"<br />
+<strong>Output:</strong> false</p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> ransomNote = "aa", magazine = "ab"<br />
+<strong>Output:</strong> false</p>
+<p><strong>Example 3:</strong></p>
+<p><strong>Input:</strong> ransomNote = "aa", magazine = "aab"<br />
+<strong>Output:</strong> true</p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= ransomNote.length, magazine.length &lt;= 10^5</code></li>
+<li><code>ransomNote</code> and <code>magazine</code> consist of lowercase English letters.</li>
+</ul>
+<h2 id="思路-37"><a class="header" href="#思路-37">思路</a></h2>
+<p>使用哈希数组存储可用的数字，使用magazine字符串存储字符，使用ransomNote字符串消耗字符，不够消耗时，返回false。否则返回true。</p>
+<h2 id="c解法-25"><a class="header" href="#c解法-25">C++解法</a></h2>
+<pre><code class="language-cpp">class Solution {
+public:
+    bool canConstruct(string ransomNote, string magazine) {
+        int record[26] = {0};
+        //add
+        if (ransomNote.size() &gt; magazine.size()) {
+            return false;
+        }
+        for (int i = 0; i &lt; magazine.length(); i++) {
+            // 通过record数据记录 magazine里各个字符出现次数
+            record[magazine[i]-'a'] ++;
+        }
+        for (int j = 0; j &lt; ransomNote.length(); j++) {
+            // 遍历ransomNote，在record里对应的字符个数做--操作
+            record[ransomNote[j]-'a']--;
+            // 如果小于零说明ransomNote里出现的字符，magazine没有
+            if(record[ransomNote[j]-'a'] &lt; 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+};
+</code></pre>
+<ul>
+<li>时间复杂度: O(n)</li>
+<li>空间复杂度: O(1)</li>
+</ul>
+<h2 id="java解法-17"><a class="header" href="#java解法-17">Java解法</a></h2>
+<pre><code class="language-java">class Solution {
+    public boolean canConstruct(String ransomNote, String magazine) {
+        // shortcut
+        if (ransomNote.length() &gt; magazine.length()) {
+            return false;
+        }
+        // 定义一个哈希映射数组
+        int[] record = new int[26];
+
+        // 遍历
+        for(char c : magazine.toCharArray()){
+            record[c - 'a'] += 1;
+        }
+
+        for(char c : ransomNote.toCharArray()){
+            record[c - 'a'] -= 1;
+        }
+        
+        // 如果数组中存在负数，说明ransomNote字符串中存在magazine中没有的字符
+        for(int i : record){
+            if(i &lt; 0){
+                return false;
+            }
+        }
+
+        return true;
+    }
+}
+</code></pre>
+<h1 id="2215-find-the-difference-of-two-arrays"><a class="header" href="#2215-find-the-difference-of-two-arrays"><a href="https://leetcode.com/problems/find-the-difference-of-two-arrays/">2215. Find the Difference of Two Arrays</a></a></h1>
+<p>Given two <strong>0-indexed</strong> integer arrays <code>nums1</code> and <code>nums2</code>, return <em>a list</em> <code>answer</code> <em>of size</em> <code>2</code> <em>where:</em></p>
+<ul>
+<li><code>answer[0]</code> <em>is a list of all <strong>distinct</strong> integers in</em> <code>nums1</code> <em>which are <strong>not</strong> present in</em> <code>nums2</code><em>.</em></li>
+<li><code>answer[1]</code> <em>is a list of all <strong>distinct</strong> integers in</em> <code>nums2</code> <em>which are <strong>not</strong> present in</em> <code>nums1</code>.</li>
+</ul>
+<p><strong>Note</strong> that the integers in the lists may be returned in <strong>any</strong> order.</p>
+<p><strong>Example 1:</strong></p>
+<p><strong>Input:</strong> <code>nums1 = [1,2,3], nums2 = [2,4,6]</code><br />
+<strong>Output:</strong> <code>[[1,3],[4,6]]</code><br />
+<strong>Explanation:</strong></p>
+<pre><code>For nums1, nums1[1] = 2 is present at index 0 of nums2, whereas nums1[0] = 1 and nums1[2] = 3 are not present in nums2. Therefore, answer[0] = [1,3].
+For nums2, nums2[0] = 2 is present at index 1 of nums1, whereas nums2[1] = 4 and nums2[2] = 6 are not present in nums2. Therefore, answer[1] = [4,6].
+</code></pre>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> <code>nums1 = [1,2,3,3], nums2 = [1,1,2,2]</code><br />
+<strong>Output:</strong> <code>[[3],[]]</code><br />
+<strong>Explanation:</strong></p>
+<pre><code>For nums1, nums1[2] and nums1[3] are not present in nums2. Since nums1[2] == nums1[3], their value is only included once and answer[0] = [3].
+Every integer in nums2 is present in nums1. Therefore, answer[1] = [].
+</code></pre>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= nums1.length, nums2.length &lt;= 1000</code></li>
+<li><code>-1000 &lt;= nums1[i], nums2[i] &lt;= 1000</code></li>
+</ul>
+<h2 id="思路-38"><a class="header" href="#思路-38">思路</a></h2>
+<p>注意到<code>-1000 &lt;= nums1[i], nums2[i] &lt;= 1000</code>，这里的哈希数组容量及数值需要调整。然后遍历两个哈希数组，找只在一个哈希数组中出现的元素即可。</p>
+<h2 id="c解法-26"><a class="header" href="#c解法-26">C++解法</a></h2>
+<pre><code class="language-cpp">class Solution {
+public:
+    vector&lt;vector&lt;int&gt;&gt; findDifference(vector&lt;int&gt;&amp; nums1, vector&lt;int&gt;&amp; nums2) {
+        vector&lt;vector&lt;int&gt;&gt; result;
+        int hash1[2001] = {0};
+        int hash2[2001] = {0};
+        for(int num : nums1){
+            hash1[num + 1000]++;
+        }
+        for(int num : nums2){
+            hash2[num + 1000]++;
+        }
+        vector&lt;int&gt; temp1;
+        vector&lt;int&gt; temp2;
+        for(int i = 0; i &lt; 2001; i++){
+            if(hash1[i] &gt; 0 &amp;&amp; hash2[i] == 0){
+                temp1.push_back(i-1000);
+            }else if(hash1[i] == 0 &amp;&amp; hash2[i] &gt; 0){
+                temp2.push_back(i-1000);
+            }
+        }
+        result.push_back(temp1);
+        result.push_back(temp2);
+        return result;
+    }
+};
+</code></pre>
+<h1 id="2248-intersection-of-multiple-arrays"><a class="header" href="#2248-intersection-of-multiple-arrays"><a href="https://leetcode.com/problems/intersection-of-multiple-arrays/">2248. Intersection of Multiple Arrays</a></a></h1>
+<p>Given a 2D integer array <code>nums</code> where <code>nums[i]</code> is a non-empty array of <strong>distinct</strong> positive integers, return <em>the list of integers that are present in <strong>each array</strong> of</em> <code>nums</code> <em>sorted in <strong>ascending order</strong></em>.</p>
+<p><strong>Example 1:</strong></p>
+<p><strong>Input:</strong> nums =<code> [[**3**,1,2,**4**,5],[1,2,**3**,**4**],[**3**,**4**,5,6]]</code><br />
+<strong>Output:</strong> <code>[3,4]</code><br />
+<strong>Explanation:</strong>
+The only integers present in each of nums[0] = [<strong>3</strong>,1,2,<strong>4</strong>,5], nums[1] = [1,2,<strong>3</strong>,<strong>4</strong>], and nums[2] = [<strong>3</strong>,<strong>4</strong>,5,6] are 3 and 4, so we return [3,4].</p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> <code>nums = [[1,2,3],[4,5,6]]</code><br />
+<strong>Output:</strong> <code>[]</code><br />
+<strong>Explanation:</strong>
+There does not exist any integer present both in nums[0] and nums[1], so we return an empty list [].</p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= nums.length &lt;= 1000</code></li>
+<li><code>1 &lt;= sum(nums[i].length) &lt;= 1000</code></li>
+<li><code>1 &lt;= nums[i][j] &lt;= 1000</code></li>
+<li>All the values of <code>nums[i]</code> are <strong>unique</strong>.</li>
+</ul>
+<h2 id="思路-39"><a class="header" href="#思路-39">思路</a></h2>
+<p>用哈希数组保存元素出现次数，向结果中加入出现次数等于二维数组长度的元素</p>
+<h2 id="c解法-27"><a class="header" href="#c解法-27">C++解法</a></h2>
+<pre><code class="language-cpp">class Solution {
+public:
+    vector&lt;int&gt; intersection(vector&lt;vector&lt;int&gt;&gt;&amp; nums) {
+        vector&lt;int&gt; result;
+        int hash[1001] = {0};
+        // 统计每个数字出现的次数  
+        for (int i = 0; i &lt; nums.size(); i++) {  
+            for (int j = 0; j &lt; nums[i].size(); j++) {  
+                hash[nums[i][j]]++;  
+            }  
+        }  
+        
+        // 记录出现次数等于子数组数量的元素  
+        for (int i = 0; i &lt; 1001; i++) {  
+            if (hash[i] == nums.size()) {
+                result.push_back(i);  
+            }  
+        }  
+        return result;
+    }
+};
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
+<h1 id="哈希集合"><a class="header" href="#哈希集合">哈希集合</a></h1>
+<ul>
+<li><a href="%E5%93%88%E5%B8%8C%E8%A1%A8/%E5%93%88%E5%B8%8C%E9%9B%86%E5%90%88.html#349-intersection-of-two-arrays">349. Intersection of Two Arrays</a>
+<ul>
+<li><a href="%E5%93%88%E5%B8%8C%E8%A1%A8/%E5%93%88%E5%B8%8C%E9%9B%86%E5%90%88.html#%E6%80%9D%E8%B7%AF">思路</a></li>
+<li><a href="%E5%93%88%E5%B8%8C%E8%A1%A8/%E5%93%88%E5%B8%8C%E9%9B%86%E5%90%88.html#c%E8%A7%A3%E6%B3%95">C++解法</a></li>
+<li><a href="%E5%93%88%E5%B8%8C%E8%A1%A8/%E5%93%88%E5%B8%8C%E9%9B%86%E5%90%88.html#java%E8%A7%A3%E6%B3%95">Java解法</a></li>
+<li><a href="%E5%93%88%E5%B8%8C%E8%A1%A8/%E5%93%88%E5%B8%8C%E9%9B%86%E5%90%88.html#python%E8%A7%A3%E6%B3%95">Python解法</a></li>
+<li><a href="%E5%93%88%E5%B8%8C%E8%A1%A8/%E5%93%88%E5%B8%8C%E9%9B%86%E5%90%88.html#go%E8%A7%A3%E6%B3%95">Go解法</a></li>
+<li><a href="%E5%93%88%E5%B8%8C%E8%A1%A8/%E5%93%88%E5%B8%8C%E9%9B%86%E5%90%88.html#rust%E8%A7%A3%E6%B3%95">Rust解法</a></li>
+</ul>
+</li>
+<li><a href="%E5%93%88%E5%B8%8C%E8%A1%A8/%E5%93%88%E5%B8%8C%E9%9B%86%E5%90%88.html#202-happy-number">202. Happy Number</a>
+<ul>
+<li><a href="%E5%93%88%E5%B8%8C%E8%A1%A8/%E5%93%88%E5%B8%8C%E9%9B%86%E5%90%88.html#%E6%80%9D%E8%B7%AF-1">思路</a></li>
+<li><a href="%E5%93%88%E5%B8%8C%E8%A1%A8/%E5%93%88%E5%B8%8C%E9%9B%86%E5%90%88.html#c%E8%A7%A3%E6%B3%95-1">C++解法</a></li>
+<li><a href="%E5%93%88%E5%B8%8C%E8%A1%A8/%E5%93%88%E5%B8%8C%E9%9B%86%E5%90%88.html#java%E8%A7%A3%E6%B3%95-1">Java解法</a></li>
+</ul>
+</li>
+</ul>
+<h1 id="349-intersection-of-two-arrays-1"><a class="header" href="#349-intersection-of-two-arrays-1"><a href="https://leetcode.com/problems/intersection-of-two-arrays/">349. Intersection of Two Arrays</a></a></h1>
+<p>Given two integer arrays <code>nums1</code> and <code>nums2</code>, return <em>an array of their</em> <em>intersection</em>. Each element in the result must be <strong>unique</strong> and you may return the result in <strong>any order</strong>.</p>
+<p><strong>Example 1:</strong></p>
+<p><strong>Input:</strong> <code>nums1 = [1,2,2,1], nums2 = [2,2]</code><br />
+<strong>Output:</strong> <code>[2]</code></p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> <code>nums1 = [4,9,5], nums2 = [9,4,9,8,4]</code><br />
+<strong>Output:</strong> <code>[9,4]</code><br />
+<strong>Explanation:</strong> <code>[4,9]</code> is also accepted.</p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= nums1.length, nums2.length &lt;= 1000</code></li>
+<li><code>0 &lt;= nums1[i], nums2[i] &lt;= 1000</code></li>
+</ul>
+<h2 id="思路-40"><a class="header" href="#思路-40">思路</a></h2>
+<p>方法一：因为<code>0 &lt;= nums1[i], nums2[i] &lt;= 1000</code>，所以这里可以使用哈希数组</p>
+<p>方法二：使用Hashset判断元素是否出现并去重</p>
+<h2 id="c解法-28"><a class="header" href="#c解法-28">C++解法</a></h2>
+<p>方法一：</p>
+<pre><code class="language-cpp">class Solution {
+public:
+    vector&lt;int&gt; intersection(vector&lt;int&gt;&amp; nums1, vector&lt;int&gt;&amp; nums2) {
+        vector&lt;int&gt; result;
+        int hash1[1001] = {0};
+        int hash2[1001] = {0};
+        for(int num : nums1){
+            hash1[num]++;
+        }
+        for(int num : nums2){
+            hash2[num]++;
+        }
+        for(int i = 0; i &lt; 1001; i++){
+            if(hash1[i] &gt; 0 &amp;&amp; hash2[i] &gt; 0){
+                result.push_back(i);
+            }
+        }
+        return result;
+    }
+};
+</code></pre>
+<p>方法二：</p>
+<pre><code class="language-cpp">class Solution {
+public:
+    vector&lt;int&gt; intersection(vector&lt;int&gt;&amp; nums1, vector&lt;int&gt;&amp; nums2) {
+        unordered_set&lt;int&gt; result_set; // 存放结果，之所以用set是为了给结果集去重
+        unordered_set&lt;int&gt; nums_set(nums1.begin(), nums1.end());
+        for (int num : nums2) {
+            // 发现nums2的元素 在nums_set里又出现过
+            if (nums_set.find(num) != nums_set.end()) {
+                result_set.insert(num);
+            }
+        }
+        return vector&lt;int&gt;(result_set.begin(), result_set.end());
+    }
+};
+</code></pre>
+<ul>
+<li>时间复杂度: O(n + m) m 是最后要把 set转成vector</li>
+<li>空间复杂度: O(n)</li>
+</ul>
+<h2 id="java解法-18"><a class="header" href="#java解法-18">Java解法</a></h2>
+<p>方法二：</p>
+<pre><code class="language-java">import java.util.*;
+
+class Solution {
+    public int[] intersection(int[] nums1, int[] nums2) {
+        Set&lt;Integer&gt; resultSet = new HashSet&lt;&gt;();
+        Set&lt;Integer&gt; numsSet = new HashSet&lt;&gt;();
+
+        for (int num : nums1) {
+            numsSet.add(num);
+        }
+        
+        for (int num : nums2) {
+            if (numsSet.contains(num)) {
+                resultSet.add(num);
+            }
+        }
+
+        return resultSet.stream().mapToInt(Integer::intValue).toArray();
+    }
+}
+</code></pre>
+<h2 id="python解法-4"><a class="header" href="#python解法-4">Python解法</a></h2>
+<p>方法二：</p>
+<pre><code class="language-python">from typing import List
+
+class Solution:
+    def intersection(self, nums1: List[int], nums2: List[int]) -&gt; List[int]:
+        result_set = set()
+        nums_set = set(nums1)
+
+        for num in nums2:
+            if num in nums_set:
+                result_set.add(num)
+
+        return list(result_set)
+</code></pre>
+<h2 id="go解法-9"><a class="header" href="#go解法-9">Go解法</a></h2>
+<p>方法二：</p>
+<pre><code class="language-go">package main
+
+import "fmt"
+
+func intersection(nums1 []int, nums2 []int) []int {
+    resultSet := make(map[int]struct{})
+    numsSet := make(map[int]struct{})
+
+    for _, num := range nums1 {
+        numsSet[num] = struct{}{}
+    }
+
+    for _, num := range nums2 {
+        if _, exists := numsSet[num]; exists {
+            resultSet[num] = struct{}{}
+        }
+    }
+
+    result := make([]int, 0, len(resultSet))
+    for num := range resultSet {
+        result = append(result, num)
+    }
+    
+    return result
+}
+
+func main() {
+    fmt.Println(intersection([]int{1, 2, 2, 1}, []int{2, 2})) // Example usage
+}
+</code></pre>
+<h2 id="rust解法-1"><a class="header" href="#rust解法-1">Rust解法</a></h2>
+<p>方法二：</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use std::collections::HashSet;
+
+pub struct Solution;
+
+impl Solution {
+    pub fn intersection(nums1: Vec&lt;i32&gt;, nums2: Vec&lt;i32&gt;) -&gt; Vec&lt;i32&gt; {
+        let nums_set: HashSet&lt;i32&gt; = nums1.into_iter().collect();
+        let result_set: HashSet&lt;i32&gt; = nums2.into_iter().filter(|num| nums_set.contains(num)).collect();
+        
+        result_set.into_iter().collect()
+    }
+}
+<span class="boring">}</span></code></pre></pre>
+<h1 id="202-happy-number"><a class="header" href="#202-happy-number"><a href="https://leetcode.com/problems/happy-number/">202. Happy Number</a></a></h1>
+<p>Write an algorithm to determine if a number <code>n</code> is happy.</p>
+<p>A <strong>happy number</strong> is a number defined by the following process:</p>
+<ul>
+<li>Starting with any positive integer, replace the number by the sum of the squares of its digits.</li>
+<li>Repeat the process until the number equals 1 (where it will stay), or it <strong>loops endlessly in a cycle</strong> which does not include 1.</li>
+<li>Those numbers for which this process <strong>ends in 1</strong> are happy.</li>
+</ul>
+<p>Return <code>true</code> <em>if</em> <code>n</code> <em>is a happy number, and</em> <code>false</code> <em>if not</em>.</p>
+<p><strong>Example 1:</strong></p>
+<p><strong>Input:</strong> n = 19<br />
+<strong>Output:</strong> true<br />
+<strong>Explanation:</strong>
+1^2 + 9^2 = 82
+8^2 + 2^2 = 68
+6^2 + 8^2 = 100
+1^2 + 0^2 + 0^2 = 1</p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> n = 2<br />
+<strong>Output:</strong> false</p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= n &lt;= 2^31 - 1</code></li>
+</ul>
+<h2 id="思路-41"><a class="header" href="#思路-41">思路</a></h2>
+<p>判断某个元素是否出现过（是否有循环），使用<code>unordered_set</code>数据结构</p>
+<p>这道题目看上去貌似一道数学问题，其实并不是！</p>
+<p>题目中说了会 <strong>无限循环</strong>，那么也就是说<strong>求和的过程中，sum会重复出现，这对解题很重要！</strong></p>
+<p><strong>当我们遇到了要快速判断一个元素是否出现集合里的时候，就要考虑哈希法了。</strong></p>
+<p>所以这道题目使用哈希法，来判断这个sum是否重复出现，如果重复了就是return false， 否则一直找到sum为1为止。</p>
+<p>判断sum是否重复出现就可以使用unordered_set。</p>
+<p><strong>还有一个难点就是求和的过程，如果对取数值各个位上的单数操作不熟悉的话，做这道题也会比较艰难。</strong></p>
+<h2 id="c解法-29"><a class="header" href="#c解法-29">C++解法</a></h2>
+<pre><code class="language-cpp">class Solution {
+public:
+    // 取数值各个位上的单数之和
+    int getSum(int n) {
+        int sum = 0;
+        while (n) {
+            sum += (n % 10) * (n % 10);
+            n /= 10;
+        }
+        return sum;
+    }
+    bool isHappy(int n) {
+        unordered_set&lt;int&gt; set;
+        while(1) {
+            int sum = getSum(n);
+            if (sum == 1) {
+                return true;
+            }
+            // 如果这个sum曾经出现过，说明已经陷入了无限循环了，立刻return false
+            if (set.find(sum) != set.end()) {
+                return false;
+            } else {
+                set.insert(sum);
+            }
+            n = sum;
+        }
+    }
+};
+</code></pre>
+<ul>
+<li>时间复杂度: O(logn)</li>
+<li>空间复杂度: O(logn)</li>
+</ul>
+<h2 id="java解法-19"><a class="header" href="#java解法-19">Java解法</a></h2>
+<pre><code class="language-java">class Solution {
+    public boolean isHappy(int n) {
+        Set&lt;Integer&gt; record = new HashSet&lt;&gt;();
+        while (n != 1 &amp;&amp; !record.contains(n)) {
+            record.add(n);
+            n = getNextNumber(n);
+        }
+        return n == 1;
+    }
+
+    private int getNextNumber(int n) {
+        int res = 0;
+        while (n &gt; 0) {
+            int temp = n % 10;
+            res += temp * temp;
+            n = n / 10;
+        }
+        return res;
+    }
+}
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
+<h1 id="哈希映射"><a class="header" href="#哈希映射">哈希映射</a></h1>
+<ul>
+<li><a href="%E5%93%88%E5%B8%8C%E8%A1%A8/%E5%93%88%E5%B8%8C%E6%98%A0%E5%B0%84.html#1-two-sum">1. Two Sum</a>
+<ul>
+<li><a href="%E5%93%88%E5%B8%8C%E8%A1%A8/%E5%93%88%E5%B8%8C%E6%98%A0%E5%B0%84.html#%E6%80%9D%E8%B7%AF">思路</a></li>
+<li><a href="%E5%93%88%E5%B8%8C%E8%A1%A8/%E5%93%88%E5%B8%8C%E6%98%A0%E5%B0%84.html#c%E8%A7%A3%E6%B3%95">C++解法</a></li>
+<li><a href="%E5%93%88%E5%B8%8C%E8%A1%A8/%E5%93%88%E5%B8%8C%E6%98%A0%E5%B0%84.html#java%E8%A7%A3%E6%B3%95">Java解法</a></li>
+</ul>
+</li>
+<li><a href="%E5%93%88%E5%B8%8C%E8%A1%A8/%E5%93%88%E5%B8%8C%E6%98%A0%E5%B0%84.html#167-two-sum-ii---input-array-is-sorted">167. Two Sum II - Input Array Is Sorted</a>
+<ul>
+<li><a href="%E5%93%88%E5%B8%8C%E8%A1%A8/%E5%93%88%E5%B8%8C%E6%98%A0%E5%B0%84.html#%E6%80%9D%E8%B7%AF-1">思路</a></li>
+<li><a href="%E5%93%88%E5%B8%8C%E8%A1%A8/%E5%93%88%E5%B8%8C%E6%98%A0%E5%B0%84.html#c%E8%A7%A3%E6%B3%95-1">C++解法</a></li>
+<li><a href="%E5%93%88%E5%B8%8C%E8%A1%A8/%E5%93%88%E5%B8%8C%E6%98%A0%E5%B0%84.html#java%E8%A7%A3%E6%B3%95-1">Java解法</a></li>
+</ul>
+</li>
+<li><a href="%E5%93%88%E5%B8%8C%E8%A1%A8/%E5%93%88%E5%B8%8C%E6%98%A0%E5%B0%84.html#454-4sum-ii">454. 4Sum II</a>
+<ul>
+<li><a href="%E5%93%88%E5%B8%8C%E8%A1%A8/%E5%93%88%E5%B8%8C%E6%98%A0%E5%B0%84.html#%E6%80%9D%E8%B7%AF-2">思路</a></li>
+<li><a href="%E5%93%88%E5%B8%8C%E8%A1%A8/%E5%93%88%E5%B8%8C%E6%98%A0%E5%B0%84.html#c%E8%A7%A3%E6%B3%95-2">C++解法</a></li>
+<li><a href="%E5%93%88%E5%B8%8C%E8%A1%A8/%E5%93%88%E5%B8%8C%E6%98%A0%E5%B0%84.html#java%E8%A7%A3%E6%B3%95-2">Java解法</a></li>
+</ul>
+</li>
+<li><a href="%E5%93%88%E5%B8%8C%E8%A1%A8/%E5%93%88%E5%B8%8C%E6%98%A0%E5%B0%84.html#15-3sum">15. 3Sum</a>
+<ul>
+<li><a href="%E5%93%88%E5%B8%8C%E8%A1%A8/%E5%93%88%E5%B8%8C%E6%98%A0%E5%B0%84.html#%E6%80%9D%E8%B7%AF-3">思路</a>
+<ul>
+<li><a href="%E5%93%88%E5%B8%8C%E8%A1%A8/%E5%93%88%E5%B8%8C%E6%98%A0%E5%B0%84.html#%E5%93%88%E5%B8%8C%E8%A7%A3%E6%B3%95">哈希解法</a></li>
+<li><a href="%E5%93%88%E5%B8%8C%E8%A1%A8/%E5%93%88%E5%B8%8C%E6%98%A0%E5%B0%84.html#%E5%8F%8C%E6%8C%87%E9%92%88">双指针</a></li>
+<li><a href="%E5%93%88%E5%B8%8C%E8%A1%A8/%E5%93%88%E5%B8%8C%E6%98%A0%E5%B0%84.html#%E5%8E%BB%E9%87%8D%E9%80%BB%E8%BE%91%E7%9A%84%E6%80%9D%E8%80%83">去重逻辑的思考</a></li>
+</ul>
+</li>
+<li><a href="%E5%93%88%E5%B8%8C%E8%A1%A8/%E5%93%88%E5%B8%8C%E6%98%A0%E5%B0%84.html#c%E8%A7%A3%E6%B3%95-3">C++解法</a></li>
+<li><a href="%E5%93%88%E5%B8%8C%E8%A1%A8/%E5%93%88%E5%B8%8C%E6%98%A0%E5%B0%84.html#java%E8%A7%A3%E6%B3%95-3">Java解法</a></li>
+<li><a href="%E5%93%88%E5%B8%8C%E8%A1%A8/%E5%93%88%E5%B8%8C%E6%98%A0%E5%B0%84.html#python%E8%A7%A3%E6%B3%95">Python解法</a></li>
+<li><a href="%E5%93%88%E5%B8%8C%E8%A1%A8/%E5%93%88%E5%B8%8C%E6%98%A0%E5%B0%84.html#go%E8%A7%A3%E6%B3%95">Go解法</a></li>
+<li><a href="%E5%93%88%E5%B8%8C%E8%A1%A8/%E5%93%88%E5%B8%8C%E6%98%A0%E5%B0%84.html#rust%E8%A7%A3%E6%B3%95">Rust解法</a></li>
+</ul>
+</li>
+<li><a href="%E5%93%88%E5%B8%8C%E8%A1%A8/%E5%93%88%E5%B8%8C%E6%98%A0%E5%B0%84.html#18-4sum">18. 4Sum</a>
+<ul>
+<li><a href="%E5%93%88%E5%B8%8C%E8%A1%A8/%E5%93%88%E5%B8%8C%E6%98%A0%E5%B0%84.html#%E6%80%9D%E8%B7%AF-4">思路</a></li>
+<li><a href="%E5%93%88%E5%B8%8C%E8%A1%A8/%E5%93%88%E5%B8%8C%E6%98%A0%E5%B0%84.html#c%E8%A7%A3%E6%B3%95-4">C++解法</a></li>
+<li><a href="%E5%93%88%E5%B8%8C%E8%A1%A8/%E5%93%88%E5%B8%8C%E6%98%A0%E5%B0%84.html#java%E8%A7%A3%E6%B3%95-4">Java解法</a></li>
+<li><a href="%E5%93%88%E5%B8%8C%E8%A1%A8/%E5%93%88%E5%B8%8C%E6%98%A0%E5%B0%84.html#python%E8%A7%A3%E6%B3%95-1">Python解法</a></li>
+<li><a href="%E5%93%88%E5%B8%8C%E8%A1%A8/%E5%93%88%E5%B8%8C%E6%98%A0%E5%B0%84.html#go%E8%A7%A3%E6%B3%95-1">Go解法</a></li>
+</ul>
+</li>
+<li><a href="%E5%93%88%E5%B8%8C%E8%A1%A8/%E5%93%88%E5%B8%8C%E6%98%A0%E5%B0%84.html#49-group-anagrams">49. Group Anagrams</a>
+<ul>
+<li><a href="%E5%93%88%E5%B8%8C%E8%A1%A8/%E5%93%88%E5%B8%8C%E6%98%A0%E5%B0%84.html#%E6%80%9D%E8%B7%AF-5">思路</a></li>
+<li><a href="%E5%93%88%E5%B8%8C%E8%A1%A8/%E5%93%88%E5%B8%8C%E6%98%A0%E5%B0%84.html#c%E8%A7%A3%E6%B3%95-5">C++解法</a></li>
+<li><a href="%E5%93%88%E5%B8%8C%E8%A1%A8/%E5%93%88%E5%B8%8C%E6%98%A0%E5%B0%84.html#java%E8%A7%A3%E6%B3%95-5">Java解法</a></li>
+</ul>
+</li>
+</ul>
+<h1 id="1-two-sum"><a class="header" href="#1-two-sum"><a href="https://leetcode.com/problems/two-sum/">1. Two Sum</a></a></h1>
+<p>Given an array of integers <code>nums</code> and an integer <code>target</code>, return <em>indices of the two numbers such that they add up to <code>target</code></em>.</p>
+<p>You may assume that each input would have <strong><em>exactly</em> one solution</strong>, and you may not use the <em>same</em> element twice.</p>
+<p>You can return the answer in any order.</p>
+<p><strong>Example 1:</strong></p>
+<p><strong>Input:</strong> <code>nums = [2,7,11,15], target = 9</code><br />
+<strong>Output:</strong> <code>[0,1]</code><br />
+<strong>Explanation:</strong> Because <code>nums[0] + nums[1] == 9, we return [0, 1]</code>.</p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> <code>nums = [3,2,4], target = 6</code><br />
+<strong>Output:</strong> <code>[1,2]</code></p>
+<p><strong>Example 3:</strong></p>
+<p><strong>Input:</strong> <code>nums = [3,3], target = 6</code><br />
+<strong>Output:</strong> <code>[0,1]</code></p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>2 &lt;= nums.length &lt;= 10^4</code></li>
+<li><code>-10^9 &lt;= nums[i] &lt;= 10^9</code></li>
+<li><code>-10^9 &lt;= target &lt;= 10^9</code></li>
+<li><strong>Only one valid answer exists.</strong></li>
+</ul>
+<p><strong>Follow-up:</strong> Can you come up with an algorithm that is less than <code>O(n2)</code> time complexity?</p>
+<h2 id="思路-42"><a class="header" href="#思路-42">思路</a></h2>
+<p>使用HashMap</p>
+<p>本题其实有四个重点：</p>
+<ul>
+<li>为什么会想到用哈希表</li>
+<li>哈希表为什么用map</li>
+<li>本题map是用来存什么的</li>
+<li>map中的key和value用来存什么的</li>
+</ul>
+<p>把这四点想清楚了，本题才算是理解透彻了。</p>
+<h2 id="c解法-30"><a class="header" href="#c解法-30">C++解法</a></h2>
+<pre><code class="language-cpp">class Solution {
+public:
+    vector&lt;int&gt; twoSum(vector&lt;int&gt;&amp; nums, int target) {
+        std::unordered_map &lt;int,int&gt; map;
+        for(int i = 0; i &lt; nums.size(); i++) {
+            // 遍历当前元素，并在map中寻找是否有匹配的key
+            auto iter = map.find(target - nums[i]); 
+            if(iter != map.end()) {
+                return {iter-&gt;second, i};
+            }
+            // 如果没找到匹配对，就把访问过的元素和下标加入到map中
+            map.insert(pair&lt;int, int&gt;(nums[i], i)); 
+        }
+        return {};
+    }
+};
+</code></pre>
+<ul>
+<li>时间复杂度: O(n)</li>
+<li>空间复杂度: O(n)</li>
+</ul>
+<h2 id="java解法-20"><a class="header" href="#java解法-20">Java解法</a></h2>
+<pre><code class="language-java">class Solution {
+    public int[] twoSum(int[] nums, int target) {
+        Map&lt;Integer, Integer&gt; numMap = new HashMap&lt;&gt;();
+        int length = nums.length;
+        for(int i = 0; i &lt; length; i++){
+            int complement = target - nums[i];
+            if(numMap.containsKey(complement)){
+                return new int[]{i, numMap.get(complement)};
+            }
+            numMap.put(nums[i], i);
+        }
+        return null;
+    }
+}
+</code></pre>
+<h1 id="167-two-sum-ii---input-array-is-sorted"><a class="header" href="#167-two-sum-ii---input-array-is-sorted"><a href="https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/">167. Two Sum II - Input Array Is Sorted</a></a></h1>
+<p>Given a <strong>1-indexed</strong> array of integers <code>numbers</code> that is already <strong><em>sorted in non-decreasing order</em></strong>, find two numbers such that they add up to a specific <code>target</code> number. Let these two numbers be <code>numbers[index1]</code> and <code>numbers[index2]</code> where <code>1 &lt;= index1 &lt; index2 &lt;= numbers.length</code>.</p>
+<p>Return <em>the indices of the two numbers,</em> <code>index1</code> <em>and</em> <code>index2</code><em>, <strong>added by one</strong> as an integer array</em> <code>[index1, index2]</code> <em>of length 2.</em></p>
+<p>The tests are generated such that there is <strong>exactly one solution</strong>. You <strong>may not</strong> use the same element twice.</p>
+<p>Your solution must use only constant extra space.</p>
+<p><strong>Example 1:</strong></p>
+<p><strong>Input:</strong> <code>numbers = [2,7,11,15], target = 9</code><br />
+<strong>Output:</strong> <code>[1,2]</code><br />
+<strong>Explanation:</strong> The sum of 2 and 7 is 9. Therefore, index1 = 1, index2 = 2. We return [1, 2].</p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> <code>numbers = [2,3,4], target = 6</code><br />
+<strong>Output:</strong> <code>[1,3]</code><br />
+<strong>Explanation:</strong> The sum of 2 and 4 is 6. Therefore index1 = 1, index2 = 3. We return [1, 3].</p>
+<p><strong>Example 3:</strong></p>
+<p><strong>Input:</strong> <code>numbers = [-1,0], target = -1</code><br />
+<strong>Output:</strong> <code>[1,2]</code><br />
+<strong>Explanation:</strong> The sum of -1 and 0 is -1. Therefore index1 = 1, index2 = 2. We return [1, 2].</p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>2 &lt;= numbers.length &lt;= 3 * 10^4</code></li>
+<li><code>-1000 &lt;= numbers[i] &lt;= 1000</code></li>
+<li><code>numbers</code> is sorted in <strong>non-decreasing order</strong>.</li>
+<li><code>-1000 &lt;= target &lt;= 1000</code></li>
+<li>The tests are generated such that there is <strong>exactly one solution</strong>.</li>
+</ul>
+<h2 id="思路-43"><a class="header" href="#思路-43">思路</a></h2>
+<p>方法一：在2Sum基础上修改索引即可，效率低下</p>
+<p>方法二：双指针，左右指针，如果使用二分搜索确保<code>numbers[right]&lt;target</code>程序效率会更高。</p>
+<h2 id="c解法-31"><a class="header" href="#c解法-31">C++解法</a></h2>
+<p>方法一：</p>
+<pre><code class="language-cpp">class Solution {
+public:
+    vector&lt;int&gt; twoSum(vector&lt;int&gt;&amp; numbers, int target) {
+        unordered_map&lt;int, int&gt; map;
+        for(int i = 0; i &lt; numbers.size(); i++){
+            int temp = target - numbers[i];
+            auto iter = map.find(temp);
+            if(iter != map.end()){
+                return {iter-&gt;second, i + 1};
+            }
+            map.insert(pair&lt;int, int&gt;(numbers[i], i + 1));
+        }
+        return {};
+    }
+};
+</code></pre>
+<h2 id="java解法-21"><a class="header" href="#java解法-21">Java解法</a></h2>
+<pre><code class="language-java">class Solution {
+    public int[] twoSum(int[] numbers, int target) {
+        int left = 0;
+        int right = numbers.length - 1;
+        while(left &lt;= right){
+            if(numbers[left] + numbers[right] &gt; target){
+                right--;
+            }else if(numbers[left] + numbers[right] &lt; target){
+                left++;
+            }else{
+                return new int[]{left + 1, right + 1};
+            }
+        }
+        return null;
+    }
+}
+</code></pre>
+<h1 id="454-4sum-ii"><a class="header" href="#454-4sum-ii"><a href="https://leetcode.com/problems/4sum-ii/">454. 4Sum II</a></a></h1>
+<p>Given four integer arrays <code>nums1</code>, <code>nums2</code>, <code>nums3</code>, and <code>nums4</code> all of length <code>n</code>, return the number of tuples <code>(i, j, k, l)</code> such that:</p>
+<ul>
+<li><code>0 &lt;= i, j, k, l &lt; n</code></li>
+<li><code>nums1[i] + nums2[j] + nums3[k] + nums4[l] == 0</code></li>
+</ul>
+<p><strong>Example 1:</strong></p>
+<p><strong>Input:</strong> <code>nums1 = [1,2], nums2 = [-2,-1], nums3 = [-1,2], nums4 = [0,2]</code><br />
+<strong>Output:</strong> 2
+<strong>Explanation:</strong></p>
+<pre><code>The two tuples are:
+1. (0, 0, 0, 1) -&gt; nums1[0] + nums2[0] + nums3[0] + nums4[1] = 1 + (-2) + (-1) + 2 = 0
+2. (1, 1, 0, 0) -&gt; nums1[1] + nums2[1] + nums3[0] + nums4[0] = 2 + (-1) + (-1) + 0 = 0
+</code></pre>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> <code>nums1 = [0], nums2 = [0], nums3 = [0], nums4 = [0]</code><br />
+<strong>Output:</strong> 1</p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>n == nums1.length</code></li>
+<li><code>n == nums2.length</code></li>
+<li><code>n == nums3.length</code></li>
+<li><code>n == nums4.length</code></li>
+<li><code>1 &lt;= n &lt;= 200</code></li>
+<li><code>-228 &lt;= nums1[i], nums2[i], nums3[i], nums4[i] &lt;= 228</code></li>
+</ul>
+<h2 id="思路-44"><a class="header" href="#思路-44">思路</a></h2>
+<p>把四个数组变成两个数组，然后仿照2Sum问题找(a+b)和0-(c+d)。分步相乘。</p>
+<p>本题不考虑去重的问题。</p>
+<p>本题其实有四个重点：</p>
+<ul>
+<li>为什么会想到用哈希表？</li>
+<li>哈希表为什么用map？</li>
+<li>本题map是用来存什么的？</li>
+<li>map中的key和value用来存什么的？</li>
+</ul>
+<p>把这四点想清楚了，本题才算是理解透彻了。</p>
+<p>map用来存前两个数组元素之和及频率</p>
+<h2 id="c解法-32"><a class="header" href="#c解法-32">C++解法</a></h2>
+<pre><code class="language-cpp">class Solution {
+public:
+    int fourSumCount(vector&lt;int&gt;&amp; nums1, vector&lt;int&gt;&amp; nums2, vector&lt;int&gt;&amp; nums3, vector&lt;int&gt;&amp; nums4) {
+        unordered_map&lt;int, int&gt; map;
+        int count = 0;
+        for(int a : nums1){
+            for(int b : nums2){
+                map[a + b]++;
+            }
+        }
+        for(int c : nums3){
+            for(int d : nums4){
+                auto iter = map.find(0 - c - d);
+                if(iter != map.end()){
+                    count += iter-&gt;second;
+                }
+            }
+        }
+        return count;
+    }
+};
+</code></pre>
+<h2 id="java解法-22"><a class="header" href="#java解法-22">Java解法</a></h2>
+<pre><code class="language-java">class Solution {
+    public int fourSumCount(int[] nums1, int[] nums2, int[] nums3, int[] nums4) {
+        Map&lt;Integer, Integer&gt; map = new HashMap&lt;&gt;();  
+        int count = 0;  
+
+        // 将 nums1 和 nums2 的所有和放入 map 中  
+        for (int a : nums1) {  
+            for (int b : nums2) {  
+                map.put(a + b, map.getOrDefault(a + b, 0) + 1);  
+            }  
+        }  
+
+        // 遍历 nums3 和 nums4，查找使得总和为 0 的组合  
+        for (int c : nums3) {  
+            for (int d : nums4) {  
+                // 查找相应的负数和  
+                count += map.getOrDefault(-(c + d), 0);  
+            }  
+        }  
+
+        return count;  
+    }
+}
+</code></pre>
+<h1 id="15-3sum"><a class="header" href="#15-3sum"><a href="https://leetcode.com/problems/3sum/">15. 3Sum</a></a></h1>
+<p>Given an integer array nums, return all the triplets <code>[nums[i], nums[j], nums[k]]</code> such that <code>i != j</code>, <code>i != k</code>, and <code>j != k</code>, and <code>nums[i] + nums[j] + nums[k] == 0</code>.</p>
+<p>Notice that the solution set must not contain duplicate triplets.</p>
+<p><strong>Example 1:</strong></p>
+<p><strong>Input:</strong> <code>nums = [-1,0,1,2,-1,-4]</code><br />
+<strong>Output:</strong> <code>[[-1,-1,2],[-1,0,1]]</code><br />
+<strong>Explanation:</strong>
+nums[0] + nums[1] + nums[2] = (-1) + 0 + 1 = 0.
+nums[1] + nums[2] + nums[4] = 0 + 1 + (-1) = 0.
+nums[0] + nums[3] + nums[4] = (-1) + 2 + (-1) = 0.
+The distinct triplets are [-1,0,1] and [-1,-1,2].
+Notice that the order of the output and the order of the triplets does not matter.</p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> <code>nums = [0,1,1]</code><br />
+<strong>Output:</strong> <code>[]</code><br />
+<strong>Explanation:</strong> The only possible triplet does not sum up to 0.</p>
+<p><strong>Example 3:</strong></p>
+<p><strong>Input:</strong> <code>nums = [0,0,0]</code><br />
+<strong>Output:</strong> <code>[[0,0,0]]</code><br />
+<strong>Explanation:</strong> The only possible triplet sums up to 0.</p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>3 &lt;= nums.length &lt;= 3000</code></li>
+<li><code>-10^5 &lt;= nums[i] &lt;= 10^5</code></li>
+</ul>
+<h2 id="思路-45"><a class="header" href="#思路-45">思路</a></h2>
+<p>因为结果要去重，这里不方便使用哈希法。</p>
+<p>收获一个结果后再进行去重操作。</p>
+<h3 id="哈希解法"><a class="header" href="#哈希解法">哈希解法</a></h3>
+<p>两层for循环就可以确定 两个数值，可以使用哈希法来确定 第三个数 0-(a+b) 或者 0 - (a + c) 是否在 数组里出现过，其实这个思路是正确的，但是我们有一个非常棘手的问题，就是题目中说的不可以包含重复的三元组。</p>
+<p>把符合条件的三元组放进vector中，然后再去重，这样是非常费时的，很容易超时，也是这道题目通过率如此之低的根源所在。</p>
+<p>去重的过程不好处理，有很多小细节，如果在面试中很难想到位。</p>
+<p>时间复杂度可以做到O(n^2)，但还是比较费时的，因为不好做剪枝操作。</p>
+<p>大家可以尝试使用哈希法写一写，就知道其困难的程度了。</p>
+<h3 id="双指针"><a class="header" href="#双指针">双指针</a></h3>
+<p><strong>其实这道题目使用哈希法并不十分合适</strong>，因为在去重的操作中有很多细节需要注意，在面试中很难直接写出没有bug的代码。</p>
+<p>而且使用哈希法在使用两层for循环的时候，能做的剪枝操作很有限，虽然时间复杂度是O(n^2)，也是可以在<code>leetcode</code>上通过，但是程序的执行时间依然比较长 。</p>
+<p>接下来我来介绍另一个解法：双指针法，<strong>这道题目使用双指针法 要比哈希法高效一些</strong>，那么来讲解一下具体实现的思路。</p>
+<p>动画效果如下：</p>
+<p><img src="https://code-thinking.cdn.bcebos.com/gifs/15.%E4%B8%89%E6%95%B0%E4%B9%8B%E5%92%8C.gif" alt="15.三数之和" /></p>
+<p>拿这个nums数组来举例，首先将数组排序，然后有一层for循环，i从下标0的地方开始，同时定一个下标left 定义在i+1的位置上，定义下标right 在数组结尾的位置上。</p>
+<p>依然还是在数组中找到 abc 使得a + b +c =0，我们这里相当于 <code>a = nums[i]，b = nums[left]，c = nums[right]</code>。</p>
+<p>接下来如何移动left 和right呢， 如果<code>nums[i] + nums[left] + nums[right] &gt; 0</code> 就说明 此时三数之和大了，因为数组是排序后了，所以right下标就应该向左移动，这样才能让三数之和小一些。</p>
+<p>如果 <code>nums[i] + nums[left] + nums[right] &lt; 0</code> 说明 此时 三数之和小了，left 就向右移动，才能让三数之和大一些，直到left与right相遇为止。</p>
+<p>时间复杂度：O(n^2)。</p>
+<h3 id="去重逻辑的思考"><a class="header" href="#去重逻辑的思考">去重逻辑的思考</a></h3>
+<p>a的去重</p>
+<p>说到去重，其实主要考虑三个数的去重。 a, b ,c, 对应的就是 <code>nums[i]，nums[left]，nums[right]</code></p>
+<p>a 如果重复了怎么办，a是nums里遍历的元素，那么应该直接跳过去。</p>
+<p>但这里有一个问题，是判断 <code>nums[i]</code> 与 <code>nums[i + 1]</code>是否相同，还是判断 <code>nums[i]</code> 与 <code>nums[i-1]</code> 是否相同。</p>
+<p>有同学可能想，这不都一样吗？</p>
+<p>其实不一样！</p>
+<p>都是和<code>nums[i]</code>进行比较，是比较它的前一个，还是比较它的后一个。</p>
+<p>如果我们的写法是 这样：</p>
+<pre><code class="language-cpp">if (nums[i] == nums[i + 1]) { // 去重操作
+    continue;
+}
+</code></pre>
+<p>那我们就把三元组中出现重复元素的情况直接pass掉了。 例如{-1, -1 ,2} 这组数据，当遍历到第一个-1 的时候，判断 下一个也是-1，那这组数据就pass了。</p>
+<p><strong>我们要做的是不能有重复的三元组，但三元组内的元素是可以重复的！</strong></p>
+<p>所以这里是有两个重复的维度。</p>
+<p>那么应该这么写：</p>
+<pre><code class="language-cpp">if (i &gt; 0 &amp;&amp; nums[i] == nums[i - 1]) {
+    continue;
+}
+</code></pre>
+<p>这么写就是当前使用<code>nums[i]</code>，我们判断前一位是不是一样的元素，在看 {-1, -1 ,2} 这组数据，当遍历到第一个 -1 的时候，只要前一位没有-1，那么 {-1, -1 ,2} 这组数据一样可以收录到结果集里。</p>
+<p>这是一个非常细节的思考过程。</p>
+<p>b与c的去重</p>
+<p>很多同学写本题的时候，去重的逻辑多加了对right 和left 的去重：（代码中注释部分）</p>
+<pre><code class="language-cpp">while (right &gt; left) {
+    if (nums[i] + nums[left] + nums[right] &gt; 0) {
+        right--;
+        // 去重 right
+        while (left &lt; right &amp;&amp; nums[right] == nums[right + 1]) right--;
+    } else if (nums[i] + nums[left] + nums[right] &lt; 0) {
+        left++;
+        // 去重 left
+        while (left &lt; right &amp;&amp; nums[left] == nums[left - 1]) left++;
+    } else {
+    }
+}
+</code></pre>
+<p>但细想一下，这种去重其实对提升程序运行效率是没有帮助的。</p>
+<p>拿right去重为例，即使不加这个去重逻辑，依然根据 <code>while (right &gt; left)</code> 和 <code>if (nums[i] + nums[left] + nums[right] &gt; 0)</code> 去完成right-- 的操作。</p>
+<p>多加了 <code>while (left &lt; right &amp;&amp; nums[right] == nums[right + 1]) right--;</code> 这一行代码，其实就是把 需要执行的逻辑提前执行了，但并没有减少 判断的逻辑。</p>
+<p>最直白的思考过程，就是right还是一个数一个数的减下去的，所以在哪里减的都是一样的。</p>
+<p>所以这种去重是可以不加的。 仅仅是把去重的逻辑提前了而已。</p>
+<p>既然三数之和可以使用双指针法，我们之前讲过的1.两数之和，可不可以使用双指针法呢？</p>
+<p>如果不能，题意如何更改就可以使用双指针法呢？</p>
+<p>两数之和 就不能使用双指针法，因为1.两数之和要求返回的是索引下标， 而双指针法一定要排序，一旦排序之后原数组的索引就被改变了。</p>
+<p>如果1.两数之和要求返回的是数值的话，就可以使用双指针法了。</p>
+<h2 id="c解法-33"><a class="header" href="#c解法-33">C++解法</a></h2>
+<p>哈希法C++代码:</p>
+<pre><code class="language-cpp">class Solution {
+public:
+    // 在一个数组中找到3个数形成的三元组，它们的和为0，不能重复使用（三数下标互不相同），且三元组不能重复。
+    // b（存储）== 0-(a+c)（检索）
+    vector&lt;vector&lt;int&gt;&gt; threeSum(vector&lt;int&gt;&amp; nums) {
+        vector&lt;vector&lt;int&gt;&gt; result;
+        sort(nums.begin(), nums.end());
+        
+        for (int i = 0; i &lt; nums.size(); i++) {
+            // 如果a是正数，a&lt;b&lt;c，不可能形成和为0的三元组
+            if (nums[i] &gt; 0)
+                break;
+            
+            // [a, a, ...] 如果本轮a和上轮a相同，那么找到的b，c也是相同的，所以去重a
+            if (i &gt; 0 &amp;&amp; nums[i] == nums[i - 1])
+                continue;
+            
+            // 这个set的作用是存储b
+            unordered_set&lt;int&gt; set;
+            
+            for (int k = i + 1; k &lt; nums.size(); k++) {
+                // 去重b=c时的b和c
+                if (k &gt; i + 2 &amp;&amp; nums[k] == nums[k - 1] &amp;&amp; nums[k - 1] == nums[k - 2])
+                    continue;
+                
+                // a+b+c=0 &lt;=&gt; b=0-(a+c)
+                int target = 0 - (nums[i] + nums[k]);
+                if (set.find(target) != set.end()) {
+                    result.push_back({nums[i], target, nums[k]});   // nums[k]成为c
+                    set.erase(target);
+                }
+                else {
+                    set.insert(nums[k]);                            // nums[k]成为b
+                }
+            }
+        }
+
+        return result;
+    }
+};
+</code></pre>
+<ul>
+<li>时间复杂度: O(n^2)</li>
+<li>空间复杂度: O(n)，额外的 set 开销</li>
+</ul>
+<p>双指针法C++代码如下：</p>
+<pre><code class="language-cpp">class Solution {
+public:
+    vector&lt;vector&lt;int&gt;&gt; threeSum(vector&lt;int&gt;&amp; nums) {
+        vector&lt;vector&lt;int&gt;&gt; result;
+        sort(nums.begin(), nums.end());
+        // 找出a + b + c = 0
+        // a = nums[i], b = nums[left], c = nums[right]
+        for (int i = 0; i &lt; nums.size(); i++) {
+            // 排序之后如果第一个元素已经大于零，那么无论如何组合都不可能凑成三元组，直接返回结果就可以了
+            if (nums[i] &gt; 0) {
+                return result;
+            }
+            // 错误去重a方法，将会漏掉-1,-1,2 这种情况
+            /*
+            if (nums[i] == nums[i + 1]) {
+                continue;
+            }
+            */
+            // 正确去重a方法
+            if (i &gt; 0 &amp;&amp; nums[i] == nums[i - 1]) {
+                continue;
+            }
+            int left = i + 1;
+            int right = nums.size() - 1;
+            while (right &gt; left) {
+                // 去重复逻辑如果放在这里，0，0，0 的情况，可能直接导致 right&lt;=left 了，从而漏掉了 0,0,0 这种三元组
+                /*
+                while (right &gt; left &amp;&amp; nums[right] == nums[right - 1]) right--;
+                while (right &gt; left &amp;&amp; nums[left] == nums[left + 1]) left++;
+                */
+                if (nums[i] + nums[left] + nums[right] &gt; 0) right--;
+                else if (nums[i] + nums[left] + nums[right] &lt; 0) left++;
+                else {
+                    result.push_back(vector&lt;int&gt;{nums[i], nums[left], nums[right]});
+                    // 去重逻辑应该放在找到一个三元组之后，对b 和 c去重
+                    while (right &gt; left &amp;&amp; nums[right] == nums[right - 1]) right--;
+                    while (right &gt; left &amp;&amp; nums[left] == nums[left + 1]) left++;
+
+                    // 找到答案时，双指针同时收缩
+                    right--;
+                    left++;
+                }
+            }
+
+        }
+        return result;
+    }
+};
+</code></pre>
+<ul>
+<li>时间复杂度: O(n^2)</li>
+<li>空间复杂度: O(1)</li>
+</ul>
+<h2 id="java解法-23"><a class="header" href="#java解法-23">Java解法</a></h2>
+<p>（版本一） 双指针</p>
+<pre><code class="language-java">class Solution {
+    public List&lt;List&lt;Integer&gt;&gt; threeSum(int[] nums) {
+        List&lt;List&lt;Integer&gt;&gt; result = new ArrayList&lt;&gt;();
+        Arrays.sort(nums);
+	// 找出a + b + c = 0
+        // a = nums[i], b = nums[left], c = nums[right]
+        for (int i = 0; i &lt; nums.length; i++) {
+	    // 排序之后如果第一个元素已经大于零，那么无论如何组合都不可能凑成三元组，直接返回结果就可以了
+            if (nums[i] &gt; 0) { 
+                return result;
+            }
+
+            if (i &gt; 0 &amp;&amp; nums[i] == nums[i - 1]) {  // 去重a
+                continue;
+            }
+
+            int left = i + 1;
+            int right = nums.length - 1;
+            while (right &gt; left) {
+                int sum = nums[i] + nums[left] + nums[right];
+                if (sum &gt; 0) {
+                    right--;
+                } else if (sum &lt; 0) {
+                    left++;
+                } else {
+                    result.add(Arrays.asList(nums[i], nums[left], nums[right]));
+		    // 去重逻辑应该放在找到一个三元组之后，对b 和 c去重
+                    while (right &gt; left &amp;&amp; nums[right] == nums[right - 1]) right--;
+                    while (right &gt; left &amp;&amp; nums[left] == nums[left + 1]) left++;
+                    
+                    right--; 
+                    left++;
+                }
+            }
+        }
+        return result;
+    }
+}
+</code></pre>
+<p>（版本二） 使用哈希集合</p>
+<pre><code class="language-java">class Solution {
+    public List&lt;List&lt;Integer&gt;&gt; threeSum(int[] nums) {
+	List&lt;List&lt;Integer&gt;&gt; result = new ArrayList&lt;&gt;();
+	Arrays.sort(nums);
+
+	for (int i = 0; i &lt; nums.length; i++) {
+		// 如果第一个元素大于零，不可能凑成三元组
+		if (nums[i] &gt; 0) {
+			return result;
+		}
+		// 三元组元素a去重
+		if (i &gt; 0 &amp;&amp; nums[i] == nums[i - 1]) {
+			continue;
+		}
+
+		HashSet&lt;Integer&gt; set = new HashSet&lt;&gt;();
+		for (int j = i + 1; j &lt; nums.length; j++) {
+			// 三元组元素b去重
+			if (j &gt; i + 2 &amp;&amp; nums[j] == nums[j - 1] &amp;&amp; nums[j - 1] == nums[j - 2]) {
+				continue;
+			}
+
+			int c = -nums[i] - nums[j];
+			if (set.contains(c)) {
+				result.add(Arrays.asList(nums[i], nums[j], c));
+				set.remove(c); // 三元组元素c去重
+			} else {
+				set.add(nums[j]);
+			}
+		}
+	}
+	return result;
+    }
+}
+</code></pre>
+<h2 id="python解法-5"><a class="header" href="#python解法-5">Python解法</a></h2>
+<p>（版本一） 双指针</p>
+<pre><code class="language-python">class Solution:
+    def threeSum(self, nums: List[int]) -&gt; List[List[int]]:
+        result = []
+        nums.sort()
+        
+        for i in range(len(nums)):
+            # 如果第一个元素已经大于0，不需要进一步检查
+            if nums[i] &gt; 0:
+                return result
+            
+            # 跳过相同的元素以避免重复
+            if i &gt; 0 and nums[i] == nums[i - 1]:
+                continue
+                
+            left = i + 1
+            right = len(nums) - 1
+            
+            while right &gt; left:
+                sum_ = nums[i] + nums[left] + nums[right]
+                
+                if sum_ &lt; 0:
+                    left += 1
+                elif sum_ &gt; 0:
+                    right -= 1
+                else:
+                    result.append([nums[i], nums[left], nums[right]])
+                    
+                    # 跳过相同的元素以避免重复
+                    while right &gt; left and nums[right] == nums[right - 1]:
+                        right -= 1
+                    while right &gt; left and nums[left] == nums[left + 1]:
+                        left += 1
+                        
+                    right -= 1
+                    left += 1
+                    
+        return result
+</code></pre>
+<p>（版本二） 使用字典</p>
+<pre><code class="language-python">class Solution:
+    def threeSum(self, nums: List[int]) -&gt; List[List[int]]:
+        result = []
+        nums.sort()
+        # 找出a + b + c = 0
+        # a = nums[i], b = nums[j], c = -(a + b)
+        for i in range(len(nums)):
+            # 排序之后如果第一个元素已经大于零，那么不可能凑成三元组
+            if nums[i] &gt; 0:
+                break
+            if i &gt; 0 and nums[i] == nums[i - 1]: #三元组元素a去重
+                continue
+            d = {}
+            for j in range(i + 1, len(nums)):
+                if j &gt; i + 2 and nums[j] == nums[j-1] == nums[j-2]: # 三元组元素b去重
+                    continue
+                c = 0 - (nums[i] + nums[j])
+                if c in d:
+                    result.append([nums[i], nums[j], c])
+                    d.pop(c) # 三元组元素c去重
+                else:
+                    d[nums[j]] = j
+        return result
+</code></pre>
+<h2 id="go解法-10"><a class="header" href="#go解法-10">Go解法</a></h2>
+<p>（版本一） 双指针</p>
+<pre><code class="language-go">func threeSum(nums []int) [][]int {
+	sort.Ints(nums)
+	res := [][]int{}
+	// 找出a + b + c = 0
+	// a = nums[i], b = nums[left], c = nums[right]
+	for i := 0; i &lt; len(nums)-2; i++ {
+		// 排序之后如果第一个元素已经大于零，那么无论如何组合都不可能凑成三元组，直接返回结果就可以了
+		n1 := nums[i]
+		if n1 &gt; 0 {
+			break
+		}
+		// 去重a
+		if i &gt; 0 &amp;&amp; n1 == nums[i-1] {
+			continue
+		}
+		l, r := i+1, len(nums)-1
+		for l &lt; r {
+			n2, n3 := nums[l], nums[r]
+			if n1+n2+n3 == 0 {
+				res = append(res, []int{n1, n2, n3})
+				// 去重逻辑应该放在找到一个三元组之后，对b 和 c去重
+				for l &lt; r &amp;&amp; nums[l] == n2 {
+					l++
+				}
+				for l &lt; r &amp;&amp; nums[r] == n3 {
+					r--
+				}
+			} else if n1+n2+n3 &lt; 0 {
+				l++
+			} else {
+				r--
+			}
+		}
+	}
+	return res
+}
+</code></pre>
+<p>（版本二） 哈希解法</p>
+<pre><code class="language-go">func threeSum(nums []int) [][]int {
+    res := make([][]int, 0)
+    sort.Ints(nums)
+    // 找出a + b + c = 0
+    // a = nums[i], b = nums[j], c = -(a + b)
+    for i := 0; i &lt; len(nums); i++ {
+        // 排序之后如果第一个元素已经大于零，那么不可能凑成三元组
+        if nums[i] &gt; 0 {
+            break
+        }
+        // 三元组元素a去重
+        if i &gt; 0 &amp;&amp; nums[i] == nums[i-1] {
+            continue
+        }
+        set := make(map[int]struct{})
+        for j := i + 1; j &lt; len(nums); j++ {
+            // 三元组元素b去重
+            if j &gt; i + 2 &amp;&amp; nums[j] == nums[j-1] &amp;&amp; nums[j-1] == nums[j-2] {
+                continue
+            }
+            c := -nums[i] - nums[j]
+            if _, ok := set[c]; ok {
+                res = append(res, []int{nums[i], nums[j], c})
+                // 三元组元素c去重
+                delete(set, c)
+            } else {
+                set[nums[j]] = struct{}{}
+            }
+        }
+    }
+    return res
+}
+</code></pre>
+<h2 id="rust解法-2"><a class="header" href="#rust解法-2">Rust解法</a></h2>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// 哈希解法
+use std::collections::HashSet;
+impl Solution {
+    pub fn three_sum(nums: Vec&lt;i32&gt;) -&gt; Vec&lt;Vec&lt;i32&gt;&gt; {
+        let mut result: Vec&lt;Vec&lt;i32&gt;&gt; = Vec::new();
+        let mut nums = nums;
+        nums.sort();
+        let len = nums.len();
+        for i in 0..len {
+            if nums[i] &gt; 0 { break; }
+            if i &gt; 0 &amp;&amp; nums[i] == nums[i - 1] { continue; }
+            let mut set = HashSet::new();
+            for j in (i + 1)..len {
+                if j &gt; i + 2 &amp;&amp; nums[j] == nums[j - 1] &amp;&amp; nums[j] == nums[j - 2] { continue; }
+                let c = 0 - (nums[i] + nums[j]);
+                if set.contains(&amp;c) {
+                    result.push(vec![nums[i], nums[j], c]);
+                    set.remove(&amp;c);
+                } else { set.insert(nums[j]); }
+            }
+        }
+        result
+    }
+}
+<span class="boring">}</span></code></pre></pre>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// 双指针法
+use std::cmp::Ordering;
+impl Solution {
+    pub fn three_sum(nums: Vec&lt;i32&gt;) -&gt; Vec&lt;Vec&lt;i32&gt;&gt; {
+        let mut result: Vec&lt;Vec&lt;i32&gt;&gt; = Vec::new();
+        let mut nums = nums;
+        nums.sort();
+        let len = nums.len();
+        for i in 0..len {
+            if nums[i] &gt; 0 { return result; }
+            if i &gt; 0 &amp;&amp; nums[i] == nums[i - 1] { continue; }
+            let (mut left, mut right) = (i + 1, len - 1);
+            while left &lt; right {
+                match (nums[i] + nums[left] + nums[right]).cmp(&amp;0){
+		    Ordering::Equal =&gt;{
+		        result.push(vec![nums[i], nums[left], nums[right]]);
+			left +=1;
+			right -=1;
+			while left &lt; right &amp;&amp; nums[left] == nums[left - 1]{
+			    left += 1;
+			}
+			while left &lt; right &amp;&amp; nums[right] == nums[right+1]{
+			    right -= 1;
+			}
+		    }
+		    Ordering::Greater =&gt; right -= 1,
+		    Ordering::Less =&gt; left += 1,
+		}
+            }
+        }
+        result
+    }
+}
+<span class="boring">}</span></code></pre></pre>
+<h1 id="18-4sum"><a class="header" href="#18-4sum"><a href="https://leetcode.com/problems/4sum/">18. 4Sum</a></a></h1>
+<p>Given an array <code>nums</code> of <code>n</code> integers, return <em>an array of all the <strong>unique</strong> quadruplets</em> <code>[nums[a], nums[b], nums[c], nums[d]]</code> such that:</p>
+<ul>
+<li><code>0 &lt;= a, b, c, d &lt; n</code></li>
+<li><code>a</code>, <code>b</code>, <code>c</code>, and <code>d</code> are <strong>distinct</strong>.</li>
+<li><code>nums[a] + nums[b] + nums[c] + nums[d] == target</code></li>
+</ul>
+<p>You may return the answer in <strong>any order</strong>.</p>
+<p><strong>Example 1:</strong></p>
+<p><strong>Input:</strong> <code>nums = [1,0,-1,0,-2,2], target = 0</code><br />
+<strong>Output:</strong> <code>[[-2,-1,1,2],[-2,0,0,2],[-1,0,0,1]]</code></p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> <code>nums = [2,2,2,2,2], target = 8</code><br />
+<strong>Output:</strong> <code>[[2,2,2,2]]</code></p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= nums.length &lt;= 200</code></li>
+<li><code>-10^9 &lt;= nums[i] &lt;= 10^9</code></li>
+<li><code>-10^9 &lt;= target &lt;= 10^9</code></li>
+</ul>
+<h2 id="思路-46"><a class="header" href="#思路-46">思路</a></h2>
+<p>四数之和，和15.三数之和是一个思路，都是使用双指针法, 基本解法就是在15.三数之和的基础上再套一层for循环。</p>
+<p>但是有一些细节需要注意，例如： 不要判断<code>nums[k] &gt; target</code> 就返回了，三数之和 可以通过 <code>nums[i] &gt; 0</code> 就返回了，因为 0 已经是确定的数了，四数之和这道题目 target是任意值。比如：数组是<code>[-4, -3, -2, -1]</code>，<code>target</code>是<code>-10</code>，不能因为<code>-4 &gt; -10</code>而跳过。但是我们依旧可以去做剪枝，逻辑变成<code>nums[i] &gt; target &amp;&amp; (nums[i] &gt;=0 || target &gt;= 0)</code>就可以了。</p>
+<p>15.三数之和的双指针解法是一层for循环<code>num[i]</code>为确定值，然后循环内有left和right下标作为双指针，找到<code>nums[i] + nums[left] + nums[right] == 0</code>。</p>
+<p>四数之和的双指针解法是两层for循环<code>nums[k] + nums[i]</code>为确定值，依然是循环内有left和right下标作为双指针，找出<code>nums[k] + nums[i] + nums[left] + nums[right] == target</code>的情况，三数之和的时间复杂度是O(n^2)，四数之和的时间复杂度是O(n^3) 。</p>
+<p>那么一样的道理，五数之和、六数之和等等都采用这种解法。</p>
+<p>对于15.三数之和双指针法就是将原本暴力O(n^3)的解法，降为O(n^2)的解法，四数之和的双指针解法就是将原本暴力O(n^4)的解法，降为O(n^3)的解法。</p>
+<p>之前我们讲过哈希表的经典题目：454.四数相加II，相对于本题简单很多，因为本题是要求在一个集合中找出四个数相加等于target，同时四元组不能重复。</p>
+<p>而454.四数相加II是四个独立的数组，只要找到<code>A[i] + B[j] + C[k] + D[l] = 0</code>就可以，不用考虑有重复的四个元素相加等于0的情况，所以相对于本题还是简单了不少！</p>
+<h2 id="c解法-34"><a class="header" href="#c解法-34">C++解法</a></h2>
+<pre><code class="language-cpp">class Solution {
+public:
+    vector&lt;vector&lt;int&gt;&gt; fourSum(vector&lt;int&gt;&amp; nums, int target) {
+        vector&lt;vector&lt;int&gt;&gt; result;
+        sort(nums.begin(), nums.end());
+        for (int k = 0; k &lt; nums.size(); k++) {
+            // 剪枝处理
+            if (nums[k] &gt; target &amp;&amp; nums[k] &gt;= 0) {
+            	break; // 这里使用break，统一通过最后的return返回
+            }
+            // 对nums[k]去重
+            if (k &gt; 0 &amp;&amp; nums[k] == nums[k - 1]) {
+                continue;
+            }
+            for (int i = k + 1; i &lt; nums.size(); i++) {
+                // 2级剪枝处理
+                if (nums[k] + nums[i] &gt; target &amp;&amp; nums[k] + nums[i] &gt;= 0) {
+                    break;
+                }
+
+                // 对nums[i]去重
+                if (i &gt; k + 1 &amp;&amp; nums[i] == nums[i - 1]) {
+                    continue;
+                }
+                int left = i + 1;
+                int right = nums.size() - 1;
+                while (right &gt; left) {
+                    // nums[k] + nums[i] + nums[left] + nums[right] &gt; target 会溢出
+                    if ((long) nums[k] + nums[i] + nums[left] + nums[right] &gt; target) {
+                        right--;
+                    // nums[k] + nums[i] + nums[left] + nums[right] &lt; target 会溢出
+                    } else if ((long) nums[k] + nums[i] + nums[left] + nums[right]  &lt; target) {
+                        left++;
+                    } else {
+                        result.push_back(vector&lt;int&gt;{nums[k], nums[i], nums[left], nums[right]});
+                        // 对nums[left]和nums[right]去重
+                        while (right &gt; left &amp;&amp; nums[right] == nums[right - 1]) right--;
+                        while (right &gt; left &amp;&amp; nums[left] == nums[left + 1]) left++;
+
+                        // 找到答案时，双指针同时收缩
+                        right--;
+                        left++;
+                    }
+                }
+
+            }
+        }
+        return result;
+    }
+};
+</code></pre>
+<ul>
+<li>时间复杂度: O(n^3)</li>
+<li>空间复杂度: O(1)</li>
+</ul>
+<p>二级剪枝的部分：</p>
+<pre><code class="language-cpp">if (nums[k] + nums[i] &gt; target &amp;&amp; nums[k] + nums[i] &gt;= 0) {
+    break;
+}
+</code></pre>
+<p>可以优化为：</p>
+<pre><code class="language-cpp">if (nums[k] + nums[i] &gt; target &amp;&amp; nums[i] &gt;= 0) {
+    break;
+}
+</code></pre>
+<p>因为只要 <code>nums[k] + nums[i] &gt; target</code>，那么 <code>nums[i]</code> 后面的数都是正数的话，就一定不符合条件了。</p>
+<p>不过这种剪枝其实有点小绕，大家能够理解 文章给的完整代码的剪枝就够了。</p>
+<h2 id="java解法-24"><a class="header" href="#java解法-24">Java解法</a></h2>
+<pre><code class="language-java">import java.util.*;
+
+public class Solution {
+    public List&lt;List&lt;Integer&gt;&gt; fourSum(int[] nums, int target) {
+        Arrays.sort(nums);  // 排序数组
+        List&lt;List&lt;Integer&gt;&gt; result = new ArrayList&lt;&gt;();  // 结果集
+        for (int k = 0; k &lt; nums.length; k++) {
+            // 剪枝处理
+            if (nums[k] &gt; target &amp;&amp; nums[k] &gt;= 0) {
+                break;
+            }
+            // 对nums[k]去重
+            if (k &gt; 0 &amp;&amp; nums[k] == nums[k - 1]) {
+                continue;
+            }
+            for (int i = k + 1; i &lt; nums.length; i++) {
+                // 第二级剪枝
+                if (nums[k] + nums[i] &gt; target &amp;&amp; nums[k] + nums[i] &gt;= 0) {
+                    break;
+                }
+                // 对nums[i]去重
+                if (i &gt; k + 1 &amp;&amp; nums[i] == nums[i - 1]) {
+                    continue;
+                }
+                int left = i + 1;
+                int right = nums.length - 1;
+                while (right &gt; left) {
+                    long sum = (long) nums[k] + nums[i] + nums[left] + nums[right];
+                    if (sum &gt; target) {
+                        right--;
+                    } else if (sum &lt; target) {
+                        left++;
+                    } else {
+                        result.add(Arrays.asList(nums[k], nums[i], nums[left], nums[right]));
+                        // 对nums[left]和nums[right]去重
+                        while (right &gt; left &amp;&amp; nums[right] == nums[right - 1]) right--;
+                        while (right &gt; left &amp;&amp; nums[left] == nums[left + 1]) left++;
+                        right--;
+                        left++;
+                    }
+                }
+            }
+        }
+        return result;
+    }
+
+    public static void main(String[] args) {
+        Solution solution = new Solution();
+        int[] nums = {1, 0, -1, 0, -2, 2};
+        int target = 0;
+        List&lt;List&lt;Integer&gt;&gt; results = solution.fourSum(nums, target);
+        for (List&lt;Integer&gt; result : results) {
+            System.out.println(result);
+        }
+    }
+}
+</code></pre>
+<h2 id="python解法-6"><a class="header" href="#python解法-6">Python解法</a></h2>
+<p>(版本一) 双指针</p>
+<pre><code class="language-python">class Solution:
+    def fourSum(self, nums: List[int], target: int) -&gt; List[List[int]]:
+        nums.sort()
+        n = len(nums)
+        result = []
+        for i in range(n):
+            if nums[i] &gt; target and nums[i] &gt; 0 and target &gt; 0:# 剪枝（可省）
+                break
+            if i &gt; 0 and nums[i] == nums[i-1]:# 去重
+                continue
+            for j in range(i+1, n):
+                if nums[i] + nums[j] &gt; target and target &gt; 0: #剪枝（可省）
+                    break
+                if j &gt; i+1 and nums[j] == nums[j-1]: # 去重
+                    continue
+                left, right = j+1, n-1
+                while left &lt; right:
+                    s = nums[i] + nums[j] + nums[left] + nums[right]
+                    if s == target:
+                        result.append([nums[i], nums[j], nums[left], nums[right]])
+                        while left &lt; right and nums[left] == nums[left+1]:
+                            left += 1
+                        while left &lt; right and nums[right] == nums[right-1]:
+                            right -= 1
+                        left += 1
+                        right -= 1
+                    elif s &lt; target:
+                        left += 1
+                    else:
+                        right -= 1
+        return result
+
+</code></pre>
+<p>(版本二) 使用字典</p>
+<pre><code class="language-python">class Solution(object):
+    def fourSum(self, nums, target):
+        """
+        :type nums: List[int]
+        :type target: int
+        :rtype: List[List[int]]
+        """
+        # 创建一个字典来存储输入列表中每个数字的频率
+        freq = {}
+        for num in nums:
+            freq[num] = freq.get(num, 0) + 1
+        
+        # 创建一个集合来存储最终答案，并遍历4个数字的所有唯一组合
+        ans = set()
+        for i in range(len(nums)):
+            for j in range(i + 1, len(nums)):
+                for k in range(j + 1, len(nums)):
+                    val = target - (nums[i] + nums[j] + nums[k])
+                    if val in freq:
+                        # 确保没有重复
+                        count = (nums[i] == val) + (nums[j] == val) + (nums[k] == val)
+                        if freq[val] &gt; count:
+                            ans.add(tuple(sorted([nums[i], nums[j], nums[k], val])))
+        
+        return [list(x) for x in ans]
+
+</code></pre>
+<h2 id="go解法-11"><a class="header" href="#go解法-11">Go解法</a></h2>
+<pre><code class="language-go">func fourSum(nums []int, target int) [][]int {
+	if len(nums) &lt; 4 {
+		return nil
+	}
+	sort.Ints(nums)
+	var res [][]int
+	for i := 0; i &lt; len(nums)-3; i++ {
+		n1 := nums[i]
+		// if n1 &gt; target { // 不能这样写,因为可能是负数
+		// 	break
+		// }
+		if i &gt; 0 &amp;&amp; n1 == nums[i-1] {  // 对nums[i]去重
+			continue
+		}
+		for j := i + 1; j &lt; len(nums)-2; j++ {
+			n2 := nums[j]
+			if j &gt; i+1 &amp;&amp; n2 == nums[j-1] {  // 对nums[j]去重
+				continue
+			}
+			l := j + 1
+			r := len(nums) - 1
+			for l &lt; r {
+				n3 := nums[l]
+				n4 := nums[r]
+				sum := n1 + n2 + n3 + n4
+				if sum &lt; target {
+					l++
+				} else if sum &gt; target {
+					r--
+				} else {
+					res = append(res, []int{n1, n2, n3, n4})
+					for l &lt; r &amp;&amp; n3 == nums[l+1] { // 去重
+						l++
+					}
+					for l &lt; r &amp;&amp; n4 == nums[r-1] { // 去重
+						r--
+					}
+					// 找到答案时,双指针同时靠近
+					r--
+					l++
+				}
+			}
+		}
+	}
+	return res
+}
+</code></pre>
+<h1 id="49-group-anagrams"><a class="header" href="#49-group-anagrams"><a href="https://leetcode.com/problems/group-anagrams/">49. Group Anagrams</a></a></h1>
+<p>Given an array of strings <code>strs</code>, group the anagrams together. You can return the answer in <strong>any order</strong>.</p>
+<p><strong>Example 1:</strong></p>
+<p><strong>Input:</strong> <code>strs = ["eat","tea","tan","ate","nat","bat"]</code></p>
+<p><strong>Output:</strong> <code>[["bat"],["nat","tan"],["ate","eat","tea"]]</code></p>
+<p><strong>Explanation:</strong></p>
+<ul>
+<li>There is no string in strs that can be rearranged to form <code>"bat"</code>.</li>
+<li>The strings <code>"nat"</code> and <code>"tan"</code> are anagrams as they can be rearranged to form each other.</li>
+<li>The strings <code>"ate"</code>, <code>"eat"</code>, and <code>"tea"</code> are anagrams as they can be rearranged to form each other.</li>
+</ul>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> <code>strs = [""]</code></p>
+<p><strong>Output:</strong> <code>[[""]]</code></p>
+<p><strong>Example 3:</strong></p>
+<p><strong>Input:</strong> <code>strs = ["a"]</code></p>
+<p><strong>Output:</strong> <code>[["a"]]</code></p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= strs.length &lt;= 10^4</code></li>
+<li><code>0 &lt;= strs[i].length &lt;= 100</code></li>
+<li><code>strs[i]</code> consists of lowercase English letters.</li>
+</ul>
+<h2 id="思路-47"><a class="header" href="#思路-47">思路</a></h2>
+<ol>
+<li><strong>头文件引入</strong>：引入必要的标准库，如 <code>&lt;iostream&gt;</code>, <code>&lt;vector&gt;</code>, <code>&lt;unordered_map&gt;</code>, 和 <code>&lt;algorithm&gt;</code>。</li>
+<li><strong>类定义</strong>：定义一个名为 <code>Solution</code> 的类，其中包含 <code>groupAnagrams</code> 方法，接受一个字符串向量并返回一个字符串向量的向量。</li>
+<li><strong>unordered_map</strong>：使用 <code>std::unordered_map</code> 来代替 Java 的 <code>HashMap</code>。</li>
+<li><strong>字符串排序</strong>：利用 <code>std::sort</code> 对字符串进行排序以创建一个唯一的键。</li>
+<li><strong>结果存储</strong>：通过遍历哈希表，将分组的单词存储到结果向量中。</li>
+</ol>
+<h2 id="c解法-35"><a class="header" href="#c解法-35">C++解法</a></h2>
+<pre><code class="language-cpp">#include &lt;iostream&gt;  
+#include &lt;vector&gt;  
+#include &lt;unordered_map&gt;  
+#include &lt;algorithm&gt;  
+
+class Solution {  
+public:  
+    std::vector&lt;std::vector&lt;std::string&gt;&gt; groupAnagrams(std::vector&lt;std::string&gt;&amp; strs) {  
+        std::unordered_map&lt;std::string, std::vector&lt;std::string&gt;&gt; map;  
+
+        for (const auto&amp; str : strs) {  
+            std::string key = str;  // Copy the string to a key  
+            
+            // Sort the string to create a key  
+            std::sort(key.begin(), key.end());  
+            
+            // Add the original string to the map using the sorted key  
+            map[key].push_back(str);  
+        }  
+
+        // Prepare the result using a vector of vectors  
+        std::vector&lt;std::vector&lt;std::string&gt;&gt; result;  
+        for (const auto&amp; pair : map) {  
+            result.push_back(pair.second);  
+        }  
+
+        return result;  
+    }  
+};
+</code></pre>
+<h2 id="java解法-25"><a class="header" href="#java解法-25">Java解法</a></h2>
+<pre><code class="language-java">class Solution {
+    public List&lt;List&lt;String&gt;&gt; groupAnagrams(String[] strs) {
+        Map&lt;String, List&lt;String&gt;&gt; map = new HashMap&lt;String, List&lt;String&gt;&gt;();
+        for (String str : strs) {
+            char[] array = str.toCharArray();
+            Arrays.sort(array);
+            String key = new String(array);
+            List&lt;String&gt; list = map.getOrDefault(key, new ArrayList&lt;String&gt;());
+            list.add(str);
+            map.put(key, list);
+        }
+        return new ArrayList&lt;List&lt;String&gt;&gt;(map.values());
+    }
+}
+</code></pre>
 <div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
 <h1 id="字符串"><a class="header" href="#字符串">字符串</a></h1>
+<ul>
+<li><a href="%E5%AD%97%E7%AC%A6%E4%B8%B2/%E5%AD%97%E7%AC%A6%E4%B8%B2.html#%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%80%BB%E7%BB%93%E7%AF%87">字符串：总结篇</a>
+<ul>
+<li><a href="%E5%AD%97%E7%AC%A6%E4%B8%B2/%E5%AD%97%E7%AC%A6%E4%B8%B2.html#%E4%BB%80%E4%B9%88%E6%98%AF%E5%AD%97%E7%AC%A6%E4%B8%B2">什么是字符串</a></li>
+<li><a href="%E5%AD%97%E7%AC%A6%E4%B8%B2/%E5%AD%97%E7%AC%A6%E4%B8%B2.html#%E8%A6%81%E4%B8%8D%E8%A6%81%E4%BD%BF%E7%94%A8%E5%BA%93%E5%87%BD%E6%95%B0">要不要使用库函数</a></li>
+<li><a href="%E5%AD%97%E7%AC%A6%E4%B8%B2/%E5%AD%97%E7%AC%A6%E4%B8%B2.html#%E5%8F%8C%E6%8C%87%E9%92%88%E6%B3%95">双指针法</a></li>
+<li><a href="%E5%AD%97%E7%AC%A6%E4%B8%B2/%E5%AD%97%E7%AC%A6%E4%B8%B2.html#%E5%8F%8D%E8%BD%AC%E7%B3%BB%E5%88%97">反转系列</a></li>
+<li><a href="%E5%AD%97%E7%AC%A6%E4%B8%B2/%E5%AD%97%E7%AC%A6%E4%B8%B2.html#kmp">KMP</a></li>
+<li><a href="%E5%AD%97%E7%AC%A6%E4%B8%B2/%E5%AD%97%E7%AC%A6%E4%B8%B2.html#%E6%80%BB%E7%BB%93">总结</a></li>
+</ul>
+</li>
+</ul>
+<h1 id="字符串总结篇"><a class="header" href="#字符串总结篇">字符串：总结篇</a></h1>
+<p>其实我们已经学习了十天的字符串了，从字符串的定义到库函数的使用原则，从各种反转到KMP算法，相信大家应该对字符串有比较深刻的认识了。</p>
+<p>那么这次我们来做一个总结。</p>
+<h2 id="什么是字符串"><a class="header" href="#什么是字符串">什么是字符串</a></h2>
+<p>字符串是若干字符组成的有限序列，也可以理解为是一个字符数组，但是很多语言对字符串做了特殊的规定，接下来我来说一说C/C++中的字符串。</p>
+<p>在C语言中，把一个字符串存入一个数组时，也把结束符 '\0'存入数组，并以此作为该字符串是否结束的标志。</p>
+<p>例如这段代码：</p>
+<pre><code class="language-cpp">char a[5] = "asd";
+for (int i = 0; a[i] != '\0'; i++) {
+}
+</code></pre>
+<p>在C++中，提供一个string类，string类会提供 size接口，可以用来判断string类字符串是否结束，就不用'\0'来判断是否结束。</p>
+<p>例如这段代码:</p>
+<pre><code class="language-cpp">string a = "asd";
+for (int i = 0; i &lt; a.size(); i++) {
+}
+</code></pre>
+<p>那么vector&lt; char &gt; 和 string 又有什么区别呢？</p>
+<p>其实在基本操作上没有区别，但是 string提供更多的字符串处理的相关接口，例如string 重载了+，而vector却没有。</p>
+<p>所以想处理字符串，我们还是会定义一个string类型。</p>
+<h2 id="要不要使用库函数"><a class="header" href="#要不要使用库函数">要不要使用库函数</a></h2>
+<p>在文章<a href="https://programmercarl.com/0344.%E5%8F%8D%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2.html">344.反转字符串 (opens new window)</a>中强调了<strong>打基础的时候，不要太迷恋于库函数。</strong></p>
+<p>甚至一些同学习惯于调用substr，split，reverse之类的库函数，却不知道其实现原理，也不知道其时间复杂度，这样实现出来的代码，如果在面试现场，面试官问：“分析其时间复杂度”的话，一定会一脸懵逼！</p>
+<p>所以建议<strong>如果题目关键的部分直接用库函数就可以解决，建议不要使用库函数。</strong></p>
+<p><strong>如果库函数仅仅是 解题过程中的一小部分，并且你已经很清楚这个库函数的内部实现原理的话，可以考虑使用库函数。</strong></p>
+<h2 id="双指针法"><a class="header" href="#双指针法">双指针法</a></h2>
+<p>在<a href="https://programmercarl.com/0344.%E5%8F%8D%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2.html">344.反转字符串 (opens new window)</a>，我们使用双指针法实现了反转字符串的操作，<strong>双指针法在数组，链表和字符串中很常用。</strong></p>
+<p>接着在<a href="https://programmercarl.com/%E5%89%91%E6%8C%87Offer05.%E6%9B%BF%E6%8D%A2%E7%A9%BA%E6%A0%BC.html">字符串：替换空格 (opens new window)</a>，同样还是使用双指针法在时间复杂度O(n)的情况下完成替换空格。</p>
+<p><strong>其实很多数组填充类的问题，都可以先预先给数组扩容带填充后的大小，然后在从后向前进行操作。</strong></p>
+<p>那么针对数组删除操作的问题，其实在<a href="https://programmercarl.com/0027.%E7%A7%BB%E9%99%A4%E5%85%83%E7%B4%A0.html">27. 移除元素 (opens new window)</a>中就已经提到了使用双指针法进行移除操作。</p>
+<p>同样的道理在<a href="https://programmercarl.com/0151.%E7%BF%BB%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2%E9%87%8C%E7%9A%84%E5%8D%95%E8%AF%8D.html">151.翻转字符串里的单词 (opens new window)</a>中我们使用O(n)的时间复杂度，完成了删除冗余空格。</p>
+<p>一些同学会使用for循环里调用库函数erase来移除元素，这其实是O(n^2)的操作，因为erase就是O(n)的操作，所以这也是典型的不知道库函数的时间复杂度，上来就用的案例了。</p>
+<h2 id="反转系列"><a class="header" href="#反转系列">反转系列</a></h2>
+<p>在反转上还可以在加一些玩法，其实考察的是对代码的掌控能力。</p>
+<p><a href="https://programmercarl.com/0541.%E5%8F%8D%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2II.html">541. 反转字符串II (opens new window)</a>中，一些同学可能为了处理逻辑：每隔2k个字符的前k的字符，写了一堆逻辑代码或者再搞一个计数器，来统计2k，再统计前k个字符。</p>
+<p>其实<strong>当需要固定规律一段一段去处理字符串的时候，要想想在在for循环的表达式上做做文章</strong>。</p>
+<p>只要让 i += (2 * k)，i 每次移动 2 * k 就可以了，然后判断是否需要有反转的区间。</p>
+<p>因为要找的也就是每2 * k 区间的起点，这样写程序会高效很多。</p>
+<p>在<a href="https://programmercarl.com/0151.%E7%BF%BB%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2%E9%87%8C%E7%9A%84%E5%8D%95%E8%AF%8D.html">151.翻转字符串里的单词 (opens new window)</a>中要求翻转字符串里的单词，这道题目可以说是综合考察了字符串的多种操作。是考察字符串的好题。</p>
+<p>这道题目通过 <strong>先整体反转再局部反转</strong>，实现了反转字符串里的单词。</p>
+<p>后来发现反转字符串还有一个牛逼的用处，就是达到左旋的效果。</p>
+<p>在<a href="https://programmercarl.com/%E5%89%91%E6%8C%87Offer58-II.%E5%B7%A6%E6%97%8B%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2.html">字符串：反转个字符串还有这个用处？ (opens new window)</a>中，我们通过<strong>先局部反转再整体反转</strong>达到了左旋的效果。</p>
+<h2 id="kmp"><a class="header" href="#kmp">KMP</a></h2>
+<p>KMP的主要思想是<strong>当出现字符串不匹配时，可以知道一部分之前已经匹配的文本内容，可以利用这些信息避免从头再去做匹配了。</strong></p>
+<p>KMP的精髓所在就是前缀表，在<a href="https://programmercarl.com/0028.%E5%AE%9E%E7%8E%B0strStr.html">KMP精讲 (opens new window)</a>中提到了，什么是KMP，什么是前缀表，以及为什么要用前缀表。</p>
+<p>前缀表：起始位置到下标i之前（包括i）的子串中，有多大长度的相同前缀后缀。</p>
+<p>那么使用KMP可以解决两类经典问题：</p>
+<ol>
+<li>匹配问题：<a href="https://programmercarl.com/0028.%E5%AE%9E%E7%8E%B0strStr.html">28. 实现 strStr()(opens new window)</a></li>
+<li>重复子串问题：<a href="https://programmercarl.com/0459.%E9%87%8D%E5%A4%8D%E7%9A%84%E5%AD%90%E5%AD%97%E7%AC%A6%E4%B8%B2.html">459.重复的子字符串(opens new window)</a></li>
+</ol>
+<p>再一次强调了什么是前缀，什么是后缀，什么又是最长相等前后缀。</p>
+<p>前缀：指不包含最后一个字符的所有以第一个字符开头的连续子串。</p>
+<p>后缀：指不包含第一个字符的所有以最后一个字符结尾的连续子串。</p>
+<p>然后<strong>针对前缀表到底要不要减一，这其实是不同KMP实现的方式</strong>，我们在<a href="https://programmercarl.com/0028.%E5%AE%9E%E7%8E%B0strStr.html">KMP精讲 (opens new window)</a>中针对之前两个问题，分别给出了两个不同版本的的KMP实现。</p>
+<p>其中主要<strong>理解j=next[x]这一步最为关键！</strong></p>
+<h2 id="总结-2"><a class="header" href="#总结-2">总结</a></h2>
+<p>字符串类类型的题目，往往想法比较简单，但是实现起来并不容易，复杂的字符串题目非常考验对代码的掌控能力。</p>
+<p>双指针法是字符串处理的常客。</p>
+<p>KMP算法是字符串查找最重要的算法，但彻底理解KMP并不容易，我们已经写了五篇KMP的文章，不断总结和完善，最终才把KMP讲清楚。</p>
+<p>好了字符串相关的算法知识就介绍到了这里了，明天开始新的征程，大家加油！</p>
 <div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
-<h1 id="双指针"><a class="header" href="#双指针">双指针</a></h1>
+<h1 id="双指针-1"><a class="header" href="#双指针-1">双指针</a></h1>
 <p>双指针法是一种常用的解决编程问题的技巧，它通常分为快慢指针和左右指针两种类型。</p>
 <h2 id="左右指针"><a class="header" href="#左右指针">左右指针</a></h2>
 <ul>
@@ -4246,7 +6850,7 @@ public:
 <li><code>2 &lt;= n &lt;= 10^5</code></li>
 <li><code>0 &lt;= height[i] &lt;= 10^4</code></li>
 </ul>
-<h2 id="思路-30"><a class="header" href="#思路-30">思路</a></h2>
+<h2 id="思路-48"><a class="header" href="#思路-48">思路</a></h2>
 <p>双指针，左低移左，右低移右</p>
 <p>The two-pointer technique starts with the widest container and moves the pointers inward based on the comparison of heights.</p>
 <p>Increasing the width of the container can only lead to a larger area if the height of the new boundary is greater. By moving the pointers towards the center, we explore containers with the potential for greater areas.</p>
@@ -4322,7 +6926,7 @@ public:
 <li><code>1 &lt;= n &lt;= 2 * 10^4</code></li>
 <li><code>0 &lt;= height[i] &lt;= 10^5</code></li>
 </ul>
-<h2 id="思路-31"><a class="header" href="#思路-31">思路</a></h2>
+<h2 id="思路-49"><a class="header" href="#思路-49">思路</a></h2>
 <p>一共三种解法：双指针、单调栈和动态规划。</p>
 <h2 id="c-解法-9"><a class="header" href="#c-解法-9">C++ 解法</a></h2>
 <p>单调栈</p>
@@ -4398,7 +7002,9 @@ public:
         return sum
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
-<h1 id="栈与队列"><a class="header" href="#栈与队列">栈与队列</a></h1>
+<h1 id="栈"><a class="header" href="#栈">栈</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
+<h1 id="队列"><a class="header" href="#队列">队列</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
 <h1 id="二叉树"><a class="header" href="#二叉树">二叉树</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
@@ -4437,7 +7043,7 @@ public:
 <li><code>-10^9 &lt;= Node.val &lt;= 10^9</code></li>
 <li><code>-1000 &lt;= targetSum &lt;= 1000</code></li>
 </ul>
-<h2 id="思路-32"><a class="header" href="#思路-32">思路</a></h2>
+<h2 id="思路-50"><a class="header" href="#思路-50">思路</a></h2>
 <h3 id="方法一深度优先搜索"><a class="header" href="#方法一深度优先搜索">方法一：深度优先搜索</a></h3>
 <p>思路与算法</p>
 <p>我们首先想到的解法是穷举所有的可能，我们访问每一个节点 node，检测以 node 为起始节点且向下延深的路径有多少种。我们递归遍历每一个节点的所有可能的路径，然后将这些路径数目加起来即为返回结果。</p>
@@ -4525,7 +7131,7 @@ public:
 <li>The number of nodes in the tree is in the range <code>[1, 10^4]</code>.</li>
 <li><code>-100 &lt;= Node.val &lt;= 100</code></li>
 </ul>
-<h2 id="思路-33"><a class="header" href="#思路-33">思路</a></h2>
+<h2 id="思路-51"><a class="header" href="#思路-51">思路</a></h2>
 <p>方法一：深度优先搜索</p>
 <p>首先我们知道一条路径的长度为该路径经过的节点数减一，所以求直径（即求路径长度的最大值）等效于求路径经过节点数的最大值减一。</p>
 <p>而任意一条路径均可以被看作由某个节点为起点，从其左儿子和右儿子向下遍历的路径拼接得到。</p>
@@ -4659,7 +7265,7 @@ private:
 <li>The number of nodes in the tree is in the range <code>[0, 100]</code>.</li>
 <li><code>-100 &lt;= Node.val &lt;= 100</code></li>
 </ul>
-<h2 id="思路-34"><a class="header" href="#思路-34">思路</a></h2>
+<h2 id="思路-52"><a class="header" href="#思路-52">思路</a></h2>
 <p>层次遍历，每层最后一个节点</p>
 <p>由于树的形状无法提前知晓，不可能设计出优于 O(n) 的算法。因此，我们应该试着寻找线性时间解。带着这个想法，我们来考虑一些同等有效的方案。</p>
 <h3 id="方法一深度优先搜索-1"><a class="header" href="#方法一深度优先搜索-1">方法一：深度优先搜索</a></h3>
@@ -4909,7 +7515,7 @@ public:
 <li>The number of nodes in the tree is in the range <code>[0, 100]</code>.</li>
 <li><code>-100 &lt;= Node.val &lt;= 100</code></li>
 </ul>
-<h2 id="思路-35"><a class="header" href="#思路-35">思路</a></h2>
+<h2 id="思路-53"><a class="header" href="#思路-53">思路</a></h2>
 <ol>
 <li>
 <p>先序遍历，左右交换</p>
@@ -5000,6 +7606,8 @@ class Solution:
 <h1 id="贪心"><a class="header" href="#贪心">贪心</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
 <h1 id="动态规划"><a class="header" href="#动态规划">动态规划</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
+<h1 id="图论"><a class="header" href="#图论">图论</a></h1>
 
                     </main>
 

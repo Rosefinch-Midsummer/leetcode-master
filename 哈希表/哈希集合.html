@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>交换节点 - 剑指Offer</title>
+        <title>哈希集合 - 剑指Offer</title>
 
 
         <!-- Custom HTML head -->
@@ -153,233 +153,271 @@
                 <div id="content" class="content">
                     <main>
                         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
-<h1 id="交换节点"><a class="header" href="#交换节点">交换节点</a></h1>
+<h1 id="哈希集合"><a class="header" href="#哈希集合">哈希集合</a></h1>
 <ul>
-<li><a href="#24-swap-nodes-in-pairs">24. Swap Nodes in Pairs</a>
+<li><a href="#349-intersection-of-two-arrays">349. Intersection of Two Arrays</a>
 <ul>
 <li><a href="#%E6%80%9D%E8%B7%AF">思路</a></li>
 <li><a href="#c%E8%A7%A3%E6%B3%95">C++解法</a></li>
 <li><a href="#java%E8%A7%A3%E6%B3%95">Java解法</a></li>
-<li><a href="#python3%E8%A7%A3%E6%B3%95">Python3解法</a></li>
+<li><a href="#python%E8%A7%A3%E6%B3%95">Python解法</a></li>
+<li><a href="#go%E8%A7%A3%E6%B3%95">Go解法</a></li>
+<li><a href="#rust%E8%A7%A3%E6%B3%95">Rust解法</a></li>
 </ul>
 </li>
-<li><a href="#1721-swapping-nodes-in-a-linked-list">1721. Swapping Nodes in a Linked List</a>
+<li><a href="#202-happy-number">202. Happy Number</a>
 <ul>
 <li><a href="#%E6%80%9D%E8%B7%AF-1">思路</a></li>
 <li><a href="#c%E8%A7%A3%E6%B3%95-1">C++解法</a></li>
+<li><a href="#java%E8%A7%A3%E6%B3%95-1">Java解法</a></li>
 </ul>
 </li>
 </ul>
-<h1 id="24-swap-nodes-in-pairs"><a class="header" href="#24-swap-nodes-in-pairs"><a href="https://leetcode.com/problems/swap-nodes-in-pairs/">24. Swap Nodes in Pairs</a></a></h1>
-<p>Given a linked list, swap every two adjacent nodes and return its head. You must solve the problem without modifying the values in the list's nodes (i.e., only nodes themselves may be changed.)</p>
+<h1 id="349-intersection-of-two-arrays"><a class="header" href="#349-intersection-of-two-arrays"><a href="https://leetcode.com/problems/intersection-of-two-arrays/">349. Intersection of Two Arrays</a></a></h1>
+<p>Given two integer arrays <code>nums1</code> and <code>nums2</code>, return <em>an array of their</em> <em>intersection</em>. Each element in the result must be <strong>unique</strong> and you may return the result in <strong>any order</strong>.</p>
 <p><strong>Example 1:</strong></p>
-<p><strong>Input:</strong> <code>head = [1,2,3,4]</code></p>
-<p><strong>Output:</strong> <code>[2,1,4,3]</code></p>
-<p><strong>Explanation:</strong></p>
-<p><img src="https://assets.leetcode.com/uploads/2020/10/03/swap_ex1.jpg" alt="" /></p>
+<p><strong>Input:</strong> <code>nums1 = [1,2,2,1], nums2 = [2,2]</code><br />
+<strong>Output:</strong> <code>[2]</code></p>
 <p><strong>Example 2:</strong></p>
-<p><strong>Input:</strong> <code>head = []</code></p>
-<p><strong>Output:</strong> <code>[]</code></p>
-<p><strong>Example 3:</strong></p>
-<p><strong>Input:</strong> <code>head = [1]</code></p>
-<p><strong>Output:</strong> <code>[1]</code></p>
-<p><strong>Example 4:</strong></p>
-<p><strong>Input:</strong> <code>head = [1,2,3]</code></p>
-<p><strong>Output:</strong> <code>[2,1,3]</code></p>
+<p><strong>Input:</strong> <code>nums1 = [4,9,5], nums2 = [9,4,9,8,4]</code><br />
+<strong>Output:</strong> <code>[9,4]</code><br />
+<strong>Explanation:</strong> <code>[4,9]</code> is also accepted.</p>
 <p><strong>Constraints:</strong></p>
 <ul>
-<li>The number of nodes in the list is in the range <code>[0, 100]</code>.</li>
-<li><code>0 &lt;= Node.val &lt;= 100</code></li>
+<li><code>1 &lt;= nums1.length, nums2.length &lt;= 1000</code></li>
+<li><code>0 &lt;= nums1[i], nums2[i] &lt;= 1000</code></li>
 </ul>
 <h2 id="思路"><a class="header" href="#思路">思路</a></h2>
-<p>设置虚拟头节点，然后两两交换</p>
-<p>Complexity</p>
-<ul>
-<li>Time complexity: O(n)</li>
-<li>Space complexity: O(1)</li>
-</ul>
+<p>方法一：因为<code>0 &lt;= nums1[i], nums2[i] &lt;= 1000</code>，所以这里可以使用哈希数组</p>
+<p>方法二：使用Hashset判断元素是否出现并去重</p>
 <h2 id="c解法"><a class="header" href="#c解法">C++解法</a></h2>
-<pre><code class="language-cpp">/**
- * Definition for singly-linked list.
- * struct ListNode {
- *     int val;
- *     ListNode *next;
- *     ListNode() : val(0), next(nullptr) {}
- *     ListNode(int x) : val(x), next(nullptr) {}
- *     ListNode(int x, ListNode *next) : val(x), next(next) {}
- * };
- */
-class Solution {
+<p>方法一：</p>
+<pre><code class="language-cpp">class Solution {
 public:
-    ListNode* swapPairs(ListNode* head) {
-        if(head == NULL || head-&gt;next == NULL){
-            return head;
+    vector&lt;int&gt; intersection(vector&lt;int&gt;&amp; nums1, vector&lt;int&gt;&amp; nums2) {
+        vector&lt;int&gt; result;
+        int hash1[1001] = {0};
+        int hash2[1001] = {0};
+        for(int num : nums1){
+            hash1[num]++;
         }
-        ListNode* dummyHead = new ListNode(0);
-        dummyHead-&gt;next = head;
-        ListNode* pre = dummyHead;
-        ListNode* cur = head;
-        while(cur != NULL &amp;&amp; cur-&gt;next != NULL){
-            ListNode* temp = cur-&gt;next-&gt;next;
-            cur-&gt;next-&gt;next = cur;
-            pre-&gt;next = cur-&gt;next;
-            cur-&gt;next = temp;
-            pre = cur;
-            cur = temp;
+        for(int num : nums2){
+            hash2[num]++;
         }
-        return dummyHead-&gt;next;
+        for(int i = 0; i &lt; 1001; i++){
+            if(hash1[i] &gt; 0 &amp;&amp; hash2[i] &gt; 0){
+                result.push_back(i);
+            }
+        }
+        return result;
     }
 };
 </code></pre>
+<p>方法二：</p>
+<pre><code class="language-cpp">class Solution {
+public:
+    vector&lt;int&gt; intersection(vector&lt;int&gt;&amp; nums1, vector&lt;int&gt;&amp; nums2) {
+        unordered_set&lt;int&gt; result_set; // 存放结果，之所以用set是为了给结果集去重
+        unordered_set&lt;int&gt; nums_set(nums1.begin(), nums1.end());
+        for (int num : nums2) {
+            // 发现nums2的元素 在nums_set里又出现过
+            if (nums_set.find(num) != nums_set.end()) {
+                result_set.insert(num);
+            }
+        }
+        return vector&lt;int&gt;(result_set.begin(), result_set.end());
+    }
+};
+</code></pre>
+<ul>
+<li>时间复杂度: O(n + m) m 是最后要把 set转成vector</li>
+<li>空间复杂度: O(n)</li>
+</ul>
 <h2 id="java解法"><a class="header" href="#java解法">Java解法</a></h2>
-<pre><code class="language-java">class Solution {
-    public ListNode swapPairs(ListNode head) {
-        ListNode dummy = new ListNode(0, head);
-        ListNode prev = dummy, cur = head;
+<p>方法二：</p>
+<pre><code class="language-java">import java.util.*;
 
-        while (cur != null &amp;&amp; cur.next != null) {
-            ListNode npn = cur.next.next;
-            ListNode second = cur.next;
+class Solution {
+    public int[] intersection(int[] nums1, int[] nums2) {
+        Set&lt;Integer&gt; resultSet = new HashSet&lt;&gt;();
+        Set&lt;Integer&gt; numsSet = new HashSet&lt;&gt;();
 
-            second.next = cur;
-            cur.next = npn;
-            prev.next = second;
-
-            prev = cur;
-            cur = npn;
+        for (int num : nums1) {
+            numsSet.add(num);
+        }
+        
+        for (int num : nums2) {
+            if (numsSet.contains(num)) {
+                resultSet.add(num);
+            }
         }
 
-        return dummy.next;        
+        return resultSet.stream().mapToInt(Integer::intValue).toArray();
     }
 }
 </code></pre>
-<h2 id="python3解法"><a class="header" href="#python3解法">Python3解法</a></h2>
-<pre><code class="language-python">class Solution:
-    def swapPairs(self, head: Optional[ListNode]) -&gt; Optional[ListNode]:
-        dummy = ListNode(0, head)
-        prev, cur = dummy, head
+<h2 id="python解法"><a class="header" href="#python解法">Python解法</a></h2>
+<p>方法二：</p>
+<pre><code class="language-python">from typing import List
 
-        while cur and cur.next:
-            npn = cur.next.next
-            second = cur.next
+class Solution:
+    def intersection(self, nums1: List[int], nums2: List[int]) -&gt; List[int]:
+        result_set = set()
+        nums_set = set(nums1)
 
-            second.next = cur
-            cur.next = npn
-            prev.next = second
+        for num in nums2:
+            if num in nums_set:
+                result_set.add(num)
 
-            prev = cur
-            cur = npn
-        
-        return dummy.next
+        return list(result_set)
 </code></pre>
-<h1 id="1721-swapping-nodes-in-a-linked-list"><a class="header" href="#1721-swapping-nodes-in-a-linked-list"><a href="https://leetcode.com/problems/swapping-nodes-in-a-linked-list/">1721. Swapping Nodes in a Linked List</a></a></h1>
-<p>You are given the <code>head</code> of a linked list, and an integer <code>k</code>.</p>
-<p>Return <em>the head of the linked list after <strong>swapping</strong> the values of the</em> <code>kth</code> <em>node from the beginning and the</em> <code>kth</code> <em>node from the end (the list is <strong>1-indexed</strong>).</em></p>
+<h2 id="go解法"><a class="header" href="#go解法">Go解法</a></h2>
+<p>方法二：</p>
+<pre><code class="language-go">package main
+
+import "fmt"
+
+func intersection(nums1 []int, nums2 []int) []int {
+    resultSet := make(map[int]struct{})
+    numsSet := make(map[int]struct{})
+
+    for _, num := range nums1 {
+        numsSet[num] = struct{}{}
+    }
+
+    for _, num := range nums2 {
+        if _, exists := numsSet[num]; exists {
+            resultSet[num] = struct{}{}
+        }
+    }
+
+    result := make([]int, 0, len(resultSet))
+    for num := range resultSet {
+        result = append(result, num)
+    }
+    
+    return result
+}
+
+func main() {
+    fmt.Println(intersection([]int{1, 2, 2, 1}, []int{2, 2})) // Example usage
+}
+</code></pre>
+<h2 id="rust解法"><a class="header" href="#rust解法">Rust解法</a></h2>
+<p>方法二：</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use std::collections::HashSet;
+
+pub struct Solution;
+
+impl Solution {
+    pub fn intersection(nums1: Vec&lt;i32&gt;, nums2: Vec&lt;i32&gt;) -&gt; Vec&lt;i32&gt; {
+        let nums_set: HashSet&lt;i32&gt; = nums1.into_iter().collect();
+        let result_set: HashSet&lt;i32&gt; = nums2.into_iter().filter(|num| nums_set.contains(num)).collect();
+        
+        result_set.into_iter().collect()
+    }
+}
+<span class="boring">}</span></code></pre></pre>
+<h1 id="202-happy-number"><a class="header" href="#202-happy-number"><a href="https://leetcode.com/problems/happy-number/">202. Happy Number</a></a></h1>
+<p>Write an algorithm to determine if a number <code>n</code> is happy.</p>
+<p>A <strong>happy number</strong> is a number defined by the following process:</p>
+<ul>
+<li>Starting with any positive integer, replace the number by the sum of the squares of its digits.</li>
+<li>Repeat the process until the number equals 1 (where it will stay), or it <strong>loops endlessly in a cycle</strong> which does not include 1.</li>
+<li>Those numbers for which this process <strong>ends in 1</strong> are happy.</li>
+</ul>
+<p>Return <code>true</code> <em>if</em> <code>n</code> <em>is a happy number, and</em> <code>false</code> <em>if not</em>.</p>
 <p><strong>Example 1:</strong></p>
-<p><img src="https://assets.leetcode.com/uploads/2020/09/21/linked1.jpg" alt="" /></p>
-<p><strong>Input:</strong> <code>head = [1,2,3,4,5], k = 2</code><br />
-<strong>Output:</strong> <code>[1,4,3,2,5]</code></p>
+<p><strong>Input:</strong> n = 19<br />
+<strong>Output:</strong> true<br />
+<strong>Explanation:</strong>
+1^2 + 9^2 = 82
+8^2 + 2^2 = 68
+6^2 + 8^2 = 100
+1^2 + 0^2 + 0^2 = 1</p>
 <p><strong>Example 2:</strong></p>
-<p><strong>Input:</strong> <code>head = [7,9,6,6,7,8,3,0,9,5], k = 5</code><br />
-<strong>Output:</strong> <code>[7,9,6,6,8,7,3,0,9,5]</code></p>
+<p><strong>Input:</strong> n = 2<br />
+<strong>Output:</strong> false</p>
 <p><strong>Constraints:</strong></p>
 <ul>
-<li>The number of nodes in the list is <code>n</code>.</li>
-<li><code>1 &lt;= k &lt;= n &lt;= 10^5</code></li>
-<li><code>0 &lt;= Node.val &lt;= 100</code></li>
+<li><code>1 &lt;= n &lt;= 2^31 - 1</code></li>
 </ul>
 <h2 id="思路-1"><a class="header" href="#思路-1">思路</a></h2>
-<p>方法一：</p>
-<p>We can traverse the linked list and store the elements in an array.</p>
-<p>Upon conversion to an array, we can swap the required elements by indexing the array.</p>
-<p>We can rebuild the linked list using the order of the elements in the array.</p>
-<p>方法二：</p>
-<ul>
-<li>To solve this problem in one pass, we can use a two-pointer approach.</li>
-<li>First, we can initialize two pointers, left_ptr and right_ptr, both pointing to the head of the linked list. We can then move the right_ptr k-2 steps forward.</li>
-<li>After this, we can move both left_ptr and right_ptr forward simultaneously until right_ptr reaches the end of the list.</li>
-<li>At this point, left_ptr will be pointing to the kth node from the beginning, and end_ptr will be pointing to the kth node from the end.</li>
-<li>We can then swap the values of these two nodes, and return the head of the linked list.</li>
-</ul>
-<p>Complexity</p>
-<ul>
-<li>Time complexity: O(N)</li>
-<li>Space complexity: O(1)</li>
-</ul>
+<p>判断某个元素是否出现过（是否有循环），使用<code>unordered_set</code>数据结构</p>
+<p>这道题目看上去貌似一道数学问题，其实并不是！</p>
+<p>题目中说了会 <strong>无限循环</strong>，那么也就是说<strong>求和的过程中，sum会重复出现，这对解题很重要！</strong></p>
+<p><strong>当我们遇到了要快速判断一个元素是否出现集合里的时候，就要考虑哈希法了。</strong></p>
+<p>所以这道题目使用哈希法，来判断这个sum是否重复出现，如果重复了就是return false， 否则一直找到sum为1为止。</p>
+<p>判断sum是否重复出现就可以使用unordered_set。</p>
+<p><strong>还有一个难点就是求和的过程，如果对取数值各个位上的单数操作不熟悉的话，做这道题也会比较艰难。</strong></p>
 <h2 id="c解法-1"><a class="header" href="#c解法-1">C++解法</a></h2>
-<p>方法一：</p>
-<pre><code class="language-cpp">/**
- * Definition for singly-linked list.
- * struct ListNode {
- *     int val;
- *     ListNode *next;
- *     ListNode() : val(0), next(nullptr) {}
- *     ListNode(int x) : val(x), next(nullptr) {}
- *     ListNode(int x, ListNode *next) : val(x), next(next) {}
- * };
- */
-class Solution {
+<pre><code class="language-cpp">class Solution {
 public:
-    ListNode* swapNodes(ListNode* head, int k) {
-        vector&lt;int&gt; nums;
-        ListNode* cur = head;
-        while(cur != NULL){
-            nums.push_back(cur-&gt;val);
-            cur = cur-&gt;next;
+    // 取数值各个位上的单数之和
+    int getSum(int n) {
+        int sum = 0;
+        while (n) {
+            sum += (n % 10) * (n % 10);
+            n /= 10;
         }
-        swap(nums[k-1], nums[nums.size()-k]);
-        ListNode* dummyHead  = new ListNode(0);
-        cur = dummyHead;
-        for(int i = 0; i &lt; nums.size(); i++){
-            ListNode* newNode = new ListNode(nums[i]);
-            cur-&gt;next = newNode;
-            cur = newNode;
+        return sum;
+    }
+    bool isHappy(int n) {
+        unordered_set&lt;int&gt; set;
+        while(1) {
+            int sum = getSum(n);
+            if (sum == 1) {
+                return true;
+            }
+            // 如果这个sum曾经出现过，说明已经陷入了无限循环了，立刻return false
+            if (set.find(sum) != set.end()) {
+                return false;
+            } else {
+                set.insert(sum);
+            }
+            n = sum;
         }
-        return dummyHead-&gt;next;
     }
 };
 </code></pre>
-<p>方法二：</p>
-<pre><code class="language-cpp">/**
- * Definition for singly-linked list.
- * struct ListNode {
- *     int val;
- *     ListNode *next;
- *     ListNode() : val(0), next(nullptr) {}
- *     ListNode(int x) : val(x), next(nullptr) {}
- *     ListNode(int x, ListNode *next) : val(x), next(next) {}
- * };
- */
-class Solution {
-public:
-    ListNode* swapNodes(ListNode* head, int k) {
-        ListNode* dummyHead  = new ListNode(0);
-        dummyHead-&gt;next = head;
-        ListNode* fast = dummyHead;
-        ListNode* slow = dummyHead;
-        for(int i = 0; i &lt; k; i++){
-            fast = fast-&gt;next;
+<ul>
+<li>时间复杂度: O(logn)</li>
+<li>空间复杂度: O(logn)</li>
+</ul>
+<h2 id="java解法-1"><a class="header" href="#java解法-1">Java解法</a></h2>
+<pre><code class="language-java">class Solution {
+    public boolean isHappy(int n) {
+        Set&lt;Integer&gt; record = new HashSet&lt;&gt;();
+        while (n != 1 &amp;&amp; !record.contains(n)) {
+            record.add(n);
+            n = getNextNumber(n);
         }
-        ListNode* temp = fast;
-        while(fast != nullptr){
-            fast = fast-&gt;next;
-            slow = slow-&gt;next;
-        }
-        swap(slow-&gt;val, temp-&gt;val);
-        return dummyHead-&gt;next;
+        return n == 1;
     }
-};
+
+    private int getNextNumber(int n) {
+        int res = 0;
+        while (n &gt; 0) {
+            int temp = n % 10;
+            res += temp * temp;
+            n = n / 10;
+        }
+        return res;
+    }
+}
 </code></pre>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../链表/环形链表.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../哈希表/哈希数组.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="../哈希表/哈希表.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../哈希表/哈希映射.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -389,11 +427,11 @@ public:
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../链表/环形链表.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../哈希表/哈希数组.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="../哈希表/哈希表.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../哈希表/哈希映射.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

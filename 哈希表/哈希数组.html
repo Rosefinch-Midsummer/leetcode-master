@@ -1,0 +1,1113 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>哈希数组 - 剑指Offer</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">剑指Offer</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
+<h1 id="哈希数组"><a class="header" href="#哈希数组">哈希数组</a></h1>
+<ul>
+<li><a href="#242-valid-anagram">242. Valid Anagram</a>
+<ul>
+<li><a href="#%E6%80%9D%E8%B7%AF">思路</a></li>
+<li><a href="#c%E8%A7%A3%E6%B3%95">C++解法</a></li>
+<li><a href="#java%E8%A7%A3%E6%B3%95">Java解法</a></li>
+</ul>
+</li>
+<li><a href="#438-find-all-anagrams-in-a-string">438. Find All Anagrams in a String</a>
+<ul>
+<li><a href="#%E6%80%9D%E8%B7%AF-1">思路</a></li>
+<li><a href="#c%E8%A7%A3%E6%B3%95-1">C++解法</a></li>
+<li><a href="#java%E8%A7%A3%E6%B3%95-1">Java解法</a></li>
+</ul>
+</li>
+<li><a href="#2273-find-resultant-array-after-removing-anagrams">2273. Find Resultant Array After Removing Anagrams</a>
+<ul>
+<li><a href="#%E6%80%9D%E8%B7%AF-2">思路</a></li>
+<li><a href="#c%E8%A7%A3%E6%B3%95-2">C++解法</a></li>
+<li><a href="#java%E8%A7%A3%E6%B3%95-2">Java解法</a></li>
+</ul>
+</li>
+<li><a href="#268-missing-number">268. Missing Number</a>
+<ul>
+<li><a href="#%E6%80%9D%E8%B7%AF-3">思路</a></li>
+<li><a href="#c%E8%A7%A3%E6%B3%95-3">C++解法</a></li>
+</ul>
+</li>
+<li><a href="#287-find-the-duplicate-number">287. Find the Duplicate Number</a>
+<ul>
+<li><a href="#%E6%80%9D%E8%B7%AF-4">思路</a></li>
+<li><a href="#c%E8%A7%A3%E6%B3%95-4">C++解法</a></li>
+</ul>
+</li>
+<li><a href="#349-intersection-of-two-arrays">349. Intersection of Two Arrays</a>
+<ul>
+<li><a href="#%E6%80%9D%E8%B7%AF-5">思路</a></li>
+<li><a href="#c%E8%A7%A3%E6%B3%95-5">C++解法</a></li>
+<li><a href="#java%E8%A7%A3%E6%B3%95-3">Java解法</a></li>
+<li><a href="#python%E8%A7%A3%E6%B3%95">Python解法</a></li>
+<li><a href="#go%E8%A7%A3%E6%B3%95">Go解法</a></li>
+<li><a href="#rust%E8%A7%A3%E6%B3%95">Rust解法</a></li>
+</ul>
+</li>
+<li><a href="#350-intersection-of-two-arrays-ii">350. Intersection of Two Arrays II</a>
+<ul>
+<li><a href="#%E6%80%9D%E8%B7%AF-6">思路</a></li>
+<li><a href="#c%E8%A7%A3%E6%B3%95-6">C++解法</a></li>
+</ul>
+</li>
+<li><a href="#383-ransom-note">383. Ransom Note</a>
+<ul>
+<li><a href="#%E6%80%9D%E8%B7%AF-7">思路</a></li>
+<li><a href="#c%E8%A7%A3%E6%B3%95-7">C++解法</a></li>
+<li><a href="#java%E8%A7%A3%E6%B3%95-4">Java解法</a></li>
+</ul>
+</li>
+<li><a href="#2215-find-the-difference-of-two-arrays">2215. Find the Difference of Two Arrays</a>
+<ul>
+<li><a href="#%E6%80%9D%E8%B7%AF-8">思路</a></li>
+<li><a href="#c%E8%A7%A3%E6%B3%95-8">C++解法</a></li>
+</ul>
+</li>
+<li><a href="#2248-intersection-of-multiple-arrays">2248. Intersection of Multiple Arrays</a>
+<ul>
+<li><a href="#%E6%80%9D%E8%B7%AF-9">思路</a></li>
+<li><a href="#c%E8%A7%A3%E6%B3%95-9">C++解法</a></li>
+</ul>
+</li>
+</ul>
+<h1 id="242-valid-anagram"><a class="header" href="#242-valid-anagram"><a href="https://leetcode.com/problems/valid-anagram/">242. Valid Anagram</a></a></h1>
+<p>Given two strings <code>s</code> and <code>t</code>, return <code>true</code> if <code>t</code> is an anagram of <code>s</code>, and <code>false</code> otherwise.</p>
+<p>An anagram is a word or phrase formed by rearranging the letters of a different word or phrase, using all the original letters exactly once.</p>
+<p><strong>Example 1:</strong></p>
+<p><strong>Input:</strong> s = "anagram", t = "nagaram"</p>
+<p><strong>Output:</strong> true</p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> s = "rat", t = "car"</p>
+<p><strong>Output:</strong> false</p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= s.length, t.length &lt;= 5 * 10^4</code></li>
+<li><code>s</code> and <code>t</code> consist of lowercase English letters.</li>
+</ul>
+<p><strong>Follow up:</strong> What if the inputs contain Unicode characters? How would you adapt your solution to such a case?</p>
+<h2 id="思路"><a class="header" href="#思路">思路</a></h2>
+<p>先判断两个字符串长度是否相等，然后使用哈希数组存储出现过的字母，一增一减，判断数组中元素是否全为0即可。</p>
+<h2 id="c解法"><a class="header" href="#c解法">C++解法</a></h2>
+<pre><code class="language-cpp">class Solution {
+public:
+    bool isAnagram(string s, string t) {
+        if(s.length() != t.length()){
+            return false;
+        }
+        int hash[26] = {0};
+        int i = 0;
+        while(s[i] != '\0')
+        {
+            hash[s[i] - 'a']++;
+            i++;
+        }
+        i = 0;
+        while(t[i] != '\0')
+        {
+            hash[t[i] - 'a']--;
+            i++;
+        }
+        for(int i = 0; i &lt; 26; i++)
+        {
+            if(hash[i] != 0)
+                return false;
+        }
+        return true;
+    }
+};
+</code></pre>
+<h2 id="java解法"><a class="header" href="#java解法">Java解法</a></h2>
+<p>以下是修改后的代码：</p>
+<pre><code class="language-java">class Solution {
+    public boolean isAnagram(String s, String t) {
+        // 检查两个字符串的长度是否相同
+        if (s.length() != t.length()) {
+            return false;
+        }
+
+        // 创建一个大小为26的数组来计数
+        int[] chars = new int[26];
+
+        // 遍历第一个字符串，增加字符计数
+        for (char ch : s.toCharArray()) {
+            chars[ch - 'a']++;
+        }
+
+        // 遍历第二个字符串，减少字符计数
+        for (char ch : t.toCharArray()) {
+            chars[ch - 'a']--;
+        }
+
+        // 检查所有计数是否都为0
+        for (int count : chars) {
+            if (count != 0) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+}
+</code></pre>
+<p>说明：</p>
+<ol>
+<li><strong>长度检查</strong>: 首先检查两个字符串的长度，如果不同，直接返回<code>false</code>。</li>
+<li><strong>使用数组</strong>: 使用<code>int[] chars = new int[26];</code>来记录每个字母的计数，避免了动态大小带来的问题。</li>
+<li><strong>更新字符计数</strong>: 第一个字符串的字符计数增加，第二个字符串的字符计数减少，以便最终检查结果。</li>
+<li><strong>检查计数</strong>: 最后检查计数数组，如果所有元素都是0，则两个字符串是异位词。</li>
+</ol>
+<h1 id="438-find-all-anagrams-in-a-string"><a class="header" href="#438-find-all-anagrams-in-a-string"><a href="https://leetcode.com/problems/find-all-anagrams-in-a-string/">438. Find All Anagrams in a String</a></a></h1>
+<p>Given two strings <code>s</code> and <code>p</code>, return an array of all the start indices of <code>p</code>'s anagrams in <code>s</code>. You may return the answer in <strong>any order</strong>.</p>
+<p><strong>Example 1:</strong></p>
+<p><strong>Input:</strong> <code>s = "cbaebabacd", p = "abc"</code><br />
+<strong>Output:</strong> <code>[0,6]</code></p>
+<p><strong>Explanation:</strong>
+The substring with start index = 0 is "cba", which is an anagram of "abc".
+The substring with start index = 6 is "bac", which is an anagram of "abc".</p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> <code>s = "abab", p = "ab"</code><br />
+<strong>Output:</strong> <code>[0,1,2]</code></p>
+<p><strong>Explanation:</strong>
+The substring with start index = 0 is "ab", which is an anagram of "ab".
+The substring with start index = 1 is "ba", which is an anagram of "ab".
+The substring with start index = 2 is "ab", which is an anagram of "ab".</p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= s.length, p.length &lt;= 3 * 10^4</code></li>
+<li><code>s</code> and <code>p</code> consist of lowercase English letters.</li>
+</ul>
+<h2 id="思路-1"><a class="header" href="#思路-1">思路</a></h2>
+<p>方法一：遍历，截取子字符串，判断是否是anagram。这种方式效率低下。</p>
+<p>方法二：滑动数组</p>
+<h2 id="c解法-1"><a class="header" href="#c解法-1">C++解法</a></h2>
+<p>方法二：滑动数组</p>
+<p>For 2 strings to be anagrams of each other, they should have the same elements with the same frequency.</p>
+<pre><code class="language-cpp">vector&lt;int&gt; findAnagrams(string s, string p) {
+        int s_len = s.length();
+        int p_len = p.length();
+        
+        if(s.size() &lt; p.size()) return {};
+        
+        vector&lt;int&gt; freq_p(26,0);
+        vector&lt;int&gt; window(26,0);
+        
+        //first window
+        for(int i=0;i&lt;p_len;i++){
+            freq_p[p[i]-'a']++;
+            window[s[i]-'a']++;
+        }
+        
+        vector&lt;int&gt; ans;
+        if(freq_p == window) ans.push_back(0);
+        
+        for(int i=p_len;i&lt;s_len;i++){
+            window[s[i-p_len] - 'a']--;
+            window[s[i] - 'a']++;
+            
+            if(freq_p == window) ans.push_back(i-p_len+1);
+        }
+        return ans;
+    }
+</code></pre>
+<p>**Time Complexity = O(n * 26) = O(n), n is the length of string s.</p>
+<p>Space Complexity = O(26) = O(1)</p>
+<p>这段 C++ 代码用于找到字符串 <code>s</code> 中所有与字符串 <code>p</code> 由字符组成的所有不同的字母异位词（anagrams）。下面是代码的详细解释：</p>
+<p>代码结构解析</p>
+<ol>
+<li>
+<p><strong>定义函数和参数：</strong></p>
+<pre><code class="language-cpp">vector&lt;int&gt; findAnagrams(string s, string p) {
+</code></pre>
+<p>这里定义了一个函数 <code>findAnagrams</code>，接收两个字符串 <code>s</code> 和 <code>p</code>，返回一个 <code>vector&lt;int&gt;</code> 结果，表示 <code>s</code> 中所有 <code>p</code> 的异位词的起始索引。</p>
+</li>
+<li>
+<p><strong>获取字符串长度并进行初步检查：</strong></p>
+<pre><code class="language-cpp">int s_len = s.length();
+int p_len = p.length();
+
+if(s.size() &lt; p.size()) return {};
+</code></pre>
+<ul>
+<li><code>s_len</code> 和 <code>p_len</code> 分别存储字符串 <code>s</code> 和 <code>p</code> 的长度。</li>
+<li>如果 <code>s</code> 的长度小于 <code>p</code> 的长度，则 <code>s</code> 中不可能包含 <code>p</code> 的异位词，函数直接返回一个空的 <code>vector</code>。</li>
+</ul>
+</li>
+<li>
+<p><strong>初始化频率数组：</strong></p>
+<pre><code class="language-cpp">vector&lt;int&gt; freq_p(26,0);
+vector&lt;int&gt; window(26,0);
+</code></pre>
+<ul>
+<li><code>freq_p</code> 用于存储字符串 <code>p</code> 中各个字符的频率。</li>
+<li><code>window</code> 用于记录当前窗口（即 <code>s</code> 中的一个子串）内各个字符的频率。</li>
+</ul>
+</li>
+<li>
+<p><strong>计算第一个窗口的字符频率：</strong></p>
+<pre><code class="language-cpp">for(int i=0;i&lt;p_len;i++){
+    freq_p[p[i]-'a']++;
+    window[s[i]-'a']++;
+}
+</code></pre>
+<ul>
+<li>遍历 <code>p</code> 和 <code>s</code> 的前 <code>p_len</code> 个字符，更新 <code>freq_p</code> 和 <code>window</code> 中各个字符的频率。</li>
+<li><code>p[i] - 'a'</code> 计算出字符 <code>p[i]</code> 对应的数组索引（以 <code>a</code> 为起始索引）。</li>
+</ul>
+</li>
+<li>
+<p><strong>检查第一个窗口：</strong></p>
+<pre><code class="language-cpp">vector&lt;int&gt; ans;
+if(freq_p == window) ans.push_back(0);
+</code></pre>
+<ul>
+<li>如果 <code>freq_p</code> 和 <code>window</code> 相等，则说明第一个窗口是 <code>p</code> 的一个异位词，索引 0 被加入到结果 <code>ans</code> 中。</li>
+</ul>
+</li>
+<li>
+<p><strong>滑动窗口：</strong></p>
+<pre><code class="language-cpp">for(int i=p_len;i&lt;s_len;i++){
+    window[s[i-p_len] - 'a']--;
+    window[s[i] - 'a']++;
+    
+    if(freq_p == window) ans.push_back(i-p_len+1);
+}
+</code></pre>
+<ul>
+<li>从 <code>p_len</code> 开始，遍历 <code>s</code> 的后续字符。</li>
+<li>每次滑动窗口时，<strong>移除</strong>左侧字符 <code>s[i - p_len]</code> 的频率 (因为这个字符不再在窗口中)，并 <strong>增加</strong>右侧字符 <code>s[i]</code> 的频率。</li>
+<li>在每次滑动后，检查 <code>freq_p</code> 和 <code>window</code> 是否相等，如果相等，则将当前窗口的起始索引 ( <code>i - p_len + 1</code>) 加入 <code>ans</code> 中。</li>
+</ul>
+</li>
+<li>
+<p><strong>返回结果：</strong></p>
+<pre><code class="language-cpp">return ans;
+</code></pre>
+<ul>
+<li>函数返回所有找到的索引的 <code>vector</code>。</li>
+</ul>
+</li>
+</ol>
+<p>总结</p>
+<p>这段代码使用了一个滑动窗口的技术，通过维护两个频率数组（一个用于 <code>p</code> 的字符频率，另一个用于 <code>s</code> 中当前窗口的字符频率）来高效地查找字符串 <code>s</code> 中所有 <code>p</code> 的异位词。每次窗口滑动时，只需更新频率数组，而不需要重新计算整个窗口的字符频率，从而提升了效率。整体时间复杂度为 O(n)，其中 n 是字符串 <code>s</code> 的长度。</p>
+<h2 id="java解法-1"><a class="header" href="#java解法-1">Java解法</a></h2>
+<p>方法一：</p>
+<pre><code class="language-java">class Solution {  
+    public List&lt;Integer&gt; findAnagrams(String s, String p) {  
+        List&lt;Integer&gt; result = new ArrayList&lt;&gt;();  
+        int pLength = p.length();  
+        int sLength = s.length();  
+        
+        // 仅当s的长度大于或等于p的长度时才处理  
+        if (sLength &lt; pLength) return result;  
+
+        for (int i = 0; i &lt;= sLength - pLength; i++) { // 修改为 &lt;= 确保包含最后一个可能的起点  
+            String temp = s.substring(i, i + pLength); // 修正这一行  
+            if (isAnagram(temp, p)) {  
+                result.add(i);  
+            }  
+        }  
+        return result;  
+    }  
+    
+    public boolean isAnagram(String s, String t) {  
+        // 检查两个字符串的长度是否相同  
+        if (s.length() != t.length()) {  
+            return false;  
+        }  
+
+        // 创建一个大小为26的数组来计数  
+        int[] chars = new int[26];  
+
+        // 遍历第一个字符串，增加字符计数  
+        for (char ch : s.toCharArray()) {  
+            chars[ch - 'a']++;  
+        }  
+
+        // 遍历第二个字符串，减少字符计数  
+        for (char ch : t.toCharArray()) {  
+            chars[ch - 'a']--;  
+        }  
+
+        // 检查所有计数是否都为0  
+        for (int count : chars) {  
+            if (count != 0) {  
+                return false;  
+            }  
+        }  
+
+        return true;  
+    }  
+}  
+</code></pre>
+<h1 id="2273-find-resultant-array-after-removing-anagrams"><a class="header" href="#2273-find-resultant-array-after-removing-anagrams"><a href="https://leetcode.com/problems/find-resultant-array-after-removing-anagrams/">2273. Find Resultant Array After Removing Anagrams</a></a></h1>
+<p>You are given a <strong>0-indexed</strong> string array <code>words</code>, where <code>words[i]</code> consists of lowercase English letters.</p>
+<p>In one operation, select any index <code>i</code> such that <code>0 &lt; i &lt; words.length</code> and <code>words[i - 1]</code> and <code>words[i]</code> are <strong>anagrams</strong>, and <strong>delete</strong> <code>words[i]</code> from <code>words</code>. Keep performing this operation as long as you can select an index that satisfies the conditions.</p>
+<p>Return <code>words</code> <em>after performing all operations</em>. It can be shown that selecting the indices for each operation in <strong>any</strong> arbitrary order will lead to the same result.</p>
+<p>An <strong>Anagram</strong> is a word or phrase formed by rearranging the letters of a different word or phrase using all the original letters exactly once. For example, <code>"dacb"</code> is an anagram of <code>"abdc"</code>.</p>
+<p><strong>Example 1:</strong></p>
+<p><strong>Input:</strong> <code>words = ["abba","baba","bbaa","cd","cd"]</code><br />
+<strong>Output:</strong> <code>["abba","cd"]</code><br />
+<strong>Explanation:</strong></p>
+<pre><code>One of the ways we can obtain the resultant array is by using the following operations:
+- Since words[2] = "bbaa" and words[1] = "baba" are anagrams, we choose index 2 and delete words[2].
+  Now words = ["abba","baba","cd","cd"].
+- Since words[1] = "baba" and words[0] = "abba" are anagrams, we choose index 1 and delete words[1].
+  Now words = ["abba","cd","cd"].
+- Since words[2] = "cd" and words[1] = "cd" are anagrams, we choose index 2 and delete words[2].
+  Now words = ["abba","cd"].
+We can no longer perform any operations, so ["abba","cd"] is the final answer.
+</code></pre>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> <code>words = ["a","b","c","d","e"]</code><br />
+<strong>Output:</strong> <code>["a","b","c","d","e"]</code><br />
+<strong>Explanation:</strong></p>
+<p>No two adjacent strings in words are anagrams of each other, so no operations are performed.</p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= words.length &lt;= 100</code></li>
+<li><code>1 &lt;= words[i].length &lt;= 10</code></li>
+<li><code>words[i]</code> consists of lowercase English letters.</li>
+</ul>
+<h2 id="思路-2"><a class="header" href="#思路-2">思路</a></h2>
+<p>方法一：设定prev=""，每个新元素都排序后转为字符串，然后和prev比较，不相同则加入结果集中</p>
+<p>方法二：使用栈</p>
+<h2 id="c解法-2"><a class="header" href="#c解法-2">C++解法</a></h2>
+<pre><code class="language-cpp">class Solution {
+public:
+    vector&lt;string&gt; removeAnagrams(vector&lt;string&gt;&amp; words) {
+        for(int i = 1;i&lt;words.size();i++){
+            string x = words[i];
+            sort(x.begin(),x.end());
+            string y = words[i-1];
+            sort(y.begin(),y.end());
+            if(x == y){
+                words.erase(words.begin() + i);
+                i--;
+            }
+        }
+        return words;
+    }
+};
+</code></pre>
+<h2 id="java解法-2"><a class="header" href="#java解法-2">Java解法</a></h2>
+<p>方法一完整测试代码：</p>
+<pre><code class="language-java">import java.util.*;
+
+class Solution {
+    public List&lt;String&gt; removeAnagrams(String[] words) {
+        String prev = "";
+        List&lt;String&gt; li = new ArrayList&lt;&gt;();
+        for (int i = 0; i &lt; words.length; i++) {
+            char[] ch = words[i].toCharArray();
+            Arrays.sort(ch);
+            //System.out.println("ch: " + Arrays.toString(ch));
+            String curr = String.valueOf(ch);
+            //System.out.println("curr: " + curr);
+            if (!curr.equals(prev)) {
+                li.add(words[i]);
+                prev = curr;
+            }
+        }
+        return li;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Solution solution = new Solution();
+        
+        String[] words1 = {"abba", "baba", "bbaa", "cd", "cd"};
+        System.out.println("Input: " + Arrays.toString(words1));
+        List&lt;String&gt; output = solution.removeAnagrams(words1);
+        System.out.println("Output: " + output);
+    }
+}
+</code></pre>
+<p>使用栈的解法如下所示：</p>
+<pre><code class="language-java">class Solution {
+    public List&lt;String&gt; removeAnagrams(String[] words) {
+        Stack&lt;String&gt; stack = new Stack&lt;&gt;();
+        for(int i = words.length-1;i&gt;= 0;i--){
+            String s = words[i];
+            while(!stack.isEmpty() &amp;&amp; anagram(stack.peek(),s) == true)stack.pop();
+            stack.push(s);
+        }
+        List&lt;String&gt; res = new ArrayList&lt;&gt;();
+        while(!stack.isEmpty())res.add(stack.pop());
+        return res;
+    }
+    
+    public boolean anagram(String p,String q){
+        int arr[] = new int[26];
+        for(char i : p.toCharArray())arr[i-'a']+=1;
+        for(char i : q.toCharArray())arr[i-'a']-=1;
+        for(int i : arr)if(i != 0)return false;
+        return true;
+    }
+}
+</code></pre>
+<h1 id="268-missing-number"><a class="header" href="#268-missing-number"><a href="https://leetcode.com/problems/missing-number/">268. Missing Number</a></a></h1>
+<p>Given an array <code>nums</code> containing <code>n</code> distinct numbers in the range <code>[0, n]</code>, return <em>the only number in the range that is missing from the array.</em></p>
+<p><strong>Example 1:</strong></p>
+<p><strong>Input:</strong> <code>nums = [3,0,1]</code><br />
+<strong>Output:</strong> <code>2</code><br />
+<strong>Explanation:</strong> n = 3 since there are 3 numbers, so all numbers are in the range [0,3]. 2 is the missing number in the range since it does not appear in nums.</p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> <code>nums = [0,1]</code><br />
+<strong>Output:</strong> <code>2</code><br />
+<strong>Explanation:</strong> n = 2 since there are 2 numbers, so all numbers are in the range [0,2]. 2 is the missing number in the range since it does not appear in nums.</p>
+<p><strong>Example 3:</strong></p>
+<p><strong>Input:</strong> <code>nums = [9,6,4,2,3,5,7,0,1]</code><br />
+<strong>Output:</strong> <code>8</code><br />
+<strong>Explanation:</strong> n = 9 since there are 9 numbers, so all numbers are in the range [0,9]. 8 is the missing number in the range since it does not appear in nums.</p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>n == nums.length</code></li>
+<li><code>1 &lt;= n &lt;= 10^4</code></li>
+<li><code>0 &lt;= nums[i] &lt;= n</code></li>
+<li>All the numbers of <code>nums</code> are <strong>unique</strong>.</li>
+</ul>
+<p><strong>Follow up:</strong> Could you implement a solution using only <code>O(1)</code> extra space complexity and <code>O(n)</code> runtime complexity?</p>
+<h2 id="思路-3"><a class="header" href="#思路-3">思路</a></h2>
+<p>用哈希数组判断数字是否出现过</p>
+<h2 id="c解法-3"><a class="header" href="#c解法-3">C++解法</a></h2>
+<pre><code class="language-cpp">class Solution {
+public:
+    int missingNumber(vector&lt;int&gt;&amp; nums) {
+        vector&lt;int&gt; result(10001, 0);
+        int maxValue = -1;
+        for(int num : nums){
+            result[num]++;
+            if(num &gt; maxValue){
+                maxValue = num;
+            }
+        }
+        for(int i = 0; i &lt; maxValue; i++){
+            if(result[i] == 0){
+                return i;
+            }
+        }
+        return maxValue + 1;
+    }
+};
+</code></pre>
+<h1 id="287-find-the-duplicate-number"><a class="header" href="#287-find-the-duplicate-number"><a href="https://leetcode.com/problems/find-the-duplicate-number/">287. Find the Duplicate Number</a></a></h1>
+<p>Given an array of integers <code>nums</code> containing <code>n + 1</code> integers where each integer is in the range <code>[1, n]</code> inclusive.</p>
+<p>There is only <strong>one repeated number</strong> in <code>nums</code>, return <em>this repeated number</em>.</p>
+<p>You must solve the problem <strong>without</strong> modifying the array <code>nums</code> and using only constant extra space.</p>
+<p><strong>Example 1:</strong></p>
+<p><strong>Input:</strong> <code>nums = [1,3,4,2,2]</code><br />
+<strong>Output:</strong> 2</p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> <code>nums = [3,1,3,4,2]</code><br />
+<strong>Output:</strong> 3</p>
+<p><strong>Example 3:</strong></p>
+<p><strong>Input:</strong> <code>nums = [3,3,3,3,3]</code><br />
+<strong>Output:</strong> 3</p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= n &lt;= 10^5</code></li>
+<li><code>nums.length == n + 1</code></li>
+<li><code>1 &lt;= nums[i] &lt;= n</code></li>
+<li>All the integers in <code>nums</code> appear only <strong>once</strong> except for <strong>precisely one integer</strong> which appears <strong>two or more</strong> times.</li>
+</ul>
+<p><strong>Follow up:</strong></p>
+<ul>
+<li>How can we prove that at least one duplicate number must exist in <code>nums</code>?</li>
+<li>Can you solve the problem in linear runtime complexity?</li>
+</ul>
+<h2 id="思路-4"><a class="header" href="#思路-4">思路</a></h2>
+<p>设置一个哈希数组，遍历<code>nums</code>数组，设置哈希数组，如果某个数的频率大于1，则直接结束循环</p>
+<h2 id="c解法-4"><a class="header" href="#c解法-4">C++解法</a></h2>
+<pre><code class="language-cpp">class Solution {
+public:
+    int findDuplicate(vector&lt;int&gt;&amp; nums) {
+        vector&lt;int&gt; result(100001, 0);
+        for(int num : nums){
+            result[num]++;
+            if(result[num] &gt; 1){
+                return num;
+            }
+        }
+        return -1;
+    }
+};
+</code></pre>
+<h1 id="349-intersection-of-two-arrays"><a class="header" href="#349-intersection-of-two-arrays"><a href="https://leetcode.com/problems/intersection-of-two-arrays/">349. Intersection of Two Arrays</a></a></h1>
+<p>Given two integer arrays <code>nums1</code> and <code>nums2</code>, return <em>an array of their</em> <em>intersection</em>. Each element in the result must be <strong>unique</strong> and you may return the result in <strong>any order</strong>.</p>
+<p><strong>Example 1:</strong></p>
+<p><strong>Input:</strong> <code>nums1 = [1,2,2,1], nums2 = [2,2]</code><br />
+<strong>Output:</strong> <code>[2]</code></p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> <code>nums1 = [4,9,5], nums2 = [9,4,9,8,4]</code><br />
+<strong>Output:</strong> <code>[9,4]</code><br />
+<strong>Explanation:</strong> <code>[4,9]</code> is also accepted.</p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= nums1.length, nums2.length &lt;= 1000</code></li>
+<li><code>0 &lt;= nums1[i], nums2[i] &lt;= 1000</code></li>
+</ul>
+<h2 id="思路-5"><a class="header" href="#思路-5">思路</a></h2>
+<p>方法一：因为<code>0 &lt;= nums1[i], nums2[i] &lt;= 1000</code>，所以这里可以使用哈希数组</p>
+<p>方法二：使用Hashset判断元素是否出现并去重</p>
+<h2 id="c解法-5"><a class="header" href="#c解法-5">C++解法</a></h2>
+<p>方法一：</p>
+<pre><code class="language-cpp">class Solution {
+public:
+    vector&lt;int&gt; intersection(vector&lt;int&gt;&amp; nums1, vector&lt;int&gt;&amp; nums2) {
+        vector&lt;int&gt; result;
+        int hash1[1001] = {0};
+        int hash2[1001] = {0};
+        for(int num : nums1){
+            hash1[num]++;
+        }
+        for(int num : nums2){
+            hash2[num]++;
+        }
+        for(int i = 0; i &lt; 1001; i++){
+            if(hash1[i] &gt; 0 &amp;&amp; hash2[i] &gt; 0){
+                result.push_back(i);
+            }
+        }
+        return result;
+    }
+};
+</code></pre>
+<p>方法二：</p>
+<pre><code class="language-cpp">class Solution {
+public:
+    vector&lt;int&gt; intersection(vector&lt;int&gt;&amp; nums1, vector&lt;int&gt;&amp; nums2) {
+        unordered_set&lt;int&gt; result_set; // 存放结果，之所以用set是为了给结果集去重
+        unordered_set&lt;int&gt; nums_set(nums1.begin(), nums1.end());
+        for (int num : nums2) {
+            // 发现nums2的元素 在nums_set里又出现过
+            if (nums_set.find(num) != nums_set.end()) {
+                result_set.insert(num);
+            }
+        }
+        return vector&lt;int&gt;(result_set.begin(), result_set.end());
+    }
+};
+</code></pre>
+<ul>
+<li>时间复杂度: O(n + m) m 是最后要把 set转成vector</li>
+<li>空间复杂度: O(n)</li>
+</ul>
+<h2 id="java解法-3"><a class="header" href="#java解法-3">Java解法</a></h2>
+<p>方法二：</p>
+<pre><code class="language-java">import java.util.*;
+
+class Solution {
+    public int[] intersection(int[] nums1, int[] nums2) {
+        Set&lt;Integer&gt; resultSet = new HashSet&lt;&gt;();
+        Set&lt;Integer&gt; numsSet = new HashSet&lt;&gt;();
+
+        for (int num : nums1) {
+            numsSet.add(num);
+        }
+        
+        for (int num : nums2) {
+            if (numsSet.contains(num)) {
+                resultSet.add(num);
+            }
+        }
+
+        return resultSet.stream().mapToInt(Integer::intValue).toArray();
+    }
+}
+</code></pre>
+<h2 id="python解法"><a class="header" href="#python解法">Python解法</a></h2>
+<p>方法二：</p>
+<pre><code class="language-python">from typing import List
+
+class Solution:
+    def intersection(self, nums1: List[int], nums2: List[int]) -&gt; List[int]:
+        result_set = set()
+        nums_set = set(nums1)
+
+        for num in nums2:
+            if num in nums_set:
+                result_set.add(num)
+
+        return list(result_set)
+</code></pre>
+<h2 id="go解法"><a class="header" href="#go解法">Go解法</a></h2>
+<p>方法二：</p>
+<pre><code class="language-go">package main
+
+import "fmt"
+
+func intersection(nums1 []int, nums2 []int) []int {
+    resultSet := make(map[int]struct{})
+    numsSet := make(map[int]struct{})
+
+    for _, num := range nums1 {
+        numsSet[num] = struct{}{}
+    }
+
+    for _, num := range nums2 {
+        if _, exists := numsSet[num]; exists {
+            resultSet[num] = struct{}{}
+        }
+    }
+
+    result := make([]int, 0, len(resultSet))
+    for num := range resultSet {
+        result = append(result, num)
+    }
+    
+    return result
+}
+
+func main() {
+    fmt.Println(intersection([]int{1, 2, 2, 1}, []int{2, 2})) // Example usage
+}
+</code></pre>
+<h2 id="rust解法"><a class="header" href="#rust解法">Rust解法</a></h2>
+<p>方法二：</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use std::collections::HashSet;
+
+pub struct Solution;
+
+impl Solution {
+    pub fn intersection(nums1: Vec&lt;i32&gt;, nums2: Vec&lt;i32&gt;) -&gt; Vec&lt;i32&gt; {
+        let nums_set: HashSet&lt;i32&gt; = nums1.into_iter().collect();
+        let result_set: HashSet&lt;i32&gt; = nums2.into_iter().filter(|num| nums_set.contains(num)).collect();
+        
+        result_set.into_iter().collect()
+    }
+}
+<span class="boring">}</span></code></pre></pre>
+<h1 id="350-intersection-of-two-arrays-ii"><a class="header" href="#350-intersection-of-two-arrays-ii"><a href="https://leetcode.com/problems/intersection-of-two-arrays-ii/">350. Intersection of Two Arrays II</a></a></h1>
+<p>Given two integer arrays <code>nums1</code> and <code>nums2</code>, return <em>an array of their intersection</em>. Each element in the result must appear as many times as it shows in both arrays and you may return the result in <strong>any order</strong>.</p>
+<p><strong>Example 1:</strong></p>
+<p><strong>Input:</strong> <code>nums1 = [1,2,2,1], nums2 = [2,2]</code><br />
+<strong>Output:</strong> <code>[2,2]</code></p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> <code>nums1 = [4,9,5], nums2 = [9,4,9,8,4]</code><br />
+<strong>Output:</strong><code>[4,9]</code><br />
+<strong>Explanation:</strong> <code>[9,4]</code> is also accepted.</p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= nums1.length, nums2.length &lt;= 1000</code></li>
+<li><code>0 &lt;= nums1[i], nums2[i] &lt;= 1000</code></li>
+</ul>
+<p><strong>Follow up:</strong></p>
+<ul>
+<li>What if the given array is already sorted? How would you optimize your algorithm?</li>
+<li>What if <code>nums1</code>'s size is small compared to <code>nums2</code>'s size? Which algorithm is better?</li>
+<li>What if elements of <code>nums2</code> are stored on disk, and the memory is limited such that you cannot load all elements into the memory at once?</li>
+</ul>
+<h2 id="思路-6"><a class="header" href="#思路-6">思路</a></h2>
+<p>因为<code>0 &lt;= nums1[i], nums2[i] &lt;= 1000</code>，所以这里可以使用哈希数组。对于每一个共同元素，计算其次数然后向结果中添加相应数量的元素。</p>
+<h2 id="c解法-6"><a class="header" href="#c解法-6">C++解法</a></h2>
+<pre><code class="language-cpp">class Solution {
+public:
+    vector&lt;int&gt; intersect(vector&lt;int&gt;&amp; nums1, vector&lt;int&gt;&amp; nums2) {
+        vector&lt;int&gt; result;
+        int hash1[1001] = {0};
+        int hash2[1001] = {0};
+        for(int num : nums1){
+            hash1[num]++;
+        }
+        for(int num : nums2){
+            hash2[num]++;
+        }
+        for(int i = 0; i &lt; 1001; i++){
+            if(hash1[i] &gt; 0 &amp;&amp; hash2[i] &gt; 0){
+                int times = min(hash1[i], hash2[i]);
+                for(int time = 0; time &lt; times; time++){
+                    result.push_back(i);
+                }
+            }
+        }
+        return result;
+    }
+};
+</code></pre>
+<h1 id="383-ransom-note"><a class="header" href="#383-ransom-note"><a href="https://leetcode.com/problems/ransom-note/">383. Ransom Note</a></a></h1>
+<p>Given two strings <code>ransomNote</code> and <code>magazine</code>, return <code>true</code> <em>if</em> <code>ransomNote</code> <em>can be constructed by using the letters from</em> <code>magazine</code> <em>and</em> <code>false</code> <em>otherwise</em>.</p>
+<p>Each letter in <code>magazine</code> can only be used once in <code>ransomNote</code>.</p>
+<p><strong>Example 1:</strong></p>
+<p><strong>Input:</strong> ransomNote = "a", magazine = "b"<br />
+<strong>Output:</strong> false</p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> ransomNote = "aa", magazine = "ab"<br />
+<strong>Output:</strong> false</p>
+<p><strong>Example 3:</strong></p>
+<p><strong>Input:</strong> ransomNote = "aa", magazine = "aab"<br />
+<strong>Output:</strong> true</p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= ransomNote.length, magazine.length &lt;= 10^5</code></li>
+<li><code>ransomNote</code> and <code>magazine</code> consist of lowercase English letters.</li>
+</ul>
+<h2 id="思路-7"><a class="header" href="#思路-7">思路</a></h2>
+<p>使用哈希数组存储可用的数字，使用magazine字符串存储字符，使用ransomNote字符串消耗字符，不够消耗时，返回false。否则返回true。</p>
+<h2 id="c解法-7"><a class="header" href="#c解法-7">C++解法</a></h2>
+<pre><code class="language-cpp">class Solution {
+public:
+    bool canConstruct(string ransomNote, string magazine) {
+        int record[26] = {0};
+        //add
+        if (ransomNote.size() &gt; magazine.size()) {
+            return false;
+        }
+        for (int i = 0; i &lt; magazine.length(); i++) {
+            // 通过record数据记录 magazine里各个字符出现次数
+            record[magazine[i]-'a'] ++;
+        }
+        for (int j = 0; j &lt; ransomNote.length(); j++) {
+            // 遍历ransomNote，在record里对应的字符个数做--操作
+            record[ransomNote[j]-'a']--;
+            // 如果小于零说明ransomNote里出现的字符，magazine没有
+            if(record[ransomNote[j]-'a'] &lt; 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+};
+</code></pre>
+<ul>
+<li>时间复杂度: O(n)</li>
+<li>空间复杂度: O(1)</li>
+</ul>
+<h2 id="java解法-4"><a class="header" href="#java解法-4">Java解法</a></h2>
+<pre><code class="language-java">class Solution {
+    public boolean canConstruct(String ransomNote, String magazine) {
+        // shortcut
+        if (ransomNote.length() &gt; magazine.length()) {
+            return false;
+        }
+        // 定义一个哈希映射数组
+        int[] record = new int[26];
+
+        // 遍历
+        for(char c : magazine.toCharArray()){
+            record[c - 'a'] += 1;
+        }
+
+        for(char c : ransomNote.toCharArray()){
+            record[c - 'a'] -= 1;
+        }
+        
+        // 如果数组中存在负数，说明ransomNote字符串中存在magazine中没有的字符
+        for(int i : record){
+            if(i &lt; 0){
+                return false;
+            }
+        }
+
+        return true;
+    }
+}
+</code></pre>
+<h1 id="2215-find-the-difference-of-two-arrays"><a class="header" href="#2215-find-the-difference-of-two-arrays"><a href="https://leetcode.com/problems/find-the-difference-of-two-arrays/">2215. Find the Difference of Two Arrays</a></a></h1>
+<p>Given two <strong>0-indexed</strong> integer arrays <code>nums1</code> and <code>nums2</code>, return <em>a list</em> <code>answer</code> <em>of size</em> <code>2</code> <em>where:</em></p>
+<ul>
+<li><code>answer[0]</code> <em>is a list of all <strong>distinct</strong> integers in</em> <code>nums1</code> <em>which are <strong>not</strong> present in</em> <code>nums2</code><em>.</em></li>
+<li><code>answer[1]</code> <em>is a list of all <strong>distinct</strong> integers in</em> <code>nums2</code> <em>which are <strong>not</strong> present in</em> <code>nums1</code>.</li>
+</ul>
+<p><strong>Note</strong> that the integers in the lists may be returned in <strong>any</strong> order.</p>
+<p><strong>Example 1:</strong></p>
+<p><strong>Input:</strong> <code>nums1 = [1,2,3], nums2 = [2,4,6]</code><br />
+<strong>Output:</strong> <code>[[1,3],[4,6]]</code><br />
+<strong>Explanation:</strong></p>
+<pre><code>For nums1, nums1[1] = 2 is present at index 0 of nums2, whereas nums1[0] = 1 and nums1[2] = 3 are not present in nums2. Therefore, answer[0] = [1,3].
+For nums2, nums2[0] = 2 is present at index 1 of nums1, whereas nums2[1] = 4 and nums2[2] = 6 are not present in nums2. Therefore, answer[1] = [4,6].
+</code></pre>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> <code>nums1 = [1,2,3,3], nums2 = [1,1,2,2]</code><br />
+<strong>Output:</strong> <code>[[3],[]]</code><br />
+<strong>Explanation:</strong></p>
+<pre><code>For nums1, nums1[2] and nums1[3] are not present in nums2. Since nums1[2] == nums1[3], their value is only included once and answer[0] = [3].
+Every integer in nums2 is present in nums1. Therefore, answer[1] = [].
+</code></pre>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= nums1.length, nums2.length &lt;= 1000</code></li>
+<li><code>-1000 &lt;= nums1[i], nums2[i] &lt;= 1000</code></li>
+</ul>
+<h2 id="思路-8"><a class="header" href="#思路-8">思路</a></h2>
+<p>注意到<code>-1000 &lt;= nums1[i], nums2[i] &lt;= 1000</code>，这里的哈希数组容量及数值需要调整。然后遍历两个哈希数组，找只在一个哈希数组中出现的元素即可。</p>
+<h2 id="c解法-8"><a class="header" href="#c解法-8">C++解法</a></h2>
+<pre><code class="language-cpp">class Solution {
+public:
+    vector&lt;vector&lt;int&gt;&gt; findDifference(vector&lt;int&gt;&amp; nums1, vector&lt;int&gt;&amp; nums2) {
+        vector&lt;vector&lt;int&gt;&gt; result;
+        int hash1[2001] = {0};
+        int hash2[2001] = {0};
+        for(int num : nums1){
+            hash1[num + 1000]++;
+        }
+        for(int num : nums2){
+            hash2[num + 1000]++;
+        }
+        vector&lt;int&gt; temp1;
+        vector&lt;int&gt; temp2;
+        for(int i = 0; i &lt; 2001; i++){
+            if(hash1[i] &gt; 0 &amp;&amp; hash2[i] == 0){
+                temp1.push_back(i-1000);
+            }else if(hash1[i] == 0 &amp;&amp; hash2[i] &gt; 0){
+                temp2.push_back(i-1000);
+            }
+        }
+        result.push_back(temp1);
+        result.push_back(temp2);
+        return result;
+    }
+};
+</code></pre>
+<h1 id="2248-intersection-of-multiple-arrays"><a class="header" href="#2248-intersection-of-multiple-arrays"><a href="https://leetcode.com/problems/intersection-of-multiple-arrays/">2248. Intersection of Multiple Arrays</a></a></h1>
+<p>Given a 2D integer array <code>nums</code> where <code>nums[i]</code> is a non-empty array of <strong>distinct</strong> positive integers, return <em>the list of integers that are present in <strong>each array</strong> of</em> <code>nums</code> <em>sorted in <strong>ascending order</strong></em>.</p>
+<p><strong>Example 1:</strong></p>
+<p><strong>Input:</strong> nums =<code> [[**3**,1,2,**4**,5],[1,2,**3**,**4**],[**3**,**4**,5,6]]</code><br />
+<strong>Output:</strong> <code>[3,4]</code><br />
+<strong>Explanation:</strong>
+The only integers present in each of nums[0] = [<strong>3</strong>,1,2,<strong>4</strong>,5], nums[1] = [1,2,<strong>3</strong>,<strong>4</strong>], and nums[2] = [<strong>3</strong>,<strong>4</strong>,5,6] are 3 and 4, so we return [3,4].</p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> <code>nums = [[1,2,3],[4,5,6]]</code><br />
+<strong>Output:</strong> <code>[]</code><br />
+<strong>Explanation:</strong>
+There does not exist any integer present both in nums[0] and nums[1], so we return an empty list [].</p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= nums.length &lt;= 1000</code></li>
+<li><code>1 &lt;= sum(nums[i].length) &lt;= 1000</code></li>
+<li><code>1 &lt;= nums[i][j] &lt;= 1000</code></li>
+<li>All the values of <code>nums[i]</code> are <strong>unique</strong>.</li>
+</ul>
+<h2 id="思路-9"><a class="header" href="#思路-9">思路</a></h2>
+<p>用哈希数组保存元素出现次数，向结果中加入出现次数等于二维数组长度的元素</p>
+<h2 id="c解法-9"><a class="header" href="#c解法-9">C++解法</a></h2>
+<pre><code class="language-cpp">class Solution {
+public:
+    vector&lt;int&gt; intersection(vector&lt;vector&lt;int&gt;&gt;&amp; nums) {
+        vector&lt;int&gt; result;
+        int hash[1001] = {0};
+        // 统计每个数字出现的次数  
+        for (int i = 0; i &lt; nums.size(); i++) {  
+            for (int j = 0; j &lt; nums[i].size(); j++) {  
+                hash[nums[i][j]]++;  
+            }  
+        }  
+        
+        // 记录出现次数等于子数组数量的元素  
+        for (int i = 0; i &lt; 1001; i++) {  
+            if (hash[i] == nums.size()) {
+                result.push_back(i);  
+            }  
+        }  
+        return result;
+    }
+};
+</code></pre>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../哈希表/哈希表.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../哈希表/哈希集合.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../哈希表/哈希表.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../哈希表/哈希集合.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

@@ -154,6 +154,138 @@
                     <main>
                         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
 <h1 id="链表"><a class="header" href="#链表">链表</a></h1>
+<ul>
+<li><a href="#%E5%85%B3%E4%BA%8E%E9%93%BE%E8%A1%A8%E4%BD%A0%E8%AF%A5%E4%BA%86%E8%A7%A3%E8%BF%99%E4%BA%9B">关于链表，你该了解这些！</a>
+<ul>
+<li><a href="#%E9%93%BE%E8%A1%A8%E7%9A%84%E7%B1%BB%E5%9E%8B">链表的类型</a>
+<ul>
+<li><a href="#%E5%8D%95%E9%93%BE%E8%A1%A8">单链表</a></li>
+<li><a href="#%E5%8F%8C%E9%93%BE%E8%A1%A8">双链表</a></li>
+<li><a href="#%E5%BE%AA%E7%8E%AF%E9%93%BE%E8%A1%A8">循环链表</a></li>
+</ul>
+</li>
+<li><a href="#%E9%93%BE%E8%A1%A8%E7%9A%84%E5%AD%98%E5%82%A8%E6%96%B9%E5%BC%8F">链表的存储方式</a></li>
+<li><a href="#%E9%93%BE%E8%A1%A8%E7%9A%84%E5%AE%9A%E4%B9%89">链表的定义</a></li>
+<li><a href="#%E9%93%BE%E8%A1%A8%E7%9A%84%E6%93%8D%E4%BD%9C">链表的操作</a>
+<ul>
+<li><a href="#%E5%88%A0%E9%99%A4%E8%8A%82%E7%82%B9">删除节点</a></li>
+<li><a href="#%E6%B7%BB%E5%8A%A0%E8%8A%82%E7%82%B9">添加节点</a></li>
+</ul>
+</li>
+<li><a href="#%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90">性能分析</a></li>
+<li><a href="#%E9%93%BE%E8%A1%A8%E7%BB%8F%E5%85%B8%E9%A2%98%E7%9B%AE">链表经典题目</a>
+<ul>
+<li><a href="#%E8%99%9A%E6%8B%9F%E5%A4%B4%E7%BB%93%E7%82%B9">虚拟头结点</a></li>
+<li><a href="#%E9%93%BE%E8%A1%A8%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C">链表的基本操作</a></li>
+<li><a href="#%E5%8F%8D%E8%BD%AC%E9%93%BE%E8%A1%A8">反转链表</a></li>
+<li><a href="#%E5%88%A0%E9%99%A4%E5%80%92%E6%95%B0%E7%AC%ACn%E4%B8%AA%E8%8A%82%E7%82%B9">删除倒数第N个节点</a></li>
+<li><a href="#%E9%93%BE%E8%A1%A8%E7%9B%B8%E4%BA%A4">链表相交</a></li>
+<li><a href="#%E7%8E%AF%E5%BD%A2%E9%93%BE%E8%A1%A8">环形链表</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><a href="https://programmercarl.com/%E9%93%BE%E8%A1%A8%E6%80%BB%E7%BB%93%E7%AF%87.html">本文来源</a></p>
+<h1 id="关于链表你该了解这些"><a class="header" href="#关于链表你该了解这些">关于链表，你该了解这些！</a></h1>
+<p>什么是链表，链表是一种通过指针串联在一起的线性结构，每一个节点由两部分组成，一个是数据域一个是指针域（存放指向下一个节点的指针），最后一个节点的指针域指向null（空指针的意思）。</p>
+<p>链表的入口节点称为链表的头结点也就是head。</p>
+<p>如图所示： <img src="https://code-thinking-1253855093.file.myqcloud.com/pics/20200806194529815.png" alt="链表1" /></p>
+<h2 id="链表的类型"><a class="header" href="#链表的类型">链表的类型</a></h2>
+<p>接下来说一下链表的几种类型:</p>
+<h3 id="单链表"><a class="header" href="#单链表">单链表</a></h3>
+<p>刚刚说的就是单链表。</p>
+<h3 id="双链表"><a class="header" href="#双链表">双链表</a></h3>
+<p>单链表中的指针域只能指向节点的下一个节点。</p>
+<p>双链表：每一个节点有两个指针域，一个指向下一个节点，一个指向上一个节点。</p>
+<p>双链表 既可以向前查询也可以向后查询。</p>
+<p>如图所示： <img src="https://code-thinking-1253855093.file.myqcloud.com/pics/20200806194559317.png" alt="链表2" /></p>
+<h3 id="循环链表"><a class="header" href="#循环链表">循环链表</a></h3>
+<p>循环链表，顾名思义，就是链表首尾相连。</p>
+<p>循环链表可以用来解决约瑟夫环问题。</p>
+<p><img src="https://code-thinking-1253855093.file.myqcloud.com/pics/20200806194629603.png" alt="链表4" /></p>
+<h2 id="链表的存储方式"><a class="header" href="#链表的存储方式">链表的存储方式</a></h2>
+<p>了解完链表的类型，再来说一说链表在内存中的存储方式。</p>
+<p>数组是在内存中是连续分布的，但是链表在内存中可不是连续分布的。</p>
+<p>链表是通过指针域的指针链接在内存中各个节点。</p>
+<p>所以链表中的节点在内存中不是连续分布的 ，而是散乱分布在内存中的某地址上，分配机制取决于操作系统的内存管理。</p>
+<p>如图所示：</p>
+<p><img src="https://code-thinking-1253855093.file.myqcloud.com/pics/20200806194613920.png" alt="链表3" /></p>
+<p>这个链表起始节点为2， 终止节点为7， 各个节点分布在内存的不同地址空间上，通过指针串联在一起。</p>
+<h2 id="链表的定义"><a class="header" href="#链表的定义">链表的定义</a></h2>
+<p>接下来说一说链表的定义。</p>
+<p>链表节点的定义，很多同学在面试的时候都写不好。</p>
+<p>这是因为平时在刷leetcode的时候，链表的节点都默认定义好了，直接用就行了，所以同学们都没有注意到链表的节点是如何定义的。</p>
+<p>而在面试的时候，一旦要自己手写链表，就写的错漏百出。</p>
+<p>这里我给出C/C++的定义链表节点方式，如下所示：</p>
+<pre><code class="language-cpp">// 单链表
+struct ListNode {
+    int val;  // 节点上存储的元素
+    ListNode *next;  // 指向下一个节点的指针
+    ListNode(int x) : val(x), next(NULL) {}  // 节点的构造函数
+};
+</code></pre>
+<p>有同学说了，我不定义构造函数行不行，答案是可以的，C++默认生成一个构造函数。</p>
+<p>但是这个构造函数不会初始化任何成员变量，下面我来举两个例子：</p>
+<p>通过自己定义构造函数初始化节点：</p>
+<pre><code class="language-cpp">ListNode* head = new ListNode(5);
+</code></pre>
+<p>使用默认构造函数初始化节点：</p>
+<pre><code class="language-cpp">ListNode* head = new ListNode();
+head-&gt;val = 5;
+</code></pre>
+<p>所以如果不定义构造函数使用默认构造函数的话，在初始化的时候就不能直接给变量赋值！</p>
+<h2 id="链表的操作"><a class="header" href="#链表的操作">链表的操作</a></h2>
+<h3 id="删除节点"><a class="header" href="#删除节点">删除节点</a></h3>
+<p>删除D节点，如图所示：</p>
+<p><img src="https://code-thinking-1253855093.file.myqcloud.com/pics/20200806195114541-20230310121459257.png" alt="链表-删除节点" /></p>
+<p>只要将C节点的next指针 指向E节点就可以了。</p>
+<p>那有同学说了，D节点不是依然存留在内存里么？只不过是没有在这个链表里而已。</p>
+<p>是这样的，所以在C++里最好是再手动释放这个D节点，释放这块内存。</p>
+<p>其他语言例如Java、Python，就有自己的内存回收机制，就不用自己手动释放了。</p>
+<h3 id="添加节点"><a class="header" href="#添加节点">添加节点</a></h3>
+<p>如图所示：</p>
+<p><img src="https://code-thinking-1253855093.file.myqcloud.com/pics/20200806195134331-20230310121503147.png" alt="链表-添加节点" /></p>
+<p>可以看出链表的增添和删除都是O(1)操作，也不会影响到其他节点。</p>
+<p>但是要注意，要是删除第五个节点，需要从头节点查找到第四个节点通过next指针进行删除操作，查找的时间复杂度是O(n)。</p>
+<h2 id="性能分析"><a class="header" href="#性能分析">性能分析</a></h2>
+<p>再把链表的特性和数组的特性进行一个对比，如图所示：</p>
+<p><img src="https://code-thinking-1253855093.file.myqcloud.com/pics/20200806195200276.png" alt="链表-链表与数据性能对比" /></p>
+<p>数组在定义的时候，长度就是固定的，如果想改动数组的长度，就需要重新定义一个新的数组。</p>
+<p>链表的长度可以是不固定的，并且可以动态增删， 适合数据量不固定，频繁增删，较少查询的场景。</p>
+<p>相信大家已经对链表足够的了解，后面我会讲解关于链表的高频面试题目，我们下期见！</p>
+<h2 id="链表经典题目"><a class="header" href="#链表经典题目">链表经典题目</a></h2>
+<h3 id="虚拟头结点"><a class="header" href="#虚拟头结点">虚拟头结点</a></h3>
+<p>在<a href="https://programmercarl.com/0203.%E7%A7%BB%E9%99%A4%E9%93%BE%E8%A1%A8%E5%85%83%E7%B4%A0.html">链表：听说用虚拟头节点会方便很多？ (opens new window)</a>中，我们讲解了链表操作中一个非常重要的技巧：虚拟头节点。</p>
+<p>链表的一大问题就是操作当前节点必须要找前一个节点才能操作。这就造成了，头结点的尴尬，因为头结点没有前一个节点了。</p>
+<p><strong>每次对应头结点的情况都要单独处理，所以使用虚拟头结点的技巧，就可以解决这个问题</strong>。</p>
+<p>在<a href="https://programmercarl.com/0203.%E7%A7%BB%E9%99%A4%E9%93%BE%E8%A1%A8%E5%85%83%E7%B4%A0.html">链表：听说用虚拟头节点会方便很多？ (opens new window)</a>中，我给出了用虚拟头结点和没用虚拟头结点的代码，大家对比一下就会发现，使用虚拟头结点的好处。</p>
+<h3 id="链表的基本操作"><a class="header" href="#链表的基本操作">链表的基本操作</a></h3>
+<p>在<a href="https://programmercarl.com/0707.%E8%AE%BE%E8%AE%A1%E9%93%BE%E8%A1%A8.html">链表：一道题目考察了常见的五个操作！ (opens new window)</a>中，我们通过设计链表把链表常见的五个操作练习了一遍。</p>
+<p>这是练习链表基础操作的非常好的一道题目，考察了：</p>
+<ul>
+<li>获取链表第index个节点的数值</li>
+<li>在链表的最前面插入一个节点</li>
+<li>在链表的最后面插入一个节点</li>
+<li>在链表第index个节点前面插入一个节点</li>
+<li>删除链表的第index个节点的数值</li>
+</ul>
+<p><strong>可以说把这道题目做了，链表基本操作就OK了，再也不用担心链表增删改查整不明白了</strong>。</p>
+<p>这里我依然使用了虚拟头结点的技巧，大家复习的时候，可以去看一下代码。</p>
+<h3 id="反转链表"><a class="header" href="#反转链表">反转链表</a></h3>
+<p>在<a href="https://programmercarl.com/0206.%E7%BF%BB%E8%BD%AC%E9%93%BE%E8%A1%A8.html">链表：听说过两天反转链表又写不出来了？ (opens new window)</a>中，讲解了如何反转链表。</p>
+<p>因为反转链表的代码相对简单，有的同学可能直接背下来了，但一写还是容易出问题。</p>
+<p>反转链表是面试中高频题目，很考察面试者对链表操作的熟练程度。</p>
+<p>我在<a href="https://programmercarl.com/0206.%E7%BF%BB%E8%BD%AC%E9%93%BE%E8%A1%A8.html">文章 (opens new window)</a>中，给出了两种反转的方式，迭代法和递归法。</p>
+<p>建议大家先学透迭代法，然后再看递归法，因为递归法比较绕，如果迭代还写不明白，递归基本也写不明白了。</p>
+<p><strong>可以先通过迭代法，彻底弄清楚链表反转的过程！</strong></p>
+<h3 id="删除倒数第n个节点"><a class="header" href="#删除倒数第n个节点">删除倒数第N个节点</a></h3>
+<p>在<a href="https://programmercarl.com/0019.%E5%88%A0%E9%99%A4%E9%93%BE%E8%A1%A8%E7%9A%84%E5%80%92%E6%95%B0%E7%AC%ACN%E4%B8%AA%E8%8A%82%E7%82%B9.html">链表：删除链表倒数第N个节点，怎么删？ (opens new window)</a>中我们结合虚拟头结点 和 双指针法来移除链表倒数第N个节点。</p>
+<h3 id="链表相交"><a class="header" href="#链表相交">链表相交</a></h3>
+<p><a href="https://programmercarl.com/%E9%9D%A2%E8%AF%95%E9%A2%9802.07.%E9%93%BE%E8%A1%A8%E7%9B%B8%E4%BA%A4.html">链表：链表相交 (opens new window)</a>使用双指针来找到两个链表的交点（引用完全相同，即：内存地址完全相同的交点）</p>
+<h3 id="环形链表"><a class="header" href="#环形链表">环形链表</a></h3>
+<p>在<a href="https://programmercarl.com/0142.%E7%8E%AF%E5%BD%A2%E9%93%BE%E8%A1%A8II.html">链表：环找到了，那入口呢？ (opens new window)</a>中，讲解了在链表如何找环，以及如何找环的入口位置。</p>
+<p>这道题目可以说是链表的比较难的题目了。 但代码却十分简洁，主要在于一些数学证明。</p>
 
                     </main>
 

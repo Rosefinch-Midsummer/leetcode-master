@@ -1,0 +1,281 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>字符串 - 剑指Offer</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">剑指Offer</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
+<h1 id="字符串"><a class="header" href="#字符串">字符串</a></h1>
+<ul>
+<li><a href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%80%BB%E7%BB%93%E7%AF%87">字符串：总结篇</a>
+<ul>
+<li><a href="#%E4%BB%80%E4%B9%88%E6%98%AF%E5%AD%97%E7%AC%A6%E4%B8%B2">什么是字符串</a></li>
+<li><a href="#%E8%A6%81%E4%B8%8D%E8%A6%81%E4%BD%BF%E7%94%A8%E5%BA%93%E5%87%BD%E6%95%B0">要不要使用库函数</a></li>
+<li><a href="#%E5%8F%8C%E6%8C%87%E9%92%88%E6%B3%95">双指针法</a></li>
+<li><a href="#%E5%8F%8D%E8%BD%AC%E7%B3%BB%E5%88%97">反转系列</a></li>
+<li><a href="#kmp">KMP</a></li>
+<li><a href="#%E6%80%BB%E7%BB%93">总结</a></li>
+</ul>
+</li>
+</ul>
+<h1 id="字符串总结篇"><a class="header" href="#字符串总结篇">字符串：总结篇</a></h1>
+<p>其实我们已经学习了十天的字符串了，从字符串的定义到库函数的使用原则，从各种反转到KMP算法，相信大家应该对字符串有比较深刻的认识了。</p>
+<p>那么这次我们来做一个总结。</p>
+<h2 id="什么是字符串"><a class="header" href="#什么是字符串">什么是字符串</a></h2>
+<p>字符串是若干字符组成的有限序列，也可以理解为是一个字符数组，但是很多语言对字符串做了特殊的规定，接下来我来说一说C/C++中的字符串。</p>
+<p>在C语言中，把一个字符串存入一个数组时，也把结束符 '\0'存入数组，并以此作为该字符串是否结束的标志。</p>
+<p>例如这段代码：</p>
+<pre><code class="language-cpp">char a[5] = "asd";
+for (int i = 0; a[i] != '\0'; i++) {
+}
+</code></pre>
+<p>在C++中，提供一个string类，string类会提供 size接口，可以用来判断string类字符串是否结束，就不用'\0'来判断是否结束。</p>
+<p>例如这段代码:</p>
+<pre><code class="language-cpp">string a = "asd";
+for (int i = 0; i &lt; a.size(); i++) {
+}
+</code></pre>
+<p>那么vector&lt; char &gt; 和 string 又有什么区别呢？</p>
+<p>其实在基本操作上没有区别，但是 string提供更多的字符串处理的相关接口，例如string 重载了+，而vector却没有。</p>
+<p>所以想处理字符串，我们还是会定义一个string类型。</p>
+<h2 id="要不要使用库函数"><a class="header" href="#要不要使用库函数">要不要使用库函数</a></h2>
+<p>在文章<a href="https://programmercarl.com/0344.%E5%8F%8D%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2.html">344.反转字符串 (opens new window)</a>中强调了<strong>打基础的时候，不要太迷恋于库函数。</strong></p>
+<p>甚至一些同学习惯于调用substr，split，reverse之类的库函数，却不知道其实现原理，也不知道其时间复杂度，这样实现出来的代码，如果在面试现场，面试官问：“分析其时间复杂度”的话，一定会一脸懵逼！</p>
+<p>所以建议<strong>如果题目关键的部分直接用库函数就可以解决，建议不要使用库函数。</strong></p>
+<p><strong>如果库函数仅仅是 解题过程中的一小部分，并且你已经很清楚这个库函数的内部实现原理的话，可以考虑使用库函数。</strong></p>
+<h2 id="双指针法"><a class="header" href="#双指针法">双指针法</a></h2>
+<p>在<a href="https://programmercarl.com/0344.%E5%8F%8D%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2.html">344.反转字符串 (opens new window)</a>，我们使用双指针法实现了反转字符串的操作，<strong>双指针法在数组，链表和字符串中很常用。</strong></p>
+<p>接着在<a href="https://programmercarl.com/%E5%89%91%E6%8C%87Offer05.%E6%9B%BF%E6%8D%A2%E7%A9%BA%E6%A0%BC.html">字符串：替换空格 (opens new window)</a>，同样还是使用双指针法在时间复杂度O(n)的情况下完成替换空格。</p>
+<p><strong>其实很多数组填充类的问题，都可以先预先给数组扩容带填充后的大小，然后在从后向前进行操作。</strong></p>
+<p>那么针对数组删除操作的问题，其实在<a href="https://programmercarl.com/0027.%E7%A7%BB%E9%99%A4%E5%85%83%E7%B4%A0.html">27. 移除元素 (opens new window)</a>中就已经提到了使用双指针法进行移除操作。</p>
+<p>同样的道理在<a href="https://programmercarl.com/0151.%E7%BF%BB%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2%E9%87%8C%E7%9A%84%E5%8D%95%E8%AF%8D.html">151.翻转字符串里的单词 (opens new window)</a>中我们使用O(n)的时间复杂度，完成了删除冗余空格。</p>
+<p>一些同学会使用for循环里调用库函数erase来移除元素，这其实是O(n^2)的操作，因为erase就是O(n)的操作，所以这也是典型的不知道库函数的时间复杂度，上来就用的案例了。</p>
+<h2 id="反转系列"><a class="header" href="#反转系列">反转系列</a></h2>
+<p>在反转上还可以在加一些玩法，其实考察的是对代码的掌控能力。</p>
+<p><a href="https://programmercarl.com/0541.%E5%8F%8D%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2II.html">541. 反转字符串II (opens new window)</a>中，一些同学可能为了处理逻辑：每隔2k个字符的前k的字符，写了一堆逻辑代码或者再搞一个计数器，来统计2k，再统计前k个字符。</p>
+<p>其实<strong>当需要固定规律一段一段去处理字符串的时候，要想想在在for循环的表达式上做做文章</strong>。</p>
+<p>只要让 i += (2 * k)，i 每次移动 2 * k 就可以了，然后判断是否需要有反转的区间。</p>
+<p>因为要找的也就是每2 * k 区间的起点，这样写程序会高效很多。</p>
+<p>在<a href="https://programmercarl.com/0151.%E7%BF%BB%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2%E9%87%8C%E7%9A%84%E5%8D%95%E8%AF%8D.html">151.翻转字符串里的单词 (opens new window)</a>中要求翻转字符串里的单词，这道题目可以说是综合考察了字符串的多种操作。是考察字符串的好题。</p>
+<p>这道题目通过 <strong>先整体反转再局部反转</strong>，实现了反转字符串里的单词。</p>
+<p>后来发现反转字符串还有一个牛逼的用处，就是达到左旋的效果。</p>
+<p>在<a href="https://programmercarl.com/%E5%89%91%E6%8C%87Offer58-II.%E5%B7%A6%E6%97%8B%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2.html">字符串：反转个字符串还有这个用处？ (opens new window)</a>中，我们通过<strong>先局部反转再整体反转</strong>达到了左旋的效果。</p>
+<h2 id="kmp"><a class="header" href="#kmp">KMP</a></h2>
+<p>KMP的主要思想是<strong>当出现字符串不匹配时，可以知道一部分之前已经匹配的文本内容，可以利用这些信息避免从头再去做匹配了。</strong></p>
+<p>KMP的精髓所在就是前缀表，在<a href="https://programmercarl.com/0028.%E5%AE%9E%E7%8E%B0strStr.html">KMP精讲 (opens new window)</a>中提到了，什么是KMP，什么是前缀表，以及为什么要用前缀表。</p>
+<p>前缀表：起始位置到下标i之前（包括i）的子串中，有多大长度的相同前缀后缀。</p>
+<p>那么使用KMP可以解决两类经典问题：</p>
+<ol>
+<li>匹配问题：<a href="https://programmercarl.com/0028.%E5%AE%9E%E7%8E%B0strStr.html">28. 实现 strStr()(opens new window)</a></li>
+<li>重复子串问题：<a href="https://programmercarl.com/0459.%E9%87%8D%E5%A4%8D%E7%9A%84%E5%AD%90%E5%AD%97%E7%AC%A6%E4%B8%B2.html">459.重复的子字符串(opens new window)</a></li>
+</ol>
+<p>再一次强调了什么是前缀，什么是后缀，什么又是最长相等前后缀。</p>
+<p>前缀：指不包含最后一个字符的所有以第一个字符开头的连续子串。</p>
+<p>后缀：指不包含第一个字符的所有以最后一个字符结尾的连续子串。</p>
+<p>然后<strong>针对前缀表到底要不要减一，这其实是不同KMP实现的方式</strong>，我们在<a href="https://programmercarl.com/0028.%E5%AE%9E%E7%8E%B0strStr.html">KMP精讲 (opens new window)</a>中针对之前两个问题，分别给出了两个不同版本的的KMP实现。</p>
+<p>其中主要<strong>理解j=next[x]这一步最为关键！</strong></p>
+<h2 id="总结"><a class="header" href="#总结">总结</a></h2>
+<p>字符串类类型的题目，往往想法比较简单，但是实现起来并不容易，复杂的字符串题目非常考验对代码的掌控能力。</p>
+<p>双指针法是字符串处理的常客。</p>
+<p>KMP算法是字符串查找最重要的算法，但彻底理解KMP并不容易，我们已经写了五篇KMP的文章，不断总结和完善，最终才把KMP讲清楚。</p>
+<p>好了字符串相关的算法知识就介绍到了这里了，明天开始新的征程，大家加油！</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../哈希表/哈希映射.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../双指针/双指针.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../哈希表/哈希映射.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../双指针/双指针.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>
