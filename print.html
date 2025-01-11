@@ -2208,6 +2208,209 @@ public:
         return False
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
+<h1 id="数与位"><a class="header" href="#数与位">数与位</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
+<h1 id="数字位操作"><a class="header" href="#数字位操作">数字位操作</a></h1>
+<ul>
+<li><a href="%E6%95%B0%E4%B8%8E%E4%BD%8D/%E6%95%B0%E5%AD%97%E4%BD%8D%E6%93%8D%E4%BD%9C.html#7-reverse-integer">7. Reverse Integer</a>
+<ul>
+<li><a href="%E6%95%B0%E4%B8%8E%E4%BD%8D/%E6%95%B0%E5%AD%97%E4%BD%8D%E6%93%8D%E4%BD%9C.html#%E6%80%9D%E8%B7%AF">思路</a></li>
+<li><a href="%E6%95%B0%E4%B8%8E%E4%BD%8D/%E6%95%B0%E5%AD%97%E4%BD%8D%E6%93%8D%E4%BD%9C.html#c%E8%A7%A3%E6%B3%95">C++解法</a></li>
+<li><a href="%E6%95%B0%E4%B8%8E%E4%BD%8D/%E6%95%B0%E5%AD%97%E4%BD%8D%E6%93%8D%E4%BD%9C.html#java%E8%A7%A3%E6%B3%95">Java解法</a></li>
+<li><a href="%E6%95%B0%E4%B8%8E%E4%BD%8D/%E6%95%B0%E5%AD%97%E4%BD%8D%E6%93%8D%E4%BD%9C.html#python3%E8%A7%A3%E6%B3%95">Python3解法</a></li>
+</ul>
+</li>
+<li><a href="%E6%95%B0%E4%B8%8E%E4%BD%8D/%E6%95%B0%E5%AD%97%E4%BD%8D%E6%93%8D%E4%BD%9C.html#9-palindrome-number">9. Palindrome Number</a>
+<ul>
+<li><a href="%E6%95%B0%E4%B8%8E%E4%BD%8D/%E6%95%B0%E5%AD%97%E4%BD%8D%E6%93%8D%E4%BD%9C.html#%E6%80%9D%E8%B7%AF-1">思路</a></li>
+<li><a href="%E6%95%B0%E4%B8%8E%E4%BD%8D/%E6%95%B0%E5%AD%97%E4%BD%8D%E6%93%8D%E4%BD%9C.html#c%E8%A7%A3%E6%B3%95-1">C++解法</a></li>
+</ul>
+</li>
+</ul>
+<h1 id="7-reverse-integer"><a class="header" href="#7-reverse-integer"><a href="https://leetcode.com/problems/reverse-integer/">7. Reverse Integer</a></a></h1>
+<p>Given a signed 32-bit integer <code>x</code>, return <code>x</code> <em>with its digits reversed</em>. If reversing <code>x</code> causes the value to go outside the signed 32-bit integer range <code>[-231, 231 - 1]</code>, then return <code>0</code>.</p>
+<p><strong>Assume the environment does not allow you to store 64-bit integers (signed or unsigned).</strong></p>
+<p><strong>Example 1:</strong></p>
+<p><strong>Input:</strong> x = 123<br />
+<strong>Output:</strong> 321</p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> x = -123<br />
+<strong>Output:</strong> -321</p>
+<p><strong>Example 3:</strong></p>
+<p><strong>Input:</strong> x = 120<br />
+<strong>Output:</strong> 21</p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>-2^31 &lt;= x &lt;= 2^31 - 1</code></li>
+</ul>
+<h2 id="思路-16"><a class="header" href="#思路-16">思路</a></h2>
+<p>x = -1230</p>
+<p>第一次循环：pop = 0, x = -123, reversed = 0</p>
+<p>第二次循环：pop = 3, x = -12, reversed = 3</p>
+<p>第三次循环：pop = 2, x = -1, reversed = 32</p>
+<p>第四次循环：pop = -1, x = 0, reversed = -321</p>
+<p><strong>Complexity Analysis</strong></p>
+<ul>
+<li>Time Complexity: O(log(x)). There are roughly log10​(x) digits in x.</li>
+<li>Space Complexity: O(1).</li>
+</ul>
+<h2 id="c解法-6"><a class="header" href="#c解法-6">C++解法</a></h2>
+<pre><code class="language-cpp">#include &lt;string&gt;  // 引入string库  
+#include &lt;limits&gt;  // 引入limits库以处理溢出  
+
+class Solution {  
+public:  
+    int reverse(int x) {  
+        long long reversed = 0;  // 使用long long以避免溢出  
+        while (x != 0) {  
+            // 取出最后一位  
+            int pop = x % 10;  
+            x /= 10;  // 删除最后一位  
+            
+            // 加入到反转结果中  
+            reversed = reversed * 10 + pop;  
+            
+            // 检查是否可能发生溢出  
+            if (reversed &gt; std::numeric_limits&lt;int&gt;::max() || reversed &lt; std::numeric_limits&lt;int&gt;::min()) {  
+                return 0;  // 溢出时返回0  
+            }  
+        }  
+        return static_cast&lt;int&gt;(reversed);  // 转换为int并返回  
+    }  
+};
+</code></pre>
+<pre><code class="language-cpp">class Solution {
+public:
+    int reverse(int x) {
+        int rev = 0;
+        while (x != 0) {
+            int pop = x % 10;
+            x /= 10;
+            if (rev &gt; INT_MAX / 10 || (rev == INT_MAX / 10 &amp;&amp; pop &gt; 7))
+                return 0;
+            if (rev &lt; INT_MIN / 10 || (rev == INT_MIN / 10 &amp;&amp; pop &lt; -8))
+                return 0;
+            rev = rev * 10 + pop;
+        }
+        return rev;
+    }
+};
+</code></pre>
+<h2 id="java解法-5"><a class="header" href="#java解法-5">Java解法</a></h2>
+<pre><code class="language-java">class Solution {
+    public int reverse(int x) {
+        int rev = 0;
+        while (x != 0) {
+            int pop = x % 10;
+            x /= 10;
+            if (
+                rev &gt; Integer.MAX_VALUE / 10 ||
+                (rev == Integer.MAX_VALUE / 10 &amp;&amp; pop &gt; 7)
+            ) return 0;
+            if (
+                rev &lt; Integer.MIN_VALUE / 10 ||
+                (rev == Integer.MIN_VALUE / 10 &amp;&amp; pop &lt; -8)
+            ) return 0;
+            rev = rev * 10 + pop;
+        }
+        return rev;
+    }
+}
+</code></pre>
+<p>To explain, lets assume that rev is positive.</p>
+<ol>
+<li>If <code>temp=rev⋅10+pop</code> causes overflow, then it must be that <code>rev≥INTMAX/10</code>​</li>
+<li>If <code>rev&gt;INTMAX/10</code>​, then temp=rev⋅10+pop is guaranteed to overflow.</li>
+<li>If <code>rev==INTMAX/10</code>​, then <code>temp=rev⋅10+pop</code> will overflow if and only if pop&gt;7</li>
+</ol>
+<p>I think both two conditions are unneccessary<br />
+<code>|| (rev == INT_MAX / 10 &amp;&amp; pop &gt; 7)</code><br />
+<code>|| (rev == INT_MAX / 10 &amp;&amp; pop &gt; 7)</code><br />
+because when <code>rev == INTMAX/10</code>, pop then will be 0, 1, or 2 because the input is int.</p>
+<h2 id="python3解法-4"><a class="header" href="#python3解法-4">Python3解法</a></h2>
+<pre><code class="language-python">class Solution:
+    def reverse(self, x: int) -&gt; int:
+        sign = [1, -1][x &lt; 0]
+        rev, x = 0, abs(x)
+        while x:
+            x, mod = divmod(x, 10)
+            rev = rev * 10 + mod
+            if rev &gt; 2**31 - 1:
+                return 0
+        return sign * rev
+</code></pre>
+<h1 id="9-palindrome-number"><a class="header" href="#9-palindrome-number"><a href="https://leetcode.com/problems/palindrome-number/">9. Palindrome Number</a></a></h1>
+<p>Given an integer <code>x</code>, return <code>true</code> <em>if</em> <code>x</code> <em>is a</em> <em><strong>palindrome</strong>__, and</em> <code>false</code> <em>otherwise</em>.</p>
+<p><strong>Example 1:</strong></p>
+<p><strong>Input:</strong> x = 121<br />
+<strong>Output:</strong> true<br />
+<strong>Explanation:</strong> 121 reads as 121 from left to right and from right to left.</p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> x = -121<br />
+<strong>Output:</strong> false<br />
+<strong>Explanation:</strong> From left to right, it reads -121. From right to left, it becomes 121-. Therefore it is not a palindrome.</p>
+<p><strong>Example 3:</strong></p>
+<p><strong>Input:</strong> x = 10<br />
+<strong>Output:</strong> false<br />
+<strong>Explanation:</strong> Reads 01 from right to left. Therefore it is not a palindrome.</p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>-2^31 &lt;= x &lt;= 2^31 - 1</code></li>
+</ul>
+<p><strong>Follow up:</strong> Could you solve it without converting the integer to a string?</p>
+<h2 id="思路-17"><a class="header" href="#思路-17">思路</a></h2>
+<p>方法一：判断是否为负数，如果是负数则返回false，如果不是负数就把参数反转一下比较</p>
+<p>Beware of overflow when you reverse the integer.</p>
+<p>方法二：转为字符串，然后调用反转函数比较</p>
+<h2 id="c解法-7"><a class="header" href="#c解法-7">C++解法</a></h2>
+<pre><code class="language-cpp">class Solution {
+public:
+    bool isPalindrome(int x) {
+        if(x &lt; 0) return false;
+        return reverse(x) == x;
+    }
+    int reverse(int x) {
+        int rev = 0;
+        while (x != 0) {
+            int pop = x % 10;
+            x /= 10;
+            if (rev &gt; INT_MAX / 10 || (rev == INT_MAX / 10 &amp;&amp; pop &gt; 7))
+                return 0;
+            if (rev &lt; INT_MIN / 10 || (rev == INT_MIN / 10 &amp;&amp; pop &lt; -8))
+                return 0;
+            rev = rev * 10 + pop;
+        }
+        return rev;
+    }
+};
+</code></pre>
+<p>测试用例为<code>1234567899</code>时，使用下面代码会报错<code>terminate called after throwing an instance of 'std::out_of_range'</code></p>
+<pre><code class="language-cpp">class Solution {
+public:
+    bool isPalindrome(int x) {
+        if(x &lt; 0) return false;
+        string s = to_string(x);
+        reverse(s.begin(), s.end());
+        return  stoi(s) == x;
+    }
+};
+</code></pre>
+<p>直接使用<code>stoi</code>函数会导致溢出，因为<code>stoi</code>函数会把字符串转换为整数，而字符串的长度是有限的，所以会导致溢出。</p>
+<pre><code class="language-cpp">#include &lt;string&gt;  
+#include &lt;algorithm&gt;  
+
+class Solution {  
+public:  
+    bool isPalindrome(int x) {  
+        if (x &lt; 0) return false; // 负数不是回文  
+        string s = to_string(x); // 转换为字符串  
+        string reversed_s = s; // 复制字符串  
+        reverse(reversed_s.begin(), reversed_s.end()); // 反转字符串  
+        return s == reversed_s; // 直接比较反转前后的字符串  
+    }  
+};
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
 <h1 id="链表"><a class="header" href="#链表">链表</a></h1>
 <ul>
 <li><a href="%E9%93%BE%E8%A1%A8/%E9%93%BE%E8%A1%A8.html#%E5%85%B3%E4%BA%8E%E9%93%BE%E8%A1%A8%E4%BD%A0%E8%AF%A5%E4%BA%86%E8%A7%A3%E8%BF%99%E4%BA%9B">关于链表，你该了解这些！</a>
@@ -2396,7 +2599,7 @@ myLinkedList.get(1);              // return 3
 <li>Please do not use the built-in LinkedList library.</li>
 <li>At most <code>2000</code> calls will be made to <code>get</code>, <code>addAtHead</code>, <code>addAtTail</code>, <code>addAtIndex</code> and <code>deleteAtIndex</code>.</li>
 </ul>
-<h2 id="思路-16"><a class="header" href="#思路-16">思路</a></h2>
+<h2 id="思路-18"><a class="header" href="#思路-18">思路</a></h2>
 <p>这道题目设计链表的五个接口：</p>
 <ul>
 <li>获取链表第index个节点的数值</li>
@@ -2413,7 +2616,7 @@ myLinkedList.get(1);              // return 3
 </ol>
 <p>下面采用的设置一个虚拟头结点（这样更方便一些，大家看代码就会感受出来）。</p>
 <p>需要处理头结点时就要设置虚拟头节点。</p>
-<h2 id="c解法-6"><a class="header" href="#c解法-6">C++解法</a></h2>
+<h2 id="c解法-8"><a class="header" href="#c解法-8">C++解法</a></h2>
 <pre><code class="language-cpp">class MyLinkedList {
 public:
     // 定义链表节点结构体
@@ -2513,8 +2716,8 @@ private:
 
 };
 </code></pre>
-<h2 id="java解法-5"><a class="header" href="#java解法-5">Java解法</a></h2>
-<h2 id="python3解法-4"><a class="header" href="#python3解法-4">Python3解法</a></h2>
+<h2 id="java解法-6"><a class="header" href="#java解法-6">Java解法</a></h2>
+<h2 id="python3解法-5"><a class="header" href="#python3解法-5">Python3解法</a></h2>
 <h1 id="876-middle-of-the-linked-list"><a class="header" href="#876-middle-of-the-linked-list"><a href="https://leetcode.com/problems/middle-of-the-linked-list/">876. Middle of the Linked List</a></a></h1>
 <p>Given the <code>head</code> of a singly linked list, return <em>the middle node of the linked list</em>.</p>
 <p>If there are two middle nodes, return <strong>the second middle</strong> node.</p>
@@ -2533,9 +2736,9 @@ private:
 <li>The number of nodes in the list is in the range <code>[1, 100]</code>.</li>
 <li><code>1 &lt;= Node.val &lt;= 100</code></li>
 </ul>
-<h2 id="思路-17"><a class="header" href="#思路-17">思路</a></h2>
+<h2 id="思路-19"><a class="header" href="#思路-19">思路</a></h2>
 <p>双指针，快慢指针</p>
-<h2 id="c解法-7"><a class="header" href="#c解法-7">C++解法</a></h2>
+<h2 id="c解法-9"><a class="header" href="#c解法-9">C++解法</a></h2>
 <pre><code class="language-cpp">/**
  * Definition for singly-linked list.
  * struct ListNode {
@@ -2645,7 +2848,7 @@ public:
 <li><code>1 &lt;= n &lt;= sz</code></li>
 </ul>
 <p><strong>Follow up:</strong> Could you do this in one pass?</p>
-<h2 id="思路-18"><a class="header" href="#思路-18">思路</a></h2>
+<h2 id="思路-20"><a class="header" href="#思路-20">思路</a></h2>
 <p>快慢指针求解，因为要删除<code>slow-&gt;next</code>，所以<code>slow</code>指针要慢一步。</p>
 <p>Maintain two pointers and update one with a delay of n steps.</p>
 <p>Complexity</p>
@@ -2653,7 +2856,7 @@ public:
 <li>Time complexity: O(n)</li>
 <li>Space complexity: O(1)</li>
 </ul>
-<h2 id="c解法-8"><a class="header" href="#c解法-8">C++解法</a></h2>
+<h2 id="c解法-10"><a class="header" href="#c解法-10">C++解法</a></h2>
 <pre><code class="language-cpp">/**
  * Definition for singly-linked list.
  * struct ListNode {
@@ -2683,7 +2886,7 @@ public:
     }
 };
 </code></pre>
-<h2 id="java解法-6"><a class="header" href="#java解法-6">Java解法</a></h2>
+<h2 id="java解法-7"><a class="header" href="#java解法-7">Java解法</a></h2>
 <pre><code class="language-java">class Solution {
     public ListNode removeNthFromEnd(ListNode head, int n) {
         ListNode fast = head, slow = head;
@@ -2698,7 +2901,7 @@ public:
     }
 }
 </code></pre>
-<h2 id="python3解法-5"><a class="header" href="#python3解法-5">Python3解法</a></h2>
+<h2 id="python3解法-6"><a class="header" href="#python3解法-6">Python3解法</a></h2>
 <pre><code class="language-python">class Solution:
     def removeNthFromEnd(self, head: ListNode, n: int) -&gt; ListNode:
         fast, slow = head, head
@@ -2727,13 +2930,13 @@ public:
 <li><code>1 &lt;= Node.val &lt;= 50</code></li>
 <li><code>0 &lt;= val &lt;= 50</code></li>
 </ul>
-<h2 id="思路-19"><a class="header" href="#思路-19">思路</a></h2>
+<h2 id="思路-21"><a class="header" href="#思路-21">思路</a></h2>
 <ol>
 <li>单独处理头节点</li>
 <li>使用虚拟头节点</li>
 </ol>
 <p>推荐使用虚拟头节点。</p>
-<h2 id="c解法-9"><a class="header" href="#c解法-9">C++解法</a></h2>
+<h2 id="c解法-11"><a class="header" href="#c解法-11">C++解法</a></h2>
 <pre><code class="language-cpp">/**
  * Definition for singly-linked list.
  * struct ListNode {
@@ -2763,7 +2966,7 @@ public:
     }
 };
 </code></pre>
-<h2 id="java解法-7"><a class="header" href="#java解法-7">Java解法</a></h2>
+<h2 id="java解法-8"><a class="header" href="#java解法-8">Java解法</a></h2>
 <pre><code class="language-java">/**
  * Definition for singly-linked list.
  * public class ListNode {
@@ -2790,7 +2993,7 @@ class Solution {
     }
 }
 </code></pre>
-<h2 id="python3解法-6"><a class="header" href="#python3解法-6">Python3解法</a></h2>
+<h2 id="python3解法-7"><a class="header" href="#python3解法-7">Python3解法</a></h2>
 <pre><code class="language-python"># Definition for singly-linked list.
 # class ListNode:
 #     def __init__(self, val=0, next=None):
@@ -2868,7 +3071,7 @@ func removeElements(head *ListNode, val int) *ListNode {
 <li>The value of each node in the list is <strong>unique</strong>.</li>
 <li>The <code>node</code> to be deleted is <strong>in the list</strong> and is <strong>not a tail</strong> node.</li>
 </ul>
-<h2 id="思路-20"><a class="header" href="#思路-20">思路</a></h2>
+<h2 id="思路-22"><a class="header" href="#思路-22">思路</a></h2>
 <p>Approach: Data Overwriting</p>
 <p><strong>Note:</strong> This method will not work if we need to delete the last node of the linked list since there is no immediate successor. However, the problem description explicitly states that the node to be deleted is not the tail node in the list.</p>
 <p>Algorithm</p>
@@ -2892,7 +3095,7 @@ func removeElements(head *ListNode, val int) *ListNode {
 </ul>
 </li>
 </ul>
-<h2 id="c解法-10"><a class="header" href="#c解法-10">C++解法</a></h2>
+<h2 id="c解法-12"><a class="header" href="#c解法-12">C++解法</a></h2>
 <pre><code class="language-cpp">/**
  * Definition for singly-linked list.  //单链表的定义
  * struct ListNode {
@@ -2911,7 +3114,7 @@ public:
     }
 };
 </code></pre>
-<h2 id="java解法-8"><a class="header" href="#java解法-8">Java解法</a></h2>
+<h2 id="java解法-9"><a class="header" href="#java解法-9">Java解法</a></h2>
 <pre><code class="language-java">/**
  * Definition for singly-linked list.
  * public class ListNode {
@@ -2930,7 +3133,7 @@ class Solution {
     }
 }
 </code></pre>
-<h2 id="python3解法-7"><a class="header" href="#python3解法-7">Python3解法</a></h2>
+<h2 id="python3解法-8"><a class="header" href="#python3解法-8">Python3解法</a></h2>
 <pre><code class="language-python"># Definition for singly-linked list.
 # class ListNode:
 #     def __init__(self, x):
@@ -2984,14 +3187,14 @@ Node 0 with value 2 is the only node remaining after removing node 1.</p>
 <li>The number of nodes in the list is in the range <code>[1, 10^5]</code>.</li>
 <li><code>1 &lt;= Node.val &lt;= 10^5</code></li>
 </ul>
-<h2 id="思路-21"><a class="header" href="#思路-21">思路</a></h2>
+<h2 id="思路-23"><a class="header" href="#思路-23">思路</a></h2>
 <p>普通解法：求长度的一半然后遍历到这里并删除该节点，需要考虑只有一个节点的情况</p>
 <p>双指针解法：快指针比慢指针的速度快一倍，快指针到头说明慢指针到达了一半的位置，跳过该节点即可。Complexity 👈</p>
 <ul>
 <li>Time complexity: O(n)</li>
 <li>Space complexity: O(1)</li>
 </ul>
-<h2 id="c解法-11"><a class="header" href="#c解法-11">C++解法</a></h2>
+<h2 id="c解法-13"><a class="header" href="#c解法-13">C++解法</a></h2>
 <p>双指针解法：</p>
 <pre><code class="language-cpp">/**
  * Definition for singly-linked list.
@@ -3059,7 +3262,7 @@ public:
     }
 };
 </code></pre>
-<h2 id="java解法-9"><a class="header" href="#java解法-9">Java解法</a></h2>
+<h2 id="java解法-10"><a class="header" href="#java解法-10">Java解法</a></h2>
 <pre><code class="language-java">/**
  * Definition for singly-linked list.
  * public class ListNode {
@@ -3133,7 +3336,7 @@ class Solution(object):
 <li>The number of the nodes in the given list is in the range <code>[1, 10^5]</code>.</li>
 <li><code>1 &lt;= Node.val &lt;= 10^5</code></li>
 </ul>
-<h2 id="思路-22"><a class="header" href="#思路-22">思路</a></h2>
+<h2 id="思路-24"><a class="header" href="#思路-24">思路</a></h2>
 <p><a href="https://leetcode.com/problems/remove-nodes-from-linked-list/solutions/5073124/remove-nodes-from-linked-list/">题解链接</a></p>
 <p>Iterate on nodes in reversed order.</p>
 <p>When iterating in reversed order, save the maximum value that was passed before.</p>
@@ -3339,7 +3542,7 @@ class Solution(object):
 <p>We use a few variables and pointers that use constant extra space. Since we don't use any data structures that grow with input size, the space complexity remains O(1).</p>
 </li>
 </ul>
-<h2 id="c解法-12"><a class="header" href="#c解法-12">C++解法</a></h2>
+<h2 id="c解法-14"><a class="header" href="#c解法-14">C++解法</a></h2>
 <p>Approach 3: Reverse Twice</p>
 <pre><code class="language-cpp">class Solution {
 private:
@@ -3475,7 +3678,7 @@ public:
     }
 };
 </code></pre>
-<h2 id="java解法-10"><a class="header" href="#java解法-10">Java解法</a></h2>
+<h2 id="java解法-11"><a class="header" href="#java解法-11">Java解法</a></h2>
 <p>Approach 2: Recursion</p>
 <pre><code class="language-java">/**
  * Definition for singly-linked list.
@@ -3509,7 +3712,7 @@ public:
     }
 }
 </code></pre>
-<h2 id="python3解法-8"><a class="header" href="#python3解法-8">Python3解法</a></h2>
+<h2 id="python3解法-9"><a class="header" href="#python3解法-9">Python3解法</a></h2>
 <p>Approach 1: Stack</p>
 <pre><code class="language-python"># Definition for singly-linked list.
 # class ListNode:
@@ -3576,11 +3779,11 @@ class Solution:
 <li><code>1 &lt;= Node.val &lt;= 10^5</code></li>
 <li>The input is generated such that there is at least one node in the linked list that has a value not present in <code>nums</code>.</li>
 </ul>
-<h2 id="思路-23"><a class="header" href="#思路-23">思路</a></h2>
+<h2 id="思路-25"><a class="header" href="#思路-25">思路</a></h2>
 <p>方法一：迭代处理数组中的元素，然后调用<code>removeElements()</code>函数，这种方法会超时。</p>
 <p>方法二：哈希数组，遍历一遍链表</p>
 <p>不要删除指针，否则容易出现悬挂指针问题，具体报错信息为<code>ERROR: AddressSanitizer: heap-use-after-free on address</code></p>
-<h2 id="c解法-13"><a class="header" href="#c解法-13">C++解法</a></h2>
+<h2 id="c解法-15"><a class="header" href="#c解法-15">C++解法</a></h2>
 <pre><code class="language-cpp">/**
  * Definition for singly-linked list.
  * struct ListNode {
@@ -3665,7 +3868,7 @@ public:
 <li><code>-5000 &lt;= Node.val &lt;= 5000</code></li>
 </ul>
 <p><strong>Follow up:</strong> A linked list can be reversed either iteratively or recursively. Could you implement both?</p>
-<h2 id="思路-24"><a class="header" href="#思路-24">思路</a></h2>
+<h2 id="思路-26"><a class="header" href="#思路-26">思路</a></h2>
 <p>双指针</p>
 <p>迭代</p>
 <p>递归</p>
@@ -3770,7 +3973,7 @@ Output: [5]</p>
 <li>1 &lt;= left &lt;= right &lt;= n</li>
 </ul>
 <p>Follow up: Could you do it in one pass?</p>
-<h2 id="思路-25"><a class="header" href="#思路-25">思路</a></h2>
+<h2 id="思路-27"><a class="header" href="#思路-27">思路</a></h2>
 <p>链表的操作问题，一般而言面试（机试）的时候不允许我们修改节点的值，而只能修改节点的指向操作。</p>
 <p>思路通常都不难，写对链表问题的技巧是：一定要先想清楚思路，并且必要的时候在草稿纸上画图，理清「穿针引线」的先后步骤，然后再编码。</p>
 <h3 id="方法一穿针引线"><a class="header" href="#方法一穿针引线">方法一：穿针引线</a></h3>
@@ -3979,9 +4182,9 @@ class Solution {
 <li><code>pos</code> is <code>-1</code> or a <strong>valid index</strong> in the linked-list.</li>
 </ul>
 <p><strong>Follow up:</strong> Can you solve it using <code>O(1)</code> (i.e. constant) memory?</p>
-<h2 id="思路-26"><a class="header" href="#思路-26">思路</a></h2>
+<h2 id="思路-28"><a class="header" href="#思路-28">思路</a></h2>
 <p>双指针，快指针比慢指针速度快一倍，有环则两者相遇，无环则自动跳出循环</p>
-<h2 id="c解法-14"><a class="header" href="#c解法-14">C++解法</a></h2>
+<h2 id="c解法-16"><a class="header" href="#c解法-16">C++解法</a></h2>
 <pre><code class="language-cpp">/**
  * Definition for singly-linked list.
  * struct ListNode {
@@ -4033,11 +4236,11 @@ public:
 <li><code>pos</code> is <code>-1</code> or a <strong>valid index</strong> in the linked-list.</li>
 </ul>
 <p><strong>Follow up:</strong> Can you solve it using <code>O(1)</code> (i.e. constant) memory?</p>
-<h2 id="思路-27"><a class="header" href="#思路-27">思路</a></h2>
+<h2 id="思路-29"><a class="header" href="#思路-29">思路</a></h2>
 <p>快慢指针相遇，相遇后新增一个指针<code>ptr</code>，由于距离关系，slow指针到环入口的距离与头指针相等，<code>ptr</code>和<code>slow</code>相遇处即为环入口。</p>
 <p>Time Complexity: O(N)</p>
 <p>Space Complexity: O(1)</p>
-<h2 id="c解法-15"><a class="header" href="#c解法-15">C++解法</a></h2>
+<h2 id="c解法-17"><a class="header" href="#c解法-17">C++解法</a></h2>
 <pre><code class="language-cpp">/**
  * Definition for singly-linked list.
  * struct ListNode {
@@ -4069,7 +4272,7 @@ public:
     }
 };
 </code></pre>
-<h2 id="java解法-11"><a class="header" href="#java解法-11">Java解法</a></h2>
+<h2 id="java解法-12"><a class="header" href="#java解法-12">Java解法</a></h2>
 <pre><code class="language-java">public class Solution {
     public ListNode detectCycle(ListNode head) {
         ListNode slow = head, fast = head;
@@ -4138,14 +4341,14 @@ public:
 <li>The number of nodes in the list is in the range <code>[0, 100]</code>.</li>
 <li><code>0 &lt;= Node.val &lt;= 100</code></li>
 </ul>
-<h2 id="思路-28"><a class="header" href="#思路-28">思路</a></h2>
+<h2 id="思路-30"><a class="header" href="#思路-30">思路</a></h2>
 <p>设置虚拟头节点，然后两两交换</p>
 <p>Complexity</p>
 <ul>
 <li>Time complexity: O(n)</li>
 <li>Space complexity: O(1)</li>
 </ul>
-<h2 id="c解法-16"><a class="header" href="#c解法-16">C++解法</a></h2>
+<h2 id="c解法-18"><a class="header" href="#c解法-18">C++解法</a></h2>
 <pre><code class="language-cpp">/**
  * Definition for singly-linked list.
  * struct ListNode {
@@ -4178,7 +4381,7 @@ public:
     }
 };
 </code></pre>
-<h2 id="java解法-12"><a class="header" href="#java解法-12">Java解法</a></h2>
+<h2 id="java解法-13"><a class="header" href="#java解法-13">Java解法</a></h2>
 <pre><code class="language-java">class Solution {
     public ListNode swapPairs(ListNode head) {
         ListNode dummy = new ListNode(0, head);
@@ -4200,7 +4403,7 @@ public:
     }
 }
 </code></pre>
-<h2 id="python3解法-9"><a class="header" href="#python3解法-9">Python3解法</a></h2>
+<h2 id="python3解法-10"><a class="header" href="#python3解法-10">Python3解法</a></h2>
 <pre><code class="language-python">class Solution:
     def swapPairs(self, head: Optional[ListNode]) -&gt; Optional[ListNode]:
         dummy = ListNode(0, head)
@@ -4235,7 +4438,7 @@ public:
 <li><code>1 &lt;= k &lt;= n &lt;= 10^5</code></li>
 <li><code>0 &lt;= Node.val &lt;= 100</code></li>
 </ul>
-<h2 id="思路-29"><a class="header" href="#思路-29">思路</a></h2>
+<h2 id="思路-31"><a class="header" href="#思路-31">思路</a></h2>
 <p>方法一：</p>
 <p>We can traverse the linked list and store the elements in an array.</p>
 <p>Upon conversion to an array, we can swap the required elements by indexing the array.</p>
@@ -4253,7 +4456,7 @@ public:
 <li>Time complexity: O(N)</li>
 <li>Space complexity: O(1)</li>
 </ul>
-<h2 id="c解法-17"><a class="header" href="#c解法-17">C++解法</a></h2>
+<h2 id="c解法-19"><a class="header" href="#c解法-19">C++解法</a></h2>
 <p>方法一：</p>
 <pre><code class="language-cpp">/**
  * Definition for singly-linked list.
@@ -4549,9 +4752,9 @@ public:
 <li><code>s</code> and <code>t</code> consist of lowercase English letters.</li>
 </ul>
 <p><strong>Follow up:</strong> What if the inputs contain Unicode characters? How would you adapt your solution to such a case?</p>
-<h2 id="思路-30"><a class="header" href="#思路-30">思路</a></h2>
+<h2 id="思路-32"><a class="header" href="#思路-32">思路</a></h2>
 <p>先判断两个字符串长度是否相等，然后使用哈希数组存储出现过的字母，一增一减，判断数组中元素是否全为0即可。</p>
-<h2 id="c解法-18"><a class="header" href="#c解法-18">C++解法</a></h2>
+<h2 id="c解法-20"><a class="header" href="#c解法-20">C++解法</a></h2>
 <pre><code class="language-cpp">class Solution {
 public:
     bool isAnagram(string s, string t) {
@@ -4580,7 +4783,7 @@ public:
     }
 };
 </code></pre>
-<h2 id="java解法-13"><a class="header" href="#java解法-13">Java解法</a></h2>
+<h2 id="java解法-14"><a class="header" href="#java解法-14">Java解法</a></h2>
 <p>以下是修改后的代码：</p>
 <pre><code class="language-java">class Solution {
     public boolean isAnagram(String s, String t) {
@@ -4640,10 +4843,10 @@ The substring with start index = 2 is "ab", which is an anagram of "ab".</p>
 <li><code>1 &lt;= s.length, p.length &lt;= 3 * 10^4</code></li>
 <li><code>s</code> and <code>p</code> consist of lowercase English letters.</li>
 </ul>
-<h2 id="思路-31"><a class="header" href="#思路-31">思路</a></h2>
+<h2 id="思路-33"><a class="header" href="#思路-33">思路</a></h2>
 <p>方法一：遍历，截取子字符串，判断是否是anagram。这种方式效率低下。</p>
 <p>方法二：滑动数组</p>
-<h2 id="c解法-19"><a class="header" href="#c解法-19">C++解法</a></h2>
+<h2 id="c解法-21"><a class="header" href="#c解法-21">C++解法</a></h2>
 <p>方法二：滑动数组</p>
 <p>For 2 strings to be anagrams of each other, they should have the same elements with the same frequency.</p>
 <pre><code class="language-cpp">vector&lt;int&gt; findAnagrams(string s, string p) {
@@ -4753,7 +4956,7 @@ if(freq_p == window) ans.push_back(0);
 </ol>
 <p>总结</p>
 <p>这段代码使用了一个滑动窗口的技术，通过维护两个频率数组（一个用于 <code>p</code> 的字符频率，另一个用于 <code>s</code> 中当前窗口的字符频率）来高效地查找字符串 <code>s</code> 中所有 <code>p</code> 的异位词。每次窗口滑动时，只需更新频率数组，而不需要重新计算整个窗口的字符频率，从而提升了效率。整体时间复杂度为 O(n)，其中 n 是字符串 <code>s</code> 的长度。</p>
-<h2 id="java解法-14"><a class="header" href="#java解法-14">Java解法</a></h2>
+<h2 id="java解法-15"><a class="header" href="#java解法-15">Java解法</a></h2>
 <p>方法一：</p>
 <pre><code class="language-java">class Solution {  
     public List&lt;Integer&gt; findAnagrams(String s, String p) {  
@@ -4832,10 +5035,10 @@ We can no longer perform any operations, so ["abba","cd"] is the final answer.
 <li><code>1 &lt;= words[i].length &lt;= 10</code></li>
 <li><code>words[i]</code> consists of lowercase English letters.</li>
 </ul>
-<h2 id="思路-32"><a class="header" href="#思路-32">思路</a></h2>
+<h2 id="思路-34"><a class="header" href="#思路-34">思路</a></h2>
 <p>方法一：设定prev=""，每个新元素都排序后转为字符串，然后和prev比较，不相同则加入结果集中</p>
 <p>方法二：使用栈</p>
-<h2 id="c解法-20"><a class="header" href="#c解法-20">C++解法</a></h2>
+<h2 id="c解法-22"><a class="header" href="#c解法-22">C++解法</a></h2>
 <pre><code class="language-cpp">class Solution {
 public:
     vector&lt;string&gt; removeAnagrams(vector&lt;string&gt;&amp; words) {
@@ -4853,7 +5056,7 @@ public:
     }
 };
 </code></pre>
-<h2 id="java解法-15"><a class="header" href="#java解法-15">Java解法</a></h2>
+<h2 id="java解法-16"><a class="header" href="#java解法-16">Java解法</a></h2>
 <p>方法一完整测试代码：</p>
 <pre><code class="language-java">import java.util.*;
 
@@ -4932,9 +5135,9 @@ public class Main {
 <li>All the numbers of <code>nums</code> are <strong>unique</strong>.</li>
 </ul>
 <p><strong>Follow up:</strong> Could you implement a solution using only <code>O(1)</code> extra space complexity and <code>O(n)</code> runtime complexity?</p>
-<h2 id="思路-33"><a class="header" href="#思路-33">思路</a></h2>
+<h2 id="思路-35"><a class="header" href="#思路-35">思路</a></h2>
 <p>用哈希数组判断数字是否出现过</p>
-<h2 id="c解法-21"><a class="header" href="#c解法-21">C++解法</a></h2>
+<h2 id="c解法-23"><a class="header" href="#c解法-23">C++解法</a></h2>
 <pre><code class="language-cpp">class Solution {
 public:
     int missingNumber(vector&lt;int&gt;&amp; nums) {
@@ -4980,9 +5183,9 @@ public:
 <li>How can we prove that at least one duplicate number must exist in <code>nums</code>?</li>
 <li>Can you solve the problem in linear runtime complexity?</li>
 </ul>
-<h2 id="思路-34"><a class="header" href="#思路-34">思路</a></h2>
+<h2 id="思路-36"><a class="header" href="#思路-36">思路</a></h2>
 <p>设置一个哈希数组，遍历<code>nums</code>数组，设置哈希数组，如果某个数的频率大于1，则直接结束循环</p>
-<h2 id="c解法-22"><a class="header" href="#c解法-22">C++解法</a></h2>
+<h2 id="c解法-24"><a class="header" href="#c解法-24">C++解法</a></h2>
 <pre><code class="language-cpp">class Solution {
 public:
     int findDuplicate(vector&lt;int&gt;&amp; nums) {
@@ -5011,10 +5214,10 @@ public:
 <li><code>1 &lt;= nums1.length, nums2.length &lt;= 1000</code></li>
 <li><code>0 &lt;= nums1[i], nums2[i] &lt;= 1000</code></li>
 </ul>
-<h2 id="思路-35"><a class="header" href="#思路-35">思路</a></h2>
+<h2 id="思路-37"><a class="header" href="#思路-37">思路</a></h2>
 <p>方法一：因为<code>0 &lt;= nums1[i], nums2[i] &lt;= 1000</code>，所以这里可以使用哈希数组</p>
 <p>方法二：使用Hashset判断元素是否出现并去重</p>
-<h2 id="c解法-23"><a class="header" href="#c解法-23">C++解法</a></h2>
+<h2 id="c解法-25"><a class="header" href="#c解法-25">C++解法</a></h2>
 <p>方法一：</p>
 <pre><code class="language-cpp">class Solution {
 public:
@@ -5057,7 +5260,7 @@ public:
 <li>时间复杂度: O(n + m) m 是最后要把 set转成vector</li>
 <li>空间复杂度: O(n)</li>
 </ul>
-<h2 id="java解法-16"><a class="header" href="#java解法-16">Java解法</a></h2>
+<h2 id="java解法-17"><a class="header" href="#java解法-17">Java解法</a></h2>
 <p>方法二：</p>
 <pre><code class="language-java">import java.util.*;
 
@@ -5164,9 +5367,9 @@ impl Solution {
 <li>What if <code>nums1</code>'s size is small compared to <code>nums2</code>'s size? Which algorithm is better?</li>
 <li>What if elements of <code>nums2</code> are stored on disk, and the memory is limited such that you cannot load all elements into the memory at once?</li>
 </ul>
-<h2 id="思路-36"><a class="header" href="#思路-36">思路</a></h2>
+<h2 id="思路-38"><a class="header" href="#思路-38">思路</a></h2>
 <p>因为<code>0 &lt;= nums1[i], nums2[i] &lt;= 1000</code>，所以这里可以使用哈希数组。对于每一个共同元素，计算其次数然后向结果中添加相应数量的元素。</p>
-<h2 id="c解法-24"><a class="header" href="#c解法-24">C++解法</a></h2>
+<h2 id="c解法-26"><a class="header" href="#c解法-26">C++解法</a></h2>
 <pre><code class="language-cpp">class Solution {
 public:
     vector&lt;int&gt; intersect(vector&lt;int&gt;&amp; nums1, vector&lt;int&gt;&amp; nums2) {
@@ -5208,9 +5411,9 @@ public:
 <li><code>1 &lt;= ransomNote.length, magazine.length &lt;= 10^5</code></li>
 <li><code>ransomNote</code> and <code>magazine</code> consist of lowercase English letters.</li>
 </ul>
-<h2 id="思路-37"><a class="header" href="#思路-37">思路</a></h2>
+<h2 id="思路-39"><a class="header" href="#思路-39">思路</a></h2>
 <p>使用哈希数组存储可用的数字，使用magazine字符串存储字符，使用ransomNote字符串消耗字符，不够消耗时，返回false。否则返回true。</p>
-<h2 id="c解法-25"><a class="header" href="#c解法-25">C++解法</a></h2>
+<h2 id="c解法-27"><a class="header" href="#c解法-27">C++解法</a></h2>
 <pre><code class="language-cpp">class Solution {
 public:
     bool canConstruct(string ransomNote, string magazine) {
@@ -5239,7 +5442,7 @@ public:
 <li>时间复杂度: O(n)</li>
 <li>空间复杂度: O(1)</li>
 </ul>
-<h2 id="java解法-17"><a class="header" href="#java解法-17">Java解法</a></h2>
+<h2 id="java解法-18"><a class="header" href="#java解法-18">Java解法</a></h2>
 <pre><code class="language-java">class Solution {
     public boolean canConstruct(String ransomNote, String magazine) {
         // shortcut
@@ -5295,9 +5498,9 @@ Every integer in nums2 is present in nums1. Therefore, answer[1] = [].
 <li><code>1 &lt;= nums1.length, nums2.length &lt;= 1000</code></li>
 <li><code>-1000 &lt;= nums1[i], nums2[i] &lt;= 1000</code></li>
 </ul>
-<h2 id="思路-38"><a class="header" href="#思路-38">思路</a></h2>
+<h2 id="思路-40"><a class="header" href="#思路-40">思路</a></h2>
 <p>注意到<code>-1000 &lt;= nums1[i], nums2[i] &lt;= 1000</code>，这里的哈希数组容量及数值需要调整。然后遍历两个哈希数组，找只在一个哈希数组中出现的元素即可。</p>
-<h2 id="c解法-26"><a class="header" href="#c解法-26">C++解法</a></h2>
+<h2 id="c解法-28"><a class="header" href="#c解法-28">C++解法</a></h2>
 <pre><code class="language-cpp">class Solution {
 public:
     vector&lt;vector&lt;int&gt;&gt; findDifference(vector&lt;int&gt;&amp; nums1, vector&lt;int&gt;&amp; nums2) {
@@ -5344,9 +5547,9 @@ There does not exist any integer present both in nums[0] and nums[1], so we retu
 <li><code>1 &lt;= nums[i][j] &lt;= 1000</code></li>
 <li>All the values of <code>nums[i]</code> are <strong>unique</strong>.</li>
 </ul>
-<h2 id="思路-39"><a class="header" href="#思路-39">思路</a></h2>
+<h2 id="思路-41"><a class="header" href="#思路-41">思路</a></h2>
 <p>用哈希数组保存元素出现次数，向结果中加入出现次数等于二维数组长度的元素</p>
-<h2 id="c解法-27"><a class="header" href="#c解法-27">C++解法</a></h2>
+<h2 id="c解法-29"><a class="header" href="#c解法-29">C++解法</a></h2>
 <pre><code class="language-cpp">class Solution {
 public:
     vector&lt;int&gt; intersection(vector&lt;vector&lt;int&gt;&gt;&amp; nums) {
@@ -5404,10 +5607,10 @@ public:
 <li><code>1 &lt;= nums1.length, nums2.length &lt;= 1000</code></li>
 <li><code>0 &lt;= nums1[i], nums2[i] &lt;= 1000</code></li>
 </ul>
-<h2 id="思路-40"><a class="header" href="#思路-40">思路</a></h2>
+<h2 id="思路-42"><a class="header" href="#思路-42">思路</a></h2>
 <p>方法一：因为<code>0 &lt;= nums1[i], nums2[i] &lt;= 1000</code>，所以这里可以使用哈希数组</p>
 <p>方法二：使用Hashset判断元素是否出现并去重</p>
-<h2 id="c解法-28"><a class="header" href="#c解法-28">C++解法</a></h2>
+<h2 id="c解法-30"><a class="header" href="#c解法-30">C++解法</a></h2>
 <p>方法一：</p>
 <pre><code class="language-cpp">class Solution {
 public:
@@ -5450,7 +5653,7 @@ public:
 <li>时间复杂度: O(n + m) m 是最后要把 set转成vector</li>
 <li>空间复杂度: O(n)</li>
 </ul>
-<h2 id="java解法-18"><a class="header" href="#java解法-18">Java解法</a></h2>
+<h2 id="java解法-19"><a class="header" href="#java解法-19">Java解法</a></h2>
 <p>方法二：</p>
 <pre><code class="language-java">import java.util.*;
 
@@ -5561,7 +5764,7 @@ impl Solution {
 <ul>
 <li><code>1 &lt;= n &lt;= 2^31 - 1</code></li>
 </ul>
-<h2 id="思路-41"><a class="header" href="#思路-41">思路</a></h2>
+<h2 id="思路-43"><a class="header" href="#思路-43">思路</a></h2>
 <p>判断某个元素是否出现过（是否有循环），使用<code>unordered_set</code>数据结构</p>
 <p>这道题目看上去貌似一道数学问题，其实并不是！</p>
 <p>题目中说了会 <strong>无限循环</strong>，那么也就是说<strong>求和的过程中，sum会重复出现，这对解题很重要！</strong></p>
@@ -5569,7 +5772,7 @@ impl Solution {
 <p>所以这道题目使用哈希法，来判断这个sum是否重复出现，如果重复了就是return false， 否则一直找到sum为1为止。</p>
 <p>判断sum是否重复出现就可以使用unordered_set。</p>
 <p><strong>还有一个难点就是求和的过程，如果对取数值各个位上的单数操作不熟悉的话，做这道题也会比较艰难。</strong></p>
-<h2 id="c解法-29"><a class="header" href="#c解法-29">C++解法</a></h2>
+<h2 id="c解法-31"><a class="header" href="#c解法-31">C++解法</a></h2>
 <pre><code class="language-cpp">class Solution {
 public:
     // 取数值各个位上的单数之和
@@ -5603,7 +5806,7 @@ public:
 <li>时间复杂度: O(logn)</li>
 <li>空间复杂度: O(logn)</li>
 </ul>
-<h2 id="java解法-19"><a class="header" href="#java解法-19">Java解法</a></h2>
+<h2 id="java解法-20"><a class="header" href="#java解法-20">Java解法</a></h2>
 <pre><code class="language-java">class Solution {
     public boolean isHappy(int n) {
         Set&lt;Integer&gt; record = new HashSet&lt;&gt;();
@@ -5704,7 +5907,7 @@ public:
 <li><strong>Only one valid answer exists.</strong></li>
 </ul>
 <p><strong>Follow-up:</strong> Can you come up with an algorithm that is less than <code>O(n2)</code> time complexity?</p>
-<h2 id="思路-42"><a class="header" href="#思路-42">思路</a></h2>
+<h2 id="思路-44"><a class="header" href="#思路-44">思路</a></h2>
 <p>使用HashMap</p>
 <p>本题其实有四个重点：</p>
 <ul>
@@ -5714,7 +5917,7 @@ public:
 <li>map中的key和value用来存什么的</li>
 </ul>
 <p>把这四点想清楚了，本题才算是理解透彻了。</p>
-<h2 id="c解法-30"><a class="header" href="#c解法-30">C++解法</a></h2>
+<h2 id="c解法-32"><a class="header" href="#c解法-32">C++解法</a></h2>
 <pre><code class="language-cpp">class Solution {
 public:
     vector&lt;int&gt; twoSum(vector&lt;int&gt;&amp; nums, int target) {
@@ -5736,7 +5939,7 @@ public:
 <li>时间复杂度: O(n)</li>
 <li>空间复杂度: O(n)</li>
 </ul>
-<h2 id="java解法-20"><a class="header" href="#java解法-20">Java解法</a></h2>
+<h2 id="java解法-21"><a class="header" href="#java解法-21">Java解法</a></h2>
 <pre><code class="language-java">class Solution {
     public int[] twoSum(int[] nums, int target) {
         Map&lt;Integer, Integer&gt; numMap = new HashMap&lt;&gt;();
@@ -5777,10 +5980,10 @@ public:
 <li><code>-1000 &lt;= target &lt;= 1000</code></li>
 <li>The tests are generated such that there is <strong>exactly one solution</strong>.</li>
 </ul>
-<h2 id="思路-43"><a class="header" href="#思路-43">思路</a></h2>
+<h2 id="思路-45"><a class="header" href="#思路-45">思路</a></h2>
 <p>方法一：在2Sum基础上修改索引即可，效率低下</p>
 <p>方法二：双指针，左右指针，如果使用二分搜索确保<code>numbers[right]&lt;target</code>程序效率会更高。</p>
-<h2 id="c解法-31"><a class="header" href="#c解法-31">C++解法</a></h2>
+<h2 id="c解法-33"><a class="header" href="#c解法-33">C++解法</a></h2>
 <p>方法一：</p>
 <pre><code class="language-cpp">class Solution {
 public:
@@ -5798,7 +6001,7 @@ public:
     }
 };
 </code></pre>
-<h2 id="java解法-21"><a class="header" href="#java解法-21">Java解法</a></h2>
+<h2 id="java解法-22"><a class="header" href="#java解法-22">Java解法</a></h2>
 <pre><code class="language-java">class Solution {
     public int[] twoSum(int[] numbers, int target) {
         int left = 0;
@@ -5842,7 +6045,7 @@ public:
 <li><code>1 &lt;= n &lt;= 200</code></li>
 <li><code>-228 &lt;= nums1[i], nums2[i], nums3[i], nums4[i] &lt;= 228</code></li>
 </ul>
-<h2 id="思路-44"><a class="header" href="#思路-44">思路</a></h2>
+<h2 id="思路-46"><a class="header" href="#思路-46">思路</a></h2>
 <p>把四个数组变成两个数组，然后仿照2Sum问题找(a+b)和0-(c+d)。分步相乘。</p>
 <p>本题不考虑去重的问题。</p>
 <p>本题其实有四个重点：</p>
@@ -5854,7 +6057,7 @@ public:
 </ul>
 <p>把这四点想清楚了，本题才算是理解透彻了。</p>
 <p>map用来存前两个数组元素之和及频率</p>
-<h2 id="c解法-32"><a class="header" href="#c解法-32">C++解法</a></h2>
+<h2 id="c解法-34"><a class="header" href="#c解法-34">C++解法</a></h2>
 <pre><code class="language-cpp">class Solution {
 public:
     int fourSumCount(vector&lt;int&gt;&amp; nums1, vector&lt;int&gt;&amp; nums2, vector&lt;int&gt;&amp; nums3, vector&lt;int&gt;&amp; nums4) {
@@ -5877,7 +6080,7 @@ public:
     }
 };
 </code></pre>
-<h2 id="java解法-22"><a class="header" href="#java解法-22">Java解法</a></h2>
+<h2 id="java解法-23"><a class="header" href="#java解法-23">Java解法</a></h2>
 <pre><code class="language-java">class Solution {
     public int fourSumCount(int[] nums1, int[] nums2, int[] nums3, int[] nums4) {
         Map&lt;Integer, Integer&gt; map = new HashMap&lt;&gt;();  
@@ -5927,7 +6130,7 @@ Notice that the order of the output and the order of the triplets does not matte
 <li><code>3 &lt;= nums.length &lt;= 3000</code></li>
 <li><code>-10^5 &lt;= nums[i] &lt;= 10^5</code></li>
 </ul>
-<h2 id="思路-45"><a class="header" href="#思路-45">思路</a></h2>
+<h2 id="思路-47"><a class="header" href="#思路-47">思路</a></h2>
 <p>因为结果要去重，这里不方便使用哈希法。</p>
 <p>收获一个结果后再进行去重操作。</p>
 <h3 id="哈希解法"><a class="header" href="#哈希解法">哈希解法</a></h3>
@@ -5994,7 +6197,7 @@ Notice that the order of the output and the order of the triplets does not matte
 <p>如果不能，题意如何更改就可以使用双指针法呢？</p>
 <p>两数之和 就不能使用双指针法，因为1.两数之和要求返回的是索引下标， 而双指针法一定要排序，一旦排序之后原数组的索引就被改变了。</p>
 <p>如果1.两数之和要求返回的是数值的话，就可以使用双指针法了。</p>
-<h2 id="c解法-33"><a class="header" href="#c解法-33">C++解法</a></h2>
+<h2 id="c解法-35"><a class="header" href="#c解法-35">C++解法</a></h2>
 <p>哈希法C++代码:</p>
 <pre><code class="language-cpp">class Solution {
 public:
@@ -6095,7 +6298,7 @@ public:
 <li>时间复杂度: O(n^2)</li>
 <li>空间复杂度: O(1)</li>
 </ul>
-<h2 id="java解法-23"><a class="header" href="#java解法-23">Java解法</a></h2>
+<h2 id="java解法-24"><a class="header" href="#java解法-24">Java解法</a></h2>
 <p>（版本一） 双指针</p>
 <pre><code class="language-java">class Solution {
     public List&lt;List&lt;Integer&gt;&gt; threeSum(int[] nums) {
@@ -6394,7 +6597,7 @@ impl Solution {
 <li><code>-10^9 &lt;= nums[i] &lt;= 10^9</code></li>
 <li><code>-10^9 &lt;= target &lt;= 10^9</code></li>
 </ul>
-<h2 id="思路-46"><a class="header" href="#思路-46">思路</a></h2>
+<h2 id="思路-48"><a class="header" href="#思路-48">思路</a></h2>
 <p>四数之和，和15.三数之和是一个思路，都是使用双指针法, 基本解法就是在15.三数之和的基础上再套一层for循环。</p>
 <p>但是有一些细节需要注意，例如： 不要判断<code>nums[k] &gt; target</code> 就返回了，三数之和 可以通过 <code>nums[i] &gt; 0</code> 就返回了，因为 0 已经是确定的数了，四数之和这道题目 target是任意值。比如：数组是<code>[-4, -3, -2, -1]</code>，<code>target</code>是<code>-10</code>，不能因为<code>-4 &gt; -10</code>而跳过。但是我们依旧可以去做剪枝，逻辑变成<code>nums[i] &gt; target &amp;&amp; (nums[i] &gt;=0 || target &gt;= 0)</code>就可以了。</p>
 <p>15.三数之和的双指针解法是一层for循环<code>num[i]</code>为确定值，然后循环内有left和right下标作为双指针，找到<code>nums[i] + nums[left] + nums[right] == 0</code>。</p>
@@ -6403,7 +6606,7 @@ impl Solution {
 <p>对于15.三数之和双指针法就是将原本暴力O(n^3)的解法，降为O(n^2)的解法，四数之和的双指针解法就是将原本暴力O(n^4)的解法，降为O(n^3)的解法。</p>
 <p>之前我们讲过哈希表的经典题目：454.四数相加II，相对于本题简单很多，因为本题是要求在一个集合中找出四个数相加等于target，同时四元组不能重复。</p>
 <p>而454.四数相加II是四个独立的数组，只要找到<code>A[i] + B[j] + C[k] + D[l] = 0</code>就可以，不用考虑有重复的四个元素相加等于0的情况，所以相对于本题还是简单了不少！</p>
-<h2 id="c解法-34"><a class="header" href="#c解法-34">C++解法</a></h2>
+<h2 id="c解法-36"><a class="header" href="#c解法-36">C++解法</a></h2>
 <pre><code class="language-cpp">class Solution {
 public:
     vector&lt;vector&lt;int&gt;&gt; fourSum(vector&lt;int&gt;&amp; nums, int target) {
@@ -6471,7 +6674,7 @@ public:
 </code></pre>
 <p>因为只要 <code>nums[k] + nums[i] &gt; target</code>，那么 <code>nums[i]</code> 后面的数都是正数的话，就一定不符合条件了。</p>
 <p>不过这种剪枝其实有点小绕，大家能够理解 文章给的完整代码的剪枝就够了。</p>
-<h2 id="java解法-24"><a class="header" href="#java解法-24">Java解法</a></h2>
+<h2 id="java解法-25"><a class="header" href="#java解法-25">Java解法</a></h2>
 <pre><code class="language-java">import java.util.*;
 
 public class Solution {
@@ -6663,7 +6866,7 @@ public class Solution {
 <li><code>0 &lt;= strs[i].length &lt;= 100</code></li>
 <li><code>strs[i]</code> consists of lowercase English letters.</li>
 </ul>
-<h2 id="思路-47"><a class="header" href="#思路-47">思路</a></h2>
+<h2 id="思路-49"><a class="header" href="#思路-49">思路</a></h2>
 <ol>
 <li><strong>头文件引入</strong>：引入必要的标准库，如 <code>&lt;iostream&gt;</code>, <code>&lt;vector&gt;</code>, <code>&lt;unordered_map&gt;</code>, 和 <code>&lt;algorithm&gt;</code>。</li>
 <li><strong>类定义</strong>：定义一个名为 <code>Solution</code> 的类，其中包含 <code>groupAnagrams</code> 方法，接受一个字符串向量并返回一个字符串向量的向量。</li>
@@ -6671,7 +6874,7 @@ public class Solution {
 <li><strong>字符串排序</strong>：利用 <code>std::sort</code> 对字符串进行排序以创建一个唯一的键。</li>
 <li><strong>结果存储</strong>：通过遍历哈希表，将分组的单词存储到结果向量中。</li>
 </ol>
-<h2 id="c解法-35"><a class="header" href="#c解法-35">C++解法</a></h2>
+<h2 id="c解法-37"><a class="header" href="#c解法-37">C++解法</a></h2>
 <pre><code class="language-cpp">#include &lt;iostream&gt;  
 #include &lt;vector&gt;  
 #include &lt;unordered_map&gt;  
@@ -6702,7 +6905,7 @@ public:
     }  
 };
 </code></pre>
-<h2 id="java解法-25"><a class="header" href="#java解法-25">Java解法</a></h2>
+<h2 id="java解法-26"><a class="header" href="#java解法-26">Java解法</a></h2>
 <pre><code class="language-java">class Solution {
     public List&lt;List&lt;String&gt;&gt; groupAnagrams(String[] strs) {
         Map&lt;String, List&lt;String&gt;&gt; map = new HashMap&lt;String, List&lt;String&gt;&gt;();
@@ -6753,30 +6956,30 @@ for (int i = 0; i &lt; a.size(); i++) {
 <p>其实在基本操作上没有区别，但是 string提供更多的字符串处理的相关接口，例如string 重载了+，而vector却没有。</p>
 <p>所以想处理字符串，我们还是会定义一个string类型。</p>
 <h2 id="要不要使用库函数"><a class="header" href="#要不要使用库函数">要不要使用库函数</a></h2>
-<p>在文章<a href="https://programmercarl.com/0344.%E5%8F%8D%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2.html">344.反转字符串 (opens new window)</a>中强调了<strong>打基础的时候，不要太迷恋于库函数。</strong></p>
+<p>在文章<a href="https://programmercarl.com/0344.%E5%8F%8D%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2.html">344.反转字符串</a>中强调了<strong>打基础的时候，不要太迷恋于库函数。</strong></p>
 <p>甚至一些同学习惯于调用substr，split，reverse之类的库函数，却不知道其实现原理，也不知道其时间复杂度，这样实现出来的代码，如果在面试现场，面试官问：“分析其时间复杂度”的话，一定会一脸懵逼！</p>
 <p>所以建议<strong>如果题目关键的部分直接用库函数就可以解决，建议不要使用库函数。</strong></p>
 <p><strong>如果库函数仅仅是 解题过程中的一小部分，并且你已经很清楚这个库函数的内部实现原理的话，可以考虑使用库函数。</strong></p>
 <h2 id="双指针法"><a class="header" href="#双指针法">双指针法</a></h2>
-<p>在<a href="https://programmercarl.com/0344.%E5%8F%8D%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2.html">344.反转字符串 (opens new window)</a>，我们使用双指针法实现了反转字符串的操作，<strong>双指针法在数组，链表和字符串中很常用。</strong></p>
-<p>接着在<a href="https://programmercarl.com/%E5%89%91%E6%8C%87Offer05.%E6%9B%BF%E6%8D%A2%E7%A9%BA%E6%A0%BC.html">字符串：替换空格 (opens new window)</a>，同样还是使用双指针法在时间复杂度O(n)的情况下完成替换空格。</p>
+<p>在<a href="https://programmercarl.com/0344.%E5%8F%8D%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2.html">344.反转字符串</a>，我们使用双指针法实现了反转字符串的操作，<strong>双指针法在数组，链表和字符串中很常用。</strong></p>
+<p>接着在<a href="https://programmercarl.com/%E5%89%91%E6%8C%87Offer05.%E6%9B%BF%E6%8D%A2%E7%A9%BA%E6%A0%BC.html">字符串：替换空格</a>，同样还是使用双指针法在时间复杂度O(n)的情况下完成替换空格。</p>
 <p><strong>其实很多数组填充类的问题，都可以先预先给数组扩容带填充后的大小，然后在从后向前进行操作。</strong></p>
-<p>那么针对数组删除操作的问题，其实在<a href="https://programmercarl.com/0027.%E7%A7%BB%E9%99%A4%E5%85%83%E7%B4%A0.html">27. 移除元素 (opens new window)</a>中就已经提到了使用双指针法进行移除操作。</p>
-<p>同样的道理在<a href="https://programmercarl.com/0151.%E7%BF%BB%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2%E9%87%8C%E7%9A%84%E5%8D%95%E8%AF%8D.html">151.翻转字符串里的单词 (opens new window)</a>中我们使用O(n)的时间复杂度，完成了删除冗余空格。</p>
+<p>那么针对数组删除操作的问题，其实在<a href="https://programmercarl.com/0027.%E7%A7%BB%E9%99%A4%E5%85%83%E7%B4%A0.html">27. 移除元素</a>中就已经提到了使用双指针法进行移除操作。</p>
+<p>同样的道理在<a href="https://programmercarl.com/0151.%E7%BF%BB%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2%E9%87%8C%E7%9A%84%E5%8D%95%E8%AF%8D.html">151.翻转字符串里的单词</a>中我们使用O(n)的时间复杂度，完成了删除冗余空格。</p>
 <p>一些同学会使用for循环里调用库函数erase来移除元素，这其实是O(n^2)的操作，因为erase就是O(n)的操作，所以这也是典型的不知道库函数的时间复杂度，上来就用的案例了。</p>
 <h2 id="反转系列"><a class="header" href="#反转系列">反转系列</a></h2>
 <p>在反转上还可以在加一些玩法，其实考察的是对代码的掌控能力。</p>
-<p><a href="https://programmercarl.com/0541.%E5%8F%8D%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2II.html">541. 反转字符串II (opens new window)</a>中，一些同学可能为了处理逻辑：每隔2k个字符的前k的字符，写了一堆逻辑代码或者再搞一个计数器，来统计2k，再统计前k个字符。</p>
+<p><a href="https://programmercarl.com/0541.%E5%8F%8D%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2II.html">541. 反转字符串II</a>中，一些同学可能为了处理逻辑：每隔2k个字符的前k的字符，写了一堆逻辑代码或者再搞一个计数器，来统计2k，再统计前k个字符。</p>
 <p>其实<strong>当需要固定规律一段一段去处理字符串的时候，要想想在在for循环的表达式上做做文章</strong>。</p>
 <p>只要让 i += (2 * k)，i 每次移动 2 * k 就可以了，然后判断是否需要有反转的区间。</p>
 <p>因为要找的也就是每2 * k 区间的起点，这样写程序会高效很多。</p>
-<p>在<a href="https://programmercarl.com/0151.%E7%BF%BB%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2%E9%87%8C%E7%9A%84%E5%8D%95%E8%AF%8D.html">151.翻转字符串里的单词 (opens new window)</a>中要求翻转字符串里的单词，这道题目可以说是综合考察了字符串的多种操作。是考察字符串的好题。</p>
+<p>在<a href="https://programmercarl.com/0151.%E7%BF%BB%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2%E9%87%8C%E7%9A%84%E5%8D%95%E8%AF%8D.html">151.翻转字符串里的单词</a>中要求翻转字符串里的单词，这道题目可以说是综合考察了字符串的多种操作。是考察字符串的好题。</p>
 <p>这道题目通过 <strong>先整体反转再局部反转</strong>，实现了反转字符串里的单词。</p>
 <p>后来发现反转字符串还有一个牛逼的用处，就是达到左旋的效果。</p>
-<p>在<a href="https://programmercarl.com/%E5%89%91%E6%8C%87Offer58-II.%E5%B7%A6%E6%97%8B%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2.html">字符串：反转个字符串还有这个用处？ (opens new window)</a>中，我们通过<strong>先局部反转再整体反转</strong>达到了左旋的效果。</p>
+<p>在<a href="https://programmercarl.com/%E5%89%91%E6%8C%87Offer58-II.%E5%B7%A6%E6%97%8B%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2.html">字符串：反转个字符串还有这个用处？</a>中，我们通过<strong>先局部反转再整体反转</strong>达到了左旋的效果。</p>
 <h2 id="kmp"><a class="header" href="#kmp">KMP</a></h2>
 <p>KMP的主要思想是<strong>当出现字符串不匹配时，可以知道一部分之前已经匹配的文本内容，可以利用这些信息避免从头再去做匹配了。</strong></p>
-<p>KMP的精髓所在就是前缀表，在<a href="https://programmercarl.com/0028.%E5%AE%9E%E7%8E%B0strStr.html">KMP精讲 (opens new window)</a>中提到了，什么是KMP，什么是前缀表，以及为什么要用前缀表。</p>
+<p>KMP的精髓所在就是前缀表，在<a href="https://programmercarl.com/0028.%E5%AE%9E%E7%8E%B0strStr.html">KMP精讲</a>中提到了，什么是KMP，什么是前缀表，以及为什么要用前缀表。</p>
 <p>前缀表：起始位置到下标i之前（包括i）的子串中，有多大长度的相同前缀后缀。</p>
 <p>那么使用KMP可以解决两类经典问题：</p>
 <ol>
@@ -6786,7 +6989,7 @@ for (int i = 0; i &lt; a.size(); i++) {
 <p>再一次强调了什么是前缀，什么是后缀，什么又是最长相等前后缀。</p>
 <p>前缀：指不包含最后一个字符的所有以第一个字符开头的连续子串。</p>
 <p>后缀：指不包含第一个字符的所有以最后一个字符结尾的连续子串。</p>
-<p>然后<strong>针对前缀表到底要不要减一，这其实是不同KMP实现的方式</strong>，我们在<a href="https://programmercarl.com/0028.%E5%AE%9E%E7%8E%B0strStr.html">KMP精讲 (opens new window)</a>中针对之前两个问题，分别给出了两个不同版本的的KMP实现。</p>
+<p>然后<strong>针对前缀表到底要不要减一，这其实是不同KMP实现的方式</strong>，我们在<a href="https://programmercarl.com/0028.%E5%AE%9E%E7%8E%B0strStr.html">KMP精讲</a>中针对之前两个问题，分别给出了两个不同版本的的KMP实现。</p>
 <p>其中主要<strong>理解j=next[x]这一步最为关键！</strong></p>
 <h2 id="总结-2"><a class="header" href="#总结-2">总结</a></h2>
 <p>字符串类类型的题目，往往想法比较简单，但是实现起来并不容易，复杂的字符串题目非常考验对代码的掌控能力。</p>
@@ -6850,7 +7053,7 @@ for (int i = 0; i &lt; a.size(); i++) {
 <li><code>2 &lt;= n &lt;= 10^5</code></li>
 <li><code>0 &lt;= height[i] &lt;= 10^4</code></li>
 </ul>
-<h2 id="思路-48"><a class="header" href="#思路-48">思路</a></h2>
+<h2 id="思路-50"><a class="header" href="#思路-50">思路</a></h2>
 <p>双指针，左低移左，右低移右</p>
 <p>The two-pointer technique starts with the widest container and moves the pointers inward based on the comparison of heights.</p>
 <p>Increasing the width of the container can only lead to a larger area if the height of the new boundary is greater. By moving the pointers towards the center, we explore containers with the potential for greater areas.</p>
@@ -6926,7 +7129,7 @@ public:
 <li><code>1 &lt;= n &lt;= 2 * 10^4</code></li>
 <li><code>0 &lt;= height[i] &lt;= 10^5</code></li>
 </ul>
-<h2 id="思路-49"><a class="header" href="#思路-49">思路</a></h2>
+<h2 id="思路-51"><a class="header" href="#思路-51">思路</a></h2>
 <p>一共三种解法：双指针、单调栈和动态规划。</p>
 <h2 id="c-解法-9"><a class="header" href="#c-解法-9">C++ 解法</a></h2>
 <p>单调栈</p>
@@ -7043,7 +7246,7 @@ public:
 <li><code>-10^9 &lt;= Node.val &lt;= 10^9</code></li>
 <li><code>-1000 &lt;= targetSum &lt;= 1000</code></li>
 </ul>
-<h2 id="思路-50"><a class="header" href="#思路-50">思路</a></h2>
+<h2 id="思路-52"><a class="header" href="#思路-52">思路</a></h2>
 <h3 id="方法一深度优先搜索"><a class="header" href="#方法一深度优先搜索">方法一：深度优先搜索</a></h3>
 <p>思路与算法</p>
 <p>我们首先想到的解法是穷举所有的可能，我们访问每一个节点 node，检测以 node 为起始节点且向下延深的路径有多少种。我们递归遍历每一个节点的所有可能的路径，然后将这些路径数目加起来即为返回结果。</p>
@@ -7131,7 +7334,7 @@ public:
 <li>The number of nodes in the tree is in the range <code>[1, 10^4]</code>.</li>
 <li><code>-100 &lt;= Node.val &lt;= 100</code></li>
 </ul>
-<h2 id="思路-51"><a class="header" href="#思路-51">思路</a></h2>
+<h2 id="思路-53"><a class="header" href="#思路-53">思路</a></h2>
 <p>方法一：深度优先搜索</p>
 <p>首先我们知道一条路径的长度为该路径经过的节点数减一，所以求直径（即求路径长度的最大值）等效于求路径经过节点数的最大值减一。</p>
 <p>而任意一条路径均可以被看作由某个节点为起点，从其左儿子和右儿子向下遍历的路径拼接得到。</p>
@@ -7265,7 +7468,7 @@ private:
 <li>The number of nodes in the tree is in the range <code>[0, 100]</code>.</li>
 <li><code>-100 &lt;= Node.val &lt;= 100</code></li>
 </ul>
-<h2 id="思路-52"><a class="header" href="#思路-52">思路</a></h2>
+<h2 id="思路-54"><a class="header" href="#思路-54">思路</a></h2>
 <p>层次遍历，每层最后一个节点</p>
 <p>由于树的形状无法提前知晓，不可能设计出优于 O(n) 的算法。因此，我们应该试着寻找线性时间解。带着这个想法，我们来考虑一些同等有效的方案。</p>
 <h3 id="方法一深度优先搜索-1"><a class="header" href="#方法一深度优先搜索-1">方法一：深度优先搜索</a></h3>
@@ -7515,7 +7718,7 @@ public:
 <li>The number of nodes in the tree is in the range <code>[0, 100]</code>.</li>
 <li><code>-100 &lt;= Node.val &lt;= 100</code></li>
 </ul>
-<h2 id="思路-53"><a class="header" href="#思路-53">思路</a></h2>
+<h2 id="思路-55"><a class="header" href="#思路-55">思路</a></h2>
 <ol>
 <li>
 <p>先序遍历，左右交换</p>
