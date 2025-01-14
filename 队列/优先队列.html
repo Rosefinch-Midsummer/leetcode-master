@@ -1,0 +1,600 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>优先队列 - 剑指Offer</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">剑指Offer</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
+<h1 id="优先队列"><a class="header" href="#优先队列">优先队列</a></h1>
+<ul>
+<li><a href="#347-top-k-frequent-elements">347. Top K Frequent Elements</a>
+<ul>
+<li><a href="#%E6%80%9D%E8%B7%AF">思路</a>
+<ul>
+<li><a href="#c%E4%BC%98%E5%85%88%E9%98%9F%E5%88%97">C++优先队列</a></li>
+</ul>
+</li>
+<li><a href="#c%E8%A7%A3%E6%B3%95">C++解法</a></li>
+<li><a href="#java%E8%A7%A3%E6%B3%95">Java解法</a></li>
+<li><a href="#python%E8%A7%A3%E6%B3%95">Python解法</a></li>
+<li><a href="#go%E8%A7%A3%E6%B3%95">Go解法</a></li>
+</ul>
+</li>
+</ul>
+<h1 id="347-top-k-frequent-elements"><a class="header" href="#347-top-k-frequent-elements"><a href="https://leetcode.com/problems/top-k-frequent-elements/">347. Top K Frequent Elements</a></a></h1>
+<p>Given an integer array <code>nums</code> and an integer <code>k</code>, return <em>the</em> <code>k</code> <em>most frequent elements</em>. You may return the answer in <strong>any order</strong>.</p>
+<p><strong>Example 1:</strong></p>
+<p><strong>Input:</strong> <code>nums = [1,1,1,2,2,3], k = 2</code><br />
+<strong>Output:</strong> <code>[1,2]</code></p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> <code>nums = [1], k = 1</code><br />
+<strong>Output:</strong> <code>[1]</code></p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= nums.length &lt;= 10^5</code></li>
+<li><code>-10^4 &lt;= nums[i] &lt;= 10^4</code></li>
+<li><code>k</code> is in the range <code>[1, the number of unique elements in the array]</code>.</li>
+<li>It is <strong>guaranteed</strong> that the answer is <strong>unique</strong>.</li>
+</ul>
+<p><strong>Follow up:</strong> Your algorithm's time complexity must be better than <code>O(n log n)</code>, where n is the array's size.</p>
+<h2 id="思路"><a class="header" href="#思路">思路</a></h2>
+<p>使用map存储，使用value调整堆结构</p>
+<p>使用小顶堆，每次弹出堆顶元素</p>
+<p>这道题目主要涉及如下三块内容：</p>
+<ol>
+<li>要统计元素出现频率</li>
+<li>对频率排序</li>
+<li>找出前K个高频元素</li>
+</ol>
+<p>首先统计元素出现的频率，这一类的问题可以使用map来进行统计。</p>
+<p>然后是对频率进行排序，这里我们可以使用一种 容器适配器就是<strong>优先级队列</strong>。</p>
+<p>什么是优先级队列呢？</p>
+<p>其实<strong>就是一个披着队列外衣的堆</strong>，因为优先级队列对外接口只是从队头取元素，从队尾添加元素，再无其他取元素的方式，看起来就是一个队列。</p>
+<p>而且优先级队列内部元素是自动依照元素的权值排列。那么它是如何有序排列的呢？</p>
+<p>缺省情况下priority_queue利用max-heap（大顶堆）完成对元素的排序，这个大顶堆是以vector为表现形式的complete binary tree（完全二叉树）。</p>
+<p>什么是堆呢？</p>
+<p><strong>堆是一棵完全二叉树，树中每个结点的值都不小于（或不大于）其左右孩子的值。</strong> 如果父亲结点是大于等于左右孩子就是大顶堆，小于等于左右孩子就是小顶堆。</p>
+<p>所以大家经常说的大顶堆（堆头是最大元素），小顶堆（堆头是最小元素），如果懒得自己实现的话，就直接用priority_queue（优先级队列）就可以了，底层实现都是一样的，从小到大排就是小顶堆，从大到小排就是大顶堆。</p>
+<p>本题我们就要使用优先级队列来对部分频率进行排序。</p>
+<p>为什么不用快排呢， 使用快排要将map转换为vector的结构，然后对整个数组进行排序， 而这种场景下，我们其实只需要维护k个有序的序列就可以了，所以使用优先级队列是最优的。</p>
+<p>此时要思考一下，是使用小顶堆呢，还是大顶堆？</p>
+<p>有的同学一想，题目要求前 K 个高频元素，那么果断用大顶堆啊。</p>
+<p>那么问题来了，定义一个大小为k的大顶堆，在每次移动更新大顶堆的时候，每次弹出都把最大的元素弹出去了，那么怎么保留下来前K个高频元素呢。</p>
+<p>而且使用大顶堆就要把所有元素都进行排序，那能不能只排序k个元素呢？</p>
+<p><strong>所以我们要用小顶堆，因为要统计最大前k个元素，只有小顶堆每次将最小的元素弹出，最后小顶堆里积累的才是前k个最大元素。</strong></p>
+<p>寻找前k个最大元素流程如图所示：（图中的频率只有三个，所以正好构成一个大小为3的小顶堆，如果频率更多一些，则用这个小顶堆进行扫描）</p>
+<p><img src="https://code-thinking.cdn.bcebos.com/pics/347.%E5%89%8DK%E4%B8%AA%E9%AB%98%E9%A2%91%E5%85%83%E7%B4%A0.jpg" alt="347.前K个高频元素" /></p>
+<h3 id="c优先队列"><a class="header" href="#c优先队列">C++优先队列</a></h3>
+<p><code>priority_queue</code> 是 C++ 标准库中的一个容器适配器，用于实现优先队列。在优先队列中，元素按照优先级的顺序被排列，通常最小或最大元素可以在常数时间内被访问。以下是关于 <code>priority_queue</code> 的详细讲解，包括用法、重要函数和一个简单的示例。</p>
+<ol>
+<li>引入头文件</li>
+</ol>
+<p>要使用 <code>priority_queue</code>，需要包含头文件：</p>
+<pre><code class="language-cpp">#include &lt;queue&gt;
+</code></pre>
+<ol start="2">
+<li>基本特性</li>
+</ol>
+<ul>
+<li><strong>底层数据结构</strong>：<code>priority_queue</code> 通常基于堆（heap）实现，主要使用最大堆或最小堆。</li>
+<li><strong>默认排序</strong>：默认情况下，<code>priority_queue</code> 是最大堆，即优先级最高的元素在顶部。如果需要最小堆，可以使用自定义比较函数。</li>
+</ul>
+<ol start="3">
+<li>主要构造函数</li>
+</ol>
+<p><code>priority_queue</code> 的构造函数可以接受以下参数：</p>
+<ul>
+<li><code>std::vector&lt;T&gt;</code>, <code>std::deque&lt;T&gt;</code>：指定存储容器的类型（默认为 <code>std::vector</code>）。</li>
+<li>自定义比较函数（可选）：确定优先级的自定义比较器。</li>
+</ul>
+<ol start="4">
+<li>常用操作</li>
+</ol>
+<p><code>priority_queue</code> 支持以下常用操作：</p>
+<ul>
+<li><code>push(const T&amp; value)</code>：插入一个新的元素。</li>
+<li><code>pop()</code>：移除堆顶元素。</li>
+<li><code>top()</code>：返回堆顶元素（最大或最小）。</li>
+<li><code>empty()</code>：判断是否为空。</li>
+<li><code>size()</code>：返回元素个数。</li>
+</ul>
+<ol start="5">
+<li>使用示例</li>
+</ol>
+<p>以下是一个简单的示例，演示如何使用 <code>priority_queue</code>：</p>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;queue&gt;
+#include &lt;vector&gt;
+
+int main() {
+    // 创建一个最大优先队列
+    std::priority_queue&lt;int&gt; maxHeap;
+
+    // 插入元素
+    maxHeap.push(10);
+    maxHeap.push(20);
+    maxHeap.push(15);
+
+    // 输出并移除堆顶元素
+    std::cout &lt;&lt; "最大元素: " &lt;&lt; maxHeap.top() &lt;&lt; std::endl; // 输出 20
+    maxHeap.pop();
+
+    std::cout &lt;&lt; "新的最大元素: " &lt;&lt; maxHeap.top() &lt;&lt; std::endl; // 输出 15
+
+    // 最小优先队列示例
+    std::priority_queue&lt;int, std::vector&lt;int&gt;, std::greater&lt;int&gt;&gt; minHeap;
+
+    // 插入元素
+    minHeap.push(10);
+    minHeap.push(20);
+    minHeap.push(15);
+
+    // 输出并移除堆顶元素
+    std::cout &lt;&lt; "最小元素: " &lt;&lt; minHeap.top() &lt;&lt; std::endl; // 输出 10
+    minHeap.pop();
+
+    std::cout &lt;&lt; "新的最小元素: " &lt;&lt; minHeap.top() &lt;&lt; std::endl; // 输出 15
+
+    return 0;
+}
+</code></pre>
+<ol start="6">
+<li>常见应用场景</li>
+</ol>
+<p>优先队列常用于以下场景：</p>
+<ul>
+<li><strong>调度算法</strong>：比如任务调度。</li>
+<li><strong>Dijkstra 算法</strong>：用于寻找最短路径时的优先队列。</li>
+<li><strong>贪心算法</strong>：在处理最优解的构造过程中管理元素的优先级。</li>
+</ul>
+<p>总结</p>
+<p><code>priority_queue</code> 是一个强大的数据结构，能够以高效的方式管理具有优先级的元素。通过自定义比较器，你可以灵活地对元素的排列进行控制。如果你有任何具体问题或者需要更深入的解释，请告诉我！</p>
+<h2 id="c解法"><a class="header" href="#c解法">C++解法</a></h2>
+<pre><code class="language-cpp">class Solution {
+public:
+    // 小顶堆
+    class mycomparison {
+    public:
+        bool operator()(const pair&lt;int, int&gt;&amp; lhs, const pair&lt;int, int&gt;&amp; rhs) {
+            return lhs.second &gt; rhs.second;
+        }
+    };
+    vector&lt;int&gt; topKFrequent(vector&lt;int&gt;&amp; nums, int k) {
+        // 要统计元素出现频率
+        unordered_map&lt;int, int&gt; map; // map&lt;nums[i],对应出现的次数&gt;
+        for (int i = 0; i &lt; nums.size(); i++) {
+            map[nums[i]]++;
+        }
+
+        // 对频率排序
+        // 定义一个小顶堆，大小为k
+        priority_queue&lt;pair&lt;int, int&gt;, vector&lt;pair&lt;int, int&gt;&gt;, mycomparison&gt; pri_que;
+
+        // 用固定大小为k的小顶堆，扫面所有频率的数值
+        for (unordered_map&lt;int, int&gt;::iterator it = map.begin(); it != map.end(); it++) {
+            pri_que.push(*it);
+            if (pri_que.size() &gt; k) { // 如果堆的大小大于了K，则队列弹出，保证堆的大小一直为k
+                pri_que.pop();
+            }
+        }
+
+        // 找出前K个高频元素，因为小顶堆先弹出的是最小的，所以倒序来输出到数组
+        vector&lt;int&gt; result(k);
+        for (int i = k - 1; i &gt;= 0; i--) {
+            result[i] = pri_que.top().first;
+            pri_que.pop();
+        }
+        return result;
+
+    }
+};
+</code></pre>
+<ul>
+<li>时间复杂度: O(nlogk)</li>
+<li>空间复杂度: O(n)</li>
+</ul>
+<p>大家对这个比较运算在建堆时是如何应用的，为什么左大于右就会建立小顶堆，反而建立大顶堆比较困惑。</p>
+<p>确实 例如我们在写快排的cmp函数的时候，<code>return left&gt;right</code> 就是从大到小，<code>return left&lt;right</code> 就是从小到大。</p>
+<p>优先级队列的定义正好反过来了，可能和优先级队列的源码实现有关（我没有仔细研究），我估计是底层实现上优先队列队首指向后面，队尾指向最前面的缘故！</p>
+<h2 id="java解法"><a class="header" href="#java解法">Java解法</a></h2>
+<pre><code class="language-java">/*Comparator接口说明:
+ * 返回负数，形参中第一个参数排在前面；返回正数，形参中第二个参数排在前面
+ * 对于队列：排在前面意味着往队头靠
+ * 对于堆（使用PriorityQueue实现）：从队头到队尾按从小到大排就是最小堆（小顶堆），
+ *                                从队头到队尾按从大到小排就是最大堆（大顶堆）---&gt;队头元素相当于堆的根节点
+ * */
+class Solution {
+    //解法1：基于大顶堆实现
+    public int[] topKFrequent1(int[] nums, int k) {
+        Map&lt;Integer,Integer&gt; map = new HashMap&lt;&gt;(); //key为数组元素值,val为对应出现次数
+        for (int num : nums) {
+            map.put(num, map.getOrDefault(num,0) + 1);
+        }
+        //在优先队列中存储二元组(num, cnt),cnt表示元素值num在数组中的出现次数
+        //出现次数按从队头到队尾的顺序是从大到小排,出现次数最多的在队头(相当于大顶堆)
+        PriorityQueue&lt;int[]&gt; pq = new PriorityQueue&lt;&gt;((pair1, pair2) -&gt; pair2[1] - pair1[1]);
+        for (Map.Entry&lt;Integer, Integer&gt; entry : map.entrySet()) {//大顶堆需要对所有元素进行排序
+            pq.add(new int[]{entry.getKey(), entry.getValue()});
+        }
+        int[] ans = new int[k];
+        for (int i = 0; i &lt; k; i++) { //依次从队头弹出k个,就是出现频率前k高的元素
+            ans[i] = pq.poll()[0];
+        }
+        return ans;
+    }
+    //解法2：基于小顶堆实现
+    public int[] topKFrequent2(int[] nums, int k) {
+        Map&lt;Integer,Integer&gt; map = new HashMap&lt;&gt;(); //key为数组元素值,val为对应出现次数
+        for (int num : nums) {
+            map.put(num, map.getOrDefault(num, 0) + 1);
+        }
+        //在优先队列中存储二元组(num, cnt),cnt表示元素值num在数组中的出现次数
+        //出现次数按从队头到队尾的顺序是从小到大排,出现次数最低的在队头(相当于小顶堆)
+        PriorityQueue&lt;int[]&gt; pq = new PriorityQueue&lt;&gt;((pair1, pair2) -&gt; pair1[1] - pair2[1]);
+        for (Map.Entry&lt;Integer, Integer&gt; entry : map.entrySet()) { //小顶堆只需要维持k个元素有序
+            if (pq.size() &lt; k) { //小顶堆元素个数小于k个时直接加
+                pq.add(new int[]{entry.getKey(), entry.getValue()});
+            } else {
+                if (entry.getValue() &gt; pq.peek()[1]) { //当前元素出现次数大于小顶堆的根结点(这k个元素中出现次数最少的那个)
+                    pq.poll(); //弹出队头(小顶堆的根结点),即把堆里出现次数最少的那个删除,留下的就是出现次数多的了
+                    pq.add(new int[]{entry.getKey(), entry.getValue()});
+                }
+            }
+        }
+        int[] ans = new int[k];
+        for (int i = k - 1; i &gt;= 0; i--) { //依次弹出小顶堆,先弹出的是堆的根,出现次数少,后面弹出的出现次数多
+            ans[i] = pq.poll()[0];
+        }
+        return ans;
+    }
+}
+</code></pre>
+<p>简化版代码：</p>
+<pre><code class="language-java">class Solution {
+    public int[] topKFrequent(int[] nums, int k) {
+        // 优先级队列，为了避免复杂 api 操作，pq 存储数组
+        // lambda 表达式设置优先级队列从大到小存储 o1 - o2 为从小到大，o2 - o1 反之
+        PriorityQueue&lt;int[]&gt; pq = new PriorityQueue&lt;&gt;((o1, o2) -&gt; o1[1] - o2[1]);
+        int[] res = new int[k]; // 答案数组为 k 个元素
+        Map&lt;Integer, Integer&gt; map = new HashMap&lt;&gt;(); // 记录元素出现次数
+        for (int num : nums) map.put(num, map.getOrDefault(num, 0) + 1);
+        for (var x : map.entrySet()) { // entrySet 获取 k-v Set 集合
+            // 将 kv 转化成数组
+            int[] tmp = new int[2];
+            tmp[0] = x.getKey();
+            tmp[1] = x.getValue();
+            pq.offer(tmp);
+            // 下面的代码是根据小根堆实现的，我只保留优先队列的最后的k个，只要超出了k我就将最小的弹出，剩余的k个就是答案
+            if(pq.size() &gt; k) {
+                pq.poll();
+            }
+        }
+        for (int i = 0; i &lt; k; i++) {
+            res[i] = pq.poll()[0]; // 获取优先队列里的元素
+        }
+        return res;
+    }
+}
+</code></pre>
+<h2 id="python解法"><a class="header" href="#python解法">Python解法</a></h2>
+<p>解法一：</p>
+<pre><code class="language-python">#时间复杂度：O(nlogk)
+#空间复杂度：O(n)
+import heapq
+class Solution:
+    def topKFrequent(self, nums: List[int], k: int) -&gt; List[int]:
+        #要统计元素出现频率
+        map_ = {} #nums[i]:对应出现的次数
+        for i in range(len(nums)):
+            map_[nums[i]] = map_.get(nums[i], 0) + 1
+        
+        #对频率排序
+        #定义一个小顶堆，大小为k
+        pri_que = [] #小顶堆
+        
+        #用固定大小为k的小顶堆，扫描所有频率的数值
+        for key, freq in map_.items():
+            heapq.heappush(pri_que, (freq, key))
+            if len(pri_que) &gt; k: #如果堆的大小大于了K，则队列弹出，保证堆的大小一直为k
+                heapq.heappop(pri_que)
+        
+        #找出前K个高频元素，因为小顶堆先弹出的是最小的，所以倒序来输出到数组
+        result = [0] * k
+        for i in range(k-1, -1, -1):
+            result[i] = heapq.heappop(pri_que)[1]
+        return result
+</code></pre>
+<p>解法二：</p>
+<pre><code class="language-python">class Solution:
+    def topKFrequent(self, nums: List[int], k: int) -&gt; List[int]:
+        # 使用字典统计数字出现次数
+        time_dict = defaultdict(int)
+        for num in nums:
+            time_dict[num] += 1
+        # 更改字典，key为出现次数，value为相应的数字的集合
+        index_dict = defaultdict(list)
+        for key in time_dict:
+            index_dict[time_dict[key]].append(key)
+        # 排序
+        key = list(index_dict.keys())
+        key.sort()
+        result = []
+        cnt = 0
+        # 获取前k项
+        while key and cnt != k:
+            result += index_dict[key[-1]]
+            cnt += len(index_dict[key[-1]])
+            key.pop()
+
+        return result[0: k]
+</code></pre>
+<h2 id="go解法"><a class="header" href="#go解法">Go解法</a></h2>
+<pre><code class="language-go">//方法一：小顶堆
+func topKFrequent(nums []int, k int) []int {
+    map_num:=map[int]int{}
+    //记录每个元素出现的次数
+    for _,item:=range nums{
+        map_num[item]++
+    }
+    h:=&amp;IHeap{}
+    heap.Init(h)
+    //所有元素入堆，堆的长度为k
+    for key,value:=range map_num{
+        heap.Push(h,[2]int{key,value})
+        if h.Len()&gt;k{
+            heap.Pop(h)
+        }
+    }
+    res:=make([]int,k)
+    //按顺序返回堆中的元素
+    for i:=0;i&lt;k;i++{
+        res[k-i-1]=heap.Pop(h).([2]int)[0]
+    }
+    return res
+}
+
+//构建小顶堆
+type IHeap [][2]int
+
+func (h IHeap) Len()int {
+    return len(h)
+}
+
+func (h IHeap) Less (i,j int) bool {
+    return h[i][1]&lt;h[j][1]
+}
+
+func (h IHeap) Swap(i,j int) {
+    h[i],h[j]=h[j],h[i]
+}
+
+func (h *IHeap) Push(x interface{}){
+    *h=append(*h,x.([2]int))
+}
+func (h *IHeap) Pop() interface{}{
+    old:=*h
+    n:=len(old)
+    x:=old[n-1]
+    *h=old[0:n-1]
+    return x
+}
+
+
+//方法二:利用O(nlogn)排序
+func topKFrequent(nums []int, k int) []int {
+    ans:=[]int{}
+    map_num:=map[int]int{}
+    for _,item:=range nums {
+        map_num[item]++
+    }
+    for key,_:=range map_num{
+        ans=append(ans,key)
+    }
+    //核心思想：排序
+    //可以不用包函数，自己实现快排
+    sort.Slice(ans,func (a,b int)bool{
+        return map_num[ans[a]]&gt;map_num[ans[b]]
+    })
+    return ans[:k]
+}
+</code></pre>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../队列/单调队列.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../二叉树/二叉树.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../队列/单调队列.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../二叉树/二叉树.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

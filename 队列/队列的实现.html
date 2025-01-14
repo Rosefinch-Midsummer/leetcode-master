@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>二叉树 - 剑指Offer</title>
+        <title>队列的实现 - 剑指Offer</title>
 
 
         <!-- Custom HTML head -->
@@ -153,17 +153,107 @@
                 <div id="content" class="content">
                     <main>
                         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
-<h1 id="二叉树"><a class="header" href="#二叉树">二叉树</a></h1>
+<h1 id="队列的实现"><a class="header" href="#队列的实现">队列的实现</a></h1>
+<ul>
+<li><a href="#232-implement-queue-using-stacks">232. Implement Queue using Stacks</a>
+<ul>
+<li><a href="#%E6%80%9D%E8%B7%AF">思路</a></li>
+<li><a href="#c%E8%A7%A3%E6%B3%95">C++解法</a></li>
+<li><a href="#java%E8%A7%A3%E6%B3%95">Java解法</a></li>
+</ul>
+</li>
+</ul>
+<h1 id="232-implement-queue-using-stacks"><a class="header" href="#232-implement-queue-using-stacks"><a href="https://leetcode.com/problems/implement-queue-using-stacks/">232. Implement Queue using Stacks</a></a></h1>
+<p>Implement a first in first out (FIFO) queue using only two stacks. The implemented queue should support all the functions of a normal queue (<code>push</code>, <code>peek</code>, <code>pop</code>, and <code>empty</code>).</p>
+<p>Implement the <code>MyQueue</code> class:</p>
+<ul>
+<li><code>void push(int x)</code> Pushes element x to the back of the queue.</li>
+<li><code>int pop()</code> Removes the element from the front of the queue and returns it.</li>
+<li><code>int peek()</code> Returns the element at the front of the queue.</li>
+<li><code>boolean empty()</code> Returns <code>true</code> if the queue is empty, <code>false</code> otherwise.</li>
+</ul>
+<p><strong>Notes:</strong></p>
+<ul>
+<li>You must use <strong>only</strong> standard operations of a stack, which means only <code>push to top</code>, <code>peek/pop from top</code>, <code>size</code>, and <code>is empty</code> operations are valid.</li>
+<li>Depending on your language, the stack may not be supported natively. You may simulate a stack using a list or deque (double-ended queue) as long as you use only a stack's standard operations.</li>
+</ul>
+<p><strong>Example 1:</strong></p>
+<p><strong>Input</strong></p>
+<pre><code>["MyQueue", "push", "push", "peek", "pop", "empty"]
+[[], [1], [2], [], [], []]
+</code></pre>
+<p><strong>Output</strong></p>
+<pre><code>[null, null, null, 1, 1, false]
+</code></pre>
+<p><strong>Explanation</strong></p>
+<pre><code>MyQueue myQueue = new MyQueue();
+myQueue.push(1); // queue is: [1]
+myQueue.push(2); // queue is: [1, 2] (leftmost is front of the queue)
+myQueue.peek(); // return 1
+myQueue.pop(); // return 1, queue is [2]
+myQueue.empty(); // return false
+</code></pre>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= x &lt;= 9</code></li>
+<li>At most <code>100</code> calls will be made to <code>push</code>, <code>pop</code>, <code>peek</code>, and <code>empty</code>.</li>
+<li>All the calls to <code>pop</code> and <code>peek</code> are valid.</li>
+</ul>
+<p><strong>Follow-up:</strong> Can you implement the queue such that each operation is <strong><a href="https://en.wikipedia.org/wiki/Amortized_analysis">amortized</a></strong> <code>O(1)</code> time complexity? In other words, performing <code>n</code> operations will take overall <code>O(n)</code> time even if one of those operations may take longer.</p>
+<h2 id="思路"><a class="header" href="#思路">思路</a></h2>
+<p>用两个栈实现队列。当stackOut为空时就把stackIn中所有元素加入到stackOut中。</p>
+<p>因为<code>All the calls to </code>pop<code> and </code>peek<code> are valid.</code>所以这里不再需要校验操作的合法性。</p>
+<h2 id="c解法"><a class="header" href="#c解法">C++解法</a></h2>
+<pre><code class="language-cpp">class MyQueue {
+public:
+    stack&lt;int&gt; stackIn;
+    stack&lt;int&gt; stackOut;
+    MyQueue() {}
+
+    void push(int x) { stackIn.push(x); }
+
+    int pop() {
+        if (stackOut.empty()) {
+            while (!stackIn.empty()) {
+                int x = stackIn.top();
+                stackIn.pop();
+                stackOut.push(x);
+            }
+        }
+        int result = stackOut.top();
+        stackOut.pop();
+        return result;
+    }
+
+    int peek() {
+        int result = this-&gt;pop();
+        stackOut.push(result);
+        return result;
+    }
+
+    bool empty() { return stackOut.empty() &amp;&amp; stackIn.empty(); }
+};
+
+/**
+ * Your MyQueue object will be instantiated and called as such:
+ * MyQueue* obj = new MyQueue();
+ * obj-&gt;push(x);
+ * int param_2 = obj-&gt;pop();
+ * int param_3 = obj-&gt;peek();
+ * bool param_4 = obj-&gt;empty();
+ */
+</code></pre>
+<h2 id="java解法"><a class="header" href="#java解法">Java解法</a></h2>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../队列/优先队列.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../队列/队列.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="../二叉树/二叉树遍历.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../队列/单调队列.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -173,11 +263,11 @@
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../队列/优先队列.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../队列/队列.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="../二叉树/二叉树遍历.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../队列/单调队列.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

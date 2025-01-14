@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>二叉树 - 剑指Offer</title>
+        <title>栈的实现 - 剑指Offer</title>
 
 
         <!-- Custom HTML head -->
@@ -153,17 +153,108 @@
                 <div id="content" class="content">
                     <main>
                         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
-<h1 id="二叉树"><a class="header" href="#二叉树">二叉树</a></h1>
+<h1 id="栈的实现"><a class="header" href="#栈的实现">栈的实现</a></h1>
+<ul>
+<li><a href="#225-implement-stack-using-queues">225. Implement Stack using Queues</a>
+<ul>
+<li><a href="#%E6%80%9D%E8%B7%AF">思路</a></li>
+<li><a href="#c%E8%A7%A3%E6%B3%95">C++解法</a></li>
+<li><a href="#java%E8%A7%A3%E6%B3%95">Java解法</a></li>
+</ul>
+</li>
+</ul>
+<h1 id="225-implement-stack-using-queues"><a class="header" href="#225-implement-stack-using-queues"><a href="https://leetcode.com/problems/implement-stack-using-queues/">225. Implement Stack using Queues</a></a></h1>
+<p>Implement a last-in-first-out (LIFO) stack using only two queues. The implemented stack should support all the functions of a normal stack (<code>push</code>, <code>top</code>, <code>pop</code>, and <code>empty</code>).</p>
+<p>Implement the <code>MyStack</code> class:</p>
+<ul>
+<li><code>void push(int x)</code> Pushes element x to the top of the stack.</li>
+<li><code>int pop()</code> Removes the element on the top of the stack and returns it.</li>
+<li><code>int top()</code> Returns the element on the top of the stack.</li>
+<li><code>boolean empty()</code> Returns <code>true</code> if the stack is empty, <code>false</code> otherwise.</li>
+</ul>
+<p><strong>Notes:</strong></p>
+<ul>
+<li>You must use <strong>only</strong> standard operations of a queue, which means that only <code>push to back</code>, <code>peek/pop from front</code>, <code>size</code> and <code>is empty</code> operations are valid.</li>
+<li>Depending on your language, the queue may not be supported natively. You may simulate a queue using a list or deque (double-ended queue) as long as you use only a queue's standard operations.</li>
+</ul>
+<p><strong>Example 1:</strong></p>
+<p><strong>Input</strong></p>
+<pre><code>["MyStack", "push", "push", "top", "pop", "empty"]
+[[], [1], [2], [], [], []]
+</code></pre>
+<p><strong>Output</strong></p>
+<pre><code>[null, null, null, 2, 2, false]
+</code></pre>
+<p><strong>Explanation</strong></p>
+<pre><code>MyStack myStack = new MyStack();
+myStack.push(1);
+myStack.push(2);
+myStack.top(); // return 2
+myStack.pop(); // return 2
+myStack.empty(); // return False
+</code></pre>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= x &lt;= 9</code></li>
+<li>At most <code>100</code> calls will be made to <code>push</code>, <code>pop</code>, <code>top</code>, and <code>empty</code>.</li>
+<li>All the calls to <code>pop</code> and <code>top</code> are valid.</li>
+</ul>
+<p><strong>Follow-up:</strong> Can you implement the stack using only one queue?</p>
+<h2 id="思路"><a class="header" href="#思路">思路</a></h2>
+<p>使用一个队列或两个队列都可以，使用一个队列时，弹出操作需要先弹出<code>size-1</code>个元素再加入，再弹出所要弹出的元素。</p>
+<h2 id="c解法"><a class="header" href="#c解法">C++解法</a></h2>
+<pre><code class="language-cpp">class MyStack {
+public:
+    queue&lt;int&gt; q;
+    MyStack() {
+        
+    }
+    
+    void push(int x) {
+        q.push(x);
+    }
+    
+    int pop() {
+        int size = q.size();
+        size--;
+        while(size--){
+            q.push(q.front());
+            q.pop();
+        }
+        int result = q.front();
+        q.pop();
+        return result;
+    }
+    
+    int top() {
+        return q.back();
+    }
+    
+    bool empty() {
+        return q.size() == 0;
+    }
+};
+
+/**
+ * Your MyStack object will be instantiated and called as such:
+ * MyStack* obj = new MyStack();
+ * obj-&gt;push(x);
+ * int param_2 = obj-&gt;pop();
+ * int param_3 = obj-&gt;top();
+ * bool param_4 = obj-&gt;empty();
+ */
+</code></pre>
+<h2 id="java解法"><a class="header" href="#java解法">Java解法</a></h2>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../队列/优先队列.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../栈/栈.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="../二叉树/二叉树遍历.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../栈/字符消消乐.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -173,11 +264,11 @@
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../队列/优先队列.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../栈/栈.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="../二叉树/二叉树遍历.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../栈/字符消消乐.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

@@ -1,0 +1,808 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>字符消消乐 - 剑指Offer</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">剑指Offer</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
+<h1 id="字符消消乐"><a class="header" href="#字符消消乐">字符消消乐</a></h1>
+<ul>
+<li><a href="#20-valid-parentheses">20. Valid Parentheses</a>
+<ul>
+<li><a href="#%E6%80%9D%E8%B7%AF">思路</a></li>
+<li><a href="#c%E8%A7%A3%E6%B3%95">C++解法</a></li>
+<li><a href="#java%E8%A7%A3%E6%B3%95">Java解法</a></li>
+</ul>
+</li>
+<li><a href="#1047-remove-all-adjacent-duplicates-in-string">1047. Remove All Adjacent Duplicates In String</a>
+<ul>
+<li><a href="#%E6%80%9D%E8%B7%AF-1">思路</a></li>
+<li><a href="#c%E8%A7%A3%E6%B3%95-1">C++解法</a></li>
+<li><a href="#java%E8%A7%A3%E6%B3%95-1">Java解法</a></li>
+<li><a href="#python%E8%A7%A3%E6%B3%95">Python解法</a></li>
+<li><a href="#go%E8%A7%A3%E6%B3%95">Go解法</a></li>
+</ul>
+</li>
+<li><a href="#1209-remove-all-adjacent-duplicates-in-string-ii">1209. Remove All Adjacent Duplicates in String II</a>
+<ul>
+<li><a href="#%E6%80%9D%E8%B7%AF-2">思路</a></li>
+<li><a href="#c%E8%A7%A3%E6%B3%95-2">C++解法</a></li>
+<li><a href="#java%E8%A7%A3%E6%B3%95-2">Java解法</a></li>
+<li><a href="#python%E8%A7%A3%E6%B3%95-1">Python解法</a></li>
+</ul>
+</li>
+<li><a href="#2390-removing-stars-from-a-string">2390. Removing Stars From a String</a>
+<ul>
+<li><a href="#%E6%80%9D%E8%B7%AF-3">思路</a></li>
+<li><a href="#c%E8%A7%A3%E6%B3%95-3">C++解法</a></li>
+</ul>
+</li>
+<li><a href="#2716-minimize-string-length">2716. Minimize String Length</a>
+<ul>
+<li><a href="#%E6%80%9D%E8%B7%AF-4">思路</a></li>
+<li><a href="#c%E8%A7%A3%E6%B3%95-4">C++解法</a></li>
+<li><a href="#java%E8%A7%A3%E6%B3%95-3">Java解法</a></li>
+<li><a href="#python3%E8%A7%A3%E6%B3%95">Python3解法</a></li>
+</ul>
+</li>
+</ul>
+<h1 id="20-valid-parentheses"><a class="header" href="#20-valid-parentheses"><a href="https://leetcode.com/problems/valid-parentheses/">20. Valid Parentheses</a></a></h1>
+<p>Given a string <code>s</code> containing just the characters <code>'('</code>, <code>')'</code>, <code>'{'</code>, <code>'}'</code>, <code>'['</code> and <code>']'</code>, determine if the input string is valid.</p>
+<p>An input string is valid if:</p>
+<ol>
+<li>Open brackets must be closed by the same type of brackets.</li>
+<li>Open brackets must be closed in the correct order.</li>
+<li>Every close bracket has a corresponding open bracket of the same type.</li>
+</ol>
+<p><strong>Example 1:</strong></p>
+<p><strong>Input:</strong> s = "()"</p>
+<p><strong>Output:</strong> true</p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> s = "()[]{}"</p>
+<p><strong>Output:</strong> true</p>
+<p><strong>Example 3:</strong></p>
+<p><strong>Input:</strong> s = "(]"</p>
+<p><strong>Output:</strong> false</p>
+<p><strong>Example 4:</strong></p>
+<p><strong>Input:</strong> s = "([])"</p>
+<p><strong>Output:</strong> true</p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= s.length &lt;= 10^4</code></li>
+<li><code>s</code> consists of parentheses only <code>'()[]{}'</code>.</li>
+</ul>
+<h2 id="思路"><a class="header" href="#思路">思路</a></h2>
+<p>使用栈数据结构，碰到左括号就压入右括号，碰到右括号就比较，相同则弹出，不同则结束程序。</p>
+<p>Use a stack of characters.</p>
+<p>When you encounter an opening bracket, push it to the top of the stack.</p>
+<p>When you encounter a closing bracket, check if the top of the stack was the opening for it. If yes, pop it from the stack. Otherwise, return false.</p>
+<h2 id="c解法"><a class="header" href="#c解法">C++解法</a></h2>
+<pre><code class="language-cpp">class Solution {
+public:
+    bool isValid(string s) {
+        if (s.size() % 2 != 0) return false; // 如果s的长度为奇数，一定不符合要求
+        stack&lt;char&gt; st;
+        for (int i = 0; i &lt; s.size(); i++) {
+            if (s[i] == '(') st.push(')');
+            else if (s[i] == '{') st.push('}');
+            else if (s[i] == '[') st.push(']');
+            // 第三种情况：遍历字符串匹配的过程中，栈已经为空了，没有匹配的字符了，说明右括号没有找到对应的左括号 return false
+            // 第二种情况：遍历字符串匹配的过程中，发现栈里没有我们要匹配的字符。所以return false
+            else if (st.empty() || st.top() != s[i]) return false;
+            else st.pop(); // st.top() 与 s[i]相等，栈弹出元素
+        }
+        // 第一种情况：此时我们已经遍历完了字符串，但是栈不为空，说明有相应的左括号没有右括号来匹配，所以return false，否则就return true
+        return st.empty();
+    }
+};
+</code></pre>
+<p>时间复杂度: O(n)</p>
+<p>空间复杂度: O(n)</p>
+<p>下面的写法是错误的：</p>
+<pre><code class="language-cpp">class Solution {
+public:
+    bool isValid(string s) {
+        if(s.size() % 2 != 0) return false;
+        stack&lt;char&gt; st;
+        for(char ch : s){
+            if(ch == '('){
+                st.push(')');
+            }else if(ch == '['){
+                st.push(']');
+            }else if(ch == '{'){
+                st.push('}');
+            }else{
+                if(st.top() == ch){
+                    st.pop();
+                }else{
+                    return false;
+                }
+            }
+        }
+        return st.empty();
+    }
+};
+</code></pre>
+<p>其中的<code>if(st.top() == ch)</code>会报错。</p>
+<h2 id="java解法"><a class="header" href="#java解法">Java解法</a></h2>
+<pre><code class="language-java">class Solution {
+    public boolean isValid(String s) {
+        Deque&lt;Character&gt; deque = new LinkedList&lt;&gt;();
+        char ch;
+        for (int i = 0; i &lt; s.length(); i++) {
+            ch = s.charAt(i);
+            //碰到左括号，就把相应的右括号入栈
+            if (ch == '(') {
+                deque.push(')');
+            }else if (ch == '{') {
+                deque.push('}');
+            }else if (ch == '[') {
+                deque.push(']');
+            } else if (deque.isEmpty() || deque.peek() != ch) {
+                return false;
+            }else {//如果是右括号判断是否和栈顶元素匹配
+                deque.pop();
+            }
+        }
+        //最后判断栈中元素是否匹配
+        return deque.isEmpty();
+    }
+}
+</code></pre>
+<h1 id="1047-remove-all-adjacent-duplicates-in-string"><a class="header" href="#1047-remove-all-adjacent-duplicates-in-string"><a href="https://leetcode.com/problems/remove-all-adjacent-duplicates-in-string/">1047. Remove All Adjacent Duplicates In String</a></a></h1>
+<p>You are given a string <code>s</code> consisting of lowercase English letters. A <strong>duplicate removal</strong> consists of choosing two <strong>adjacent</strong> and <strong>equal</strong> letters and removing them.</p>
+<p>We repeatedly make <strong>duplicate removals</strong> on <code>s</code> until we no longer can.</p>
+<p>Return <em>the final string after all such duplicate removals have been made</em>. It can be proven that the answer is <strong>unique</strong>.</p>
+<p><strong>Example 1:</strong></p>
+<p><strong>Input:</strong> s = "abbaca"<br />
+<strong>Output:</strong> "ca"<br />
+<strong>Explanation:</strong><br />
+For example, in "abbaca" we could remove "bb" since the letters are adjacent and equal, and this is the only possible move.  The result of this move is that the string is "aaca", of which only "aa" is possible, so the final string is "ca".</p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> s = "azxxzy"<br />
+<strong>Output:</strong> "ay"</p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= s.length &lt;= 10^5</code></li>
+<li><code>s</code> consists of lowercase English letters.</li>
+</ul>
+<h2 id="思路-1"><a class="header" href="#思路-1">思路</a></h2>
+<p>本题也是用栈来解决的经典题目。</p>
+<p>那么栈里应该放的是什么元素呢？</p>
+<p>我们在删除相邻重复项的时候，其实就是要知道当前遍历的这个元素，我们在前一位是不是遍历过一样数值的元素，那么如何记录前面遍历过的元素呢？</p>
+<p>所以就是用栈来存放，那么栈的目的，就是存放遍历过的元素，当遍历当前的这个元素的时候，去栈里看一下我们是不是遍历过相同数值的相邻元素。</p>
+<p>然后再去做对应的消除操作。 如动画所示：</p>
+<p><img src="https://code-thinking.cdn.bcebos.com/gifs/1047.%E5%88%A0%E9%99%A4%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E7%9A%84%E6%89%80%E6%9C%89%E7%9B%B8%E9%82%BB%E9%87%8D%E5%A4%8D%E9%A1%B9.gif" alt="1047.删除字符串中的所有相邻重复项" /></p>
+<p>从栈中弹出剩余元素，此时是字符串ac，因为从栈里弹出的元素是倒序的，所以再对字符串进行反转一下，就得到了最终的结果。</p>
+<h2 id="c解法-1"><a class="header" href="#c解法-1">C++解法</a></h2>
+<pre><code class="language-cpp">class Solution {
+public:
+    string removeDuplicates(string S) {
+        stack&lt;char&gt; st;
+        for (char s : S) {
+            if (st.empty() || s != st.top()) {
+                st.push(s);
+            } else {
+                st.pop(); // s 与 st.top()相等的情况
+            }
+        }
+        string result = "";
+        while (!st.empty()) { // 将栈中元素放到result字符串汇总
+            result += st.top();
+            st.pop();
+        }
+        reverse (result.begin(), result.end()); // 此时字符串需要反转一下
+        return result;
+
+    }
+};
+</code></pre>
+<ul>
+<li>时间复杂度: O(n)</li>
+<li>空间复杂度: O(n)</li>
+</ul>
+<p>当然可以拿字符串直接作为栈，这样省去了栈还要转为字符串的操作。</p>
+<p>代码如下：</p>
+<pre><code class="language-cpp">class Solution {
+public:
+    string removeDuplicates(string S) {
+        string result;
+        for(char s : S) {
+            if(result.empty() || result.back() != s) {
+                result.push_back(s);
+            }
+            else {
+                result.pop_back();
+            }
+        }
+        return result;
+    }
+};
+</code></pre>
+<ul>
+<li>时间复杂度: O(n)</li>
+<li>空间复杂度: O(1)，返回值不计空间复杂度</li>
+</ul>
+<h2 id="java解法-1"><a class="header" href="#java解法-1">Java解法</a></h2>
+<p>使用 Deque 作为堆栈</p>
+<pre><code class="language-java">class Solution {
+    public String removeDuplicates(String S) {
+        //ArrayDeque会比LinkedList在除了删除元素这一点外会快一点
+        //参考：https://stackoverflow.com/questions/6163166/why-is-arraydeque-better-than-linkedlist
+        ArrayDeque&lt;Character&gt; deque = new ArrayDeque&lt;&gt;();
+        char ch;
+        for (int i = 0; i &lt; S.length(); i++) {
+            ch = S.charAt(i);
+            if (deque.isEmpty() || deque.peek() != ch) {
+                deque.push(ch);
+            } else {
+                deque.pop();
+            }
+        }
+        String str = "";
+        //剩余的元素即为不重复的元素
+        while (!deque.isEmpty()) {
+            str = deque.pop() + str;
+        }
+        return str;
+    }
+}
+</code></pre>
+<p>拿字符串直接作为栈，省去了栈还要转为字符串的操作。</p>
+<pre><code class="language-java">class Solution {
+    public String removeDuplicates(String s) {
+        // 将 res 当做栈
+        // 也可以用 StringBuilder 来修改字符串，速度更快
+        // StringBuilder res = new StringBuilder();
+        StringBuffer res = new StringBuffer();
+        // top为 res 的长度
+        int top = -1;
+        for (int i = 0; i &lt; s.length(); i++) {
+            char c = s.charAt(i);
+            // 当 top &gt;= 0,即栈中有字符时，当前字符如果和栈中字符相等，弹出栈顶字符，同时 top--
+            if (top &gt;= 0 &amp;&amp; res.charAt(top) == c) {
+                res.deleteCharAt(top);
+                top--;
+            // 否则，将该字符 入栈，同时top++
+            } else {
+                res.append(c);
+                top++;
+            }
+        }
+        return res.toString();
+    }
+}
+</code></pre>
+<p>拓展：双指针</p>
+<pre><code class="language-cpp">class Solution {
+    public String removeDuplicates(String s) {
+        char[] ch = s.toCharArray();
+        int fast = 0;
+        int slow = 0;
+        while(fast &lt; s.length()){
+            // 直接用fast指针覆盖slow指针的值
+            ch[slow] = ch[fast];
+            // 遇到前后相同值的，就跳过，即slow指针后退一步，下次循环就可以直接被覆盖掉了
+            if(slow &gt; 0 &amp;&amp; ch[slow] == ch[slow - 1]){
+                slow--;
+            }else{
+                slow++;
+            }
+            fast++;
+        }
+        return new String(ch,0,slow);
+    }
+}
+</code></pre>
+<h2 id="python解法"><a class="header" href="#python解法">Python解法</a></h2>
+<pre><code class="language-python"># 方法一，使用栈
+class Solution:
+    def removeDuplicates(self, s: str) -&gt; str:
+        res = list()
+        for item in s:
+            if res and res[-1] == item:
+                res.pop()
+            else:
+                res.append(item)
+        return "".join(res)  # 字符串拼接
+</code></pre>
+<pre><code class="language-python"># 方法二，使用双指针模拟栈，如果不让用栈可以作为备选方法。
+class Solution:
+    def removeDuplicates(self, s: str) -&gt; str:
+        res = list(s)
+        slow = fast = 0
+        length = len(res)
+
+        while fast &lt; length:
+            # 如果一样直接换，不一样会把后面的填在slow的位置
+            res[slow] = res[fast]
+            
+            # 如果发现和前一个一样，就退一格指针
+            if slow &gt; 0 and res[slow] == res[slow - 1]:
+                slow -= 1
+            else:
+                slow += 1
+            fast += 1
+            
+        return ''.join(res[0: slow])
+</code></pre>
+<h2 id="go解法"><a class="header" href="#go解法">Go解法</a></h2>
+<p>使用栈</p>
+<pre><code class="language-go">func removeDuplicates(s string) string {
+    stack := make([]rune, 0)
+    for _, val := range s {
+        if len(stack) == 0 || val != stack[len(stack)-1] {
+            stack = append(stack, val)
+        } else {
+            stack = stack[:len(stack)-1]
+        }
+    }
+    var res []rune
+    for len(stack) != 0 { // 将栈中元素放到result字符串汇总
+        res = append(res, stack[len(stack)-1])
+        stack = stack[:len(stack)-1]
+    }
+    // 此时字符串需要反转一下
+    l, r := 0, len(res)-1
+    for l &lt; r {
+        res[l], res[r] = res[r], res[l]
+        l++
+        r--
+    }
+    return string(res)
+}
+</code></pre>
+<p>拿字符串直接作为栈，省去了栈还要转为字符串的操作</p>
+<pre><code class="language-go">func removeDuplicates(s string) string {
+    var stack []byte
+    for i := 0; i &lt; len(s);i++ {
+        // 栈不空 且 与栈顶元素不等
+        if len(stack) &gt; 0 &amp;&amp; stack[len(stack)-1] == s[i] {
+            // 弹出栈顶元素 并 忽略当前元素(s[i])
+            stack = stack[:len(stack)-1]
+        }else{
+            // 入栈
+            stack = append(stack, s[i])
+        }
+    }
+    return string(stack)
+}
+</code></pre>
+<h1 id="1209-remove-all-adjacent-duplicates-in-string-ii"><a class="header" href="#1209-remove-all-adjacent-duplicates-in-string-ii"><a href="https://leetcode.com/problems/remove-all-adjacent-duplicates-in-string-ii/">1209. Remove All Adjacent Duplicates in String II</a></a></h1>
+<p>You are given a string <code>s</code> and an integer <code>k</code>, a <code>k</code> <strong>duplicate removal</strong> consists of choosing <code>k</code> adjacent and equal letters from <code>s</code> and removing them, causing the left and the right side of the deleted substring to concatenate together.</p>
+<p>We repeatedly make <code>k</code> <strong>duplicate removals</strong> on <code>s</code> until we no longer can.</p>
+<p>Return <em>the final string after all such duplicate removals have been made</em>. It is guaranteed that the answer is <strong>unique</strong>.</p>
+<p><strong>Example 1:</strong></p>
+<p><strong>Input:</strong> s = "abcd", k = 2<br />
+<strong>Output:</strong> "abcd"<br />
+<strong>Explanation:</strong> There's nothing to delete.</p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> s = "deeedbbcccbdaa", k = 3<br />
+<strong>Output:</strong> "aa"<br />
+<strong>Explanation:</strong><br />
+First delete "eee" and "ccc", get "ddbbbdaa"
+Then delete "bbb", get "dddaa"
+Finally delete "ddd", get "aa"</p>
+<p><strong>Example 3:</strong></p>
+<p><strong>Input:</strong> s = "pbbcggttciiippooaais", k = 2<br />
+<strong>Output:</strong> "ps"</p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= s.length &lt;= 10^5</code></li>
+<li><code>2 &lt;= k &lt;= 10^4</code></li>
+<li><code>s</code> only contains lowercase English letters.</li>
+</ul>
+<h2 id="思路-2"><a class="header" href="#思路-2">思路</a></h2>
+<p>Solution 1: Two Pointers</p>
+<p>Solution 2: Stack</p>
+<p>Save the character <code>c</code> and its count to the <code>stack</code>.<br />
+If the next character <code>c</code> is same as the last one, increment the count.<br />
+Otherwise push a pair <code>(c, 1)</code> into the stack.<br />
+I used a dummy element <code>('#', 0)</code> to avoid empty stack.</p>
+<p>Complexity</p>
+<p>Time <code>O(N)</code> for one pass</p>
+<p>Space <code>O(N)</code></p>
+<h2 id="c解法-2"><a class="header" href="#c解法-2">C++解法</a></h2>
+<pre><code class="language-cpp">    string removeDuplicates(string s, int k) {
+        int i = 0, n = s.length();
+        vector&lt;int&gt; count(n);
+        for (int j = 0; j &lt; n; ++j, ++i) {
+            s[i] = s[j];
+            count[i] = i &gt; 0 &amp;&amp; s[i - 1] == s[j] ? count[i - 1] + 1 : 1;
+            if (count[i] == k) i -= k;
+        }
+        return s.substr(0, i);
+    }
+</code></pre>
+<pre><code class="language-cpp">    string removeDuplicates(string s, int k) {
+        vector&lt;pair&lt;int, char&gt;&gt; stack = {{0, '#'}};
+        for (char c: s) {
+            if (stack.back().second != c) {
+                stack.push_back({1, c});
+            } else if (++stack.back().first == k)
+                stack.pop_back();
+        }
+        string res;
+        for (auto &amp; p : stack) {
+            res.append(p.first, p.second);
+        }
+        return res;
+    }
+</code></pre>
+<h2 id="java解法-2"><a class="header" href="#java解法-2">Java解法</a></h2>
+<pre><code class="language-java">    public String removeDuplicates(String s, int k) {
+        int[] count = new int[s.length()];
+        StringBuilder sb = new StringBuilder();
+        for(char c : s.toCharArray()) {
+            sb.append(c);
+            int last = sb.length()-1;
+            count[last] = 1 + (last &gt; 0 &amp;&amp; sb.charAt(last) == sb.charAt(last-1) ? count[last-1] : 0);
+            if(count[last] &gt;= k) sb.delete(sb.length()-k, sb.length());
+        }
+        return sb.toString();
+    }
+</code></pre>
+<pre><code class="language-java">    public String removeDuplicates(String s, int k) {
+        int i = 0, n = s.length(), count[] = new int[n];
+        char[] stack = s.toCharArray();
+        for (int j = 0; j &lt; n; ++j, ++i) {
+            stack[i] = stack[j];
+            count[i] = i &gt; 0 &amp;&amp; stack[i - 1] == stack[j] ? count[i - 1] + 1 : 1;
+            if (count[i] == k) i -= k;
+        }
+        return new String(stack, 0, i);
+    }
+</code></pre>
+<h2 id="python解法-1"><a class="header" href="#python解法-1"><strong>Python解法</strong></a></h2>
+<pre><code class="language-python">    def removeDuplicates(self, s, k):
+        stack = [['#', 0]]
+        for c in s:
+            if stack[-1][0] == c:
+                stack[-1][1] += 1
+                if stack[-1][1] == k:
+                    stack.pop()
+            else:
+                stack.append([c, 1])
+        return ''.join(c * k for c, k in stack)
+</code></pre>
+<h1 id="2390-removing-stars-from-a-string"><a class="header" href="#2390-removing-stars-from-a-string"><a href="https://leetcode.com/problems/removing-stars-from-a-string/">2390. Removing Stars From a String</a></a></h1>
+<p>You are given a string <code>s</code>, which contains stars <code>*</code>.</p>
+<p>In one operation, you can:</p>
+<ul>
+<li>Choose a star in <code>s</code>.</li>
+<li>Remove the closest <strong>non-star</strong> character to its <strong>left</strong>, as well as remove the star itself.</li>
+</ul>
+<p>Return <em>the string after <strong>all</strong> stars have been removed</em>.</p>
+<p><strong>Note:</strong></p>
+<ul>
+<li>The input will be generated such that the operation is always possible.</li>
+<li>It can be shown that the resulting string will always be unique.</li>
+</ul>
+<p><strong>Example 1:</strong></p>
+<p><strong>Input:</strong> <code>s = "leet**cod*e"</code><br />
+<strong>Output:</strong> <code>"lecoe"</code><br />
+<strong>Explanation:</strong> Performing the removals from left to right:</p>
+<ul>
+<li>The closest character to the 1st star is 't' in <code>"lee**t****cod*e"</code>. s becomes <code>"lee*cod*e"</code>.</li>
+<li>The closest character to the 2nd star is 'e' in <code>"le**e***cod*e"</code>. s becomes <code>"lecod*e"</code>.</li>
+<li>The closest character to the 3rd star is 'd' in <code>"leco**d***e"</code>. s becomes <code>"lecoe"</code>.
+There are no more stars, so we return "lecoe".</li>
+</ul>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> <code>s = "erase*****"</code><br />
+<strong>Output:</strong> ""<br />
+<strong>Explanation:</strong> The entire string is removed, so we return an empty string.</p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= s.length &lt;= 10^5</code></li>
+<li><code>s</code> consists of lowercase English letters and stars <code>*</code>.</li>
+<li>The operation above can be performed on <code>s</code>.</li>
+</ul>
+<h2 id="思路-3"><a class="header" href="#思路-3">思路</a></h2>
+<p>What data structure could we use to efficiently perform these removals?</p>
+<p>Use a stack to store the characters. Pop one character off the stack at each star. Otherwise, we push the character onto the stack.</p>
+<p>当然可以拿字符串直接作为栈，这样省去了栈还要转为字符串的操作。</p>
+<h2 id="c解法-3"><a class="header" href="#c解法-3">C++解法</a></h2>
+<pre><code class="language-cpp">class Solution {
+public:
+    string removeStars(string s) {
+        string result;
+        for(char ch : s) {
+            if(result.empty() || ch != '*') {
+                result.push_back(ch);
+            }
+            else {
+                result.pop_back();
+            }
+        }
+        return result;
+    }
+};
+</code></pre>
+<h1 id="2716-minimize-string-length"><a class="header" href="#2716-minimize-string-length"><a href="https://leetcode.com/problems/minimize-string-length/">2716. Minimize String Length</a></a></h1>
+<p>Given a string <code>s</code>, you have two types of operation:</p>
+<ol>
+<li>Choose an index <code>i</code> in the string, and let <code>c</code> be the character in position <code>i</code>. <strong>Delete</strong> the <strong>closest occurrence</strong> of <code>c</code> to the <strong>left</strong> of <code>i</code> (if exists).</li>
+<li>Choose an index <code>i</code> in the string, and let <code>c</code> be the character in position <code>i</code>. <strong>Delete</strong> the <strong>closest occurrence</strong> of <code>c</code> to the <strong>right</strong> of <code>i</code> (if exists).</li>
+</ol>
+<p>Your task is to <strong>minimize</strong> the length of <code>s</code> by performing the above operations zero or more times.</p>
+<p>Return an integer denoting the length of the <strong>minimized</strong> string.</p>
+<p><strong>Example 1:</strong></p>
+<p><strong>Input:</strong> s = "aaabc"</p>
+<p><strong>Output:</strong> 3</p>
+<p><strong>Explanation:</strong></p>
+<ol>
+<li>Operation 2: we choose <code>i = 1</code> so <code>c</code> is 'a', then we remove <code>s[2]</code> as it is closest 'a' character to the right of <code>s[1]</code>.<br />
+<code>s</code> becomes "aabc" after this.</li>
+<li>Operation 1: we choose <code>i = 1</code> so <code>c</code> is 'a', then we remove <code>s[0]</code> as it is closest 'a' character to the left of <code>s[1]</code>.<br />
+<code>s</code> becomes "abc" after this.</li>
+</ol>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> s = "cbbd"</p>
+<p><strong>Output:</strong> 3</p>
+<p><strong>Explanation:</strong></p>
+<ol>
+<li>Operation 1: we choose <code>i = 2</code> so <code>c</code> is 'b', then we remove <code>s[1]</code> as it is closest 'b' character to the left of <code>s[1]</code>.<br />
+<code>s</code> becomes "cbd" after this.</li>
+</ol>
+<p><strong>Example 3:</strong></p>
+<p><strong>Input:</strong> s = "baadccab"</p>
+<p><strong>Output:</strong> 4</p>
+<p><strong>Explanation:</strong></p>
+<ol>
+<li>Operation 1: we choose <code>i = 6</code> so <code>c</code> is 'a', then we remove <code>s[2]</code> as it is closest 'a' character to the left of <code>s[6]</code>.<br />
+<code>s</code> becomes "badccab" after this.</li>
+<li>Operation 2: we choose <code>i = 0</code> so <code>c</code> is 'b', then we remove <code>s[6]</code> as it is closest 'b' character to the right of <code>s[0]</code>.<br />
+<code>s</code> becomes "badcca" fter this.</li>
+<li>Operation 2: we choose <code>i = 3</code> so <code>c</code> is 'c', then we remove <code>s[4]</code> as it is closest 'c' character to the right of <code>s[3]</code>.<br />
+<code>s</code> becomes "badca" after this.</li>
+<li>Operation 1: we choose <code>i = 4</code> so <code>c</code> is 'a', then we remove <code>s[1]</code> as it is closest 'a' character to the left of <code>s[4]</code>.<br />
+<code>s</code> becomes "bdca" after this.</li>
+</ol>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= s.length &lt;= 100</code></li>
+<li><code>s</code> contains only lowercase English letters</li>
+</ul>
+<h2 id="思路-4"><a class="header" href="#思路-4">思路</a></h2>
+<p>The minimized string will not contain duplicate characters.</p>
+<p>The minimized string will contain all distinct characters of the original string.</p>
+<h2 id="c解法-4"><a class="header" href="#c解法-4">C++解法</a></h2>
+<pre><code class="language-cpp">class Solution {
+public:
+    int minimizedStringLength(string s) {
+        return unordered_set&lt;char&gt;(s.begin(), s.end()).size();
+    }
+};
+</code></pre>
+<p>使用hash数组求解：</p>
+<pre><code class="language-cpp">class Solution {
+public:
+    int minimizedStringLength(string s) {
+        int hash[26] = {0};
+        for(char ch : s){
+            hash[ch - 'a']++;
+        }
+        int count = 0;
+        for(int i = 0; i &lt; 26; i++){
+            if(hash[i] != 0){
+                count++;
+            }
+        }
+        return count;
+    }
+};
+</code></pre>
+<p>注意：<code>int hash[26] = {0};</code>这行代码确保 <code>hash</code> 数组的所有元素都被初始化为零，避免了使用未初始化值的问题。</p>
+<h2 id="java解法-3"><a class="header" href="#java解法-3">Java解法</a></h2>
+<pre><code class="language-java">class Solution {
+    public int minimizedStringLength(String s) {
+        return (int) s.chars().distinct().count();
+    }
+}
+</code></pre>
+<h2 id="python3解法"><a class="header" href="#python3解法">Python3解法</a></h2>
+<pre><code class="language-python">class Solution:
+    def minimizedStringLength(self, s: str) -&gt; int:
+        return len(set(s))
+</code></pre>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../栈/栈的实现.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../栈/栈与计算器.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../栈/栈的实现.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../栈/栈与计算器.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

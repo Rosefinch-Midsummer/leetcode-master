@@ -1,0 +1,582 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>单调队列 - 剑指Offer</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">剑指Offer</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
+<h1 id="单调队列"><a class="header" href="#单调队列">单调队列</a></h1>
+<ul>
+<li><a href="#239-sliding-window-maximum">239. Sliding Window Maximum</a>
+<ul>
+<li><a href="#%E6%80%9D%E8%B7%AF">思路</a></li>
+<li><a href="#c%E8%A7%A3%E6%B3%95">C++解法</a></li>
+<li><a href="#java%E8%A7%A3%E6%B3%95">Java解法</a></li>
+<li><a href="#python%E8%A7%A3%E6%B3%95">Python解法</a></li>
+<li><a href="#go%E8%A7%A3%E6%B3%95">Go解法</a></li>
+</ul>
+</li>
+</ul>
+<h1 id="239-sliding-window-maximum"><a class="header" href="#239-sliding-window-maximum"><a href="https://leetcode.com/problems/sliding-window-maximum/">239. Sliding Window Maximum</a></a></h1>
+<p>You are given an array of integers <code>nums</code>, there is a sliding window of size <code>k</code> which is moving from the very left of the array to the very right. You can only see the <code>k</code> numbers in the window. Each time the sliding window moves right by one position.</p>
+<p>Return <em>the max sliding window</em>.</p>
+<p><strong>Example 1:</strong></p>
+<p><strong>Input:</strong> <code>nums = [1,3,-1,-3,5,3,6,7], k = 3</code><br />
+<strong>Output:</strong> <code>[3,3,5,5,6,7]</code><br />
+<strong>Explanation:</strong></p>
+<pre><code>Window position                Max
+---------------               -----
+[1  3  -1] -3  5  3  6  7       **3**
+ 1 [3  -1  -3] 5  3  6  7       **3**
+ 1  3 [-1  -3  5] 3  6  7      ** 5**
+ 1  3  -1 [-3  5  3] 6  7       **5**
+ 1  3  -1  -3 [5  3  6] 7       **6**
+ 1  3  -1  -3  5 [3  6  7]      **7**
+</code></pre>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> <code>nums = [1], k = 1</code><br />
+<strong>Output:</strong> <code>[1]</code></p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= nums.length &lt;= 10^5</code></li>
+<li><code>-10^4 &lt;= nums[i] &lt;= 10^4</code></li>
+<li><code>1 &lt;= k &lt;= nums.length</code></li>
+</ul>
+<h2 id="思路"><a class="header" href="#思路">思路</a></h2>
+<p>不能使用普通队列，也不能使用优先级队列，需要自己实现特殊单调队列，特殊队列要有<code>pop()</code>、<code>push()</code>和<code>getMaxValue()</code>成员函数。</p>
+<p>这是使用单调队列的经典题目。</p>
+<p>难点是如何求一个区间里的最大值呢？ （这好像是废话），暴力一下不就得了。</p>
+<p>暴力方法，遍历一遍的过程中每次从窗口中再找到最大的数值，这样很明显是O(n × k)的算法。</p>
+<p>有的同学可能会想用一个大顶堆（优先级队列）来存放这个窗口里的k个数字，这样就可以知道最大的最大值是多少了， <strong>但是问题是这个窗口是移动的，而大顶堆每次只能弹出最大值，我们无法移除其他数值，这样就造成大顶堆维护的不是滑动窗口里面的数值了。所以不能用大顶堆。</strong></p>
+<p>此时我们需要一个队列，这个队列呢，放进去窗口里的元素，然后随着窗口的移动，队列也一进一出，每次移动之后，队列告诉我们里面的最大值是什么。</p>
+<p>这个队列应该长这个样子：</p>
+<pre><code class="language-cpp">class MyQueue {
+public:
+    void pop(int value) {
+    }
+    void push(int value) {
+    }
+    int front() {
+        return que.front();
+    }
+};
+</code></pre>
+<p>每次窗口移动的时候，调用que.pop(滑动窗口中移除元素的数值)，que.push(滑动窗口添加元素的数值)，然后que.front()就返回我们要的最大值。</p>
+<p>这么个队列香不香，要是有现成的这种数据结构是不是更香了！</p>
+<p>其实在C++中，可以使用 multiset 来模拟这个过程，文末提供这个解法仅针对C++，以下讲解我们还是靠自己来实现这个单调队列。</p>
+<p>然后再分析一下，队列里的元素一定是要排序的，而且要最大值放在出队口，要不然怎么知道最大值呢。</p>
+<p>但如果把窗口里的元素都放进队列里，窗口移动的时候，队列需要弹出元素。</p>
+<p>那么问题来了，已经排序之后的队列 怎么能把窗口要移除的元素（这个元素可不一定是最大值）弹出呢。</p>
+<p>大家此时应该陷入深思.....</p>
+<p><strong>其实队列没有必要维护窗口里的所有元素，只需要维护有可能成为窗口里最大值的元素就可以了，同时保证队列里的元素数值是由大到小的。</strong></p>
+<p>那么这个维护元素单调递减的队列就叫做<strong>单调队列，即单调递减或单调递增的队列。C++中没有直接支持单调队列，需要我们自己来实现一个单调队列</strong></p>
+<p><strong>不要以为实现的单调队列就是 对窗口里面的数进行排序，如果排序的话，那和优先级队列又有什么区别了呢。</strong></p>
+<p>来看一下单调队列如何维护队列里的元素。</p>
+<p>动画如下：</p>
+<p><img src="https://code-thinking.cdn.bcebos.com/gifs/239.%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3%E6%9C%80%E5%A4%A7%E5%80%BC.gif" alt="239.滑动窗口最大值" /></p>
+<p>对于窗口里的元素{2, 3, 5, 1 ,4}，单调队列里只维护{5, 4} 就够了，保持单调队列里单调递减，此时队列出口元素就是窗口里最大元素。</p>
+<p>此时大家应该怀疑单调队列里维护着{5, 4} 怎么配合窗口进行滑动呢？</p>
+<p>设计单调队列的时候，pop，和push操作要保持如下规则：</p>
+<ol>
+<li>pop(value)：如果窗口移除的元素value等于单调队列的出口元素，那么队列弹出元素，否则不用任何操作</li>
+<li>push(value)：如果push的元素value大于入口元素的数值，那么就将队列入口的元素弹出，直到push元素的数值小于等于队列入口元素的数值为止</li>
+</ol>
+<p>保持如上规则，每次窗口移动的时候，只要问que.front()就可以返回当前窗口的最大值。</p>
+<p>为了更直观的感受到单调队列的工作过程，以题目示例为例，输入: nums = [1,3,-1,-3,5,3,6,7], 和 k = 3，动画如下：</p>
+<p><img src="https://code-thinking.cdn.bcebos.com/gifs/239.%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3%E6%9C%80%E5%A4%A7%E5%80%BC-2.gif" alt="239.滑动窗口最大值-2" /></p>
+<p>那么我们用什么数据结构来实现这个单调队列呢？</p>
+<p>使用deque最为合适，在文章<a href="https://programmercarl.com/%E6%A0%88%E4%B8%8E%E9%98%9F%E5%88%97%E7%90%86%E8%AE%BA%E5%9F%BA%E7%A1%80.html">栈与队列：来看看栈和队列不为人知的一面</a>中，我们就提到了常用的queue在没有指定容器的情况下，deque就是默认底层容器。</p>
+<p>基于刚刚说过的单调队列pop和push的规则，代码不难实现，如下：</p>
+<pre><code class="language-cpp">class MyQueue { //单调队列（从大到小）
+public:
+    deque&lt;int&gt; que; // 使用deque来实现单调队列
+    // 每次弹出的时候，比较当前要弹出的数值是否等于队列出口元素的数值，如果相等则弹出。
+    // 同时pop之前判断队列当前是否为空。
+    void pop(int value) {
+        if (!que.empty() &amp;&amp; value == que.front()) {
+            que.pop_front();
+        }
+    }
+    // 如果push的数值大于入口元素的数值，那么就将队列后端的数值弹出，直到push的数值小于等于队列入口元素的数值为止。
+    // 这样就保持了队列里的数值是单调从大到小的了。
+    void push(int value) {
+        while (!que.empty() &amp;&amp; value &gt; que.back()) {
+            que.pop_back();
+        }
+        que.push_back(value);
+
+    }
+    // 查询当前队列里的最大值 直接返回队列前端也就是front就可以了。
+    int front() {
+        return que.front();
+    }
+};
+</code></pre>
+<p>这样我们就用deque实现了一个单调队列，接下来解决滑动窗口最大值的问题就很简单了，直接看代码吧。</p>
+<h2 id="c解法"><a class="header" href="#c解法">C++解法</a></h2>
+<pre><code class="language-cpp">class Solution {
+private:
+    class MyQueue { //单调队列（从大到小）
+    public:
+        deque&lt;int&gt; que; // 使用deque来实现单调队列
+        // 每次弹出的时候，比较当前要弹出的数值是否等于队列出口元素的数值，如果相等则弹出。
+        // 同时pop之前判断队列当前是否为空。
+        void pop(int value) {
+            if (!que.empty() &amp;&amp; value == que.front()) {
+                que.pop_front();
+            }
+        }
+        // 如果push的数值大于入口元素的数值，那么就将队列后端的数值弹出，直到push的数值小于等于队列入口元素的数值为止。
+        // 这样就保持了队列里的数值是单调从大到小的了。
+        void push(int value) {
+            while (!que.empty() &amp;&amp; value &gt; que.back()) {
+                que.pop_back();
+            }
+            que.push_back(value);
+
+        }
+        // 查询当前队列里的最大值 直接返回队列前端也就是front就可以了。
+        int front() {
+            return que.front();
+        }
+    };
+public:
+    vector&lt;int&gt; maxSlidingWindow(vector&lt;int&gt;&amp; nums, int k) {
+        MyQueue que;
+        vector&lt;int&gt; result;
+        for (int i = 0; i &lt; k; i++) { // 先将前k的元素放进队列
+            que.push(nums[i]);
+        }
+        result.push_back(que.front()); // result 记录前k的元素的最大值
+        for (int i = k; i &lt; nums.size(); i++) {
+            que.pop(nums[i - k]); // 滑动窗口移除最前面元素
+            que.push(nums[i]); // 滑动窗口前加入最后面的元素
+            result.push_back(que.front()); // 记录对应的最大值
+        }
+        return result;
+    }
+};
+</code></pre>
+<ul>
+<li>时间复杂度: O(n)</li>
+<li>空间复杂度: O(k)</li>
+</ul>
+<p>再来看一下时间复杂度，使用单调队列的时间复杂度是 O(n)。</p>
+<p>有的同学可能想了，在队列中 push元素的过程中，还有pop操作呢，感觉不是纯粹的O(n)。</p>
+<p>其实，大家可以自己观察一下单调队列的实现，nums 中的每个元素最多也就被 push_back 和 pop_back 各一次，没有任何多余操作，所以整体的复杂度还是 O(n)。</p>
+<p>空间复杂度因为我们定义一个辅助队列，所以是O(k)。</p>
+<p>大家貌似对单调队列 都有一些疑惑，首先要明确的是，题解中单调队列里的pop和push接口，仅适用于本题哈。单调队列不是一成不变的，而是不同场景不同写法，总之要保证队列里单调递减或递增的原则，所以叫做单调队列。 不要以为本题中的单调队列实现就是固定的写法哈。</p>
+<p>大家貌似对deque也有一些疑惑，C++中deque是stack和queue默认的底层实现容器（这个我们之前已经讲过啦），deque是可以两边扩展的，而且deque里元素并不是严格的连续分布的。</p>
+<h2 id="java解法"><a class="header" href="#java解法">Java解法</a></h2>
+<pre><code class="language-java">//解法一
+//自定义数组
+class MyQueue {
+    Deque&lt;Integer&gt; deque = new LinkedList&lt;&gt;();
+    //弹出元素时，比较当前要弹出的数值是否等于队列出口的数值，如果相等则弹出
+    //同时判断队列当前是否为空
+    void poll(int val) {
+        if (!deque.isEmpty() &amp;&amp; val == deque.peek()) {
+            deque.poll();
+        }
+    }
+    //添加元素时，如果要添加的元素大于入口处的元素，就将入口元素弹出
+    //保证队列元素单调递减
+    //比如此时队列元素3,1，2将要入队，比1大，所以1弹出，此时队列：3,2
+    void add(int val) {
+        while (!deque.isEmpty() &amp;&amp; val &gt; deque.getLast()) {
+            deque.removeLast();
+        }
+        deque.add(val);
+    }
+    //队列队顶元素始终为最大值
+    int peek() {
+        return deque.peek();
+    }
+}
+
+class Solution {
+    public int[] maxSlidingWindow(int[] nums, int k) {
+        if (nums.length == 1) {
+            return nums;
+        }
+        int len = nums.length - k + 1;
+        //存放结果元素的数组
+        int[] res = new int[len];
+        int num = 0;
+        //自定义队列
+        MyQueue myQueue = new MyQueue();
+        //先将前k的元素放入队列
+        for (int i = 0; i &lt; k; i++) {
+            myQueue.add(nums[i]);
+        }
+        res[num++] = myQueue.peek();
+        for (int i = k; i &lt; nums.length; i++) {
+            //滑动窗口移除最前面的元素，移除是判断该元素是否放入队列
+            myQueue.poll(nums[i - k]);
+            //滑动窗口加入最后面的元素
+            myQueue.add(nums[i]);
+            //记录对应的最大值
+            res[num++] = myQueue.peek();
+        }
+        return res;
+    }
+}
+
+//解法二
+//利用双端队列手动实现单调队列
+/**
+ * 用一个单调队列来存储对应的下标，每当窗口滑动的时候，直接取队列的头部指针对应的值放入结果集即可
+ * 单调队列类似 （tail --&gt;） 3 --&gt; 2 --&gt; 1 --&gt; 0 (--&gt; head) (右边为头结点，元素存的是下标)
+ */
+class Solution {
+    public int[] maxSlidingWindow(int[] nums, int k) {
+        ArrayDeque&lt;Integer&gt; deque = new ArrayDeque&lt;&gt;();
+        int n = nums.length;
+        int[] res = new int[n - k + 1];
+        int idx = 0;
+        for(int i = 0; i &lt; n; i++) {
+            // 根据题意，i为nums下标，是要在[i - k + 1, i] 中选到最大值，只需要保证两点
+            // 1.队列头结点需要在[i - k + 1, i]范围内，不符合则要弹出
+            while(!deque.isEmpty() &amp;&amp; deque.peek() &lt; i - k + 1){
+                deque.poll();
+            }
+            // 2.既然是单调，就要保证每次放进去的数字要比末尾的都大，否则也弹出
+            while(!deque.isEmpty() &amp;&amp; nums[deque.peekLast()] &lt; nums[i]) {
+                deque.pollLast();
+            }
+
+            deque.offer(i);
+
+            // 因为单调，当i增长到符合第一个k范围的时候，每滑动一步都将队列头节点放入结果就行了
+            if(i &gt;= k - 1){
+                res[idx++] = nums[deque.peek()];
+            }
+        }
+        return res;
+    }
+}
+</code></pre>
+<h2 id="python解法"><a class="header" href="#python解法">Python解法</a></h2>
+<p>解法一：使用自定义的单调队列类</p>
+<pre><code class="language-python">from collections import deque
+
+
+class MyQueue: #单调队列（从大到小
+    def __init__(self):
+        self.queue = deque() #这里需要使用deque实现单调队列，直接使用list会超时
+    
+    #每次弹出的时候，比较当前要弹出的数值是否等于队列出口元素的数值，如果相等则弹出。
+    #同时pop之前判断队列当前是否为空。
+    def pop(self, value):
+        if self.queue and value == self.queue[0]:
+            self.queue.popleft()#list.pop()时间复杂度为O(n),这里需要使用collections.deque()
+            
+    #如果push的数值大于入口元素的数值，那么就将队列后端的数值弹出，直到push的数值小于等于队列入口元素的数值为止。
+    #这样就保持了队列里的数值是单调从大到小的了。
+    def push(self, value):
+        while self.queue and value &gt; self.queue[-1]:
+            self.queue.pop()
+        self.queue.append(value)
+        
+    #查询当前队列里的最大值 直接返回队列前端也就是front就可以了。
+    def front(self):
+        return self.queue[0]
+    
+class Solution:
+    def maxSlidingWindow(self, nums: List[int], k: int) -&gt; List[int]:
+        que = MyQueue()
+        result = []
+        for i in range(k): #先将前k的元素放进队列
+            que.push(nums[i])
+        result.append(que.front()) #result 记录前k的元素的最大值
+        for i in range(k, len(nums)):
+            que.pop(nums[i - k]) #滑动窗口移除最前面元素
+            que.push(nums[i]) #滑动窗口前加入最后面的元素
+            result.append(que.front()) #记录对应的最大值
+        return result
+</code></pre>
+<p>解法二：直接用单调队列</p>
+<pre><code class="language-python">from collections import deque
+class Solution:
+    def maxSlidingWindow(self, nums: List[int], k: int) -&gt; List[int]:
+        max_list = [] # 结果集合
+        kept_nums = deque() # 单调队列
+
+        for i in range(len(nums)):
+            update_kept_nums(kept_nums, nums[i]) # 右侧新元素加入
+
+            if i &gt;= k and nums[i - k] == kept_nums[0]: # 左侧旧元素如果等于单调队列头元素，需要移除头元素
+                kept_nums.popleft()
+
+            if i &gt;= k - 1:
+                max_list.append(kept_nums[0])
+
+        return max_list
+
+def update_kept_nums(kept_nums, num): # num 是新加入的元素
+    # 所有小于新元素的队列尾部元素，在新元素出现后，都是没有价值的，都需要被移除
+    while kept_nums and num &gt; kept_nums[-1]:
+        kept_nums.pop()
+
+    kept_nums.append(num)
+
+</code></pre>
+<h2 id="go解法"><a class="header" href="#go解法">Go解法</a></h2>
+<pre><code class="language-go">// 封装单调队列的方式解题
+type MyQueue struct {
+    queue []int
+}
+
+func NewMyQueue() *MyQueue {
+    return &amp;MyQueue{
+        queue: make([]int, 0),
+    }
+}
+
+func (m *MyQueue) Front() int {
+    return m.queue[0]
+}
+
+func (m *MyQueue) Back() int {
+    return m.queue[len(m.queue)-1]
+}
+
+func (m *MyQueue) Empty() bool {
+    return len(m.queue) == 0
+}
+
+func (m *MyQueue) Push(val int) {
+    for !m.Empty() &amp;&amp; val &gt; m.Back() {
+        m.queue = m.queue[:len(m.queue)-1]
+    }
+    m.queue = append(m.queue, val)
+}
+
+func (m *MyQueue) Pop(val int) {
+    if !m.Empty() &amp;&amp; val == m.Front() {
+        m.queue = m.queue[1:]
+    }
+}
+
+func maxSlidingWindow(nums []int, k int) []int {
+    queue := NewMyQueue()
+    length := len(nums)
+    res := make([]int, 0)
+    // 先将前k个元素放入队列
+    for i := 0; i &lt; k; i++ {
+        queue.Push(nums[i])
+    }
+    // 记录前k个元素的最大值
+    res = append(res, queue.Front())
+
+    for i := k; i &lt; length; i++ {
+        // 滑动窗口移除最前面的元素
+        queue.Pop(nums[i-k])
+        // 滑动窗口添加最后面的元素
+        queue.Push(nums[i])
+        // 记录最大值
+        res = append(res, queue.Front())
+    }
+    return res
+}
+</code></pre>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../队列/队列的实现.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../队列/优先队列.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../队列/队列的实现.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../队列/优先队列.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

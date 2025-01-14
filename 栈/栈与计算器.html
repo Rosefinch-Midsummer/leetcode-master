@@ -1,0 +1,676 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>栈与计算器 - 剑指Offer</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">剑指Offer</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
+<h1 id="栈与计算器"><a class="header" href="#栈与计算器">栈与计算器</a></h1>
+<ul>
+<li><a href="#150-evaluate-reverse-polish-notation">150. Evaluate Reverse Polish Notation</a>
+<ul>
+<li><a href="#%E6%80%9D%E8%B7%AF">思路</a></li>
+<li><a href="#c%E8%A7%A3%E6%B3%95">C++解法</a></li>
+<li><a href="#java%E8%A7%A3%E6%B3%95">Java解法</a></li>
+<li><a href="#python3%E8%A7%A3%E6%B3%95">Python3解法</a></li>
+<li><a href="#go">Go</a></li>
+</ul>
+</li>
+<li><a href="#224-basic-calculator">224. Basic Calculator</a>
+<ul>
+<li><a href="#%E6%80%9D%E8%B7%AF-1">思路</a></li>
+<li><a href="#c%E8%A7%A3%E6%B3%95-1">C++解法</a></li>
+</ul>
+</li>
+<li><a href="#227-basic-calculator-ii">227. Basic Calculator II</a>
+<ul>
+<li><a href="#%E6%80%9D%E8%B7%AF-2">思路</a>
+<ul>
+<li><a href="#approach-1-using-stack">Approach 1: Using Stack</a></li>
+<li><a href="#approach-2-optimized-approach-without-the-stack">Approach 2: Optimized Approach without the stack</a></li>
+</ul>
+</li>
+<li><a href="#c%E8%A7%A3%E6%B3%95-2">C++解法</a></li>
+<li><a href="#java%E8%A7%A3%E6%B3%95-1">Java解法</a></li>
+</ul>
+</li>
+</ul>
+<h1 id="150-evaluate-reverse-polish-notation"><a class="header" href="#150-evaluate-reverse-polish-notation"><a href="https://leetcode.com/problems/evaluate-reverse-polish-notation/">150. Evaluate Reverse Polish Notation</a></a></h1>
+<p>You are given an array of strings <code>tokens</code> that represents an arithmetic expression in a <a href="http://en.wikipedia.org/wiki/Reverse_Polish_notation">Reverse Polish Notation</a>.</p>
+<p>Evaluate the expression. Return <em>an integer that represents the value of the expression</em>.</p>
+<p><strong>Note</strong> that:</p>
+<ul>
+<li>The valid operators are <code>'+'</code>, <code>'-'</code>, <code>'*'</code>, and <code>'/'</code>.</li>
+<li>Each operand may be an integer or another expression.</li>
+<li>The division between two integers always <strong>truncates toward zero</strong>.</li>
+<li>There will not be any division by zero.</li>
+<li>The input represents a valid arithmetic expression in a reverse polish notation.</li>
+<li>The answer and all the intermediate calculations can be represented in a <strong>32-bit</strong> integer.</li>
+</ul>
+<p><strong>Example 1:</strong></p>
+<p><strong>Input:</strong> <code>tokens = ["2","1","+","3","*"]</code><br />
+<strong>Output:</strong> <code>9</code><br />
+<strong>Explanation:</strong> ((2 + 1) * 3) = 9</p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> <code>tokens = ["4","13","5","/","+"]</code><br />
+<strong>Output:</strong> <code>6</code><br />
+<strong>Explanation:</strong> (4 + (13 / 5)) = 6</p>
+<p><strong>Example 3:</strong></p>
+<p><strong>Input:</strong> <code>tokens = ["10","6","9","3","+","-11","*","/","*","17","+","5","+"]</code><br />
+<strong>Output:</strong> <code>22</code><br />
+<strong>Explanation:</strong> ((10 * (6 / ((9 + 3) * -11))) + 17) + 5
+= ((10 * (6 / (12 * -11))) + 17) + 5
+= ((10 * (6 / -132)) + 17) + 5
+= ((10 * 0) + 17) + 5
+= (0 + 17) + 5
+= 17 + 5
+= 22</p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= tokens.length &lt;= 10^4</code></li>
+<li><code>tokens[i]</code> is either an operator: <code>"+"</code>, <code>"-"</code>, <code>"*"</code>, or <code>"/"</code>, or an integer in the range <code>[-200, 200]</code>.</li>
+</ul>
+<h2 id="思路"><a class="header" href="#思路">思路</a></h2>
+<p>遇到数字字符串就转为数字并入栈，遇到运算符就弹出两个数字计算，然后把结果压栈。</p>
+<p>逆波兰表达式：是一种后缀表达式，所谓后缀就是指运算符写在后面。</p>
+<p>平常使用的算式则是一种中缀表达式，如 ( 1 + 2 ) * ( 3 + 4 ) 。</p>
+<p>该算式的逆波兰表达式写法为 ( ( 1 2 + ) ( 3 4 + ) * ) 。</p>
+<p>逆波兰表达式主要有以下两个优点：</p>
+<ul>
+<li>去掉括号后表达式无歧义，上式即便写成 1 2 + 3 4 + * 也可以依据次序计算出正确结果。</li>
+<li>适合用栈操作运算：遇到数字则入栈；遇到运算符则取出栈顶两个数字进行计算，并将结果压入栈中。</li>
+</ul>
+<h2 id="c解法"><a class="header" href="#c解法">C++解法</a></h2>
+<pre><code class="language-cpp">class Solution {
+public:
+    int evalRPN(vector&lt;string&gt;&amp; tokens) {
+        // 力扣修改了后台测试数据，需要用longlong
+        stack&lt;long long&gt; st; 
+        for (int i = 0; i &lt; tokens.size(); i++) {
+            if (tokens[i] == "+" || tokens[i] == "-" || tokens[i] == "*" || tokens[i] == "/") {
+                long long num1 = st.top();
+                st.pop();
+                long long num2 = st.top();
+                st.pop();
+                if (tokens[i] == "+") st.push(num2 + num1);
+                if (tokens[i] == "-") st.push(num2 - num1);
+                if (tokens[i] == "*") st.push(num2 * num1);
+                if (tokens[i] == "/") st.push(num2 / num1);
+            } else {
+                st.push(stoll(tokens[i]));
+            }
+        }
+
+        long long result = st.top();
+        st.pop(); // 把栈里最后一个元素弹出（其实不弹出也没事）
+        return result;
+    }
+};
+</code></pre>
+<p>实测使用int可以AC。</p>
+<ul>
+<li>时间复杂度: O(n)</li>
+<li>空间复杂度: O(n)</li>
+</ul>
+<h2 id="java解法"><a class="header" href="#java解法">Java解法</a></h2>
+<pre><code class="language-java">class Solution {
+    public int evalRPN(String[] tokens) {
+        Deque&lt;Integer&gt; stack = new LinkedList();
+        for (String s : tokens) {
+            if ("+".equals(s)) {        // leetcode 内置jdk的问题，不能使用==判断字符串是否相等
+                stack.push(stack.pop() + stack.pop());      // 注意 - 和/ 需要特殊处理
+            } else if ("-".equals(s)) {
+                stack.push(-stack.pop() + stack.pop());
+            } else if ("*".equals(s)) {
+                stack.push(stack.pop() * stack.pop());
+            } else if ("/".equals(s)) {
+                int temp1 = stack.pop();
+                int temp2 = stack.pop();
+                stack.push(temp2 / temp1);
+            } else {
+                stack.push(Integer.valueOf(s));
+            }
+        }
+        return stack.pop();
+    }
+}
+</code></pre>
+<h2 id="python3解法"><a class="header" href="#python3解法">Python3解法</a></h2>
+<pre><code class="language-python">from operator import add, sub, mul
+
+def div(x, y):
+    # 使用整数除法的向零取整方式
+    return int(x / y) if x * y &gt; 0 else -(abs(x) // abs(y))
+
+class Solution(object):
+    op_map = {'+': add, '-': sub, '*': mul, '/': div}
+    
+    def evalRPN(self, tokens: List[str]) -&gt; int:
+        stack = []
+        for token in tokens:
+            if token not in {'+', '-', '*', '/'}:
+                stack.append(int(token))
+            else:
+                op2 = stack.pop()
+                op1 = stack.pop()
+                stack.append(self.op_map[token](op1, op2))  # 第一个出来的在运算符后面
+        return stack.pop()
+</code></pre>
+<p>另一种可行，但因为使用eval()相对较慢的方法:</p>
+<pre><code class="language-python">class Solution(object):
+    def evalRPN(self, tokens: List[str]) -&gt; int:
+        stack = []
+        for token in tokens:
+            # 判断是否为数字，因为isdigit()不识别负数，故需要排除第一位的符号
+            if token.isdigit() or (len(token)&gt;1 and token[1].isdigit()):
+                stack.append(token)
+            else:
+                op2 = stack.pop()
+                op1 = stack.pop()
+		# 由题意"The division always truncates toward zero"，所以使用int()可以天然取整
+                stack.append(str(int(eval(op1 + token + op2))))
+        return int(stack.pop())
+</code></pre>
+<h2 id="go"><a class="header" href="#go">Go</a></h2>
+<pre><code class="language-go">func evalRPN(tokens []string) int {
+	stack := []int{}
+	for _, token := range tokens {
+		val, err := strconv.Atoi(token)
+		if err == nil {
+			stack = append(stack, val)
+		} else {   // 如果err不为nil说明不是数字
+			num1, num2 := stack[len(stack)-2], stack[(len(stack))-1]
+			stack = stack[:len(stack)-2]
+			switch token {
+			case "+":
+				stack = append(stack, num1+num2)
+			case "-":
+				stack = append(stack, num1-num2)
+			case "*":
+				stack = append(stack, num1*num2)
+			case "/":
+				stack = append(stack, num1/num2)
+			}
+		}
+	}
+	return stack[0]
+}
+</code></pre>
+<h1 id="224-basic-calculator"><a class="header" href="#224-basic-calculator"><a href="https://leetcode.com/problems/basic-calculator/">224. Basic Calculator</a></a></h1>
+<p>Given a string <code>s</code> representing a valid expression, implement a basic calculator to evaluate it, and return <em>the result of the evaluation</em>.</p>
+<p><strong>Note:</strong> You are <strong>not</strong> allowed to use any built-in function which evaluates strings as mathematical expressions, such as <code>eval()</code>.</p>
+<p><strong>Example 1:</strong></p>
+<p><strong>Input:</strong> s = "1 + 1"<br />
+<strong>Output:</strong> 2</p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> s = " 2-1 + 2 "<br />
+<strong>Output:</strong> 3</p>
+<p><strong>Example 3:</strong></p>
+<p><strong>Input:</strong> s = "(1+(4+5+2)-3)+(6+8)"<br />
+<strong>Output:</strong> 23</p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= s.length &lt;= 3 * 10^5</code></li>
+<li><code>s</code> consists of digits, <code>'+'</code>, <code>'-'</code>, <code>'('</code>, <code>')'</code>, and <code>' '</code>.</li>
+<li><code>s</code> represents a valid expression.</li>
+<li><code>'+'</code> is <strong>not</strong> used as a unary operation (i.e., <code>"+1"</code> and <code>"+(2 + 3)"</code> is invalid).</li>
+<li><code>'-'</code> could be used as a unary operation (i.e., <code>"-1"</code> and <code>"-(2 + 3)"</code> is valid).</li>
+<li>There will be no two consecutive operators in the input.</li>
+<li>Every number and running calculation will fit in a signed 32-bit integer.</li>
+</ul>
+<h2 id="思路-1"><a class="header" href="#思路-1">思路</a></h2>
+<p>左括号前是运算符，所以需要存储。</p>
+<p><code>sum = st.top().first + st.top().second * sum;</code>其中sum是括号内数字和，<code>st.top().first</code>是括号前数字和，<code>st.top().second</code>是括号前运算符符号。</p>
+<h2 id="c解法-1"><a class="header" href="#c解法-1">C++解法</a></h2>
+<pre><code class="language-cpp">class Solution {
+public:
+    int calculate(string s) {
+        long long int sum = 0;
+        int sign = 1;
+        stack&lt;pair&lt;int,int&gt;&gt; st;
+        for(int i = 0; i &lt; s.length(); i++){
+            if(isdigit(s[i])){
+                long long int num = 0;
+                while(i &lt; s.size() &amp;&amp; isdigit(s[i])){
+                    num = num * 10 + (s[i] - '0');
+                    i++;
+                }
+                i--;
+                sum += num * sign;
+                sign = 1;
+            }else if(s[i] == '('){
+                st.push({sum, sign});
+                sum = 0;
+                sign = 1;
+            }else if(s[i] == ')'){
+                sum = st.top().first + st.top().second * sum;
+                st.pop();
+            }else if(s[i] == '-'){
+                sign = -1 * sign;
+            }
+        }
+        return sum;
+    }
+};
+</code></pre>
+<h1 id="227-basic-calculator-ii"><a class="header" href="#227-basic-calculator-ii"><a href="https://leetcode.com/problems/basic-calculator-ii/">227. Basic Calculator II</a></a></h1>
+<p>Given a string <code>s</code> which represents an expression, <em>evaluate this expression and return its value</em>. </p>
+<p>The integer division should truncate toward zero.</p>
+<p>You may assume that the given expression is always valid. All intermediate results will be in the range of <code>[-2^31, 2^31 - 1]</code>.</p>
+<p><strong>Note:</strong> You are not allowed to use any built-in function which evaluates strings as mathematical expressions, such as <code>eval()</code>.</p>
+<p><strong>Example 1:</strong></p>
+<p><strong>Input:</strong> <code>s = "3+2*2"</code><br />
+<strong>Output:</strong> 7</p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> <code>s = " 3/2 "</code><br />
+<strong>Output:</strong> 1</p>
+<p><strong>Example 3:</strong></p>
+<p><strong>Input:</strong> <code>s = " 3+5 / 2 "</code><br />
+<strong>Output:</strong> 5</p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= s.length &lt;= 3 * 10^5</code></li>
+<li><code>s</code> consists of integers and operators <code>('+', '-', '*', '/')</code> separated by some number of spaces.</li>
+<li><code>s</code> represents <strong>a valid expression</strong>.</li>
+<li>All the integers in the expression are non-negative integers in the range <code>[0, 2^31 - 1]</code>.</li>
+<li>The answer is <strong>guaranteed</strong> to fit in a <strong>32-bit integer</strong>.</li>
+</ul>
+<h2 id="思路-2"><a class="header" href="#思路-2">思路</a></h2>
+<h3 id="approach-1-using-stack"><a class="header" href="#approach-1-using-stack">Approach 1: Using Stack</a></h3>
+<p>Intuition</p>
+<p>We know that there could be 4 types of operations - addition <code>(+)</code>, subtraction <code>(-)</code>, multiplication <code>(*)</code> and division <code>(/)</code>. Without parenthesis, we know that, multiplication <code>(*)</code> and <code>(\)</code> operations would always have higher precedence than addition <code>(+)</code> and subtraction <code>(-)</code> based on operator precedence rules.</p>
+<p><img src="https://leetcode.com/problems/basic-calculator-ii/solutions/893354/Figures/227/calculator_overview.png" alt="img" /></p>
+<p>If we look at the above examples, we can make the following observations -</p>
+<ul>
+<li>If the current operation is addition <code>(+)</code> or subtraction <code>(-)</code>, then the expression is evaluated based on the precedence of the next operation.</li>
+</ul>
+<p>In example 1, <code>4+3</code> is evaluated later because the next operation is multiplication <code>(3*5)</code> which has higher precedence.<br />
+But, in example 2, <code>4+3</code> is evaluated first because the next operation is subtraction <code>(3-5)</code> which has equal precedence.</p>
+<ul>
+<li>If the current operator is multiplication <code>(*)</code> or division <code>(/)</code>, then the expression is evaluated irrespective of the next operation. This is because in the given set of operations <code>(+,-,*,/)</code>, the <code>*</code> and <code>/</code> operations have the highest precedence and therefore must be evaluated first.</li>
+</ul>
+<p>In the above examples 3 and 4, <code>4*3</code> is always evaluated first irrespective of the next operation.</p>
+<p>Using this intuition let's look at the algorithm to implement the problem.</p>
+<p>Algorithm</p>
+<p>Scan the input string <code>s</code> from left to right and evaluate the expressions based on the following rules</p>
+<ol>
+<li>If the current character is a digit <code>0-9</code> ( operand ), add it to the number <code>currentNumber</code>.</li>
+<li>Otherwise, the current character must be an operation <code>(+,-,*, /)</code>. Evaluate the expression based on the type of operation.</li>
+</ol>
+<ul>
+<li>Addition <code>(+)</code> or Subtraction <code>(-)</code>: We must evaluate the expression later based on the next operation. So, we must store the <code>currentNumber</code> to be used later. Let's push the currentNumber in the Stack.</li>
+</ul>
+<blockquote>
+<p><a href="https://leetcode.com/explore/learn/card/queue-stack/230/usage-stack/">Stack data structure</a> follows Last In First Out (LIFO) principle. Hence, the last pushed number in the stack would be popped out first for evaluation. In addition, when we pop from the stack and evaluate this expression in the future, we need a way to determine if the operation was Addition <code>(+)</code> or Subtraction <code>(-)</code>. To simplify our evaluation, we can push <code>-currentNumber</code> in a stack if the current operation is subtraction (<code>-</code>) and assume that the operation for all the values in the stack is addition <code>(+)</code>. This works because <code>(a - currentNumber)</code> is equivalent to <code>(a + (-currentNumber))</code>.</p>
+</blockquote>
+<ul>
+<li>Multiplication <code>(*)</code> or Division <code>(/)</code>: Pop the top values from the stack and evaluate the current expression. Push the evaluated value back to the stack.</li>
+</ul>
+<p>Once the string is scanned, pop from the stack and add to the <code>result</code>.</p>
+<p>Implementation</p>
+<p>Complexity Analysis</p>
+<ul>
+<li>Time Complexity: O(n), where n is the length of the string s. We iterate over the string s at most twice.</li>
+<li>Space Complexity: O(n), where n is the length of the string s.</li>
+</ul>
+<h3 id="approach-2-optimized-approach-without-the-stack"><a class="header" href="#approach-2-optimized-approach-without-the-stack">Approach 2: Optimized Approach without the stack</a></h3>
+<p>Intuition</p>
+<p>In the previous approach, we used a stack to track the values of the evaluated expressions. In the end, we pop all the values from the stack and add to the result. Instead of that, we could add the values to the result beforehand and keep track of the last calculated number, thus eliminating the need for the stack. Let's understand the algorithm in detail.</p>
+<p>Algorithm</p>
+<p>The approach works similar to <em>Approach 1</em> with the following differences :</p>
+<ul>
+<li>Instead of using a <code>stack</code>, we use a variable <code>lastNumber</code> to track the value of the last evaluated expression.</li>
+<li>If the operation is Addition <code>(+)</code> or Subtraction <code>(-)</code>, add the <code>lastNumber</code> to the result instead of pushing it to the stack. The <code>currentNumber</code> would be updated to <code>lastNumber</code> for the next iteration.</li>
+<li>If the operation is Multiplication <code>(*)</code> or Division <code>(/)</code>, we must evaluate the expression <code>lastNumber * currentNumber</code> and update the <code>lastNumber</code> with the result of the expression. This would be added to the result after the entire string is scanned.</li>
+</ul>
+<p>Implementation</p>
+<p>Complexity Analysis</p>
+<ul>
+<li>Time Complexity: O(n), where n is the length of the string s.</li>
+<li>Space Complexity: O(1), as we use constant extra space to store <code>lastNumber</code>, <code>result</code> and so on.</li>
+</ul>
+<h2 id="c解法-2"><a class="header" href="#c解法-2">C++解法</a></h2>
+<p>使用栈</p>
+<pre><code class="language-cpp">
+class Solution {
+public:
+    int calculate(string s) {
+        int len = s.length();
+        if (len == 0) return 0;
+        stack&lt;int&gt; stack;
+        int currentNumber = 0;
+        char operation = '+';
+        for (int i = 0; i &lt; len; i++) {
+            char currentChar = s[i];
+            if (isdigit(currentChar)) {
+                currentNumber = (currentNumber * 10) + (currentChar - '0');
+            }
+            if (!isdigit(currentChar) &amp;&amp; !iswspace(currentChar) || i == len - 1) {
+                if (operation == '-') {
+                    stack.push(-currentNumber);
+                } else if (operation == '+') {
+                    stack.push(currentNumber);
+                } else if (operation == '*') {
+                    int stackTop = stack.top();
+                    stack.pop();
+                    stack.push(stackTop * currentNumber);
+                } else if (operation == '/') {
+                    int stackTop = stack.top();
+                    stack.pop();
+                    stack.push(stackTop / currentNumber);
+                }
+                operation = currentChar;
+                currentNumber = 0;
+            }
+        }
+        int result = 0;
+        while (stack.size() != 0) {
+            result += stack.top();
+            stack.pop();
+        }
+        return result;
+    }
+};
+
+</code></pre>
+<p>不用栈</p>
+<pre><code class="language-cpp">class Solution {
+public:
+    int calculate(string s) {
+        int length = s.length();
+        if (length == 0) return 0;
+        int currentNumber = 0, lastNumber = 0, result = 0;
+        char sign = '+';
+        for (int i = 0; i &lt; length; i++) {
+            char currentChar = s[i];
+            if (isdigit(currentChar)) {
+                currentNumber = (currentNumber * 10) + (currentChar - '0');
+            }
+            if (!isdigit(currentChar) &amp;&amp; !iswspace(currentChar) || i == length - 1) {
+                if (sign == '+' || sign == '-') {
+                    result += lastNumber;
+                    lastNumber = (sign == '+') ? currentNumber : -currentNumber;
+                } else if (sign == '*') {
+                    lastNumber = lastNumber * currentNumber;
+                } else if (sign == '/') {
+                    lastNumber = lastNumber / currentNumber;
+                }
+                sign = currentChar;
+                currentNumber = 0;
+            }
+        }
+        result += lastNumber;
+        return result;  
+    }
+};
+</code></pre>
+<h2 id="java解法-1"><a class="header" href="#java解法-1">Java解法</a></h2>
+<pre><code class="language-java">class Solution {
+    public int calculate(String s) {
+
+        if (s == null || s.isEmpty()) return 0;
+        int len = s.length();
+        Stack&lt;Integer&gt; stack = new Stack&lt;Integer&gt;();
+        int currentNumber = 0;
+        char operation = '+';
+        for (int i = 0; i &lt; len; i++) {
+            char currentChar = s.charAt(i);
+            if (Character.isDigit(currentChar)) {
+                currentNumber = (currentNumber * 10) + (currentChar - '0');
+            }
+            if (!Character.isDigit(currentChar) &amp;&amp; !Character.isWhitespace(currentChar) || i == len - 1) {
+                if (operation == '-') {
+                    stack.push(-currentNumber);
+                }
+                else if (operation == '+') {
+                    stack.push(currentNumber);
+                }
+                else if (operation == '*') {
+                    stack.push(stack.pop() * currentNumber);
+                }
+                else if (operation == '/') {
+                    stack.push(stack.pop() / currentNumber);
+                }
+                operation = currentChar;
+                currentNumber = 0;
+            }
+        }
+        int result = 0;
+        while (!stack.isEmpty()) {
+            result += stack.pop();
+        }
+        return result;
+    }
+}
+
+</code></pre>
+<p>不用栈</p>
+<pre><code class="language-java">class Solution {
+    public int calculate(String s) {
+        if (s == null || s.isEmpty()) return 0;
+        int length = s.length();
+        int currentNumber = 0, lastNumber = 0, result = 0;
+        char operation = '+';
+        for (int i = 0; i &lt; length; i++) {
+            char currentChar = s.charAt(i);
+            if (Character.isDigit(currentChar)) {
+                currentNumber = (currentNumber * 10) + (currentChar - '0');
+            }
+            if (!Character.isDigit(currentChar) &amp;&amp; !Character.isWhitespace(currentChar) || i == length - 1) {
+                if (operation == '+' || operation == '-') {
+                    result += lastNumber;
+                    lastNumber = (operation == '+') ? currentNumber : -currentNumber;
+                } else if (operation == '*') {
+                    lastNumber = lastNumber * currentNumber;
+                } else if (operation == '/') {
+                    lastNumber = lastNumber / currentNumber;
+                }
+                operation = currentChar;
+                currentNumber = 0;
+            }
+        }
+        result += lastNumber;
+        return result;
+    }
+}
+</code></pre>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../栈/字符消消乐.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../队列/队列.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../栈/字符消消乐.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../队列/队列.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

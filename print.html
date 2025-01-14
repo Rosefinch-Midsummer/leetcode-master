@@ -7206,8 +7206,2169 @@ public:
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
 <h1 id="栈"><a class="header" href="#栈">栈</a></h1>
+<ul>
+<li><a href="%E6%A0%88/%E6%A0%88.html#%E6%A0%88%E5%92%8C%E9%98%9F%E5%88%97">栈和队列</a></li>
+</ul>
+<h2 id="栈和队列"><a class="header" href="#栈和队列">栈和队列</a></h2>
+<p>灵魂四问：</p>
+<ol>
+<li>C++中stack，queue 是容器么？</li>
+<li>我们使用的stack，queue是属于那个版本的STL？</li>
+<li>我们使用的STL中stack，queue是如何实现的？</li>
+<li>stack，queue 提供迭代器来遍历空间么？</li>
+</ol>
+<p>栈与队列是我们熟悉的不能再熟悉的数据结构，但它们的底层实现，很多同学都比较模糊，这其实就是基础所在。</p>
+<p>可以出一道面试题：栈里面的元素在内存中是连续分布的么？</p>
+<p>这个问题有两个陷阱：</p>
+<ul>
+<li>陷阱1：栈是容器适配器，底层容器使用不同的容器，导致栈内数据在内存中不一定是连续分布的。</li>
+<li>陷阱2：默认情况下，默认底层容器是deque，那么deque在内存中的数据分布是什么样的呢？ 答案是：不连续的，下文也会提到deque。</li>
+</ul>
+<p>我想栈和队列的原理大家应该很熟悉了，队列是先进先出，栈是先进后出。</p>
+<p>如图所示：</p>
+<p><img src="https://code-thinking-1253855093.file.myqcloud.com/pics/20210104235346563.png" alt="栈与队列理论1" /></p>
+<p>那么我这里再列出四个关于栈的问题，大家可以思考一下。以下是以C++为例，使用其他编程语言的同学也对应思考一下，自己使用的编程语言里栈和队列是什么样的。</p>
+<ol>
+<li>C++中stack 是容器么？</li>
+<li>我们使用的stack是属于哪个版本的STL？</li>
+<li>我们使用的STL中stack是如何实现的？</li>
+<li>stack 提供迭代器来遍历stack空间么？</li>
+</ol>
+<p>相信这四个问题并不那么好回答， 因为一些同学使用数据结构会停留在非常表面上的应用，稍稍往深一问，就会有好像懂，好像也不懂的感觉。</p>
+<p>有的同学可能仅仅知道有栈和队列这么个数据结构，却不知道底层实现，也不清楚所使用栈和队列和STL是什么关系。</p>
+<p>所以这里我再给大家扫一遍基础知识，</p>
+<p>首先大家要知道 栈和队列是STL（C++标准库）里面的两个数据结构。</p>
+<p>C++标准库是有多个版本的，要知道我们使用的STL是哪个版本，才能知道对应的栈和队列的实现原理。</p>
+<p>那么来介绍一下，三个最为普遍的STL版本：</p>
+<ol>
+<li>
+<p>HP STL 其他版本的C++ STL，一般是以HP STL为蓝本实现出来的，HP STL是C++ STL的第一个实现版本，而且开放源代码。</p>
+</li>
+<li>
+<p>P.J.Plauger STL 由P.J.Plauger参照HP STL实现出来的，被Visual C++编译器所采用，不是开源的。</p>
+</li>
+<li>
+<p>SGI STL 由Silicon Graphics Computer Systems公司参照HP STL实现，被Linux的C++编译器GCC所采用，SGI STL是开源软件，源码可读性甚高。</p>
+</li>
+</ol>
+<p>接下来介绍的栈和队列也是SGI STL里面的数据结构， 知道了使用版本，才知道对应的底层实现。</p>
+<p>来说一说栈，栈先进后出，如图所示：</p>
+<p><img src="https://code-thinking-1253855093.file.myqcloud.com/pics/20210104235434905.png" alt="栈与队列理论2" /></p>
+<p>栈提供push 和 pop 等等接口，所有元素必须符合先进后出规则，所以栈不提供走访功能，也不提供迭代器(iterator)。 不像是set 或者map 提供迭代器iterator来遍历所有元素。</p>
+<p><strong>栈是以底层容器完成其所有的工作，对外提供统一的接口，底层容器是可插拔的（也就是说我们可以控制使用哪种容器来实现栈的功能）。</strong></p>
+<p>所以STL中栈往往不被归类为容器，而被归类为container adapter（容器适配器）。</p>
+<p>那么问题来了，STL 中栈是用什么容器实现的？</p>
+<p>从下图中可以看出，栈的内部结构，栈的底层实现可以是vector，deque，list 都是可以的， 主要就是数组和链表的底层实现。</p>
+<p><img src="https://code-thinking-1253855093.file.myqcloud.com/pics/20210104235459376.png" alt="栈与队列理论3" /></p>
+<p><strong>我们常用的SGI STL，如果没有指定底层实现的话，默认是以deque为栈的底层结构。</strong></p>
+<p>deque是一个双向队列，只要封住一段，只开通另一端就可以实现栈的逻辑了。</p>
+<p><strong>SGI STL中 队列底层实现缺省情况下一样使用deque实现的。</strong></p>
+<p>我们也可以指定vector为栈的底层实现，初始化语句如下：</p>
+<pre><code class="language-cpp">std::stack&lt;int, std::vector&lt;int&gt; &gt; third;  // 使用vector为底层容器的栈
+</code></pre>
+<p>刚刚讲过栈的特性，对应的队列的情况是一样的。</p>
+<p>队列中先进先出的数据结构，同样不允许有遍历行为，不提供迭代器, <strong>SGI STL中队列一样是以deque为缺省情况下的底部结构。</strong></p>
+<p>也可以指定list 为起底层实现，初始化queue的语句如下：</p>
+<pre><code class="language-cpp">std::queue&lt;int, std::list&lt;int&gt;&gt; third; // 定义以list为底层容器的队列
+</code></pre>
+<p>所以STL 队列也不被归类为容器，而被归类为container adapter（ 容器适配器）。</p>
+<p>我这里讲的都是C++ 语言中的情况， 使用其他语言的同学也要思考栈与队列的底层实现问题， 不要对数据结构的使用浅尝辄止，而要深挖其内部原理，才能夯实基础。</p>
+<div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
+<h1 id="栈的实现"><a class="header" href="#栈的实现">栈的实现</a></h1>
+<ul>
+<li><a href="%E6%A0%88/%E6%A0%88%E7%9A%84%E5%AE%9E%E7%8E%B0.html#225-implement-stack-using-queues">225. Implement Stack using Queues</a>
+<ul>
+<li><a href="%E6%A0%88/%E6%A0%88%E7%9A%84%E5%AE%9E%E7%8E%B0.html#%E6%80%9D%E8%B7%AF">思路</a></li>
+<li><a href="%E6%A0%88/%E6%A0%88%E7%9A%84%E5%AE%9E%E7%8E%B0.html#c%E8%A7%A3%E6%B3%95">C++解法</a></li>
+<li><a href="%E6%A0%88/%E6%A0%88%E7%9A%84%E5%AE%9E%E7%8E%B0.html#java%E8%A7%A3%E6%B3%95">Java解法</a></li>
+</ul>
+</li>
+</ul>
+<h1 id="225-implement-stack-using-queues"><a class="header" href="#225-implement-stack-using-queues"><a href="https://leetcode.com/problems/implement-stack-using-queues/">225. Implement Stack using Queues</a></a></h1>
+<p>Implement a last-in-first-out (LIFO) stack using only two queues. The implemented stack should support all the functions of a normal stack (<code>push</code>, <code>top</code>, <code>pop</code>, and <code>empty</code>).</p>
+<p>Implement the <code>MyStack</code> class:</p>
+<ul>
+<li><code>void push(int x)</code> Pushes element x to the top of the stack.</li>
+<li><code>int pop()</code> Removes the element on the top of the stack and returns it.</li>
+<li><code>int top()</code> Returns the element on the top of the stack.</li>
+<li><code>boolean empty()</code> Returns <code>true</code> if the stack is empty, <code>false</code> otherwise.</li>
+</ul>
+<p><strong>Notes:</strong></p>
+<ul>
+<li>You must use <strong>only</strong> standard operations of a queue, which means that only <code>push to back</code>, <code>peek/pop from front</code>, <code>size</code> and <code>is empty</code> operations are valid.</li>
+<li>Depending on your language, the queue may not be supported natively. You may simulate a queue using a list or deque (double-ended queue) as long as you use only a queue's standard operations.</li>
+</ul>
+<p><strong>Example 1:</strong></p>
+<p><strong>Input</strong></p>
+<pre><code>["MyStack", "push", "push", "top", "pop", "empty"]
+[[], [1], [2], [], [], []]
+</code></pre>
+<p><strong>Output</strong></p>
+<pre><code>[null, null, null, 2, 2, false]
+</code></pre>
+<p><strong>Explanation</strong></p>
+<pre><code>MyStack myStack = new MyStack();
+myStack.push(1);
+myStack.push(2);
+myStack.top(); // return 2
+myStack.pop(); // return 2
+myStack.empty(); // return False
+</code></pre>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= x &lt;= 9</code></li>
+<li>At most <code>100</code> calls will be made to <code>push</code>, <code>pop</code>, <code>top</code>, and <code>empty</code>.</li>
+<li>All the calls to <code>pop</code> and <code>top</code> are valid.</li>
+</ul>
+<p><strong>Follow-up:</strong> Can you implement the stack using only one queue?</p>
+<h2 id="思路-52"><a class="header" href="#思路-52">思路</a></h2>
+<p>使用一个队列或两个队列都可以，使用一个队列时，弹出操作需要先弹出<code>size-1</code>个元素再加入，再弹出所要弹出的元素。</p>
+<h2 id="c解法-38"><a class="header" href="#c解法-38">C++解法</a></h2>
+<pre><code class="language-cpp">class MyStack {
+public:
+    queue&lt;int&gt; q;
+    MyStack() {
+        
+    }
+    
+    void push(int x) {
+        q.push(x);
+    }
+    
+    int pop() {
+        int size = q.size();
+        size--;
+        while(size--){
+            q.push(q.front());
+            q.pop();
+        }
+        int result = q.front();
+        q.pop();
+        return result;
+    }
+    
+    int top() {
+        return q.back();
+    }
+    
+    bool empty() {
+        return q.size() == 0;
+    }
+};
+
+/**
+ * Your MyStack object will be instantiated and called as such:
+ * MyStack* obj = new MyStack();
+ * obj-&gt;push(x);
+ * int param_2 = obj-&gt;pop();
+ * int param_3 = obj-&gt;top();
+ * bool param_4 = obj-&gt;empty();
+ */
+</code></pre>
+<h2 id="java解法-27"><a class="header" href="#java解法-27">Java解法</a></h2>
+<div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
+<h1 id="字符消消乐"><a class="header" href="#字符消消乐">字符消消乐</a></h1>
+<ul>
+<li><a href="%E6%A0%88/%E5%AD%97%E7%AC%A6%E6%B6%88%E6%B6%88%E4%B9%90.html#20-valid-parentheses">20. Valid Parentheses</a>
+<ul>
+<li><a href="%E6%A0%88/%E5%AD%97%E7%AC%A6%E6%B6%88%E6%B6%88%E4%B9%90.html#%E6%80%9D%E8%B7%AF">思路</a></li>
+<li><a href="%E6%A0%88/%E5%AD%97%E7%AC%A6%E6%B6%88%E6%B6%88%E4%B9%90.html#c%E8%A7%A3%E6%B3%95">C++解法</a></li>
+<li><a href="%E6%A0%88/%E5%AD%97%E7%AC%A6%E6%B6%88%E6%B6%88%E4%B9%90.html#java%E8%A7%A3%E6%B3%95">Java解法</a></li>
+</ul>
+</li>
+<li><a href="%E6%A0%88/%E5%AD%97%E7%AC%A6%E6%B6%88%E6%B6%88%E4%B9%90.html#1047-remove-all-adjacent-duplicates-in-string">1047. Remove All Adjacent Duplicates In String</a>
+<ul>
+<li><a href="%E6%A0%88/%E5%AD%97%E7%AC%A6%E6%B6%88%E6%B6%88%E4%B9%90.html#%E6%80%9D%E8%B7%AF-1">思路</a></li>
+<li><a href="%E6%A0%88/%E5%AD%97%E7%AC%A6%E6%B6%88%E6%B6%88%E4%B9%90.html#c%E8%A7%A3%E6%B3%95-1">C++解法</a></li>
+<li><a href="%E6%A0%88/%E5%AD%97%E7%AC%A6%E6%B6%88%E6%B6%88%E4%B9%90.html#java%E8%A7%A3%E6%B3%95-1">Java解法</a></li>
+<li><a href="%E6%A0%88/%E5%AD%97%E7%AC%A6%E6%B6%88%E6%B6%88%E4%B9%90.html#python%E8%A7%A3%E6%B3%95">Python解法</a></li>
+<li><a href="%E6%A0%88/%E5%AD%97%E7%AC%A6%E6%B6%88%E6%B6%88%E4%B9%90.html#go%E8%A7%A3%E6%B3%95">Go解法</a></li>
+</ul>
+</li>
+<li><a href="%E6%A0%88/%E5%AD%97%E7%AC%A6%E6%B6%88%E6%B6%88%E4%B9%90.html#1209-remove-all-adjacent-duplicates-in-string-ii">1209. Remove All Adjacent Duplicates in String II</a>
+<ul>
+<li><a href="%E6%A0%88/%E5%AD%97%E7%AC%A6%E6%B6%88%E6%B6%88%E4%B9%90.html#%E6%80%9D%E8%B7%AF-2">思路</a></li>
+<li><a href="%E6%A0%88/%E5%AD%97%E7%AC%A6%E6%B6%88%E6%B6%88%E4%B9%90.html#c%E8%A7%A3%E6%B3%95-2">C++解法</a></li>
+<li><a href="%E6%A0%88/%E5%AD%97%E7%AC%A6%E6%B6%88%E6%B6%88%E4%B9%90.html#java%E8%A7%A3%E6%B3%95-2">Java解法</a></li>
+<li><a href="%E6%A0%88/%E5%AD%97%E7%AC%A6%E6%B6%88%E6%B6%88%E4%B9%90.html#python%E8%A7%A3%E6%B3%95-1">Python解法</a></li>
+</ul>
+</li>
+<li><a href="%E6%A0%88/%E5%AD%97%E7%AC%A6%E6%B6%88%E6%B6%88%E4%B9%90.html#2390-removing-stars-from-a-string">2390. Removing Stars From a String</a>
+<ul>
+<li><a href="%E6%A0%88/%E5%AD%97%E7%AC%A6%E6%B6%88%E6%B6%88%E4%B9%90.html#%E6%80%9D%E8%B7%AF-3">思路</a></li>
+<li><a href="%E6%A0%88/%E5%AD%97%E7%AC%A6%E6%B6%88%E6%B6%88%E4%B9%90.html#c%E8%A7%A3%E6%B3%95-3">C++解法</a></li>
+</ul>
+</li>
+<li><a href="%E6%A0%88/%E5%AD%97%E7%AC%A6%E6%B6%88%E6%B6%88%E4%B9%90.html#2716-minimize-string-length">2716. Minimize String Length</a>
+<ul>
+<li><a href="%E6%A0%88/%E5%AD%97%E7%AC%A6%E6%B6%88%E6%B6%88%E4%B9%90.html#%E6%80%9D%E8%B7%AF-4">思路</a></li>
+<li><a href="%E6%A0%88/%E5%AD%97%E7%AC%A6%E6%B6%88%E6%B6%88%E4%B9%90.html#c%E8%A7%A3%E6%B3%95-4">C++解法</a></li>
+<li><a href="%E6%A0%88/%E5%AD%97%E7%AC%A6%E6%B6%88%E6%B6%88%E4%B9%90.html#java%E8%A7%A3%E6%B3%95-3">Java解法</a></li>
+<li><a href="%E6%A0%88/%E5%AD%97%E7%AC%A6%E6%B6%88%E6%B6%88%E4%B9%90.html#python3%E8%A7%A3%E6%B3%95">Python3解法</a></li>
+</ul>
+</li>
+</ul>
+<h1 id="20-valid-parentheses"><a class="header" href="#20-valid-parentheses"><a href="https://leetcode.com/problems/valid-parentheses/">20. Valid Parentheses</a></a></h1>
+<p>Given a string <code>s</code> containing just the characters <code>'('</code>, <code>')'</code>, <code>'{'</code>, <code>'}'</code>, <code>'['</code> and <code>']'</code>, determine if the input string is valid.</p>
+<p>An input string is valid if:</p>
+<ol>
+<li>Open brackets must be closed by the same type of brackets.</li>
+<li>Open brackets must be closed in the correct order.</li>
+<li>Every close bracket has a corresponding open bracket of the same type.</li>
+</ol>
+<p><strong>Example 1:</strong></p>
+<p><strong>Input:</strong> s = "()"</p>
+<p><strong>Output:</strong> true</p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> s = "()[]{}"</p>
+<p><strong>Output:</strong> true</p>
+<p><strong>Example 3:</strong></p>
+<p><strong>Input:</strong> s = "(]"</p>
+<p><strong>Output:</strong> false</p>
+<p><strong>Example 4:</strong></p>
+<p><strong>Input:</strong> s = "([])"</p>
+<p><strong>Output:</strong> true</p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= s.length &lt;= 10^4</code></li>
+<li><code>s</code> consists of parentheses only <code>'()[]{}'</code>.</li>
+</ul>
+<h2 id="思路-53"><a class="header" href="#思路-53">思路</a></h2>
+<p>使用栈数据结构，碰到左括号就压入右括号，碰到右括号就比较，相同则弹出，不同则结束程序。</p>
+<p>Use a stack of characters.</p>
+<p>When you encounter an opening bracket, push it to the top of the stack.</p>
+<p>When you encounter a closing bracket, check if the top of the stack was the opening for it. If yes, pop it from the stack. Otherwise, return false.</p>
+<h2 id="c解法-39"><a class="header" href="#c解法-39">C++解法</a></h2>
+<pre><code class="language-cpp">class Solution {
+public:
+    bool isValid(string s) {
+        if (s.size() % 2 != 0) return false; // 如果s的长度为奇数，一定不符合要求
+        stack&lt;char&gt; st;
+        for (int i = 0; i &lt; s.size(); i++) {
+            if (s[i] == '(') st.push(')');
+            else if (s[i] == '{') st.push('}');
+            else if (s[i] == '[') st.push(']');
+            // 第三种情况：遍历字符串匹配的过程中，栈已经为空了，没有匹配的字符了，说明右括号没有找到对应的左括号 return false
+            // 第二种情况：遍历字符串匹配的过程中，发现栈里没有我们要匹配的字符。所以return false
+            else if (st.empty() || st.top() != s[i]) return false;
+            else st.pop(); // st.top() 与 s[i]相等，栈弹出元素
+        }
+        // 第一种情况：此时我们已经遍历完了字符串，但是栈不为空，说明有相应的左括号没有右括号来匹配，所以return false，否则就return true
+        return st.empty();
+    }
+};
+</code></pre>
+<p>时间复杂度: O(n)</p>
+<p>空间复杂度: O(n)</p>
+<p>下面的写法是错误的：</p>
+<pre><code class="language-cpp">class Solution {
+public:
+    bool isValid(string s) {
+        if(s.size() % 2 != 0) return false;
+        stack&lt;char&gt; st;
+        for(char ch : s){
+            if(ch == '('){
+                st.push(')');
+            }else if(ch == '['){
+                st.push(']');
+            }else if(ch == '{'){
+                st.push('}');
+            }else{
+                if(st.top() == ch){
+                    st.pop();
+                }else{
+                    return false;
+                }
+            }
+        }
+        return st.empty();
+    }
+};
+</code></pre>
+<p>其中的<code>if(st.top() == ch)</code>会报错。</p>
+<h2 id="java解法-28"><a class="header" href="#java解法-28">Java解法</a></h2>
+<pre><code class="language-java">class Solution {
+    public boolean isValid(String s) {
+        Deque&lt;Character&gt; deque = new LinkedList&lt;&gt;();
+        char ch;
+        for (int i = 0; i &lt; s.length(); i++) {
+            ch = s.charAt(i);
+            //碰到左括号，就把相应的右括号入栈
+            if (ch == '(') {
+                deque.push(')');
+            }else if (ch == '{') {
+                deque.push('}');
+            }else if (ch == '[') {
+                deque.push(']');
+            } else if (deque.isEmpty() || deque.peek() != ch) {
+                return false;
+            }else {//如果是右括号判断是否和栈顶元素匹配
+                deque.pop();
+            }
+        }
+        //最后判断栈中元素是否匹配
+        return deque.isEmpty();
+    }
+}
+</code></pre>
+<h1 id="1047-remove-all-adjacent-duplicates-in-string"><a class="header" href="#1047-remove-all-adjacent-duplicates-in-string"><a href="https://leetcode.com/problems/remove-all-adjacent-duplicates-in-string/">1047. Remove All Adjacent Duplicates In String</a></a></h1>
+<p>You are given a string <code>s</code> consisting of lowercase English letters. A <strong>duplicate removal</strong> consists of choosing two <strong>adjacent</strong> and <strong>equal</strong> letters and removing them.</p>
+<p>We repeatedly make <strong>duplicate removals</strong> on <code>s</code> until we no longer can.</p>
+<p>Return <em>the final string after all such duplicate removals have been made</em>. It can be proven that the answer is <strong>unique</strong>.</p>
+<p><strong>Example 1:</strong></p>
+<p><strong>Input:</strong> s = "abbaca"<br />
+<strong>Output:</strong> "ca"<br />
+<strong>Explanation:</strong><br />
+For example, in "abbaca" we could remove "bb" since the letters are adjacent and equal, and this is the only possible move.  The result of this move is that the string is "aaca", of which only "aa" is possible, so the final string is "ca".</p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> s = "azxxzy"<br />
+<strong>Output:</strong> "ay"</p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= s.length &lt;= 10^5</code></li>
+<li><code>s</code> consists of lowercase English letters.</li>
+</ul>
+<h2 id="思路-54"><a class="header" href="#思路-54">思路</a></h2>
+<p>本题也是用栈来解决的经典题目。</p>
+<p>那么栈里应该放的是什么元素呢？</p>
+<p>我们在删除相邻重复项的时候，其实就是要知道当前遍历的这个元素，我们在前一位是不是遍历过一样数值的元素，那么如何记录前面遍历过的元素呢？</p>
+<p>所以就是用栈来存放，那么栈的目的，就是存放遍历过的元素，当遍历当前的这个元素的时候，去栈里看一下我们是不是遍历过相同数值的相邻元素。</p>
+<p>然后再去做对应的消除操作。 如动画所示：</p>
+<p><img src="https://code-thinking.cdn.bcebos.com/gifs/1047.%E5%88%A0%E9%99%A4%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E7%9A%84%E6%89%80%E6%9C%89%E7%9B%B8%E9%82%BB%E9%87%8D%E5%A4%8D%E9%A1%B9.gif" alt="1047.删除字符串中的所有相邻重复项" /></p>
+<p>从栈中弹出剩余元素，此时是字符串ac，因为从栈里弹出的元素是倒序的，所以再对字符串进行反转一下，就得到了最终的结果。</p>
+<h2 id="c解法-40"><a class="header" href="#c解法-40">C++解法</a></h2>
+<pre><code class="language-cpp">class Solution {
+public:
+    string removeDuplicates(string S) {
+        stack&lt;char&gt; st;
+        for (char s : S) {
+            if (st.empty() || s != st.top()) {
+                st.push(s);
+            } else {
+                st.pop(); // s 与 st.top()相等的情况
+            }
+        }
+        string result = "";
+        while (!st.empty()) { // 将栈中元素放到result字符串汇总
+            result += st.top();
+            st.pop();
+        }
+        reverse (result.begin(), result.end()); // 此时字符串需要反转一下
+        return result;
+
+    }
+};
+</code></pre>
+<ul>
+<li>时间复杂度: O(n)</li>
+<li>空间复杂度: O(n)</li>
+</ul>
+<p>当然可以拿字符串直接作为栈，这样省去了栈还要转为字符串的操作。</p>
+<p>代码如下：</p>
+<pre><code class="language-cpp">class Solution {
+public:
+    string removeDuplicates(string S) {
+        string result;
+        for(char s : S) {
+            if(result.empty() || result.back() != s) {
+                result.push_back(s);
+            }
+            else {
+                result.pop_back();
+            }
+        }
+        return result;
+    }
+};
+</code></pre>
+<ul>
+<li>时间复杂度: O(n)</li>
+<li>空间复杂度: O(1)，返回值不计空间复杂度</li>
+</ul>
+<h2 id="java解法-29"><a class="header" href="#java解法-29">Java解法</a></h2>
+<p>使用 Deque 作为堆栈</p>
+<pre><code class="language-java">class Solution {
+    public String removeDuplicates(String S) {
+        //ArrayDeque会比LinkedList在除了删除元素这一点外会快一点
+        //参考：https://stackoverflow.com/questions/6163166/why-is-arraydeque-better-than-linkedlist
+        ArrayDeque&lt;Character&gt; deque = new ArrayDeque&lt;&gt;();
+        char ch;
+        for (int i = 0; i &lt; S.length(); i++) {
+            ch = S.charAt(i);
+            if (deque.isEmpty() || deque.peek() != ch) {
+                deque.push(ch);
+            } else {
+                deque.pop();
+            }
+        }
+        String str = "";
+        //剩余的元素即为不重复的元素
+        while (!deque.isEmpty()) {
+            str = deque.pop() + str;
+        }
+        return str;
+    }
+}
+</code></pre>
+<p>拿字符串直接作为栈，省去了栈还要转为字符串的操作。</p>
+<pre><code class="language-java">class Solution {
+    public String removeDuplicates(String s) {
+        // 将 res 当做栈
+        // 也可以用 StringBuilder 来修改字符串，速度更快
+        // StringBuilder res = new StringBuilder();
+        StringBuffer res = new StringBuffer();
+        // top为 res 的长度
+        int top = -1;
+        for (int i = 0; i &lt; s.length(); i++) {
+            char c = s.charAt(i);
+            // 当 top &gt;= 0,即栈中有字符时，当前字符如果和栈中字符相等，弹出栈顶字符，同时 top--
+            if (top &gt;= 0 &amp;&amp; res.charAt(top) == c) {
+                res.deleteCharAt(top);
+                top--;
+            // 否则，将该字符 入栈，同时top++
+            } else {
+                res.append(c);
+                top++;
+            }
+        }
+        return res.toString();
+    }
+}
+</code></pre>
+<p>拓展：双指针</p>
+<pre><code class="language-cpp">class Solution {
+    public String removeDuplicates(String s) {
+        char[] ch = s.toCharArray();
+        int fast = 0;
+        int slow = 0;
+        while(fast &lt; s.length()){
+            // 直接用fast指针覆盖slow指针的值
+            ch[slow] = ch[fast];
+            // 遇到前后相同值的，就跳过，即slow指针后退一步，下次循环就可以直接被覆盖掉了
+            if(slow &gt; 0 &amp;&amp; ch[slow] == ch[slow - 1]){
+                slow--;
+            }else{
+                slow++;
+            }
+            fast++;
+        }
+        return new String(ch,0,slow);
+    }
+}
+</code></pre>
+<h2 id="python解法-7"><a class="header" href="#python解法-7">Python解法</a></h2>
+<pre><code class="language-python"># 方法一，使用栈
+class Solution:
+    def removeDuplicates(self, s: str) -&gt; str:
+        res = list()
+        for item in s:
+            if res and res[-1] == item:
+                res.pop()
+            else:
+                res.append(item)
+        return "".join(res)  # 字符串拼接
+</code></pre>
+<pre><code class="language-python"># 方法二，使用双指针模拟栈，如果不让用栈可以作为备选方法。
+class Solution:
+    def removeDuplicates(self, s: str) -&gt; str:
+        res = list(s)
+        slow = fast = 0
+        length = len(res)
+
+        while fast &lt; length:
+            # 如果一样直接换，不一样会把后面的填在slow的位置
+            res[slow] = res[fast]
+            
+            # 如果发现和前一个一样，就退一格指针
+            if slow &gt; 0 and res[slow] == res[slow - 1]:
+                slow -= 1
+            else:
+                slow += 1
+            fast += 1
+            
+        return ''.join(res[0: slow])
+</code></pre>
+<h2 id="go解法-12"><a class="header" href="#go解法-12">Go解法</a></h2>
+<p>使用栈</p>
+<pre><code class="language-go">func removeDuplicates(s string) string {
+    stack := make([]rune, 0)
+    for _, val := range s {
+        if len(stack) == 0 || val != stack[len(stack)-1] {
+            stack = append(stack, val)
+        } else {
+            stack = stack[:len(stack)-1]
+        }
+    }
+    var res []rune
+    for len(stack) != 0 { // 将栈中元素放到result字符串汇总
+        res = append(res, stack[len(stack)-1])
+        stack = stack[:len(stack)-1]
+    }
+    // 此时字符串需要反转一下
+    l, r := 0, len(res)-1
+    for l &lt; r {
+        res[l], res[r] = res[r], res[l]
+        l++
+        r--
+    }
+    return string(res)
+}
+</code></pre>
+<p>拿字符串直接作为栈，省去了栈还要转为字符串的操作</p>
+<pre><code class="language-go">func removeDuplicates(s string) string {
+    var stack []byte
+    for i := 0; i &lt; len(s);i++ {
+        // 栈不空 且 与栈顶元素不等
+        if len(stack) &gt; 0 &amp;&amp; stack[len(stack)-1] == s[i] {
+            // 弹出栈顶元素 并 忽略当前元素(s[i])
+            stack = stack[:len(stack)-1]
+        }else{
+            // 入栈
+            stack = append(stack, s[i])
+        }
+    }
+    return string(stack)
+}
+</code></pre>
+<h1 id="1209-remove-all-adjacent-duplicates-in-string-ii"><a class="header" href="#1209-remove-all-adjacent-duplicates-in-string-ii"><a href="https://leetcode.com/problems/remove-all-adjacent-duplicates-in-string-ii/">1209. Remove All Adjacent Duplicates in String II</a></a></h1>
+<p>You are given a string <code>s</code> and an integer <code>k</code>, a <code>k</code> <strong>duplicate removal</strong> consists of choosing <code>k</code> adjacent and equal letters from <code>s</code> and removing them, causing the left and the right side of the deleted substring to concatenate together.</p>
+<p>We repeatedly make <code>k</code> <strong>duplicate removals</strong> on <code>s</code> until we no longer can.</p>
+<p>Return <em>the final string after all such duplicate removals have been made</em>. It is guaranteed that the answer is <strong>unique</strong>.</p>
+<p><strong>Example 1:</strong></p>
+<p><strong>Input:</strong> s = "abcd", k = 2<br />
+<strong>Output:</strong> "abcd"<br />
+<strong>Explanation:</strong> There's nothing to delete.</p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> s = "deeedbbcccbdaa", k = 3<br />
+<strong>Output:</strong> "aa"<br />
+<strong>Explanation:</strong><br />
+First delete "eee" and "ccc", get "ddbbbdaa"
+Then delete "bbb", get "dddaa"
+Finally delete "ddd", get "aa"</p>
+<p><strong>Example 3:</strong></p>
+<p><strong>Input:</strong> s = "pbbcggttciiippooaais", k = 2<br />
+<strong>Output:</strong> "ps"</p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= s.length &lt;= 10^5</code></li>
+<li><code>2 &lt;= k &lt;= 10^4</code></li>
+<li><code>s</code> only contains lowercase English letters.</li>
+</ul>
+<h2 id="思路-55"><a class="header" href="#思路-55">思路</a></h2>
+<p>Solution 1: Two Pointers</p>
+<p>Solution 2: Stack</p>
+<p>Save the character <code>c</code> and its count to the <code>stack</code>.<br />
+If the next character <code>c</code> is same as the last one, increment the count.<br />
+Otherwise push a pair <code>(c, 1)</code> into the stack.<br />
+I used a dummy element <code>('#', 0)</code> to avoid empty stack.</p>
+<p>Complexity</p>
+<p>Time <code>O(N)</code> for one pass</p>
+<p>Space <code>O(N)</code></p>
+<h2 id="c解法-41"><a class="header" href="#c解法-41">C++解法</a></h2>
+<pre><code class="language-cpp">    string removeDuplicates(string s, int k) {
+        int i = 0, n = s.length();
+        vector&lt;int&gt; count(n);
+        for (int j = 0; j &lt; n; ++j, ++i) {
+            s[i] = s[j];
+            count[i] = i &gt; 0 &amp;&amp; s[i - 1] == s[j] ? count[i - 1] + 1 : 1;
+            if (count[i] == k) i -= k;
+        }
+        return s.substr(0, i);
+    }
+</code></pre>
+<pre><code class="language-cpp">    string removeDuplicates(string s, int k) {
+        vector&lt;pair&lt;int, char&gt;&gt; stack = {{0, '#'}};
+        for (char c: s) {
+            if (stack.back().second != c) {
+                stack.push_back({1, c});
+            } else if (++stack.back().first == k)
+                stack.pop_back();
+        }
+        string res;
+        for (auto &amp; p : stack) {
+            res.append(p.first, p.second);
+        }
+        return res;
+    }
+</code></pre>
+<h2 id="java解法-30"><a class="header" href="#java解法-30">Java解法</a></h2>
+<pre><code class="language-java">    public String removeDuplicates(String s, int k) {
+        int[] count = new int[s.length()];
+        StringBuilder sb = new StringBuilder();
+        for(char c : s.toCharArray()) {
+            sb.append(c);
+            int last = sb.length()-1;
+            count[last] = 1 + (last &gt; 0 &amp;&amp; sb.charAt(last) == sb.charAt(last-1) ? count[last-1] : 0);
+            if(count[last] &gt;= k) sb.delete(sb.length()-k, sb.length());
+        }
+        return sb.toString();
+    }
+</code></pre>
+<pre><code class="language-java">    public String removeDuplicates(String s, int k) {
+        int i = 0, n = s.length(), count[] = new int[n];
+        char[] stack = s.toCharArray();
+        for (int j = 0; j &lt; n; ++j, ++i) {
+            stack[i] = stack[j];
+            count[i] = i &gt; 0 &amp;&amp; stack[i - 1] == stack[j] ? count[i - 1] + 1 : 1;
+            if (count[i] == k) i -= k;
+        }
+        return new String(stack, 0, i);
+    }
+</code></pre>
+<h2 id="python解法-8"><a class="header" href="#python解法-8"><strong>Python解法</strong></a></h2>
+<pre><code class="language-python">    def removeDuplicates(self, s, k):
+        stack = [['#', 0]]
+        for c in s:
+            if stack[-1][0] == c:
+                stack[-1][1] += 1
+                if stack[-1][1] == k:
+                    stack.pop()
+            else:
+                stack.append([c, 1])
+        return ''.join(c * k for c, k in stack)
+</code></pre>
+<h1 id="2390-removing-stars-from-a-string"><a class="header" href="#2390-removing-stars-from-a-string"><a href="https://leetcode.com/problems/removing-stars-from-a-string/">2390. Removing Stars From a String</a></a></h1>
+<p>You are given a string <code>s</code>, which contains stars <code>*</code>.</p>
+<p>In one operation, you can:</p>
+<ul>
+<li>Choose a star in <code>s</code>.</li>
+<li>Remove the closest <strong>non-star</strong> character to its <strong>left</strong>, as well as remove the star itself.</li>
+</ul>
+<p>Return <em>the string after <strong>all</strong> stars have been removed</em>.</p>
+<p><strong>Note:</strong></p>
+<ul>
+<li>The input will be generated such that the operation is always possible.</li>
+<li>It can be shown that the resulting string will always be unique.</li>
+</ul>
+<p><strong>Example 1:</strong></p>
+<p><strong>Input:</strong> <code>s = "leet**cod*e"</code><br />
+<strong>Output:</strong> <code>"lecoe"</code><br />
+<strong>Explanation:</strong> Performing the removals from left to right:</p>
+<ul>
+<li>The closest character to the 1st star is 't' in <code>"lee**t****cod*e"</code>. s becomes <code>"lee*cod*e"</code>.</li>
+<li>The closest character to the 2nd star is 'e' in <code>"le**e***cod*e"</code>. s becomes <code>"lecod*e"</code>.</li>
+<li>The closest character to the 3rd star is 'd' in <code>"leco**d***e"</code>. s becomes <code>"lecoe"</code>.
+There are no more stars, so we return "lecoe".</li>
+</ul>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> <code>s = "erase*****"</code><br />
+<strong>Output:</strong> ""<br />
+<strong>Explanation:</strong> The entire string is removed, so we return an empty string.</p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= s.length &lt;= 10^5</code></li>
+<li><code>s</code> consists of lowercase English letters and stars <code>*</code>.</li>
+<li>The operation above can be performed on <code>s</code>.</li>
+</ul>
+<h2 id="思路-56"><a class="header" href="#思路-56">思路</a></h2>
+<p>What data structure could we use to efficiently perform these removals?</p>
+<p>Use a stack to store the characters. Pop one character off the stack at each star. Otherwise, we push the character onto the stack.</p>
+<p>当然可以拿字符串直接作为栈，这样省去了栈还要转为字符串的操作。</p>
+<h2 id="c解法-42"><a class="header" href="#c解法-42">C++解法</a></h2>
+<pre><code class="language-cpp">class Solution {
+public:
+    string removeStars(string s) {
+        string result;
+        for(char ch : s) {
+            if(result.empty() || ch != '*') {
+                result.push_back(ch);
+            }
+            else {
+                result.pop_back();
+            }
+        }
+        return result;
+    }
+};
+</code></pre>
+<h1 id="2716-minimize-string-length"><a class="header" href="#2716-minimize-string-length"><a href="https://leetcode.com/problems/minimize-string-length/">2716. Minimize String Length</a></a></h1>
+<p>Given a string <code>s</code>, you have two types of operation:</p>
+<ol>
+<li>Choose an index <code>i</code> in the string, and let <code>c</code> be the character in position <code>i</code>. <strong>Delete</strong> the <strong>closest occurrence</strong> of <code>c</code> to the <strong>left</strong> of <code>i</code> (if exists).</li>
+<li>Choose an index <code>i</code> in the string, and let <code>c</code> be the character in position <code>i</code>. <strong>Delete</strong> the <strong>closest occurrence</strong> of <code>c</code> to the <strong>right</strong> of <code>i</code> (if exists).</li>
+</ol>
+<p>Your task is to <strong>minimize</strong> the length of <code>s</code> by performing the above operations zero or more times.</p>
+<p>Return an integer denoting the length of the <strong>minimized</strong> string.</p>
+<p><strong>Example 1:</strong></p>
+<p><strong>Input:</strong> s = "aaabc"</p>
+<p><strong>Output:</strong> 3</p>
+<p><strong>Explanation:</strong></p>
+<ol>
+<li>Operation 2: we choose <code>i = 1</code> so <code>c</code> is 'a', then we remove <code>s[2]</code> as it is closest 'a' character to the right of <code>s[1]</code>.<br />
+<code>s</code> becomes "aabc" after this.</li>
+<li>Operation 1: we choose <code>i = 1</code> so <code>c</code> is 'a', then we remove <code>s[0]</code> as it is closest 'a' character to the left of <code>s[1]</code>.<br />
+<code>s</code> becomes "abc" after this.</li>
+</ol>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> s = "cbbd"</p>
+<p><strong>Output:</strong> 3</p>
+<p><strong>Explanation:</strong></p>
+<ol>
+<li>Operation 1: we choose <code>i = 2</code> so <code>c</code> is 'b', then we remove <code>s[1]</code> as it is closest 'b' character to the left of <code>s[1]</code>.<br />
+<code>s</code> becomes "cbd" after this.</li>
+</ol>
+<p><strong>Example 3:</strong></p>
+<p><strong>Input:</strong> s = "baadccab"</p>
+<p><strong>Output:</strong> 4</p>
+<p><strong>Explanation:</strong></p>
+<ol>
+<li>Operation 1: we choose <code>i = 6</code> so <code>c</code> is 'a', then we remove <code>s[2]</code> as it is closest 'a' character to the left of <code>s[6]</code>.<br />
+<code>s</code> becomes "badccab" after this.</li>
+<li>Operation 2: we choose <code>i = 0</code> so <code>c</code> is 'b', then we remove <code>s[6]</code> as it is closest 'b' character to the right of <code>s[0]</code>.<br />
+<code>s</code> becomes "badcca" fter this.</li>
+<li>Operation 2: we choose <code>i = 3</code> so <code>c</code> is 'c', then we remove <code>s[4]</code> as it is closest 'c' character to the right of <code>s[3]</code>.<br />
+<code>s</code> becomes "badca" after this.</li>
+<li>Operation 1: we choose <code>i = 4</code> so <code>c</code> is 'a', then we remove <code>s[1]</code> as it is closest 'a' character to the left of <code>s[4]</code>.<br />
+<code>s</code> becomes "bdca" after this.</li>
+</ol>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= s.length &lt;= 100</code></li>
+<li><code>s</code> contains only lowercase English letters</li>
+</ul>
+<h2 id="思路-57"><a class="header" href="#思路-57">思路</a></h2>
+<p>The minimized string will not contain duplicate characters.</p>
+<p>The minimized string will contain all distinct characters of the original string.</p>
+<h2 id="c解法-43"><a class="header" href="#c解法-43">C++解法</a></h2>
+<pre><code class="language-cpp">class Solution {
+public:
+    int minimizedStringLength(string s) {
+        return unordered_set&lt;char&gt;(s.begin(), s.end()).size();
+    }
+};
+</code></pre>
+<p>使用hash数组求解：</p>
+<pre><code class="language-cpp">class Solution {
+public:
+    int minimizedStringLength(string s) {
+        int hash[26] = {0};
+        for(char ch : s){
+            hash[ch - 'a']++;
+        }
+        int count = 0;
+        for(int i = 0; i &lt; 26; i++){
+            if(hash[i] != 0){
+                count++;
+            }
+        }
+        return count;
+    }
+};
+</code></pre>
+<p>注意：<code>int hash[26] = {0};</code>这行代码确保 <code>hash</code> 数组的所有元素都被初始化为零，避免了使用未初始化值的问题。</p>
+<h2 id="java解法-31"><a class="header" href="#java解法-31">Java解法</a></h2>
+<pre><code class="language-java">class Solution {
+    public int minimizedStringLength(String s) {
+        return (int) s.chars().distinct().count();
+    }
+}
+</code></pre>
+<h2 id="python3解法-11"><a class="header" href="#python3解法-11">Python3解法</a></h2>
+<pre><code class="language-python">class Solution:
+    def minimizedStringLength(self, s: str) -&gt; int:
+        return len(set(s))
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
+<h1 id="栈与计算器"><a class="header" href="#栈与计算器">栈与计算器</a></h1>
+<ul>
+<li><a href="%E6%A0%88/%E6%A0%88%E4%B8%8E%E8%AE%A1%E7%AE%97%E5%99%A8.html#150-evaluate-reverse-polish-notation">150. Evaluate Reverse Polish Notation</a>
+<ul>
+<li><a href="%E6%A0%88/%E6%A0%88%E4%B8%8E%E8%AE%A1%E7%AE%97%E5%99%A8.html#%E6%80%9D%E8%B7%AF">思路</a></li>
+<li><a href="%E6%A0%88/%E6%A0%88%E4%B8%8E%E8%AE%A1%E7%AE%97%E5%99%A8.html#c%E8%A7%A3%E6%B3%95">C++解法</a></li>
+<li><a href="%E6%A0%88/%E6%A0%88%E4%B8%8E%E8%AE%A1%E7%AE%97%E5%99%A8.html#java%E8%A7%A3%E6%B3%95">Java解法</a></li>
+<li><a href="%E6%A0%88/%E6%A0%88%E4%B8%8E%E8%AE%A1%E7%AE%97%E5%99%A8.html#python3%E8%A7%A3%E6%B3%95">Python3解法</a></li>
+<li><a href="%E6%A0%88/%E6%A0%88%E4%B8%8E%E8%AE%A1%E7%AE%97%E5%99%A8.html#go">Go</a></li>
+</ul>
+</li>
+<li><a href="%E6%A0%88/%E6%A0%88%E4%B8%8E%E8%AE%A1%E7%AE%97%E5%99%A8.html#224-basic-calculator">224. Basic Calculator</a>
+<ul>
+<li><a href="%E6%A0%88/%E6%A0%88%E4%B8%8E%E8%AE%A1%E7%AE%97%E5%99%A8.html#%E6%80%9D%E8%B7%AF-1">思路</a></li>
+<li><a href="%E6%A0%88/%E6%A0%88%E4%B8%8E%E8%AE%A1%E7%AE%97%E5%99%A8.html#c%E8%A7%A3%E6%B3%95-1">C++解法</a></li>
+</ul>
+</li>
+<li><a href="%E6%A0%88/%E6%A0%88%E4%B8%8E%E8%AE%A1%E7%AE%97%E5%99%A8.html#227-basic-calculator-ii">227. Basic Calculator II</a>
+<ul>
+<li><a href="%E6%A0%88/%E6%A0%88%E4%B8%8E%E8%AE%A1%E7%AE%97%E5%99%A8.html#%E6%80%9D%E8%B7%AF-2">思路</a>
+<ul>
+<li><a href="%E6%A0%88/%E6%A0%88%E4%B8%8E%E8%AE%A1%E7%AE%97%E5%99%A8.html#approach-1-using-stack">Approach 1: Using Stack</a></li>
+<li><a href="%E6%A0%88/%E6%A0%88%E4%B8%8E%E8%AE%A1%E7%AE%97%E5%99%A8.html#approach-2-optimized-approach-without-the-stack">Approach 2: Optimized Approach without the stack</a></li>
+</ul>
+</li>
+<li><a href="%E6%A0%88/%E6%A0%88%E4%B8%8E%E8%AE%A1%E7%AE%97%E5%99%A8.html#c%E8%A7%A3%E6%B3%95-2">C++解法</a></li>
+<li><a href="%E6%A0%88/%E6%A0%88%E4%B8%8E%E8%AE%A1%E7%AE%97%E5%99%A8.html#java%E8%A7%A3%E6%B3%95-1">Java解法</a></li>
+</ul>
+</li>
+</ul>
+<h1 id="150-evaluate-reverse-polish-notation"><a class="header" href="#150-evaluate-reverse-polish-notation"><a href="https://leetcode.com/problems/evaluate-reverse-polish-notation/">150. Evaluate Reverse Polish Notation</a></a></h1>
+<p>You are given an array of strings <code>tokens</code> that represents an arithmetic expression in a <a href="http://en.wikipedia.org/wiki/Reverse_Polish_notation">Reverse Polish Notation</a>.</p>
+<p>Evaluate the expression. Return <em>an integer that represents the value of the expression</em>.</p>
+<p><strong>Note</strong> that:</p>
+<ul>
+<li>The valid operators are <code>'+'</code>, <code>'-'</code>, <code>'*'</code>, and <code>'/'</code>.</li>
+<li>Each operand may be an integer or another expression.</li>
+<li>The division between two integers always <strong>truncates toward zero</strong>.</li>
+<li>There will not be any division by zero.</li>
+<li>The input represents a valid arithmetic expression in a reverse polish notation.</li>
+<li>The answer and all the intermediate calculations can be represented in a <strong>32-bit</strong> integer.</li>
+</ul>
+<p><strong>Example 1:</strong></p>
+<p><strong>Input:</strong> <code>tokens = ["2","1","+","3","*"]</code><br />
+<strong>Output:</strong> <code>9</code><br />
+<strong>Explanation:</strong> ((2 + 1) * 3) = 9</p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> <code>tokens = ["4","13","5","/","+"]</code><br />
+<strong>Output:</strong> <code>6</code><br />
+<strong>Explanation:</strong> (4 + (13 / 5)) = 6</p>
+<p><strong>Example 3:</strong></p>
+<p><strong>Input:</strong> <code>tokens = ["10","6","9","3","+","-11","*","/","*","17","+","5","+"]</code><br />
+<strong>Output:</strong> <code>22</code><br />
+<strong>Explanation:</strong> ((10 * (6 / ((9 + 3) * -11))) + 17) + 5
+= ((10 * (6 / (12 * -11))) + 17) + 5
+= ((10 * (6 / -132)) + 17) + 5
+= ((10 * 0) + 17) + 5
+= (0 + 17) + 5
+= 17 + 5
+= 22</p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= tokens.length &lt;= 10^4</code></li>
+<li><code>tokens[i]</code> is either an operator: <code>"+"</code>, <code>"-"</code>, <code>"*"</code>, or <code>"/"</code>, or an integer in the range <code>[-200, 200]</code>.</li>
+</ul>
+<h2 id="思路-58"><a class="header" href="#思路-58">思路</a></h2>
+<p>遇到数字字符串就转为数字并入栈，遇到运算符就弹出两个数字计算，然后把结果压栈。</p>
+<p>逆波兰表达式：是一种后缀表达式，所谓后缀就是指运算符写在后面。</p>
+<p>平常使用的算式则是一种中缀表达式，如 ( 1 + 2 ) * ( 3 + 4 ) 。</p>
+<p>该算式的逆波兰表达式写法为 ( ( 1 2 + ) ( 3 4 + ) * ) 。</p>
+<p>逆波兰表达式主要有以下两个优点：</p>
+<ul>
+<li>去掉括号后表达式无歧义，上式即便写成 1 2 + 3 4 + * 也可以依据次序计算出正确结果。</li>
+<li>适合用栈操作运算：遇到数字则入栈；遇到运算符则取出栈顶两个数字进行计算，并将结果压入栈中。</li>
+</ul>
+<h2 id="c解法-44"><a class="header" href="#c解法-44">C++解法</a></h2>
+<pre><code class="language-cpp">class Solution {
+public:
+    int evalRPN(vector&lt;string&gt;&amp; tokens) {
+        // 力扣修改了后台测试数据，需要用longlong
+        stack&lt;long long&gt; st; 
+        for (int i = 0; i &lt; tokens.size(); i++) {
+            if (tokens[i] == "+" || tokens[i] == "-" || tokens[i] == "*" || tokens[i] == "/") {
+                long long num1 = st.top();
+                st.pop();
+                long long num2 = st.top();
+                st.pop();
+                if (tokens[i] == "+") st.push(num2 + num1);
+                if (tokens[i] == "-") st.push(num2 - num1);
+                if (tokens[i] == "*") st.push(num2 * num1);
+                if (tokens[i] == "/") st.push(num2 / num1);
+            } else {
+                st.push(stoll(tokens[i]));
+            }
+        }
+
+        long long result = st.top();
+        st.pop(); // 把栈里最后一个元素弹出（其实不弹出也没事）
+        return result;
+    }
+};
+</code></pre>
+<p>实测使用int可以AC。</p>
+<ul>
+<li>时间复杂度: O(n)</li>
+<li>空间复杂度: O(n)</li>
+</ul>
+<h2 id="java解法-32"><a class="header" href="#java解法-32">Java解法</a></h2>
+<pre><code class="language-java">class Solution {
+    public int evalRPN(String[] tokens) {
+        Deque&lt;Integer&gt; stack = new LinkedList();
+        for (String s : tokens) {
+            if ("+".equals(s)) {        // leetcode 内置jdk的问题，不能使用==判断字符串是否相等
+                stack.push(stack.pop() + stack.pop());      // 注意 - 和/ 需要特殊处理
+            } else if ("-".equals(s)) {
+                stack.push(-stack.pop() + stack.pop());
+            } else if ("*".equals(s)) {
+                stack.push(stack.pop() * stack.pop());
+            } else if ("/".equals(s)) {
+                int temp1 = stack.pop();
+                int temp2 = stack.pop();
+                stack.push(temp2 / temp1);
+            } else {
+                stack.push(Integer.valueOf(s));
+            }
+        }
+        return stack.pop();
+    }
+}
+</code></pre>
+<h2 id="python3解法-12"><a class="header" href="#python3解法-12">Python3解法</a></h2>
+<pre><code class="language-python">from operator import add, sub, mul
+
+def div(x, y):
+    # 使用整数除法的向零取整方式
+    return int(x / y) if x * y &gt; 0 else -(abs(x) // abs(y))
+
+class Solution(object):
+    op_map = {'+': add, '-': sub, '*': mul, '/': div}
+    
+    def evalRPN(self, tokens: List[str]) -&gt; int:
+        stack = []
+        for token in tokens:
+            if token not in {'+', '-', '*', '/'}:
+                stack.append(int(token))
+            else:
+                op2 = stack.pop()
+                op1 = stack.pop()
+                stack.append(self.op_map[token](op1, op2))  # 第一个出来的在运算符后面
+        return stack.pop()
+</code></pre>
+<p>另一种可行，但因为使用eval()相对较慢的方法:</p>
+<pre><code class="language-python">class Solution(object):
+    def evalRPN(self, tokens: List[str]) -&gt; int:
+        stack = []
+        for token in tokens:
+            # 判断是否为数字，因为isdigit()不识别负数，故需要排除第一位的符号
+            if token.isdigit() or (len(token)&gt;1 and token[1].isdigit()):
+                stack.append(token)
+            else:
+                op2 = stack.pop()
+                op1 = stack.pop()
+		# 由题意"The division always truncates toward zero"，所以使用int()可以天然取整
+                stack.append(str(int(eval(op1 + token + op2))))
+        return int(stack.pop())
+</code></pre>
+<h2 id="go-1"><a class="header" href="#go-1">Go</a></h2>
+<pre><code class="language-go">func evalRPN(tokens []string) int {
+	stack := []int{}
+	for _, token := range tokens {
+		val, err := strconv.Atoi(token)
+		if err == nil {
+			stack = append(stack, val)
+		} else {   // 如果err不为nil说明不是数字
+			num1, num2 := stack[len(stack)-2], stack[(len(stack))-1]
+			stack = stack[:len(stack)-2]
+			switch token {
+			case "+":
+				stack = append(stack, num1+num2)
+			case "-":
+				stack = append(stack, num1-num2)
+			case "*":
+				stack = append(stack, num1*num2)
+			case "/":
+				stack = append(stack, num1/num2)
+			}
+		}
+	}
+	return stack[0]
+}
+</code></pre>
+<h1 id="224-basic-calculator"><a class="header" href="#224-basic-calculator"><a href="https://leetcode.com/problems/basic-calculator/">224. Basic Calculator</a></a></h1>
+<p>Given a string <code>s</code> representing a valid expression, implement a basic calculator to evaluate it, and return <em>the result of the evaluation</em>.</p>
+<p><strong>Note:</strong> You are <strong>not</strong> allowed to use any built-in function which evaluates strings as mathematical expressions, such as <code>eval()</code>.</p>
+<p><strong>Example 1:</strong></p>
+<p><strong>Input:</strong> s = "1 + 1"<br />
+<strong>Output:</strong> 2</p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> s = " 2-1 + 2 "<br />
+<strong>Output:</strong> 3</p>
+<p><strong>Example 3:</strong></p>
+<p><strong>Input:</strong> s = "(1+(4+5+2)-3)+(6+8)"<br />
+<strong>Output:</strong> 23</p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= s.length &lt;= 3 * 10^5</code></li>
+<li><code>s</code> consists of digits, <code>'+'</code>, <code>'-'</code>, <code>'('</code>, <code>')'</code>, and <code>' '</code>.</li>
+<li><code>s</code> represents a valid expression.</li>
+<li><code>'+'</code> is <strong>not</strong> used as a unary operation (i.e., <code>"+1"</code> and <code>"+(2 + 3)"</code> is invalid).</li>
+<li><code>'-'</code> could be used as a unary operation (i.e., <code>"-1"</code> and <code>"-(2 + 3)"</code> is valid).</li>
+<li>There will be no two consecutive operators in the input.</li>
+<li>Every number and running calculation will fit in a signed 32-bit integer.</li>
+</ul>
+<h2 id="思路-59"><a class="header" href="#思路-59">思路</a></h2>
+<p>左括号前是运算符，所以需要存储。</p>
+<p><code>sum = st.top().first + st.top().second * sum;</code>其中sum是括号内数字和，<code>st.top().first</code>是括号前数字和，<code>st.top().second</code>是括号前运算符符号。</p>
+<h2 id="c解法-45"><a class="header" href="#c解法-45">C++解法</a></h2>
+<pre><code class="language-cpp">class Solution {
+public:
+    int calculate(string s) {
+        long long int sum = 0;
+        int sign = 1;
+        stack&lt;pair&lt;int,int&gt;&gt; st;
+        for(int i = 0; i &lt; s.length(); i++){
+            if(isdigit(s[i])){
+                long long int num = 0;
+                while(i &lt; s.size() &amp;&amp; isdigit(s[i])){
+                    num = num * 10 + (s[i] - '0');
+                    i++;
+                }
+                i--;
+                sum += num * sign;
+                sign = 1;
+            }else if(s[i] == '('){
+                st.push({sum, sign});
+                sum = 0;
+                sign = 1;
+            }else if(s[i] == ')'){
+                sum = st.top().first + st.top().second * sum;
+                st.pop();
+            }else if(s[i] == '-'){
+                sign = -1 * sign;
+            }
+        }
+        return sum;
+    }
+};
+</code></pre>
+<h1 id="227-basic-calculator-ii"><a class="header" href="#227-basic-calculator-ii"><a href="https://leetcode.com/problems/basic-calculator-ii/">227. Basic Calculator II</a></a></h1>
+<p>Given a string <code>s</code> which represents an expression, <em>evaluate this expression and return its value</em>. </p>
+<p>The integer division should truncate toward zero.</p>
+<p>You may assume that the given expression is always valid. All intermediate results will be in the range of <code>[-2^31, 2^31 - 1]</code>.</p>
+<p><strong>Note:</strong> You are not allowed to use any built-in function which evaluates strings as mathematical expressions, such as <code>eval()</code>.</p>
+<p><strong>Example 1:</strong></p>
+<p><strong>Input:</strong> <code>s = "3+2*2"</code><br />
+<strong>Output:</strong> 7</p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> <code>s = " 3/2 "</code><br />
+<strong>Output:</strong> 1</p>
+<p><strong>Example 3:</strong></p>
+<p><strong>Input:</strong> <code>s = " 3+5 / 2 "</code><br />
+<strong>Output:</strong> 5</p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= s.length &lt;= 3 * 10^5</code></li>
+<li><code>s</code> consists of integers and operators <code>('+', '-', '*', '/')</code> separated by some number of spaces.</li>
+<li><code>s</code> represents <strong>a valid expression</strong>.</li>
+<li>All the integers in the expression are non-negative integers in the range <code>[0, 2^31 - 1]</code>.</li>
+<li>The answer is <strong>guaranteed</strong> to fit in a <strong>32-bit integer</strong>.</li>
+</ul>
+<h2 id="思路-60"><a class="header" href="#思路-60">思路</a></h2>
+<h3 id="approach-1-using-stack"><a class="header" href="#approach-1-using-stack">Approach 1: Using Stack</a></h3>
+<p>Intuition</p>
+<p>We know that there could be 4 types of operations - addition <code>(+)</code>, subtraction <code>(-)</code>, multiplication <code>(*)</code> and division <code>(/)</code>. Without parenthesis, we know that, multiplication <code>(*)</code> and <code>(\)</code> operations would always have higher precedence than addition <code>(+)</code> and subtraction <code>(-)</code> based on operator precedence rules.</p>
+<p><img src="https://leetcode.com/problems/basic-calculator-ii/solutions/893354/Figures/227/calculator_overview.png" alt="img" /></p>
+<p>If we look at the above examples, we can make the following observations -</p>
+<ul>
+<li>If the current operation is addition <code>(+)</code> or subtraction <code>(-)</code>, then the expression is evaluated based on the precedence of the next operation.</li>
+</ul>
+<p>In example 1, <code>4+3</code> is evaluated later because the next operation is multiplication <code>(3*5)</code> which has higher precedence.<br />
+But, in example 2, <code>4+3</code> is evaluated first because the next operation is subtraction <code>(3-5)</code> which has equal precedence.</p>
+<ul>
+<li>If the current operator is multiplication <code>(*)</code> or division <code>(/)</code>, then the expression is evaluated irrespective of the next operation. This is because in the given set of operations <code>(+,-,*,/)</code>, the <code>*</code> and <code>/</code> operations have the highest precedence and therefore must be evaluated first.</li>
+</ul>
+<p>In the above examples 3 and 4, <code>4*3</code> is always evaluated first irrespective of the next operation.</p>
+<p>Using this intuition let's look at the algorithm to implement the problem.</p>
+<p>Algorithm</p>
+<p>Scan the input string <code>s</code> from left to right and evaluate the expressions based on the following rules</p>
+<ol>
+<li>If the current character is a digit <code>0-9</code> ( operand ), add it to the number <code>currentNumber</code>.</li>
+<li>Otherwise, the current character must be an operation <code>(+,-,*, /)</code>. Evaluate the expression based on the type of operation.</li>
+</ol>
+<ul>
+<li>Addition <code>(+)</code> or Subtraction <code>(-)</code>: We must evaluate the expression later based on the next operation. So, we must store the <code>currentNumber</code> to be used later. Let's push the currentNumber in the Stack.</li>
+</ul>
+<blockquote>
+<p><a href="https://leetcode.com/explore/learn/card/queue-stack/230/usage-stack/">Stack data structure</a> follows Last In First Out (LIFO) principle. Hence, the last pushed number in the stack would be popped out first for evaluation. In addition, when we pop from the stack and evaluate this expression in the future, we need a way to determine if the operation was Addition <code>(+)</code> or Subtraction <code>(-)</code>. To simplify our evaluation, we can push <code>-currentNumber</code> in a stack if the current operation is subtraction (<code>-</code>) and assume that the operation for all the values in the stack is addition <code>(+)</code>. This works because <code>(a - currentNumber)</code> is equivalent to <code>(a + (-currentNumber))</code>.</p>
+</blockquote>
+<ul>
+<li>Multiplication <code>(*)</code> or Division <code>(/)</code>: Pop the top values from the stack and evaluate the current expression. Push the evaluated value back to the stack.</li>
+</ul>
+<p>Once the string is scanned, pop from the stack and add to the <code>result</code>.</p>
+<p>Implementation</p>
+<p>Complexity Analysis</p>
+<ul>
+<li>Time Complexity: O(n), where n is the length of the string s. We iterate over the string s at most twice.</li>
+<li>Space Complexity: O(n), where n is the length of the string s.</li>
+</ul>
+<h3 id="approach-2-optimized-approach-without-the-stack"><a class="header" href="#approach-2-optimized-approach-without-the-stack">Approach 2: Optimized Approach without the stack</a></h3>
+<p>Intuition</p>
+<p>In the previous approach, we used a stack to track the values of the evaluated expressions. In the end, we pop all the values from the stack and add to the result. Instead of that, we could add the values to the result beforehand and keep track of the last calculated number, thus eliminating the need for the stack. Let's understand the algorithm in detail.</p>
+<p>Algorithm</p>
+<p>The approach works similar to <em>Approach 1</em> with the following differences :</p>
+<ul>
+<li>Instead of using a <code>stack</code>, we use a variable <code>lastNumber</code> to track the value of the last evaluated expression.</li>
+<li>If the operation is Addition <code>(+)</code> or Subtraction <code>(-)</code>, add the <code>lastNumber</code> to the result instead of pushing it to the stack. The <code>currentNumber</code> would be updated to <code>lastNumber</code> for the next iteration.</li>
+<li>If the operation is Multiplication <code>(*)</code> or Division <code>(/)</code>, we must evaluate the expression <code>lastNumber * currentNumber</code> and update the <code>lastNumber</code> with the result of the expression. This would be added to the result after the entire string is scanned.</li>
+</ul>
+<p>Implementation</p>
+<p>Complexity Analysis</p>
+<ul>
+<li>Time Complexity: O(n), where n is the length of the string s.</li>
+<li>Space Complexity: O(1), as we use constant extra space to store <code>lastNumber</code>, <code>result</code> and so on.</li>
+</ul>
+<h2 id="c解法-46"><a class="header" href="#c解法-46">C++解法</a></h2>
+<p>使用栈</p>
+<pre><code class="language-cpp">
+class Solution {
+public:
+    int calculate(string s) {
+        int len = s.length();
+        if (len == 0) return 0;
+        stack&lt;int&gt; stack;
+        int currentNumber = 0;
+        char operation = '+';
+        for (int i = 0; i &lt; len; i++) {
+            char currentChar = s[i];
+            if (isdigit(currentChar)) {
+                currentNumber = (currentNumber * 10) + (currentChar - '0');
+            }
+            if (!isdigit(currentChar) &amp;&amp; !iswspace(currentChar) || i == len - 1) {
+                if (operation == '-') {
+                    stack.push(-currentNumber);
+                } else if (operation == '+') {
+                    stack.push(currentNumber);
+                } else if (operation == '*') {
+                    int stackTop = stack.top();
+                    stack.pop();
+                    stack.push(stackTop * currentNumber);
+                } else if (operation == '/') {
+                    int stackTop = stack.top();
+                    stack.pop();
+                    stack.push(stackTop / currentNumber);
+                }
+                operation = currentChar;
+                currentNumber = 0;
+            }
+        }
+        int result = 0;
+        while (stack.size() != 0) {
+            result += stack.top();
+            stack.pop();
+        }
+        return result;
+    }
+};
+
+</code></pre>
+<p>不用栈</p>
+<pre><code class="language-cpp">class Solution {
+public:
+    int calculate(string s) {
+        int length = s.length();
+        if (length == 0) return 0;
+        int currentNumber = 0, lastNumber = 0, result = 0;
+        char sign = '+';
+        for (int i = 0; i &lt; length; i++) {
+            char currentChar = s[i];
+            if (isdigit(currentChar)) {
+                currentNumber = (currentNumber * 10) + (currentChar - '0');
+            }
+            if (!isdigit(currentChar) &amp;&amp; !iswspace(currentChar) || i == length - 1) {
+                if (sign == '+' || sign == '-') {
+                    result += lastNumber;
+                    lastNumber = (sign == '+') ? currentNumber : -currentNumber;
+                } else if (sign == '*') {
+                    lastNumber = lastNumber * currentNumber;
+                } else if (sign == '/') {
+                    lastNumber = lastNumber / currentNumber;
+                }
+                sign = currentChar;
+                currentNumber = 0;
+            }
+        }
+        result += lastNumber;
+        return result;  
+    }
+};
+</code></pre>
+<h2 id="java解法-33"><a class="header" href="#java解法-33">Java解法</a></h2>
+<pre><code class="language-java">class Solution {
+    public int calculate(String s) {
+
+        if (s == null || s.isEmpty()) return 0;
+        int len = s.length();
+        Stack&lt;Integer&gt; stack = new Stack&lt;Integer&gt;();
+        int currentNumber = 0;
+        char operation = '+';
+        for (int i = 0; i &lt; len; i++) {
+            char currentChar = s.charAt(i);
+            if (Character.isDigit(currentChar)) {
+                currentNumber = (currentNumber * 10) + (currentChar - '0');
+            }
+            if (!Character.isDigit(currentChar) &amp;&amp; !Character.isWhitespace(currentChar) || i == len - 1) {
+                if (operation == '-') {
+                    stack.push(-currentNumber);
+                }
+                else if (operation == '+') {
+                    stack.push(currentNumber);
+                }
+                else if (operation == '*') {
+                    stack.push(stack.pop() * currentNumber);
+                }
+                else if (operation == '/') {
+                    stack.push(stack.pop() / currentNumber);
+                }
+                operation = currentChar;
+                currentNumber = 0;
+            }
+        }
+        int result = 0;
+        while (!stack.isEmpty()) {
+            result += stack.pop();
+        }
+        return result;
+    }
+}
+
+</code></pre>
+<p>不用栈</p>
+<pre><code class="language-java">class Solution {
+    public int calculate(String s) {
+        if (s == null || s.isEmpty()) return 0;
+        int length = s.length();
+        int currentNumber = 0, lastNumber = 0, result = 0;
+        char operation = '+';
+        for (int i = 0; i &lt; length; i++) {
+            char currentChar = s.charAt(i);
+            if (Character.isDigit(currentChar)) {
+                currentNumber = (currentNumber * 10) + (currentChar - '0');
+            }
+            if (!Character.isDigit(currentChar) &amp;&amp; !Character.isWhitespace(currentChar) || i == length - 1) {
+                if (operation == '+' || operation == '-') {
+                    result += lastNumber;
+                    lastNumber = (operation == '+') ? currentNumber : -currentNumber;
+                } else if (operation == '*') {
+                    lastNumber = lastNumber * currentNumber;
+                } else if (operation == '/') {
+                    lastNumber = lastNumber / currentNumber;
+                }
+                operation = currentChar;
+                currentNumber = 0;
+            }
+        }
+        result += lastNumber;
+        return result;
+    }
+}
+</code></pre>
 <div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
 <h1 id="队列"><a class="header" href="#队列">队列</a></h1>
+<ul>
+<li><a href="%E9%98%9F%E5%88%97/%E9%98%9F%E5%88%97.html#%E6%A0%88%E5%92%8C%E9%98%9F%E5%88%97">栈和队列</a></li>
+</ul>
+<h2 id="栈和队列-1"><a class="header" href="#栈和队列-1">栈和队列</a></h2>
+<p>灵魂四问：</p>
+<ol>
+<li>C++中stack，queue 是容器么？</li>
+<li>我们使用的stack，queue是属于那个版本的STL？</li>
+<li>我们使用的STL中stack，queue是如何实现的？</li>
+<li>stack，queue 提供迭代器来遍历空间么？</li>
+</ol>
+<p>栈与队列是我们熟悉的不能再熟悉的数据结构，但它们的底层实现，很多同学都比较模糊，这其实就是基础所在。</p>
+<p>可以出一道面试题：栈里面的元素在内存中是连续分布的么？</p>
+<p>这个问题有两个陷阱：</p>
+<ul>
+<li>陷阱1：栈是容器适配器，底层容器使用不同的容器，导致栈内数据在内存中不一定是连续分布的。</li>
+<li>陷阱2：默认情况下，默认底层容器是deque，那么deque在内存中的数据分布是什么样的呢？ 答案是：不连续的，下文也会提到deque。</li>
+</ul>
+<p>我想栈和队列的原理大家应该很熟悉了，队列是先进先出，栈是先进后出。</p>
+<p>如图所示：</p>
+<p><img src="https://code-thinking-1253855093.file.myqcloud.com/pics/20210104235346563.png" alt="栈与队列理论1" /></p>
+<p>那么我这里再列出四个关于栈的问题，大家可以思考一下。以下是以C++为例，使用其他编程语言的同学也对应思考一下，自己使用的编程语言里栈和队列是什么样的。</p>
+<ol>
+<li>C++中stack 是容器么？</li>
+<li>我们使用的stack是属于哪个版本的STL？</li>
+<li>我们使用的STL中stack是如何实现的？</li>
+<li>stack 提供迭代器来遍历stack空间么？</li>
+</ol>
+<p>相信这四个问题并不那么好回答， 因为一些同学使用数据结构会停留在非常表面上的应用，稍稍往深一问，就会有好像懂，好像也不懂的感觉。</p>
+<p>有的同学可能仅仅知道有栈和队列这么个数据结构，却不知道底层实现，也不清楚所使用栈和队列和STL是什么关系。</p>
+<p>所以这里我再给大家扫一遍基础知识，</p>
+<p>首先大家要知道 栈和队列是STL（C++标准库）里面的两个数据结构。</p>
+<p>C++标准库是有多个版本的，要知道我们使用的STL是哪个版本，才能知道对应的栈和队列的实现原理。</p>
+<p>那么来介绍一下，三个最为普遍的STL版本：</p>
+<ol>
+<li>
+<p>HP STL 其他版本的C++ STL，一般是以HP STL为蓝本实现出来的，HP STL是C++ STL的第一个实现版本，而且开放源代码。</p>
+</li>
+<li>
+<p>P.J.Plauger STL 由P.J.Plauger参照HP STL实现出来的，被Visual C++编译器所采用，不是开源的。</p>
+</li>
+<li>
+<p>SGI STL 由Silicon Graphics Computer Systems公司参照HP STL实现，被Linux的C++编译器GCC所采用，SGI STL是开源软件，源码可读性甚高。</p>
+</li>
+</ol>
+<p>接下来介绍的栈和队列也是SGI STL里面的数据结构， 知道了使用版本，才知道对应的底层实现。</p>
+<p>来说一说栈，栈先进后出，如图所示：</p>
+<p><img src="https://code-thinking-1253855093.file.myqcloud.com/pics/20210104235434905.png" alt="栈与队列理论2" /></p>
+<p>栈提供push 和 pop 等等接口，所有元素必须符合先进后出规则，所以栈不提供走访功能，也不提供迭代器(iterator)。 不像是set 或者map 提供迭代器iterator来遍历所有元素。</p>
+<p><strong>栈是以底层容器完成其所有的工作，对外提供统一的接口，底层容器是可插拔的（也就是说我们可以控制使用哪种容器来实现栈的功能）。</strong></p>
+<p>所以STL中栈往往不被归类为容器，而被归类为container adapter（容器适配器）。</p>
+<p>那么问题来了，STL 中栈是用什么容器实现的？</p>
+<p>从下图中可以看出，栈的内部结构，栈的底层实现可以是vector，deque，list 都是可以的， 主要就是数组和链表的底层实现。</p>
+<p><img src="https://code-thinking-1253855093.file.myqcloud.com/pics/20210104235459376.png" alt="栈与队列理论3" /></p>
+<p><strong>我们常用的SGI STL，如果没有指定底层实现的话，默认是以deque为栈的底层结构。</strong></p>
+<p>deque是一个双向队列，只要封住一段，只开通另一端就可以实现栈的逻辑了。</p>
+<p><strong>SGI STL中 队列底层实现缺省情况下一样使用deque实现的。</strong></p>
+<p>我们也可以指定vector为栈的底层实现，初始化语句如下：</p>
+<pre><code class="language-cpp">std::stack&lt;int, std::vector&lt;int&gt; &gt; third;  // 使用vector为底层容器的栈
+</code></pre>
+<p>刚刚讲过栈的特性，对应的队列的情况是一样的。</p>
+<p>队列中先进先出的数据结构，同样不允许有遍历行为，不提供迭代器, <strong>SGI STL中队列一样是以deque为缺省情况下的底部结构。</strong></p>
+<p>也可以指定list 为起底层实现，初始化queue的语句如下：</p>
+<pre><code class="language-cpp">std::queue&lt;int, std::list&lt;int&gt;&gt; third; // 定义以list为底层容器的队列
+</code></pre>
+<p>所以STL 队列也不被归类为容器，而被归类为container adapter（ 容器适配器）。</p>
+<p>我这里讲的都是C++ 语言中的情况， 使用其他语言的同学也要思考栈与队列的底层实现问题， 不要对数据结构的使用浅尝辄止，而要深挖其内部原理，才能夯实基础。</p>
+<div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
+<h1 id="队列的实现"><a class="header" href="#队列的实现">队列的实现</a></h1>
+<ul>
+<li><a href="%E9%98%9F%E5%88%97/%E9%98%9F%E5%88%97%E7%9A%84%E5%AE%9E%E7%8E%B0.html#232-implement-queue-using-stacks">232. Implement Queue using Stacks</a>
+<ul>
+<li><a href="%E9%98%9F%E5%88%97/%E9%98%9F%E5%88%97%E7%9A%84%E5%AE%9E%E7%8E%B0.html#%E6%80%9D%E8%B7%AF">思路</a></li>
+<li><a href="%E9%98%9F%E5%88%97/%E9%98%9F%E5%88%97%E7%9A%84%E5%AE%9E%E7%8E%B0.html#c%E8%A7%A3%E6%B3%95">C++解法</a></li>
+<li><a href="%E9%98%9F%E5%88%97/%E9%98%9F%E5%88%97%E7%9A%84%E5%AE%9E%E7%8E%B0.html#java%E8%A7%A3%E6%B3%95">Java解法</a></li>
+</ul>
+</li>
+</ul>
+<h1 id="232-implement-queue-using-stacks"><a class="header" href="#232-implement-queue-using-stacks"><a href="https://leetcode.com/problems/implement-queue-using-stacks/">232. Implement Queue using Stacks</a></a></h1>
+<p>Implement a first in first out (FIFO) queue using only two stacks. The implemented queue should support all the functions of a normal queue (<code>push</code>, <code>peek</code>, <code>pop</code>, and <code>empty</code>).</p>
+<p>Implement the <code>MyQueue</code> class:</p>
+<ul>
+<li><code>void push(int x)</code> Pushes element x to the back of the queue.</li>
+<li><code>int pop()</code> Removes the element from the front of the queue and returns it.</li>
+<li><code>int peek()</code> Returns the element at the front of the queue.</li>
+<li><code>boolean empty()</code> Returns <code>true</code> if the queue is empty, <code>false</code> otherwise.</li>
+</ul>
+<p><strong>Notes:</strong></p>
+<ul>
+<li>You must use <strong>only</strong> standard operations of a stack, which means only <code>push to top</code>, <code>peek/pop from top</code>, <code>size</code>, and <code>is empty</code> operations are valid.</li>
+<li>Depending on your language, the stack may not be supported natively. You may simulate a stack using a list or deque (double-ended queue) as long as you use only a stack's standard operations.</li>
+</ul>
+<p><strong>Example 1:</strong></p>
+<p><strong>Input</strong></p>
+<pre><code>["MyQueue", "push", "push", "peek", "pop", "empty"]
+[[], [1], [2], [], [], []]
+</code></pre>
+<p><strong>Output</strong></p>
+<pre><code>[null, null, null, 1, 1, false]
+</code></pre>
+<p><strong>Explanation</strong></p>
+<pre><code>MyQueue myQueue = new MyQueue();
+myQueue.push(1); // queue is: [1]
+myQueue.push(2); // queue is: [1, 2] (leftmost is front of the queue)
+myQueue.peek(); // return 1
+myQueue.pop(); // return 1, queue is [2]
+myQueue.empty(); // return false
+</code></pre>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= x &lt;= 9</code></li>
+<li>At most <code>100</code> calls will be made to <code>push</code>, <code>pop</code>, <code>peek</code>, and <code>empty</code>.</li>
+<li>All the calls to <code>pop</code> and <code>peek</code> are valid.</li>
+</ul>
+<p><strong>Follow-up:</strong> Can you implement the queue such that each operation is <strong><a href="https://en.wikipedia.org/wiki/Amortized_analysis">amortized</a></strong> <code>O(1)</code> time complexity? In other words, performing <code>n</code> operations will take overall <code>O(n)</code> time even if one of those operations may take longer.</p>
+<h2 id="思路-61"><a class="header" href="#思路-61">思路</a></h2>
+<p>用两个栈实现队列。当stackOut为空时就把stackIn中所有元素加入到stackOut中。</p>
+<p>因为<code>All the calls to </code>pop<code> and </code>peek<code> are valid.</code>所以这里不再需要校验操作的合法性。</p>
+<h2 id="c解法-47"><a class="header" href="#c解法-47">C++解法</a></h2>
+<pre><code class="language-cpp">class MyQueue {
+public:
+    stack&lt;int&gt; stackIn;
+    stack&lt;int&gt; stackOut;
+    MyQueue() {}
+
+    void push(int x) { stackIn.push(x); }
+
+    int pop() {
+        if (stackOut.empty()) {
+            while (!stackIn.empty()) {
+                int x = stackIn.top();
+                stackIn.pop();
+                stackOut.push(x);
+            }
+        }
+        int result = stackOut.top();
+        stackOut.pop();
+        return result;
+    }
+
+    int peek() {
+        int result = this-&gt;pop();
+        stackOut.push(result);
+        return result;
+    }
+
+    bool empty() { return stackOut.empty() &amp;&amp; stackIn.empty(); }
+};
+
+/**
+ * Your MyQueue object will be instantiated and called as such:
+ * MyQueue* obj = new MyQueue();
+ * obj-&gt;push(x);
+ * int param_2 = obj-&gt;pop();
+ * int param_3 = obj-&gt;peek();
+ * bool param_4 = obj-&gt;empty();
+ */
+</code></pre>
+<h2 id="java解法-34"><a class="header" href="#java解法-34">Java解法</a></h2>
+<div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
+<h1 id="单调队列"><a class="header" href="#单调队列">单调队列</a></h1>
+<ul>
+<li><a href="%E9%98%9F%E5%88%97/%E5%8D%95%E8%B0%83%E9%98%9F%E5%88%97.html#239-sliding-window-maximum">239. Sliding Window Maximum</a>
+<ul>
+<li><a href="%E9%98%9F%E5%88%97/%E5%8D%95%E8%B0%83%E9%98%9F%E5%88%97.html#%E6%80%9D%E8%B7%AF">思路</a></li>
+<li><a href="%E9%98%9F%E5%88%97/%E5%8D%95%E8%B0%83%E9%98%9F%E5%88%97.html#c%E8%A7%A3%E6%B3%95">C++解法</a></li>
+<li><a href="%E9%98%9F%E5%88%97/%E5%8D%95%E8%B0%83%E9%98%9F%E5%88%97.html#java%E8%A7%A3%E6%B3%95">Java解法</a></li>
+<li><a href="%E9%98%9F%E5%88%97/%E5%8D%95%E8%B0%83%E9%98%9F%E5%88%97.html#python%E8%A7%A3%E6%B3%95">Python解法</a></li>
+<li><a href="%E9%98%9F%E5%88%97/%E5%8D%95%E8%B0%83%E9%98%9F%E5%88%97.html#go%E8%A7%A3%E6%B3%95">Go解法</a></li>
+</ul>
+</li>
+</ul>
+<h1 id="239-sliding-window-maximum"><a class="header" href="#239-sliding-window-maximum"><a href="https://leetcode.com/problems/sliding-window-maximum/">239. Sliding Window Maximum</a></a></h1>
+<p>You are given an array of integers <code>nums</code>, there is a sliding window of size <code>k</code> which is moving from the very left of the array to the very right. You can only see the <code>k</code> numbers in the window. Each time the sliding window moves right by one position.</p>
+<p>Return <em>the max sliding window</em>.</p>
+<p><strong>Example 1:</strong></p>
+<p><strong>Input:</strong> <code>nums = [1,3,-1,-3,5,3,6,7], k = 3</code><br />
+<strong>Output:</strong> <code>[3,3,5,5,6,7]</code><br />
+<strong>Explanation:</strong></p>
+<pre><code>Window position                Max
+---------------               -----
+[1  3  -1] -3  5  3  6  7       **3**
+ 1 [3  -1  -3] 5  3  6  7       **3**
+ 1  3 [-1  -3  5] 3  6  7      ** 5**
+ 1  3  -1 [-3  5  3] 6  7       **5**
+ 1  3  -1  -3 [5  3  6] 7       **6**
+ 1  3  -1  -3  5 [3  6  7]      **7**
+</code></pre>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> <code>nums = [1], k = 1</code><br />
+<strong>Output:</strong> <code>[1]</code></p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= nums.length &lt;= 10^5</code></li>
+<li><code>-10^4 &lt;= nums[i] &lt;= 10^4</code></li>
+<li><code>1 &lt;= k &lt;= nums.length</code></li>
+</ul>
+<h2 id="思路-62"><a class="header" href="#思路-62">思路</a></h2>
+<p>不能使用普通队列，也不能使用优先级队列，需要自己实现特殊单调队列，特殊队列要有<code>pop()</code>、<code>push()</code>和<code>getMaxValue()</code>成员函数。</p>
+<p>这是使用单调队列的经典题目。</p>
+<p>难点是如何求一个区间里的最大值呢？ （这好像是废话），暴力一下不就得了。</p>
+<p>暴力方法，遍历一遍的过程中每次从窗口中再找到最大的数值，这样很明显是O(n × k)的算法。</p>
+<p>有的同学可能会想用一个大顶堆（优先级队列）来存放这个窗口里的k个数字，这样就可以知道最大的最大值是多少了， <strong>但是问题是这个窗口是移动的，而大顶堆每次只能弹出最大值，我们无法移除其他数值，这样就造成大顶堆维护的不是滑动窗口里面的数值了。所以不能用大顶堆。</strong></p>
+<p>此时我们需要一个队列，这个队列呢，放进去窗口里的元素，然后随着窗口的移动，队列也一进一出，每次移动之后，队列告诉我们里面的最大值是什么。</p>
+<p>这个队列应该长这个样子：</p>
+<pre><code class="language-cpp">class MyQueue {
+public:
+    void pop(int value) {
+    }
+    void push(int value) {
+    }
+    int front() {
+        return que.front();
+    }
+};
+</code></pre>
+<p>每次窗口移动的时候，调用que.pop(滑动窗口中移除元素的数值)，que.push(滑动窗口添加元素的数值)，然后que.front()就返回我们要的最大值。</p>
+<p>这么个队列香不香，要是有现成的这种数据结构是不是更香了！</p>
+<p>其实在C++中，可以使用 multiset 来模拟这个过程，文末提供这个解法仅针对C++，以下讲解我们还是靠自己来实现这个单调队列。</p>
+<p>然后再分析一下，队列里的元素一定是要排序的，而且要最大值放在出队口，要不然怎么知道最大值呢。</p>
+<p>但如果把窗口里的元素都放进队列里，窗口移动的时候，队列需要弹出元素。</p>
+<p>那么问题来了，已经排序之后的队列 怎么能把窗口要移除的元素（这个元素可不一定是最大值）弹出呢。</p>
+<p>大家此时应该陷入深思.....</p>
+<p><strong>其实队列没有必要维护窗口里的所有元素，只需要维护有可能成为窗口里最大值的元素就可以了，同时保证队列里的元素数值是由大到小的。</strong></p>
+<p>那么这个维护元素单调递减的队列就叫做<strong>单调队列，即单调递减或单调递增的队列。C++中没有直接支持单调队列，需要我们自己来实现一个单调队列</strong></p>
+<p><strong>不要以为实现的单调队列就是 对窗口里面的数进行排序，如果排序的话，那和优先级队列又有什么区别了呢。</strong></p>
+<p>来看一下单调队列如何维护队列里的元素。</p>
+<p>动画如下：</p>
+<p><img src="https://code-thinking.cdn.bcebos.com/gifs/239.%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3%E6%9C%80%E5%A4%A7%E5%80%BC.gif" alt="239.滑动窗口最大值" /></p>
+<p>对于窗口里的元素{2, 3, 5, 1 ,4}，单调队列里只维护{5, 4} 就够了，保持单调队列里单调递减，此时队列出口元素就是窗口里最大元素。</p>
+<p>此时大家应该怀疑单调队列里维护着{5, 4} 怎么配合窗口进行滑动呢？</p>
+<p>设计单调队列的时候，pop，和push操作要保持如下规则：</p>
+<ol>
+<li>pop(value)：如果窗口移除的元素value等于单调队列的出口元素，那么队列弹出元素，否则不用任何操作</li>
+<li>push(value)：如果push的元素value大于入口元素的数值，那么就将队列入口的元素弹出，直到push元素的数值小于等于队列入口元素的数值为止</li>
+</ol>
+<p>保持如上规则，每次窗口移动的时候，只要问que.front()就可以返回当前窗口的最大值。</p>
+<p>为了更直观的感受到单调队列的工作过程，以题目示例为例，输入: nums = [1,3,-1,-3,5,3,6,7], 和 k = 3，动画如下：</p>
+<p><img src="https://code-thinking.cdn.bcebos.com/gifs/239.%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3%E6%9C%80%E5%A4%A7%E5%80%BC-2.gif" alt="239.滑动窗口最大值-2" /></p>
+<p>那么我们用什么数据结构来实现这个单调队列呢？</p>
+<p>使用deque最为合适，在文章<a href="https://programmercarl.com/%E6%A0%88%E4%B8%8E%E9%98%9F%E5%88%97%E7%90%86%E8%AE%BA%E5%9F%BA%E7%A1%80.html">栈与队列：来看看栈和队列不为人知的一面</a>中，我们就提到了常用的queue在没有指定容器的情况下，deque就是默认底层容器。</p>
+<p>基于刚刚说过的单调队列pop和push的规则，代码不难实现，如下：</p>
+<pre><code class="language-cpp">class MyQueue { //单调队列（从大到小）
+public:
+    deque&lt;int&gt; que; // 使用deque来实现单调队列
+    // 每次弹出的时候，比较当前要弹出的数值是否等于队列出口元素的数值，如果相等则弹出。
+    // 同时pop之前判断队列当前是否为空。
+    void pop(int value) {
+        if (!que.empty() &amp;&amp; value == que.front()) {
+            que.pop_front();
+        }
+    }
+    // 如果push的数值大于入口元素的数值，那么就将队列后端的数值弹出，直到push的数值小于等于队列入口元素的数值为止。
+    // 这样就保持了队列里的数值是单调从大到小的了。
+    void push(int value) {
+        while (!que.empty() &amp;&amp; value &gt; que.back()) {
+            que.pop_back();
+        }
+        que.push_back(value);
+
+    }
+    // 查询当前队列里的最大值 直接返回队列前端也就是front就可以了。
+    int front() {
+        return que.front();
+    }
+};
+</code></pre>
+<p>这样我们就用deque实现了一个单调队列，接下来解决滑动窗口最大值的问题就很简单了，直接看代码吧。</p>
+<h2 id="c解法-48"><a class="header" href="#c解法-48">C++解法</a></h2>
+<pre><code class="language-cpp">class Solution {
+private:
+    class MyQueue { //单调队列（从大到小）
+    public:
+        deque&lt;int&gt; que; // 使用deque来实现单调队列
+        // 每次弹出的时候，比较当前要弹出的数值是否等于队列出口元素的数值，如果相等则弹出。
+        // 同时pop之前判断队列当前是否为空。
+        void pop(int value) {
+            if (!que.empty() &amp;&amp; value == que.front()) {
+                que.pop_front();
+            }
+        }
+        // 如果push的数值大于入口元素的数值，那么就将队列后端的数值弹出，直到push的数值小于等于队列入口元素的数值为止。
+        // 这样就保持了队列里的数值是单调从大到小的了。
+        void push(int value) {
+            while (!que.empty() &amp;&amp; value &gt; que.back()) {
+                que.pop_back();
+            }
+            que.push_back(value);
+
+        }
+        // 查询当前队列里的最大值 直接返回队列前端也就是front就可以了。
+        int front() {
+            return que.front();
+        }
+    };
+public:
+    vector&lt;int&gt; maxSlidingWindow(vector&lt;int&gt;&amp; nums, int k) {
+        MyQueue que;
+        vector&lt;int&gt; result;
+        for (int i = 0; i &lt; k; i++) { // 先将前k的元素放进队列
+            que.push(nums[i]);
+        }
+        result.push_back(que.front()); // result 记录前k的元素的最大值
+        for (int i = k; i &lt; nums.size(); i++) {
+            que.pop(nums[i - k]); // 滑动窗口移除最前面元素
+            que.push(nums[i]); // 滑动窗口前加入最后面的元素
+            result.push_back(que.front()); // 记录对应的最大值
+        }
+        return result;
+    }
+};
+</code></pre>
+<ul>
+<li>时间复杂度: O(n)</li>
+<li>空间复杂度: O(k)</li>
+</ul>
+<p>再来看一下时间复杂度，使用单调队列的时间复杂度是 O(n)。</p>
+<p>有的同学可能想了，在队列中 push元素的过程中，还有pop操作呢，感觉不是纯粹的O(n)。</p>
+<p>其实，大家可以自己观察一下单调队列的实现，nums 中的每个元素最多也就被 push_back 和 pop_back 各一次，没有任何多余操作，所以整体的复杂度还是 O(n)。</p>
+<p>空间复杂度因为我们定义一个辅助队列，所以是O(k)。</p>
+<p>大家貌似对单调队列 都有一些疑惑，首先要明确的是，题解中单调队列里的pop和push接口，仅适用于本题哈。单调队列不是一成不变的，而是不同场景不同写法，总之要保证队列里单调递减或递增的原则，所以叫做单调队列。 不要以为本题中的单调队列实现就是固定的写法哈。</p>
+<p>大家貌似对deque也有一些疑惑，C++中deque是stack和queue默认的底层实现容器（这个我们之前已经讲过啦），deque是可以两边扩展的，而且deque里元素并不是严格的连续分布的。</p>
+<h2 id="java解法-35"><a class="header" href="#java解法-35">Java解法</a></h2>
+<pre><code class="language-java">//解法一
+//自定义数组
+class MyQueue {
+    Deque&lt;Integer&gt; deque = new LinkedList&lt;&gt;();
+    //弹出元素时，比较当前要弹出的数值是否等于队列出口的数值，如果相等则弹出
+    //同时判断队列当前是否为空
+    void poll(int val) {
+        if (!deque.isEmpty() &amp;&amp; val == deque.peek()) {
+            deque.poll();
+        }
+    }
+    //添加元素时，如果要添加的元素大于入口处的元素，就将入口元素弹出
+    //保证队列元素单调递减
+    //比如此时队列元素3,1，2将要入队，比1大，所以1弹出，此时队列：3,2
+    void add(int val) {
+        while (!deque.isEmpty() &amp;&amp; val &gt; deque.getLast()) {
+            deque.removeLast();
+        }
+        deque.add(val);
+    }
+    //队列队顶元素始终为最大值
+    int peek() {
+        return deque.peek();
+    }
+}
+
+class Solution {
+    public int[] maxSlidingWindow(int[] nums, int k) {
+        if (nums.length == 1) {
+            return nums;
+        }
+        int len = nums.length - k + 1;
+        //存放结果元素的数组
+        int[] res = new int[len];
+        int num = 0;
+        //自定义队列
+        MyQueue myQueue = new MyQueue();
+        //先将前k的元素放入队列
+        for (int i = 0; i &lt; k; i++) {
+            myQueue.add(nums[i]);
+        }
+        res[num++] = myQueue.peek();
+        for (int i = k; i &lt; nums.length; i++) {
+            //滑动窗口移除最前面的元素，移除是判断该元素是否放入队列
+            myQueue.poll(nums[i - k]);
+            //滑动窗口加入最后面的元素
+            myQueue.add(nums[i]);
+            //记录对应的最大值
+            res[num++] = myQueue.peek();
+        }
+        return res;
+    }
+}
+
+//解法二
+//利用双端队列手动实现单调队列
+/**
+ * 用一个单调队列来存储对应的下标，每当窗口滑动的时候，直接取队列的头部指针对应的值放入结果集即可
+ * 单调队列类似 （tail --&gt;） 3 --&gt; 2 --&gt; 1 --&gt; 0 (--&gt; head) (右边为头结点，元素存的是下标)
+ */
+class Solution {
+    public int[] maxSlidingWindow(int[] nums, int k) {
+        ArrayDeque&lt;Integer&gt; deque = new ArrayDeque&lt;&gt;();
+        int n = nums.length;
+        int[] res = new int[n - k + 1];
+        int idx = 0;
+        for(int i = 0; i &lt; n; i++) {
+            // 根据题意，i为nums下标，是要在[i - k + 1, i] 中选到最大值，只需要保证两点
+            // 1.队列头结点需要在[i - k + 1, i]范围内，不符合则要弹出
+            while(!deque.isEmpty() &amp;&amp; deque.peek() &lt; i - k + 1){
+                deque.poll();
+            }
+            // 2.既然是单调，就要保证每次放进去的数字要比末尾的都大，否则也弹出
+            while(!deque.isEmpty() &amp;&amp; nums[deque.peekLast()] &lt; nums[i]) {
+                deque.pollLast();
+            }
+
+            deque.offer(i);
+
+            // 因为单调，当i增长到符合第一个k范围的时候，每滑动一步都将队列头节点放入结果就行了
+            if(i &gt;= k - 1){
+                res[idx++] = nums[deque.peek()];
+            }
+        }
+        return res;
+    }
+}
+</code></pre>
+<h2 id="python解法-9"><a class="header" href="#python解法-9">Python解法</a></h2>
+<p>解法一：使用自定义的单调队列类</p>
+<pre><code class="language-python">from collections import deque
+
+
+class MyQueue: #单调队列（从大到小
+    def __init__(self):
+        self.queue = deque() #这里需要使用deque实现单调队列，直接使用list会超时
+    
+    #每次弹出的时候，比较当前要弹出的数值是否等于队列出口元素的数值，如果相等则弹出。
+    #同时pop之前判断队列当前是否为空。
+    def pop(self, value):
+        if self.queue and value == self.queue[0]:
+            self.queue.popleft()#list.pop()时间复杂度为O(n),这里需要使用collections.deque()
+            
+    #如果push的数值大于入口元素的数值，那么就将队列后端的数值弹出，直到push的数值小于等于队列入口元素的数值为止。
+    #这样就保持了队列里的数值是单调从大到小的了。
+    def push(self, value):
+        while self.queue and value &gt; self.queue[-1]:
+            self.queue.pop()
+        self.queue.append(value)
+        
+    #查询当前队列里的最大值 直接返回队列前端也就是front就可以了。
+    def front(self):
+        return self.queue[0]
+    
+class Solution:
+    def maxSlidingWindow(self, nums: List[int], k: int) -&gt; List[int]:
+        que = MyQueue()
+        result = []
+        for i in range(k): #先将前k的元素放进队列
+            que.push(nums[i])
+        result.append(que.front()) #result 记录前k的元素的最大值
+        for i in range(k, len(nums)):
+            que.pop(nums[i - k]) #滑动窗口移除最前面元素
+            que.push(nums[i]) #滑动窗口前加入最后面的元素
+            result.append(que.front()) #记录对应的最大值
+        return result
+</code></pre>
+<p>解法二：直接用单调队列</p>
+<pre><code class="language-python">from collections import deque
+class Solution:
+    def maxSlidingWindow(self, nums: List[int], k: int) -&gt; List[int]:
+        max_list = [] # 结果集合
+        kept_nums = deque() # 单调队列
+
+        for i in range(len(nums)):
+            update_kept_nums(kept_nums, nums[i]) # 右侧新元素加入
+
+            if i &gt;= k and nums[i - k] == kept_nums[0]: # 左侧旧元素如果等于单调队列头元素，需要移除头元素
+                kept_nums.popleft()
+
+            if i &gt;= k - 1:
+                max_list.append(kept_nums[0])
+
+        return max_list
+
+def update_kept_nums(kept_nums, num): # num 是新加入的元素
+    # 所有小于新元素的队列尾部元素，在新元素出现后，都是没有价值的，都需要被移除
+    while kept_nums and num &gt; kept_nums[-1]:
+        kept_nums.pop()
+
+    kept_nums.append(num)
+
+</code></pre>
+<h2 id="go解法-13"><a class="header" href="#go解法-13">Go解法</a></h2>
+<pre><code class="language-go">// 封装单调队列的方式解题
+type MyQueue struct {
+    queue []int
+}
+
+func NewMyQueue() *MyQueue {
+    return &amp;MyQueue{
+        queue: make([]int, 0),
+    }
+}
+
+func (m *MyQueue) Front() int {
+    return m.queue[0]
+}
+
+func (m *MyQueue) Back() int {
+    return m.queue[len(m.queue)-1]
+}
+
+func (m *MyQueue) Empty() bool {
+    return len(m.queue) == 0
+}
+
+func (m *MyQueue) Push(val int) {
+    for !m.Empty() &amp;&amp; val &gt; m.Back() {
+        m.queue = m.queue[:len(m.queue)-1]
+    }
+    m.queue = append(m.queue, val)
+}
+
+func (m *MyQueue) Pop(val int) {
+    if !m.Empty() &amp;&amp; val == m.Front() {
+        m.queue = m.queue[1:]
+    }
+}
+
+func maxSlidingWindow(nums []int, k int) []int {
+    queue := NewMyQueue()
+    length := len(nums)
+    res := make([]int, 0)
+    // 先将前k个元素放入队列
+    for i := 0; i &lt; k; i++ {
+        queue.Push(nums[i])
+    }
+    // 记录前k个元素的最大值
+    res = append(res, queue.Front())
+
+    for i := k; i &lt; length; i++ {
+        // 滑动窗口移除最前面的元素
+        queue.Pop(nums[i-k])
+        // 滑动窗口添加最后面的元素
+        queue.Push(nums[i])
+        // 记录最大值
+        res = append(res, queue.Front())
+    }
+    return res
+}
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
+<h1 id="优先队列"><a class="header" href="#优先队列">优先队列</a></h1>
+<ul>
+<li><a href="%E9%98%9F%E5%88%97/%E4%BC%98%E5%85%88%E9%98%9F%E5%88%97.html#347-top-k-frequent-elements">347. Top K Frequent Elements</a>
+<ul>
+<li><a href="%E9%98%9F%E5%88%97/%E4%BC%98%E5%85%88%E9%98%9F%E5%88%97.html#%E6%80%9D%E8%B7%AF">思路</a>
+<ul>
+<li><a href="%E9%98%9F%E5%88%97/%E4%BC%98%E5%85%88%E9%98%9F%E5%88%97.html#c%E4%BC%98%E5%85%88%E9%98%9F%E5%88%97">C++优先队列</a></li>
+</ul>
+</li>
+<li><a href="%E9%98%9F%E5%88%97/%E4%BC%98%E5%85%88%E9%98%9F%E5%88%97.html#c%E8%A7%A3%E6%B3%95">C++解法</a></li>
+<li><a href="%E9%98%9F%E5%88%97/%E4%BC%98%E5%85%88%E9%98%9F%E5%88%97.html#java%E8%A7%A3%E6%B3%95">Java解法</a></li>
+<li><a href="%E9%98%9F%E5%88%97/%E4%BC%98%E5%85%88%E9%98%9F%E5%88%97.html#python%E8%A7%A3%E6%B3%95">Python解法</a></li>
+<li><a href="%E9%98%9F%E5%88%97/%E4%BC%98%E5%85%88%E9%98%9F%E5%88%97.html#go%E8%A7%A3%E6%B3%95">Go解法</a></li>
+</ul>
+</li>
+</ul>
+<h1 id="347-top-k-frequent-elements"><a class="header" href="#347-top-k-frequent-elements"><a href="https://leetcode.com/problems/top-k-frequent-elements/">347. Top K Frequent Elements</a></a></h1>
+<p>Given an integer array <code>nums</code> and an integer <code>k</code>, return <em>the</em> <code>k</code> <em>most frequent elements</em>. You may return the answer in <strong>any order</strong>.</p>
+<p><strong>Example 1:</strong></p>
+<p><strong>Input:</strong> <code>nums = [1,1,1,2,2,3], k = 2</code><br />
+<strong>Output:</strong> <code>[1,2]</code></p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> <code>nums = [1], k = 1</code><br />
+<strong>Output:</strong> <code>[1]</code></p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= nums.length &lt;= 10^5</code></li>
+<li><code>-10^4 &lt;= nums[i] &lt;= 10^4</code></li>
+<li><code>k</code> is in the range <code>[1, the number of unique elements in the array]</code>.</li>
+<li>It is <strong>guaranteed</strong> that the answer is <strong>unique</strong>.</li>
+</ul>
+<p><strong>Follow up:</strong> Your algorithm's time complexity must be better than <code>O(n log n)</code>, where n is the array's size.</p>
+<h2 id="思路-63"><a class="header" href="#思路-63">思路</a></h2>
+<p>使用map存储，使用value调整堆结构</p>
+<p>使用小顶堆，每次弹出堆顶元素</p>
+<p>这道题目主要涉及如下三块内容：</p>
+<ol>
+<li>要统计元素出现频率</li>
+<li>对频率排序</li>
+<li>找出前K个高频元素</li>
+</ol>
+<p>首先统计元素出现的频率，这一类的问题可以使用map来进行统计。</p>
+<p>然后是对频率进行排序，这里我们可以使用一种 容器适配器就是<strong>优先级队列</strong>。</p>
+<p>什么是优先级队列呢？</p>
+<p>其实<strong>就是一个披着队列外衣的堆</strong>，因为优先级队列对外接口只是从队头取元素，从队尾添加元素，再无其他取元素的方式，看起来就是一个队列。</p>
+<p>而且优先级队列内部元素是自动依照元素的权值排列。那么它是如何有序排列的呢？</p>
+<p>缺省情况下priority_queue利用max-heap（大顶堆）完成对元素的排序，这个大顶堆是以vector为表现形式的complete binary tree（完全二叉树）。</p>
+<p>什么是堆呢？</p>
+<p><strong>堆是一棵完全二叉树，树中每个结点的值都不小于（或不大于）其左右孩子的值。</strong> 如果父亲结点是大于等于左右孩子就是大顶堆，小于等于左右孩子就是小顶堆。</p>
+<p>所以大家经常说的大顶堆（堆头是最大元素），小顶堆（堆头是最小元素），如果懒得自己实现的话，就直接用priority_queue（优先级队列）就可以了，底层实现都是一样的，从小到大排就是小顶堆，从大到小排就是大顶堆。</p>
+<p>本题我们就要使用优先级队列来对部分频率进行排序。</p>
+<p>为什么不用快排呢， 使用快排要将map转换为vector的结构，然后对整个数组进行排序， 而这种场景下，我们其实只需要维护k个有序的序列就可以了，所以使用优先级队列是最优的。</p>
+<p>此时要思考一下，是使用小顶堆呢，还是大顶堆？</p>
+<p>有的同学一想，题目要求前 K 个高频元素，那么果断用大顶堆啊。</p>
+<p>那么问题来了，定义一个大小为k的大顶堆，在每次移动更新大顶堆的时候，每次弹出都把最大的元素弹出去了，那么怎么保留下来前K个高频元素呢。</p>
+<p>而且使用大顶堆就要把所有元素都进行排序，那能不能只排序k个元素呢？</p>
+<p><strong>所以我们要用小顶堆，因为要统计最大前k个元素，只有小顶堆每次将最小的元素弹出，最后小顶堆里积累的才是前k个最大元素。</strong></p>
+<p>寻找前k个最大元素流程如图所示：（图中的频率只有三个，所以正好构成一个大小为3的小顶堆，如果频率更多一些，则用这个小顶堆进行扫描）</p>
+<p><img src="https://code-thinking.cdn.bcebos.com/pics/347.%E5%89%8DK%E4%B8%AA%E9%AB%98%E9%A2%91%E5%85%83%E7%B4%A0.jpg" alt="347.前K个高频元素" /></p>
+<h3 id="c优先队列"><a class="header" href="#c优先队列">C++优先队列</a></h3>
+<p><code>priority_queue</code> 是 C++ 标准库中的一个容器适配器，用于实现优先队列。在优先队列中，元素按照优先级的顺序被排列，通常最小或最大元素可以在常数时间内被访问。以下是关于 <code>priority_queue</code> 的详细讲解，包括用法、重要函数和一个简单的示例。</p>
+<ol>
+<li>引入头文件</li>
+</ol>
+<p>要使用 <code>priority_queue</code>，需要包含头文件：</p>
+<pre><code class="language-cpp">#include &lt;queue&gt;
+</code></pre>
+<ol start="2">
+<li>基本特性</li>
+</ol>
+<ul>
+<li><strong>底层数据结构</strong>：<code>priority_queue</code> 通常基于堆（heap）实现，主要使用最大堆或最小堆。</li>
+<li><strong>默认排序</strong>：默认情况下，<code>priority_queue</code> 是最大堆，即优先级最高的元素在顶部。如果需要最小堆，可以使用自定义比较函数。</li>
+</ul>
+<ol start="3">
+<li>主要构造函数</li>
+</ol>
+<p><code>priority_queue</code> 的构造函数可以接受以下参数：</p>
+<ul>
+<li><code>std::vector&lt;T&gt;</code>, <code>std::deque&lt;T&gt;</code>：指定存储容器的类型（默认为 <code>std::vector</code>）。</li>
+<li>自定义比较函数（可选）：确定优先级的自定义比较器。</li>
+</ul>
+<ol start="4">
+<li>常用操作</li>
+</ol>
+<p><code>priority_queue</code> 支持以下常用操作：</p>
+<ul>
+<li><code>push(const T&amp; value)</code>：插入一个新的元素。</li>
+<li><code>pop()</code>：移除堆顶元素。</li>
+<li><code>top()</code>：返回堆顶元素（最大或最小）。</li>
+<li><code>empty()</code>：判断是否为空。</li>
+<li><code>size()</code>：返回元素个数。</li>
+</ul>
+<ol start="5">
+<li>使用示例</li>
+</ol>
+<p>以下是一个简单的示例，演示如何使用 <code>priority_queue</code>：</p>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;queue&gt;
+#include &lt;vector&gt;
+
+int main() {
+    // 创建一个最大优先队列
+    std::priority_queue&lt;int&gt; maxHeap;
+
+    // 插入元素
+    maxHeap.push(10);
+    maxHeap.push(20);
+    maxHeap.push(15);
+
+    // 输出并移除堆顶元素
+    std::cout &lt;&lt; "最大元素: " &lt;&lt; maxHeap.top() &lt;&lt; std::endl; // 输出 20
+    maxHeap.pop();
+
+    std::cout &lt;&lt; "新的最大元素: " &lt;&lt; maxHeap.top() &lt;&lt; std::endl; // 输出 15
+
+    // 最小优先队列示例
+    std::priority_queue&lt;int, std::vector&lt;int&gt;, std::greater&lt;int&gt;&gt; minHeap;
+
+    // 插入元素
+    minHeap.push(10);
+    minHeap.push(20);
+    minHeap.push(15);
+
+    // 输出并移除堆顶元素
+    std::cout &lt;&lt; "最小元素: " &lt;&lt; minHeap.top() &lt;&lt; std::endl; // 输出 10
+    minHeap.pop();
+
+    std::cout &lt;&lt; "新的最小元素: " &lt;&lt; minHeap.top() &lt;&lt; std::endl; // 输出 15
+
+    return 0;
+}
+</code></pre>
+<ol start="6">
+<li>常见应用场景</li>
+</ol>
+<p>优先队列常用于以下场景：</p>
+<ul>
+<li><strong>调度算法</strong>：比如任务调度。</li>
+<li><strong>Dijkstra 算法</strong>：用于寻找最短路径时的优先队列。</li>
+<li><strong>贪心算法</strong>：在处理最优解的构造过程中管理元素的优先级。</li>
+</ul>
+<p>总结</p>
+<p><code>priority_queue</code> 是一个强大的数据结构，能够以高效的方式管理具有优先级的元素。通过自定义比较器，你可以灵活地对元素的排列进行控制。如果你有任何具体问题或者需要更深入的解释，请告诉我！</p>
+<h2 id="c解法-49"><a class="header" href="#c解法-49">C++解法</a></h2>
+<pre><code class="language-cpp">class Solution {
+public:
+    // 小顶堆
+    class mycomparison {
+    public:
+        bool operator()(const pair&lt;int, int&gt;&amp; lhs, const pair&lt;int, int&gt;&amp; rhs) {
+            return lhs.second &gt; rhs.second;
+        }
+    };
+    vector&lt;int&gt; topKFrequent(vector&lt;int&gt;&amp; nums, int k) {
+        // 要统计元素出现频率
+        unordered_map&lt;int, int&gt; map; // map&lt;nums[i],对应出现的次数&gt;
+        for (int i = 0; i &lt; nums.size(); i++) {
+            map[nums[i]]++;
+        }
+
+        // 对频率排序
+        // 定义一个小顶堆，大小为k
+        priority_queue&lt;pair&lt;int, int&gt;, vector&lt;pair&lt;int, int&gt;&gt;, mycomparison&gt; pri_que;
+
+        // 用固定大小为k的小顶堆，扫面所有频率的数值
+        for (unordered_map&lt;int, int&gt;::iterator it = map.begin(); it != map.end(); it++) {
+            pri_que.push(*it);
+            if (pri_que.size() &gt; k) { // 如果堆的大小大于了K，则队列弹出，保证堆的大小一直为k
+                pri_que.pop();
+            }
+        }
+
+        // 找出前K个高频元素，因为小顶堆先弹出的是最小的，所以倒序来输出到数组
+        vector&lt;int&gt; result(k);
+        for (int i = k - 1; i &gt;= 0; i--) {
+            result[i] = pri_que.top().first;
+            pri_que.pop();
+        }
+        return result;
+
+    }
+};
+</code></pre>
+<ul>
+<li>时间复杂度: O(nlogk)</li>
+<li>空间复杂度: O(n)</li>
+</ul>
+<p>大家对这个比较运算在建堆时是如何应用的，为什么左大于右就会建立小顶堆，反而建立大顶堆比较困惑。</p>
+<p>确实 例如我们在写快排的cmp函数的时候，<code>return left&gt;right</code> 就是从大到小，<code>return left&lt;right</code> 就是从小到大。</p>
+<p>优先级队列的定义正好反过来了，可能和优先级队列的源码实现有关（我没有仔细研究），我估计是底层实现上优先队列队首指向后面，队尾指向最前面的缘故！</p>
+<h2 id="java解法-36"><a class="header" href="#java解法-36">Java解法</a></h2>
+<pre><code class="language-java">/*Comparator接口说明:
+ * 返回负数，形参中第一个参数排在前面；返回正数，形参中第二个参数排在前面
+ * 对于队列：排在前面意味着往队头靠
+ * 对于堆（使用PriorityQueue实现）：从队头到队尾按从小到大排就是最小堆（小顶堆），
+ *                                从队头到队尾按从大到小排就是最大堆（大顶堆）---&gt;队头元素相当于堆的根节点
+ * */
+class Solution {
+    //解法1：基于大顶堆实现
+    public int[] topKFrequent1(int[] nums, int k) {
+        Map&lt;Integer,Integer&gt; map = new HashMap&lt;&gt;(); //key为数组元素值,val为对应出现次数
+        for (int num : nums) {
+            map.put(num, map.getOrDefault(num,0) + 1);
+        }
+        //在优先队列中存储二元组(num, cnt),cnt表示元素值num在数组中的出现次数
+        //出现次数按从队头到队尾的顺序是从大到小排,出现次数最多的在队头(相当于大顶堆)
+        PriorityQueue&lt;int[]&gt; pq = new PriorityQueue&lt;&gt;((pair1, pair2) -&gt; pair2[1] - pair1[1]);
+        for (Map.Entry&lt;Integer, Integer&gt; entry : map.entrySet()) {//大顶堆需要对所有元素进行排序
+            pq.add(new int[]{entry.getKey(), entry.getValue()});
+        }
+        int[] ans = new int[k];
+        for (int i = 0; i &lt; k; i++) { //依次从队头弹出k个,就是出现频率前k高的元素
+            ans[i] = pq.poll()[0];
+        }
+        return ans;
+    }
+    //解法2：基于小顶堆实现
+    public int[] topKFrequent2(int[] nums, int k) {
+        Map&lt;Integer,Integer&gt; map = new HashMap&lt;&gt;(); //key为数组元素值,val为对应出现次数
+        for (int num : nums) {
+            map.put(num, map.getOrDefault(num, 0) + 1);
+        }
+        //在优先队列中存储二元组(num, cnt),cnt表示元素值num在数组中的出现次数
+        //出现次数按从队头到队尾的顺序是从小到大排,出现次数最低的在队头(相当于小顶堆)
+        PriorityQueue&lt;int[]&gt; pq = new PriorityQueue&lt;&gt;((pair1, pair2) -&gt; pair1[1] - pair2[1]);
+        for (Map.Entry&lt;Integer, Integer&gt; entry : map.entrySet()) { //小顶堆只需要维持k个元素有序
+            if (pq.size() &lt; k) { //小顶堆元素个数小于k个时直接加
+                pq.add(new int[]{entry.getKey(), entry.getValue()});
+            } else {
+                if (entry.getValue() &gt; pq.peek()[1]) { //当前元素出现次数大于小顶堆的根结点(这k个元素中出现次数最少的那个)
+                    pq.poll(); //弹出队头(小顶堆的根结点),即把堆里出现次数最少的那个删除,留下的就是出现次数多的了
+                    pq.add(new int[]{entry.getKey(), entry.getValue()});
+                }
+            }
+        }
+        int[] ans = new int[k];
+        for (int i = k - 1; i &gt;= 0; i--) { //依次弹出小顶堆,先弹出的是堆的根,出现次数少,后面弹出的出现次数多
+            ans[i] = pq.poll()[0];
+        }
+        return ans;
+    }
+}
+</code></pre>
+<p>简化版代码：</p>
+<pre><code class="language-java">class Solution {
+    public int[] topKFrequent(int[] nums, int k) {
+        // 优先级队列，为了避免复杂 api 操作，pq 存储数组
+        // lambda 表达式设置优先级队列从大到小存储 o1 - o2 为从小到大，o2 - o1 反之
+        PriorityQueue&lt;int[]&gt; pq = new PriorityQueue&lt;&gt;((o1, o2) -&gt; o1[1] - o2[1]);
+        int[] res = new int[k]; // 答案数组为 k 个元素
+        Map&lt;Integer, Integer&gt; map = new HashMap&lt;&gt;(); // 记录元素出现次数
+        for (int num : nums) map.put(num, map.getOrDefault(num, 0) + 1);
+        for (var x : map.entrySet()) { // entrySet 获取 k-v Set 集合
+            // 将 kv 转化成数组
+            int[] tmp = new int[2];
+            tmp[0] = x.getKey();
+            tmp[1] = x.getValue();
+            pq.offer(tmp);
+            // 下面的代码是根据小根堆实现的，我只保留优先队列的最后的k个，只要超出了k我就将最小的弹出，剩余的k个就是答案
+            if(pq.size() &gt; k) {
+                pq.poll();
+            }
+        }
+        for (int i = 0; i &lt; k; i++) {
+            res[i] = pq.poll()[0]; // 获取优先队列里的元素
+        }
+        return res;
+    }
+}
+</code></pre>
+<h2 id="python解法-10"><a class="header" href="#python解法-10">Python解法</a></h2>
+<p>解法一：</p>
+<pre><code class="language-python">#时间复杂度：O(nlogk)
+#空间复杂度：O(n)
+import heapq
+class Solution:
+    def topKFrequent(self, nums: List[int], k: int) -&gt; List[int]:
+        #要统计元素出现频率
+        map_ = {} #nums[i]:对应出现的次数
+        for i in range(len(nums)):
+            map_[nums[i]] = map_.get(nums[i], 0) + 1
+        
+        #对频率排序
+        #定义一个小顶堆，大小为k
+        pri_que = [] #小顶堆
+        
+        #用固定大小为k的小顶堆，扫描所有频率的数值
+        for key, freq in map_.items():
+            heapq.heappush(pri_que, (freq, key))
+            if len(pri_que) &gt; k: #如果堆的大小大于了K，则队列弹出，保证堆的大小一直为k
+                heapq.heappop(pri_que)
+        
+        #找出前K个高频元素，因为小顶堆先弹出的是最小的，所以倒序来输出到数组
+        result = [0] * k
+        for i in range(k-1, -1, -1):
+            result[i] = heapq.heappop(pri_que)[1]
+        return result
+</code></pre>
+<p>解法二：</p>
+<pre><code class="language-python">class Solution:
+    def topKFrequent(self, nums: List[int], k: int) -&gt; List[int]:
+        # 使用字典统计数字出现次数
+        time_dict = defaultdict(int)
+        for num in nums:
+            time_dict[num] += 1
+        # 更改字典，key为出现次数，value为相应的数字的集合
+        index_dict = defaultdict(list)
+        for key in time_dict:
+            index_dict[time_dict[key]].append(key)
+        # 排序
+        key = list(index_dict.keys())
+        key.sort()
+        result = []
+        cnt = 0
+        # 获取前k项
+        while key and cnt != k:
+            result += index_dict[key[-1]]
+            cnt += len(index_dict[key[-1]])
+            key.pop()
+
+        return result[0: k]
+</code></pre>
+<h2 id="go解法-14"><a class="header" href="#go解法-14">Go解法</a></h2>
+<pre><code class="language-go">//方法一：小顶堆
+func topKFrequent(nums []int, k int) []int {
+    map_num:=map[int]int{}
+    //记录每个元素出现的次数
+    for _,item:=range nums{
+        map_num[item]++
+    }
+    h:=&amp;IHeap{}
+    heap.Init(h)
+    //所有元素入堆，堆的长度为k
+    for key,value:=range map_num{
+        heap.Push(h,[2]int{key,value})
+        if h.Len()&gt;k{
+            heap.Pop(h)
+        }
+    }
+    res:=make([]int,k)
+    //按顺序返回堆中的元素
+    for i:=0;i&lt;k;i++{
+        res[k-i-1]=heap.Pop(h).([2]int)[0]
+    }
+    return res
+}
+
+//构建小顶堆
+type IHeap [][2]int
+
+func (h IHeap) Len()int {
+    return len(h)
+}
+
+func (h IHeap) Less (i,j int) bool {
+    return h[i][1]&lt;h[j][1]
+}
+
+func (h IHeap) Swap(i,j int) {
+    h[i],h[j]=h[j],h[i]
+}
+
+func (h *IHeap) Push(x interface{}){
+    *h=append(*h,x.([2]int))
+}
+func (h *IHeap) Pop() interface{}{
+    old:=*h
+    n:=len(old)
+    x:=old[n-1]
+    *h=old[0:n-1]
+    return x
+}
+
+
+//方法二:利用O(nlogn)排序
+func topKFrequent(nums []int, k int) []int {
+    ans:=[]int{}
+    map_num:=map[int]int{}
+    for _,item:=range nums {
+        map_num[item]++
+    }
+    for key,_:=range map_num{
+        ans=append(ans,key)
+    }
+    //核心思想：排序
+    //可以不用包函数，自己实现快排
+    sort.Slice(ans,func (a,b int)bool{
+        return map_num[ans[a]]&gt;map_num[ans[b]]
+    })
+    return ans[:k]
+}
+</code></pre>
 <div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
 <h1 id="二叉树"><a class="header" href="#二叉树">二叉树</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
@@ -7246,7 +9407,7 @@ public:
 <li><code>-10^9 &lt;= Node.val &lt;= 10^9</code></li>
 <li><code>-1000 &lt;= targetSum &lt;= 1000</code></li>
 </ul>
-<h2 id="思路-52"><a class="header" href="#思路-52">思路</a></h2>
+<h2 id="思路-64"><a class="header" href="#思路-64">思路</a></h2>
 <h3 id="方法一深度优先搜索"><a class="header" href="#方法一深度优先搜索">方法一：深度优先搜索</a></h3>
 <p>思路与算法</p>
 <p>我们首先想到的解法是穷举所有的可能，我们访问每一个节点 node，检测以 node 为起始节点且向下延深的路径有多少种。我们递归遍历每一个节点的所有可能的路径，然后将这些路径数目加起来即为返回结果。</p>
@@ -7334,7 +9495,7 @@ public:
 <li>The number of nodes in the tree is in the range <code>[1, 10^4]</code>.</li>
 <li><code>-100 &lt;= Node.val &lt;= 100</code></li>
 </ul>
-<h2 id="思路-53"><a class="header" href="#思路-53">思路</a></h2>
+<h2 id="思路-65"><a class="header" href="#思路-65">思路</a></h2>
 <p>方法一：深度优先搜索</p>
 <p>首先我们知道一条路径的长度为该路径经过的节点数减一，所以求直径（即求路径长度的最大值）等效于求路径经过节点数的最大值减一。</p>
 <p>而任意一条路径均可以被看作由某个节点为起点，从其左儿子和右儿子向下遍历的路径拼接得到。</p>
@@ -7468,7 +9629,7 @@ private:
 <li>The number of nodes in the tree is in the range <code>[0, 100]</code>.</li>
 <li><code>-100 &lt;= Node.val &lt;= 100</code></li>
 </ul>
-<h2 id="思路-54"><a class="header" href="#思路-54">思路</a></h2>
+<h2 id="思路-66"><a class="header" href="#思路-66">思路</a></h2>
 <p>层次遍历，每层最后一个节点</p>
 <p>由于树的形状无法提前知晓，不可能设计出优于 O(n) 的算法。因此，我们应该试着寻找线性时间解。带着这个想法，我们来考虑一些同等有效的方案。</p>
 <h3 id="方法一深度优先搜索-1"><a class="header" href="#方法一深度优先搜索-1">方法一：深度优先搜索</a></h3>
@@ -7718,7 +9879,7 @@ public:
 <li>The number of nodes in the tree is in the range <code>[0, 100]</code>.</li>
 <li><code>-100 &lt;= Node.val &lt;= 100</code></li>
 </ul>
-<h2 id="思路-55"><a class="header" href="#思路-55">思路</a></h2>
+<h2 id="思路-67"><a class="header" href="#思路-67">思路</a></h2>
 <ol>
 <li>
 <p>先序遍历，左右交换</p>
