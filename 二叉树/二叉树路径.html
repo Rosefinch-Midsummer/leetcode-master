@@ -1,0 +1,1764 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>二叉树路径 - 剑指Offer</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">剑指Offer</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
+<h1 id="二叉树路径"><a class="header" href="#二叉树路径">二叉树路径</a></h1>
+<ul>
+<li><a href="#257-binary-tree-paths">257. Binary Tree Paths</a>
+<ul>
+<li><a href="#%E6%80%9D%E8%B7%AF">思路</a>
+<ul>
+<li><a href="#%E9%80%92%E5%BD%92">递归</a></li>
+</ul>
+</li>
+<li><a href="#c%E8%A7%A3%E6%B3%95">C++解法</a></li>
+<li><a href="#java%E8%A7%A3%E6%B3%95">Java解法</a></li>
+<li><a href="#python3%E8%A7%A3%E6%B3%95">Python3解法</a></li>
+<li><a href="#go%E8%A7%A3%E6%B3%95">Go解法</a></li>
+</ul>
+</li>
+<li><a href="#404-sum-of-left-leaves">404. Sum of Left Leaves</a>
+<ul>
+<li><a href="#%E6%80%9D%E8%B7%AF-1">思路</a></li>
+<li><a href="#c%E8%A7%A3%E6%B3%95-1">C++解法</a></li>
+<li><a href="#java%E8%A7%A3%E6%B3%95-1">Java解法</a></li>
+<li><a href="#python3%E8%A7%A3%E6%B3%95-1">Python3解法</a></li>
+<li><a href="#go%E8%A7%A3%E6%B3%95-1">Go解法</a></li>
+</ul>
+</li>
+<li><a href="#513-find-bottom-left-tree-value">513. Find Bottom Left Tree Value</a>
+<ul>
+<li><a href="#%E6%80%9D%E8%B7%AF-2">思路</a>
+<ul>
+<li><a href="#%E9%80%92%E5%BD%92-1">递归</a></li>
+<li><a href="#%E8%BF%AD%E4%BB%A3%E6%B3%95">迭代法</a></li>
+<li><a href="#%E6%80%BB%E7%BB%93">总结</a></li>
+</ul>
+</li>
+<li><a href="#c%E8%A7%A3%E6%B3%95-2">C++解法</a></li>
+<li><a href="#java%E8%A7%A3%E6%B3%95-2">Java解法</a></li>
+<li><a href="#python3%E8%A7%A3%E6%B3%95-2">Python3解法</a></li>
+<li><a href="#go%E8%A7%A3%E6%B3%95-2">Go解法</a></li>
+</ul>
+</li>
+<li><a href="#112-path-sum">112. Path Sum</a>
+<ul>
+<li><a href="#%E6%80%9D%E8%B7%AF-3">思路</a>
+<ul>
+<li><a href="#%E9%80%92%E5%BD%92-2">递归</a></li>
+<li><a href="#%E8%BF%AD%E4%BB%A3">迭代</a></li>
+</ul>
+</li>
+<li><a href="#c%E8%A7%A3%E6%B3%95-3">C++解法</a></li>
+<li><a href="#java%E8%A7%A3%E6%B3%95-3">Java解法</a></li>
+<li><a href="#python3%E8%A7%A3%E6%B3%95-3">Python3解法</a></li>
+<li><a href="#go%E8%A7%A3%E6%B3%95-3">Go解法</a></li>
+</ul>
+</li>
+<li><a href="#113-path-sum-ii">113. Path Sum II</a>
+<ul>
+<li><a href="#%E6%80%9D%E8%B7%AF-4">思路</a></li>
+<li><a href="#c%E8%A7%A3%E6%B3%95-4">C++解法</a></li>
+<li><a href="#java%E8%A7%A3%E6%B3%95-4">Java解法</a></li>
+<li><a href="#python3%E8%A7%A3%E6%B3%95-4">Python3解法</a></li>
+<li><a href="#go%E8%A7%A3%E6%B3%95-4">Go解法</a></li>
+</ul>
+</li>
+<li><a href="#129-sum-root-to-leaf-numbers">129. Sum Root to Leaf Numbers</a>
+<ul>
+<li><a href="#%E6%80%9D%E8%B7%AF-5">思路</a></li>
+<li><a href="#c%E8%A7%A3%E6%B3%95-5">C++解法</a></li>
+<li><a href="#java%E8%A7%A3%E6%B3%95-5">Java解法</a></li>
+<li><a href="#python3%E8%A7%A3%E6%B3%95-5">Python3解法</a></li>
+<li><a href="#go%E8%A7%A3%E6%B3%95-5">Go解法</a></li>
+</ul>
+</li>
+<li><a href="#437-path-sum-iii">437. Path Sum III</a>
+<ul>
+<li><a href="#%E6%80%9D%E8%B7%AF-6">思路</a>
+<ul>
+<li><a href="#%E6%96%B9%E6%B3%95%E4%B8%80%E6%B7%B1%E5%BA%A6%E4%BC%98%E5%85%88%E6%90%9C%E7%B4%A2">方法一：深度优先搜索</a></li>
+<li><a href="#%E6%96%B9%E6%B3%95%E4%BA%8C-%E5%89%8D%E7%BC%80%E5%92%8C">方法二: 前缀和</a></li>
+</ul>
+</li>
+<li><a href="#c-%E8%A7%A3%E6%B3%95">C++ 解法</a></li>
+<li><a href="#java-%E8%A7%A3%E6%B3%95">Java 解法</a></li>
+<li><a href="#python-%E8%A7%A3%E6%B3%95">Python 解法</a></li>
+</ul>
+</li>
+</ul>
+<h1 id="257-binary-tree-paths"><a class="header" href="#257-binary-tree-paths"><a href="https://leetcode.com/problems/binary-tree-paths/">257. Binary Tree Paths</a></a></h1>
+<p>Given the <code>root</code> of a binary tree, return <em>all root-to-leaf paths in <strong>any order</strong></em>.</p>
+<p>A <strong>leaf</strong> is a node with no children.</p>
+<p><strong>Example 1:</strong></p>
+<p><img src="https://assets.leetcode.com/uploads/2021/03/12/paths-tree.jpg" alt="" /></p>
+<p><strong>Input:</strong> <code>root = [1,2,3,null,5]</code><br />
+<strong>Output:</strong> <code>["1-&gt;2-&gt;5","1-&gt;3"]</code></p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> <code>root = [1]</code><br />
+<strong>Output:</strong> <code>["1"]</code></p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li>The number of nodes in the tree is in the range <code>[1, 100]</code>.</li>
+<li><code>-100 &lt;= Node.val &lt;= 100</code></li>
+</ul>
+<h2 id="思路"><a class="header" href="#思路">思路</a></h2>
+<p>这道题目要求从根节点到叶子的路径，所以需要前序遍历，这样才方便让父节点指向孩子节点，找到对应的路径。</p>
+<p>在这道题目中将第一次涉及回溯，因为我们要把路径记录下来，需要回溯来回退一个路径再进入另一个路径。</p>
+<p>前序遍历以及回溯的过程如图：</p>
+<p><img src="https://code-thinking-1253855093.file.myqcloud.com/pics/20210204151702443.png" alt="257.二叉树的所有路径" /></p>
+<p>我们先使用递归的方式，来做前序遍历。<strong>要知道递归和回溯就是一家的，本题也需要回溯。</strong></p>
+<h3 id="递归"><a class="header" href="#递归">递归</a></h3>
+<ol>
+<li>递归函数参数以及返回值</li>
+</ol>
+<p>要传入根节点，记录每一条路径的path，和存放结果集的result，这里递归不需要返回值，代码如下：</p>
+<pre><code class="language-cpp">void traversal(TreeNode* cur, vector&lt;int&gt;&amp; path, vector&lt;string&gt;&amp; result)
+</code></pre>
+<ol start="2">
+<li>确定递归终止条件</li>
+</ol>
+<p>在写递归的时候都习惯了这么写：</p>
+<pre><code class="language-cpp">if (cur == NULL) {
+    终止处理逻辑
+}
+</code></pre>
+<p>但是本题的终止条件这样写会很麻烦，因为本题要找到叶子节点，就开始结束的处理逻辑了（把路径放进result里）。</p>
+<p><strong>那么什么时候算是找到了叶子节点？</strong> 是当 cur不为空，其左右孩子都为空的时候，就找到叶子节点。</p>
+<p>所以本题的终止条件是：</p>
+<pre><code class="language-cpp">if (cur-&gt;left == NULL &amp;&amp; cur-&gt;right == NULL) {
+    终止处理逻辑
+}
+</code></pre>
+<p>为什么没有判断cur是否为空呢，因为下面的逻辑可以控制空节点不入循环。</p>
+<p>再来看一下终止处理的逻辑。</p>
+<p>这里使用vector 结构path来记录路径，所以要把vector 结构的path转为string格式，再把这个string 放进 result里。</p>
+<p><strong>那么为什么使用了vector 结构来记录路径呢？</strong> 因为在下面处理单层递归逻辑的时候，要做回溯，使用vector方便来做回溯。</p>
+<p>可能有的同学问了，我看有些人的代码也没有回溯啊。</p>
+<p><strong>其实是有回溯的，只不过隐藏在函数调用时的参数赋值里</strong>，下文我还会提到。</p>
+<p>这里我们先使用vector结构的path容器来记录路径，那么终止处理逻辑如下：</p>
+<pre><code class="language-cpp">if (cur-&gt;left == NULL &amp;&amp; cur-&gt;right == NULL) { // 遇到叶子节点
+    string sPath;
+    for (int i = 0; i &lt; path.size() - 1; i++) { // 将path里记录的路径转为string格式
+        sPath += to_string(path[i]);
+        sPath += "-&gt;";
+    }
+    sPath += to_string(path[path.size() - 1]); // 记录最后一个节点（叶子节点）
+    result.push_back(sPath); // 收集一个路径
+    return;
+}
+</code></pre>
+<ol start="3">
+<li>确定单层递归逻辑</li>
+</ol>
+<p>因为是前序遍历，需要先处理中间节点，中间节点就是我们要记录路径上的节点，先放进path中。</p>
+<p><code>path.push_back(cur-&gt;val);</code></p>
+<p>然后是递归和回溯的过程，上面说过没有判断cur是否为空，那么在这里递归的时候，如果为空就不进行下一层递归了。</p>
+<p>所以递归前要加上判断语句，下面要递归的节点是否为空，如下</p>
+<pre><code class="language-cpp">if (cur-&gt;left) {
+    traversal(cur-&gt;left, path, result);
+}
+if (cur-&gt;right) {
+    traversal(cur-&gt;right, path, result);
+}
+</code></pre>
+<p>此时还没完，递归完，要做回溯啊，因为path 不能一直加入节点，它还要删节点，然后才能加入新的节点。</p>
+<p>那么回溯要怎么回溯呢，一些同学会这么写，如下：</p>
+<pre><code class="language-cpp">if (cur-&gt;left) {
+    traversal(cur-&gt;left, path, result);
+}
+if (cur-&gt;right) {
+    traversal(cur-&gt;right, path, result);
+}
+path.pop_back();
+</code></pre>
+<p>这个回溯就有很大的问题，我们知道，<strong>回溯和递归是一一对应的，有一个递归，就要有一个回溯</strong>，这么写的话相当于把递归和回溯拆开了， 一个在花括号里，一个在花括号外。</p>
+<p><strong>所以回溯要和递归永远在一起，世界上最遥远的距离是你在花括号里，而我在花括号外！</strong></p>
+<p>那么代码应该这么写：</p>
+<pre><code class="language-cpp">if (cur-&gt;left) {
+    traversal(cur-&gt;left, path, result);
+    path.pop_back(); // 回溯
+}
+if (cur-&gt;right) {
+    traversal(cur-&gt;right, path, result);
+    path.pop_back(); // 回溯
+}
+</code></pre>
+<p>那么本题整体代码如下：</p>
+<pre><code class="language-cpp">// 版本一
+class Solution {
+private:
+
+    void traversal(TreeNode* cur, vector&lt;int&gt;&amp; path, vector&lt;string&gt;&amp; result) {
+        path.push_back(cur-&gt;val); // 中，中为什么写在这里，因为最后一个节点也要加入到path中 
+        // 这才到了叶子节点
+        if (cur-&gt;left == NULL &amp;&amp; cur-&gt;right == NULL) {
+            string sPath;
+            for (int i = 0; i &lt; path.size() - 1; i++) {
+                sPath += to_string(path[i]);
+                sPath += "-&gt;";
+            }
+            sPath += to_string(path[path.size() - 1]);
+            result.push_back(sPath);
+            return;
+        }
+        if (cur-&gt;left) { // 左 
+            traversal(cur-&gt;left, path, result);
+            path.pop_back(); // 回溯
+        }
+        if (cur-&gt;right) { // 右
+            traversal(cur-&gt;right, path, result);
+            path.pop_back(); // 回溯
+        }
+    }
+
+public:
+    vector&lt;string&gt; binaryTreePaths(TreeNode* root) {
+        vector&lt;string&gt; result;
+        vector&lt;int&gt; path;
+        if (root == NULL) return result;
+        traversal(root, path, result);
+        return result;
+    }
+};
+</code></pre>
+<p>如上的C++代码充分体现了回溯。</p>
+<p>那么如上代码可以精简成如下代码：</p>
+<pre><code class="language-cpp">class Solution {
+private:
+
+    void traversal(TreeNode* cur, string path, vector&lt;string&gt;&amp; result) {
+        path += to_string(cur-&gt;val); // 中
+        if (cur-&gt;left == NULL &amp;&amp; cur-&gt;right == NULL) {
+            result.push_back(path);
+            return;
+        }
+        if (cur-&gt;left) traversal(cur-&gt;left, path + "-&gt;", result); // 左
+        if (cur-&gt;right) traversal(cur-&gt;right, path + "-&gt;", result); // 右
+    }
+
+public:
+    vector&lt;string&gt; binaryTreePaths(TreeNode* root) {
+        vector&lt;string&gt; result;
+        string path;
+        if (root == NULL) return result;
+        traversal(root, path, result);
+        return result;
+
+    }
+};
+</code></pre>
+<p>如上代码精简了不少，也隐藏了不少东西。</p>
+<p>注意在函数定义的时候<code>void traversal(TreeNode* cur, string path, vector&lt;string&gt;&amp; result)</code> ，定义的是<code>string path</code>，每次都是复制赋值，不用使用引用，否则就无法做到回溯的效果。（这里涉及到C++语法知识）</p>
+<p>那么在如上代码中，<strong>貌似没有看到回溯的逻辑，其实不然，回溯就隐藏在<code>traversal(cur-&gt;left, path + "-&gt;", result);</code>中的 <code>path + "-&gt;"</code>。</strong> 每次函数调用完，path依然是没有加上"-&gt;" 的，这就是回溯了。</p>
+<p>为了把这份精简代码的回溯过程展现出来，大家可以试一试把：</p>
+<pre><code class="language-cpp">if (cur-&gt;left) traversal(cur-&gt;left, path + "-&gt;", result); // 左  回溯就隐藏在这里
+</code></pre>
+<p>改成如下代码：</p>
+<pre><code class="language-cpp">path += "-&gt;";
+traversal(cur-&gt;left, path, result); // 左
+</code></pre>
+<p>即：</p>
+<pre><code class="language-cpp">if (cur-&gt;left) {
+    path += "-&gt;";
+    traversal(cur-&gt;left, path, result); // 左
+}
+if (cur-&gt;right) {
+    path += "-&gt;";
+    traversal(cur-&gt;right, path, result); // 右
+}
+</code></pre>
+<p>此时就没有回溯了，这个代码就是通过不了的了。</p>
+<p>如果想把回溯加上，就要 在上面代码的基础上，加上回溯，就可以AC了。</p>
+<pre><code class="language-cpp">if (cur-&gt;left) {
+    path += "-&gt;";
+    traversal(cur-&gt;left, path, result); // 左
+    path.pop_back(); // 回溯 '&gt;'
+    path.pop_back(); // 回溯 '-'
+}
+if (cur-&gt;right) {
+    path += "-&gt;";
+    traversal(cur-&gt;right, path, result); // 右
+    path.pop_back(); // 回溯 '&gt;' 
+    path.pop_back(); //  回溯 '-' 
+}
+</code></pre>
+<p>整体代码如下：</p>
+<pre><code class="language-cpp">//版本二
+class Solution {
+private:
+    void traversal(TreeNode* cur, string path, vector&lt;string&gt;&amp; result) {
+        path += to_string(cur-&gt;val); // 中，中为什么写在这里，因为最后一个节点也要加入到path中
+        if (cur-&gt;left == NULL &amp;&amp; cur-&gt;right == NULL) {
+            result.push_back(path);
+            return;
+        }
+        if (cur-&gt;left) {
+            path += "-&gt;";
+            traversal(cur-&gt;left, path, result); // 左
+            path.pop_back(); // 回溯 '&gt;'
+            path.pop_back(); // 回溯 '-'
+        }
+        if (cur-&gt;right) {
+            path += "-&gt;";
+            traversal(cur-&gt;right, path, result); // 右
+            path.pop_back(); // 回溯'&gt;'
+            path.pop_back(); // 回溯 '-'
+        }
+    }
+
+public:
+    vector&lt;string&gt; binaryTreePaths(TreeNode* root) {
+        vector&lt;string&gt; result;
+        string path;
+        if (root == NULL) return result;
+        traversal(root, path, result);
+        return result;
+
+    }
+};
+
+</code></pre>
+<p><strong>大家应该可以感受出来，如果把 <code>path + "-&gt;"</code>作为函数参数就是可以的，因为并没有改变path的数值，执行完递归函数之后，path依然是之前的数值（相当于回溯了）</strong></p>
+<p><strong>综合以上，第二种递归的代码虽然精简但把很多重要的点隐藏在了代码细节里，第一种递归写法虽然代码多一些，但是把每一个逻辑处理都完整的展现出来了。</strong></p>
+<h2 id="c解法"><a class="header" href="#c解法">C++解法</a></h2>
+<pre><code class="language-cpp">/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+    void traversal(TreeNode* cur, vector&lt;int&gt;&amp; path, vector&lt;string&gt;&amp; result){
+        path.push_back(cur-&gt;val);
+        if(cur-&gt;left == NULL &amp;&amp; cur-&gt;right == NULL){
+            string strPath;
+            for(int i = 0; i &lt; path.size() - 1; i++){
+                strPath += to_string(path[i]);
+                strPath += "-&gt;";
+            }
+            strPath += to_string(path[path.size() - 1]);
+            result.push_back(strPath);
+            return;
+        }
+        if(cur-&gt;left){
+            traversal(cur-&gt;left, path, result);
+            path.pop_back();
+        }
+        if(cur-&gt;right){
+            traversal(cur-&gt;right, path, result);
+            path.pop_back();
+        }
+
+    }
+    vector&lt;string&gt; binaryTreePaths(TreeNode* root) {
+        vector&lt;int&gt; path;
+        vector&lt;string&gt; result;
+        if(root == NULL){
+            return result;
+        }
+        traversal(root, path, result);
+        return result;
+    }
+};
+</code></pre>
+<h2 id="java解法"><a class="header" href="#java解法">Java解法</a></h2>
+<pre><code class="language-java">//解法一
+
+//方式一
+class Solution {
+    /**
+     * 递归法
+     */
+    public List&lt;String&gt; binaryTreePaths(TreeNode root) {
+        List&lt;String&gt; res = new ArrayList&lt;&gt;();// 存最终的结果
+        if (root == null) {
+            return res;
+        }
+        List&lt;Integer&gt; paths = new ArrayList&lt;&gt;();// 作为结果中的路径
+        traversal(root, paths, res);
+        return res;
+    }
+
+    private void traversal(TreeNode root, List&lt;Integer&gt; paths, List&lt;String&gt; res) {
+        paths.add(root.val);// 前序遍历，中
+        // 遇到叶子结点
+        if (root.left == null &amp;&amp; root.right == null) {
+            // 输出
+            StringBuilder sb = new StringBuilder();// StringBuilder用来拼接字符串，速度更快
+            for (int i = 0; i &lt; paths.size() - 1; i++) {
+                sb.append(paths.get(i)).append("-&gt;");
+            }
+            sb.append(paths.get(paths.size() - 1));// 记录最后一个节点
+            res.add(sb.toString());// 收集一个路径
+            return;
+        }
+        // 递归和回溯是同时进行，所以要放在同一个花括号里
+        if (root.left != null) { // 左
+            traversal(root.left, paths, res);
+            paths.remove(paths.size() - 1);// 回溯
+        }
+        if (root.right != null) { // 右
+            traversal(root.right, paths, res);
+            paths.remove(paths.size() - 1);// 回溯
+        }
+    }
+}
+
+//方式二
+class Solution {
+
+    List&lt;String&gt; result = new ArrayList&lt;&gt;();
+
+    public List&lt;String&gt; binaryTreePaths(TreeNode root) {
+        deal(root, "");
+        return result;
+    }
+
+    public void deal(TreeNode node, String s) {
+        if (node == null)
+            return;
+        if (node.left == null &amp;&amp; node.right == null) {
+            result.add(new StringBuilder(s).append(node.val).toString());
+            return;
+        }
+        String tmp = new StringBuilder(s).append(node.val).append("-&gt;").toString();
+        deal(node.left, tmp);
+        deal(node.right, tmp);
+    }
+}
+</code></pre>
+<pre><code class="language-java">// 解法二
+class Solution {
+    /**
+     * 迭代法
+     */
+    public List&lt;String&gt; binaryTreePaths(TreeNode root) {
+        List&lt;String&gt; result = new ArrayList&lt;&gt;();
+        if (root == null)
+            return result;
+        Stack&lt;Object&gt; stack = new Stack&lt;&gt;();
+        // 节点和路径同时入栈
+        stack.push(root);
+        stack.push(root.val + "");
+        while (!stack.isEmpty()) {
+            // 节点和路径同时出栈
+            String path = (String) stack.pop();
+            TreeNode node = (TreeNode) stack.pop();
+            // 若找到叶子节点
+            if (node.left == null &amp;&amp; node.right == null) {
+                result.add(path);
+            }
+            //右子节点不为空
+            if (node.right != null) {
+                stack.push(node.right);
+                stack.push(path + "-&gt;" + node.right.val);
+            }
+            //左子节点不为空
+            if (node.left != null) {
+                stack.push(node.left);
+                stack.push(path + "-&gt;" + node.left.val);
+            }
+        }
+        return result;
+    }
+}
+</code></pre>
+<h2 id="python3解法"><a class="header" href="#python3解法">Python3解法</a></h2>
+<p>递归法+回溯</p>
+<pre><code class="language-python"># Definition for a binary tree node.
+class Solution:
+    def traversal(self, cur, path, result):
+        path.append(cur.val)  # 中
+        if not cur.left and not cur.right:  # 到达叶子节点
+            sPath = '-&gt;'.join(map(str, path))
+            result.append(sPath)
+            return
+        if cur.left:  # 左
+            self.traversal(cur.left, path, result)
+            path.pop()  # 回溯
+        if cur.right:  # 右
+            self.traversal(cur.right, path, result)
+            path.pop()  # 回溯
+
+    def binaryTreePaths(self, root):
+        result = []
+        path = []
+        if not root:
+            return result
+        self.traversal(root, path, result)
+        return result
+
+</code></pre>
+<h2 id="go解法"><a class="header" href="#go解法">Go解法</a></h2>
+<p>递归法：</p>
+<pre><code class="language-go">func binaryTreePaths(root *TreeNode) []string {
+    res := make([]string, 0)
+    var travel func(node *TreeNode, s string)
+    travel = func(node *TreeNode, s string) {
+        if node.Left == nil &amp;&amp; node.Right == nil {
+            v := s + strconv.Itoa(node.Val)
+            res = append(res, v)
+            return
+        }
+        s = s + strconv.Itoa(node.Val) + "-&gt;"
+        if node.Left != nil {
+            travel(node.Left, s)
+        }
+        if node.Right != nil {
+            travel(node.Right, s)
+        }
+    }
+    travel(root, "")
+    return res
+}
+</code></pre>
+<p>迭代法</p>
+<pre><code class="language-go">func binaryTreePaths(root *TreeNode) []string {
+	stack := []*TreeNode{}
+	paths := make([]string, 0)
+	res := make([]string, 0)
+	if root != nil {
+		stack = append(stack, root)
+		paths = append(paths, "")
+	}
+	for len(stack) &gt; 0 {
+		l := len(stack)
+		node := stack[l-1]
+		path := paths[l-1]
+		stack = stack[:l-1]
+		paths = paths[:l-1]
+		if node.Left == nil &amp;&amp; node.Right == nil {
+			res = append(res, path+strconv.Itoa(node.Val))
+			continue
+		}
+		if node.Right != nil {
+			stack = append(stack, node.Right)
+			paths = append(paths, path+strconv.Itoa(node.Val)+"-&gt;")
+		}
+		if node.Left != nil {
+			stack = append(stack, node.Left)
+			paths = append(paths, path+strconv.Itoa(node.Val)+"-&gt;")
+		}
+	}
+	return res
+}
+</code></pre>
+<h1 id="404-sum-of-left-leaves"><a class="header" href="#404-sum-of-left-leaves"><a href="https://leetcode.com/problems/sum-of-left-leaves/">404. Sum of Left Leaves</a></a></h1>
+<p>Given the <code>root</code> of a binary tree, return <em>the sum of all left leaves.</em></p>
+<p>A <strong>leaf</strong> is a node with no children. A <strong>left leaf</strong> is a leaf that is the left child of another node.</p>
+<p><strong>Example 1:</strong></p>
+<p><img src="https://assets.leetcode.com/uploads/2021/04/08/leftsum-tree.jpg" alt="" /></p>
+<p><strong>Input:</strong> <code>root = [3,9,20,null,null,15,7]</code><br />
+<strong>Output:</strong> 24<br />
+<strong>Explanation:</strong> There are two left leaves in the binary tree, with values 9 and 15 respectively.</p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> <code>root = [1]</code><br />
+<strong>Output:</strong> 0</p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li>The number of nodes in the tree is in the range <code>[1, 1000]</code>.</li>
+<li><code>-1000 &lt;= Node.val &lt;= 1000</code></li>
+</ul>
+<h2 id="思路-1"><a class="header" href="#思路-1">思路</a></h2>
+<p><strong>首先要注意是判断左叶子，不是二叉树左侧节点，所以不要上来想着层序遍历。</strong></p>
+<p>因为题目中其实没有说清楚左叶子究竟是什么节点，那么我来给出左叶子的明确定义：<strong>节点A的左孩子不为空，且左孩子的左右孩子都为空（说明是叶子节点），那么A节点的左孩子为左叶子节点</strong></p>
+<p>大家思考一下如下图中二叉树，左叶子之和究竟是多少？</p>
+<p><img src="https://code-thinking-1253855093.file.myqcloud.com/pics/20210204151949672.png" alt="404.左叶子之和" /> <strong>其实是0，因为这棵树根本没有左叶子！</strong></p>
+<p>但看这个图的左叶子之和是多少？</p>
+<p><img src="https://code-thinking-1253855093.file.myqcloud.com/pics/20220902165805.png" alt="图二" /></p>
+<p>相信通过这两个图，大家对最左叶子的定义有明确理解了。</p>
+<p>那么<strong>判断当前节点是不是左叶子是无法判断的，必须要通过节点的父节点来判断其左孩子是不是左叶子。</strong></p>
+<p>如果该节点的左节点不为空，该节点的左节点的左节点为空，该节点的左节点的右节点为空，则找到了一个左叶子，判断代码如下：</p>
+<pre><code class="language-cpp">if (node-&gt;left != NULL &amp;&amp; node-&gt;left-&gt;left == NULL &amp;&amp; node-&gt;left-&gt;right == NULL) {
+    左叶子节点处理逻辑
+}
+</code></pre>
+<p>递归的遍历顺序为后序遍历（左右中），是因为要通过递归函数的返回值来累加求取左叶子数值之和。</p>
+<p>递归三部曲：</p>
+<ol>
+<li>确定递归函数的参数和返回值</li>
+</ol>
+<p>判断一个树的左叶子节点之和，那么一定要传入树的根节点，递归函数的返回值为数值之和，所以为int</p>
+<p>使用题目中给出的函数就可以了。</p>
+<ol start="2">
+<li>确定终止条件</li>
+</ol>
+<p>如果遍历到空节点，那么左叶子值一定是0</p>
+<pre><code class="language-cpp">if (root == NULL) return 0;
+</code></pre>
+<p>注意，只有当前遍历的节点是父节点，才能判断其子节点是不是左叶子。 所以如果当前遍历的节点是叶子节点，那其左叶子也必定是0，那么终止条件为：</p>
+<pre><code class="language-cpp">if (root == NULL) return 0;
+if (root-&gt;left == NULL &amp;&amp; root-&gt;right== NULL) return 0; //其实这个也可以不写，如果不写不影响结果，但就会让递归多进行了一层。
+</code></pre>
+<ol start="3">
+<li>确定单层递归的逻辑</li>
+</ol>
+<p>当遇到左叶子节点的时候，记录数值，然后通过递归求取左子树左叶子之和，和 右子树左叶子之和，相加便是整个树的左叶子之和。</p>
+<p>代码如下：</p>
+<pre><code class="language-cpp">int leftValue = sumOfLeftLeaves(root-&gt;left);    // 左
+if (root-&gt;left &amp;&amp; !root-&gt;left-&gt;left &amp;&amp; !root-&gt;left-&gt;right) {
+    leftValue = root-&gt;left-&gt;val;
+}
+int rightValue = sumOfLeftLeaves(root-&gt;right);  // 右
+
+int sum = leftValue + rightValue;               // 中
+return sum;
+
+</code></pre>
+<h2 id="c解法-1"><a class="header" href="#c解法-1">C++解法</a></h2>
+<p>整体递归代码如下：</p>
+<pre><code class="language-cpp">class Solution {
+public:
+    int sumOfLeftLeaves(TreeNode* root) {
+        if (root == NULL) return 0;
+        if (root-&gt;left == NULL &amp;&amp; root-&gt;right== NULL) return 0;
+
+        int leftValue = sumOfLeftLeaves(root-&gt;left);    // 左
+        if (root-&gt;left &amp;&amp; !root-&gt;left-&gt;left &amp;&amp; !root-&gt;left-&gt;right) { // 左子树就是一个左叶子的情况
+            leftValue = root-&gt;left-&gt;val;
+        }
+        int rightValue = sumOfLeftLeaves(root-&gt;right);  // 右
+
+        int sum = leftValue + rightValue;               // 中
+        return sum;
+    }
+};
+
+</code></pre>
+<p>以上代码精简之后如下：</p>
+<pre><code class="language-cpp">class Solution {
+public:
+    int sumOfLeftLeaves(TreeNode* root) {
+        if (root == NULL) return 0;
+        int leftValue = 0;
+        if (root-&gt;left != NULL &amp;&amp; root-&gt;left-&gt;left == NULL &amp;&amp; root-&gt;left-&gt;right == NULL) {
+            leftValue = root-&gt;left-&gt;val;
+        }
+        return leftValue + sumOfLeftLeaves(root-&gt;left) + sumOfLeftLeaves(root-&gt;right);
+    }
+};
+</code></pre>
+<p>精简之后的代码其实看不出来用的是什么遍历方式了，对于算法初学者以上根据第一个版本来学习。</p>
+<p>后序遍历求和解法：</p>
+<pre><code class="language-cpp">/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+    void traversal(TreeNode* root, vector&lt;int&gt;&amp; vals){
+        if(root == NULL){
+            return;
+        }
+        traversal(root-&gt;left, vals);
+        traversal(root-&gt;right, vals);
+        if(root-&gt;left != NULL &amp;&amp; root-&gt;left-&gt;left == NULL &amp;&amp; root-&gt;left-&gt;right == NULL){
+            vals.push_back(root-&gt;left-&gt;val);
+        }
+    }
+    int sumOfLeftLeaves(TreeNode* root) {
+        vector&lt;int&gt; vals;
+        traversal(root, vals);
+        int sum = 0;
+        for(int val : vals){
+            sum += val;
+        }
+        return sum;
+    }
+};
+</code></pre>
+<h2 id="java解法-1"><a class="header" href="#java解法-1">Java解法</a></h2>
+<pre><code class="language-java">// 层序遍历迭代法
+class Solution {
+    public int sumOfLeftLeaves(TreeNode root) {
+        int sum = 0;
+        if (root == null) return 0;
+        Queue&lt;TreeNode&gt; queue = new LinkedList&lt;&gt;();
+        queue.offer(root);
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            while (size -- &gt; 0) {
+                TreeNode node = queue.poll();
+                if (node.left != null) { // 左节点不为空
+                    queue.offer(node.left);
+                    if (node.left.left == null &amp;&amp; node.left.right == null){ // 左叶子节点
+                        sum += node.left.val;
+                    }
+                }
+                if (node.right != null) queue.offer(node.right);
+            }
+        }
+        return sum;
+    }
+}
+</code></pre>
+<h2 id="python3解法-1"><a class="header" href="#python3解法-1">Python3解法</a></h2>
+<p>递归精简版</p>
+<pre><code class="language-python"># Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def sumOfLeftLeaves(self, root):
+        if root is None:
+            return 0
+        leftValue = 0
+        if root.left is not None and root.left.left is None and root.left.right is None:
+            leftValue = root.left.val
+        return leftValue + self.sumOfLeftLeaves(root.left) + self.sumOfLeftLeaves(root.right)
+</code></pre>
+<h2 id="go解法-1"><a class="header" href="#go解法-1">Go解法</a></h2>
+<p><strong>迭代法(前序遍历)</strong></p>
+<pre><code class="language-go">func sumOfLeftLeaves(root *TreeNode) int {
+        st := make([]*TreeNode, 0)
+        if root == nil {
+            return 0
+        }
+        st = append(st, root)
+        result := 0
+
+        for len(st) != 0 {
+            node := st[len(st)-1]
+            st = st[:len(st)-1]
+            if node.Left != nil &amp;&amp; node.Left.Left == nil &amp;&amp; node.Left.Right == nil {
+                result += node.Left.Val
+            }
+            if node.Right != nil {
+                st = append(st, node.Right)
+            }
+            if node.Left != nil {
+                st = append(st, node.Left)
+            } 
+        }
+
+        return result
+}
+
+</code></pre>
+<h1 id="513-find-bottom-left-tree-value"><a class="header" href="#513-find-bottom-left-tree-value"><a href="https://leetcode.com/problems/find-bottom-left-tree-value/">513. Find Bottom Left Tree Value</a></a></h1>
+<p>Given the <code>root</code> of a binary tree, return the leftmost value in the last row of the tree.</p>
+<p><strong>Example 1:</strong></p>
+<p><img src="https://assets.leetcode.com/uploads/2020/12/14/tree1.jpg" alt="" /></p>
+<p><strong>Input:</strong> <code>root = [2,1,3]</code><br />
+<strong>Output:</strong> 1</p>
+<p><strong>Example 2:</strong></p>
+<p><img src="https://assets.leetcode.com/uploads/2020/12/14/tree2.jpg" alt="" /></p>
+<p><strong>Input:</strong> <code>root = [1,2,3,4,null,5,6,null,null,7]</code><br />
+<strong>Output:</strong> 7</p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li>The number of nodes in the tree is in the range <code>[1, 10^4]</code>.</li>
+<li><code>-2^31 &lt;= Node.val &lt;= 2^31 - 1</code></li>
+</ul>
+<h2 id="思路-2"><a class="header" href="#思路-2">思路</a></h2>
+<p>本题要找出树的最后一行的最左边的值。此时大家应该想起用层序遍历是非常简单的了，反而用递归的话会比较难一点。</p>
+<p>我们依然还是先介绍递归法。</p>
+<h3 id="递归-1"><a class="header" href="#递归-1">递归</a></h3>
+<p>咋眼一看，这道题目用递归的话就就一直向左遍历，最后一个就是答案呗？</p>
+<p>没有这么简单，一直向左遍历到最后一个，它未必是最后一行啊。</p>
+<p>我们来分析一下题目：在树的<strong>最后一行</strong>找到<strong>最左边的值</strong>。</p>
+<p>首先要是最后一行，然后是最左边的值。</p>
+<p>如果使用递归法，如何判断是最后一行呢，其实就是深度最大的叶子节点一定是最后一行。</p>
+<p>如果对二叉树深度和高度还有点疑惑的话，请看：<a href="https://programmercarl.com/0110.%E5%B9%B3%E8%A1%A1%E4%BA%8C%E5%8F%89%E6%A0%91.html">110.平衡二叉树 (opens new window)</a>。</p>
+<p>所以要找深度最大的叶子节点。</p>
+<p>那么如何找最左边的呢？可以使用前序遍历（当然中序，后序都可以，因为本题没有 中间节点的处理逻辑，只要左优先就行），保证优先左边搜索，然后记录深度最大的叶子节点，此时就是树的最后一行最左边的值。</p>
+<p>递归三部曲：</p>
+<ol>
+<li>确定递归函数的参数和返回值</li>
+</ol>
+<p>参数必须有要遍历的树的根节点，还有就是一个int型的变量用来记录最长深度。 这里就不需要返回值了，所以递归函数的返回类型为void。</p>
+<p>本题还需要类里的两个全局变量，maxDepth用来记录最大深度，result记录最大深度最左节点的数值。</p>
+<p>代码如下：</p>
+<pre><code class="language-cpp">int maxDepth = INT_MIN;   // 全局变量 记录最大深度
+int result;       // 全局变量 最大深度最左节点的数值
+void traversal(TreeNode* root, int depth)
+</code></pre>
+<ol start="2">
+<li>确定终止条件</li>
+</ol>
+<p>当遇到叶子节点的时候，就需要统计一下最大的深度了，所以需要遇到叶子节点来更新最大深度。</p>
+<p>代码如下：</p>
+<pre><code class="language-cpp">if (root-&gt;left == NULL &amp;&amp; root-&gt;right == NULL) {
+    if (depth &gt; maxDepth) {
+        maxDepth = depth;           // 更新最大深度
+        result = root-&gt;val;   // 最大深度最左面的数值
+    }
+    return;
+}
+</code></pre>
+<ol start="3">
+<li>确定单层递归的逻辑</li>
+</ol>
+<p>在找最大深度的时候，递归的过程中依然要使用回溯，代码如下：</p>
+<pre><code class="language-cpp">                    // 中
+if (root-&gt;left) {   // 左
+    depth++; // 深度加一
+    traversal(root-&gt;left, depth);
+    depth--; // 回溯，深度减一
+}
+if (root-&gt;right) { // 右
+    depth++; // 深度加一
+    traversal(root-&gt;right, depth);
+    depth--; // 回溯，深度减一
+}
+return;
+</code></pre>
+<h3 id="迭代法"><a class="header" href="#迭代法">迭代法</a></h3>
+<p>本题使用层序遍历再合适不过了，比递归要好理解得多！</p>
+<p>只需要记录最后一行第一个节点的数值就可以了。</p>
+<p>如果对层序遍历不了解，看这篇<a href="https://programmercarl.com/0102.%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E5%B1%82%E5%BA%8F%E9%81%8D%E5%8E%86.html">二叉树：层序遍历登场！ (opens new window)</a>，这篇里也给出了层序遍历的模板，稍作修改就一过刷了这道题了。</p>
+<h3 id="总结"><a class="header" href="#总结">总结</a></h3>
+<p>本题涉及如下几点：</p>
+<ul>
+<li>递归求深度的写法，我们在<a href="https://programmercarl.com/0110.%E5%B9%B3%E8%A1%A1%E4%BA%8C%E5%8F%89%E6%A0%91.html">110.平衡二叉树 (opens new window)</a>中详细的分析了深度应该怎么求，高度应该怎么求。</li>
+<li>递归中其实隐藏了回溯，在<a href="https://programmercarl.com/0257.%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E6%89%80%E6%9C%89%E8%B7%AF%E5%BE%84.html">257. 二叉树的所有路径 (opens new window)</a>中讲解了究竟哪里使用了回溯，哪里隐藏了回溯。</li>
+<li>层次遍历，在<a href="https://programmercarl.com/0102.%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E5%B1%82%E5%BA%8F%E9%81%8D%E5%8E%86.html">二叉树：层序遍历登场！ (opens new window)</a>深度讲解了二叉树层次遍历。 所以本题涉及到的点，我们之前都讲解过，这些知识点需要同学们灵活运用，这样就举一反三了。</li>
+</ul>
+<h2 id="c解法-2"><a class="header" href="#c解法-2">C++解法</a></h2>
+<p>递归法完整代码如下：</p>
+<pre><code class="language-cpp">class Solution {
+public:
+    int maxDepth = INT_MIN;
+    int result;
+    void traversal(TreeNode* root, int depth) {
+        if (root-&gt;left == NULL &amp;&amp; root-&gt;right == NULL) {
+            if (depth &gt; maxDepth) {
+                maxDepth = depth;
+                result = root-&gt;val;
+            }
+            return;
+        }
+        if (root-&gt;left) {
+            depth++;
+            traversal(root-&gt;left, depth);
+            depth--; // 回溯
+        }
+        if (root-&gt;right) {
+            depth++;
+            traversal(root-&gt;right, depth);
+            depth--; // 回溯
+        }
+        return;
+    }
+    int findBottomLeftValue(TreeNode* root) {
+        traversal(root, 0);
+        return result;
+    }
+};
+</code></pre>
+<p>当然回溯的地方可以精简，精简代码如下：</p>
+<pre><code class="language-cpp">class Solution {
+public:
+    int maxDepth = INT_MIN;
+    int result;
+    void traversal(TreeNode* root, int depth) {
+        if (root-&gt;left == NULL &amp;&amp; root-&gt;right == NULL) {
+            if (depth &gt; maxDepth) {
+                maxDepth = depth;
+                result = root-&gt;val;
+            }
+            return;
+        }
+        if (root-&gt;left) {
+            traversal(root-&gt;left, depth + 1); // 隐藏着回溯
+        }
+        if (root-&gt;right) {
+            traversal(root-&gt;right, depth + 1); // 隐藏着回溯
+        }
+        return;
+    }
+    int findBottomLeftValue(TreeNode* root) {
+        traversal(root, 0);
+        return result;
+    }
+};
+</code></pre>
+<p>如果对回溯部分精简的代码不理解的话，可以看这篇<a href="https://programmercarl.com/0257.%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E6%89%80%E6%9C%89%E8%B7%AF%E5%BE%84.html">257. 二叉树的所有路径(opens new window)</a></p>
+<p>迭代法代码如下：</p>
+<pre><code class="language-cpp">class Solution {
+public:
+    int findBottomLeftValue(TreeNode* root) {
+        queue&lt;TreeNode*&gt; que;
+        if (root != NULL) que.push(root);
+        int result = 0;
+        while (!que.empty()) {
+            int size = que.size();
+            for (int i = 0; i &lt; size; i++) {
+                TreeNode* node = que.front();
+                que.pop();
+                if (i == 0) result = node-&gt;val; // 记录该行第一个元素
+                if (node-&gt;left) que.push(node-&gt;left);
+                if (node-&gt;right) que.push(node-&gt;right);
+            }
+        }
+        return result;
+    }
+};
+</code></pre>
+<h2 id="java解法-2"><a class="header" href="#java解法-2">Java解法</a></h2>
+<pre><code class="language-java">// 递归法
+class Solution {
+    private int Deep = -1;
+    private int value = 0;
+    public int findBottomLeftValue(TreeNode root) {
+        value = root.val;
+        findLeftValue(root,0);
+        return value;
+    }
+
+    private void findLeftValue (TreeNode root,int deep) {
+        if (root == null) return;
+        if (root.left == null &amp;&amp; root.right == null) {
+            if (deep &gt; Deep) {
+                value = root.val;
+                Deep = deep;
+            }
+        }
+        if (root.left != null) findLeftValue(root.left,deep + 1);
+        if (root.right != null) findLeftValue(root.right,deep + 1);
+    }
+}
+</code></pre>
+<pre><code class="language-java">//迭代法
+class Solution {
+
+    public int findBottomLeftValue(TreeNode root) {
+        Queue&lt;TreeNode&gt; queue = new LinkedList&lt;&gt;();
+        queue.offer(root);
+        int res = 0;
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            for (int i = 0; i &lt; size; i++) {
+                TreeNode poll = queue.poll();
+                if (i == 0) {
+                    res = poll.val;
+                }
+                if (poll.left != null) {
+                    queue.offer(poll.left);
+                }
+                if (poll.right != null) {
+                    queue.offer(poll.right);
+                }
+            }
+        }
+        return res;
+    }
+}
+</code></pre>
+<h2 id="python3解法-2"><a class="header" href="#python3解法-2">Python3解法</a></h2>
+<p>递归法+精简</p>
+<pre><code class="language-python">class Solution:
+    def findBottomLeftValue(self, root: TreeNode) -&gt; int:
+        self.max_depth = float('-inf')
+        self.result = None
+        self.traversal(root, 0)
+        return self.result
+    
+    def traversal(self, node, depth):
+        if not node.left and not node.right:
+            if depth &gt; self.max_depth:
+                self.max_depth = depth
+                self.result = node.val
+            return
+        
+        if node.left:
+            self.traversal(node.left, depth+1)
+        if node.right:
+            self.traversal(node.right, depth+1)
+</code></pre>
+<h2 id="go解法-2"><a class="header" href="#go解法-2">Go解法</a></h2>
+<p>迭代法</p>
+<pre><code class="language-go">func findBottomLeftValue(root *TreeNode) int {
+    var gradation int
+    queue := list.New()
+    
+    queue.PushBack(root)
+    for queue.Len() &gt; 0 {
+        length := queue.Len()
+        for i := 0; i &lt; length; i++ {
+            node := queue.Remove(queue.Front()).(*TreeNode)
+            if i == 0 {
+                gradation = node.Val
+            }
+            if node.Left != nil {
+                queue.PushBack(node.Left)
+            }
+            if node.Right != nil {
+                queue.PushBack(node.Right)
+            }
+        }
+    }
+    return gradation
+}
+</code></pre>
+<h1 id="112-path-sum"><a class="header" href="#112-path-sum"><a href="https://leetcode.com/problems/path-sum/">112. Path Sum</a></a></h1>
+<p>Given the <code>root</code> of a binary tree and an integer <code>targetSum</code>, return <code>true</code> if the tree has a <strong>root-to-leaf</strong> path such that adding up all the values along the path equals <code>targetSum</code>.</p>
+<p>A <strong>leaf</strong> is a node with no children.</p>
+<p><strong>Example 1:</strong></p>
+<p><img src="https://assets.leetcode.com/uploads/2021/01/18/pathsum1.jpg" alt="" /></p>
+<p><strong>Input:</strong> <code>root = [5,4,8,11,null,13,4,7,2,null,null,null,1], targetSum = 22</code><br />
+<strong>Output:</strong> <code>true</code><br />
+<strong>Explanation:</strong> The root-to-leaf path with the target sum is shown.</p>
+<p><strong>Example 2:</strong></p>
+<p><img src="https://assets.leetcode.com/uploads/2021/01/18/pathsum2.jpg" alt="" /></p>
+<p><strong>Input:</strong> <code>root = [1,2,3], targetSum = 5</code><br />
+<strong>Output:</strong> <code>false</code><br />
+<strong>Explanation:</strong> There are two root-to-leaf paths in the tree:
+(1 --&gt; 2): The sum is 3.
+(1 --&gt; 3): The sum is 4.
+There is no root-to-leaf path with sum = 5.</p>
+<p><strong>Example 3:</strong></p>
+<p><strong>Input:</strong> <code>root = [], targetSum = 0</code><br />
+<strong>Output:</strong> <code>false</code><br />
+<strong>Explanation:</strong> Since the tree is empty, there are no root-to-leaf paths.</p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li>The number of nodes in the tree is in the range <code>[0, 5000]</code>.</li>
+<li><code>-1000 &lt;= Node.val &lt;= 1000</code></li>
+<li><code>-1000 &lt;= targetSum &lt;= 1000</code></li>
+</ul>
+<h2 id="思路-3"><a class="header" href="#思路-3">思路</a></h2>
+<p>改造Binary Tree Paths代码</p>
+<h3 id="递归-2"><a class="header" href="#递归-2">递归</a></h3>
+<p>可以使用深度优先遍历的方式（本题前中后序都可以，无所谓，因为中节点也没有处理逻辑）来遍历二叉树</p>
+<ol>
+<li>确定递归函数的参数和返回类型</li>
+</ol>
+<p>参数：需要二叉树的根节点，还需要一个计数器，这个计数器用来计算二叉树的一条边之和是否正好是目标和，计数器为int型。</p>
+<p>再来看返回值，递归函数什么时候需要返回值？什么时候不需要返回值？这里总结如下三点：</p>
+<ul>
+<li>如果需要搜索整棵二叉树且不用处理递归返回值，递归函数就不要返回值。（这种情况就是本文下半部分介绍的113.路径总和ii）</li>
+<li>如果需要搜索整棵二叉树且需要处理递归返回值，递归函数就需要返回值。 （这种情况我们在<a href="https://programmercarl.com/0236.%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E6%9C%80%E8%BF%91%E5%85%AC%E5%85%B1%E7%A5%96%E5%85%88.html">236. 二叉树的最近公共祖先 (opens new window)</a>中介绍）</li>
+<li>如果要搜索其中一条符合条件的路径，那么递归一定需要返回值，因为遇到符合条件的路径了就要及时返回。（本题的情况）</li>
+</ul>
+<p>而本题我们要找一条符合条件的路径，所以递归函数需要返回值，及时返回，那么返回类型是什么呢？</p>
+<p>如图所示：</p>
+<p><img src="https://code-thinking-1253855093.file.myqcloud.com/pics/2021020316051216.png" alt="112.路径总和" /></p>
+<p>图中可以看出，遍历的路线，并不要遍历整棵树，所以递归函数需要返回值，可以用bool类型表示。</p>
+<p>所以代码如下：</p>
+<pre><code class="language-cpp">bool traversal(treenode* cur, int count)   // 注意函数的返回类型
+</code></pre>
+<ol start="2">
+<li>确定终止条件</li>
+</ol>
+<p>首先计数器如何统计这一条路径的和呢？</p>
+<p>不要去累加然后判断是否等于目标和，那么代码比较麻烦，可以用递减，让计数器count初始为目标和，然后每次减去遍历路径节点上的数值。</p>
+<p>如果最后count == 0，同时到了叶子节点的话，说明找到了目标和。</p>
+<p>如果遍历到了叶子节点，count不为0，就是没找到。</p>
+<p>递归终止条件代码如下：</p>
+<pre><code class="language-cpp">if (!cur-&gt;left &amp;&amp; !cur-&gt;right &amp;&amp; count == 0) return true; // 遇到叶子节点，并且计数为0
+if (!cur-&gt;left &amp;&amp; !cur-&gt;right) return false; // 遇到叶子节点而没有找到合适的边，直接返回
+</code></pre>
+<ol start="3">
+<li>确定单层递归的逻辑</li>
+</ol>
+<p>因为终止条件是判断叶子节点，所以递归的过程中就不要让空节点进入递归了。</p>
+<p>递归函数是有返回值的，如果递归函数返回true，说明找到了合适的路径，应该立刻返回。</p>
+<p>代码如下：</p>
+<pre><code class="language-cpp">if (cur-&gt;left) { // 左 （空节点不遍历）
+    // 遇到叶子节点返回true，则直接返回true
+    if (traversal(cur-&gt;left, count - cur-&gt;left-&gt;val)) return true; // 注意这里有回溯的逻辑
+}
+if (cur-&gt;right) { // 右 （空节点不遍历）
+    // 遇到叶子节点返回true，则直接返回true
+    if (traversal(cur-&gt;right, count - cur-&gt;right-&gt;val)) return true; // 注意这里有回溯的逻辑
+}
+return false;
+</code></pre>
+<p>以上代码中是包含着回溯的，没有回溯，如何后撤重新找另一条路径呢。</p>
+<p>回溯隐藏在<code>traversal(cur-&gt;left, count - cur-&gt;left-&gt;val)</code>这里， 因为把<code>count - cur-&gt;left-&gt;val</code> 直接作为参数传进去，函数结束，count的数值没有改变。</p>
+<p>为了把回溯的过程体现出来，可以改为如下代码：</p>
+<pre><code class="language-cpp">if (cur-&gt;left) { // 左
+    count -= cur-&gt;left-&gt;val; // 递归，处理节点;
+    if (traversal(cur-&gt;left, count)) return true;
+    count += cur-&gt;left-&gt;val; // 回溯，撤销处理结果
+}
+if (cur-&gt;right) { // 右
+    count -= cur-&gt;right-&gt;val;
+    if (traversal(cur-&gt;right, count)) return true;
+    count += cur-&gt;right-&gt;val;
+}
+return false;
+</code></pre>
+<p>整体代码如下：</p>
+<pre><code class="language-cpp">class Solution {
+private:
+    bool traversal(TreeNode* cur, int count) {
+        if (!cur-&gt;left &amp;&amp; !cur-&gt;right &amp;&amp; count == 0) return true; // 遇到叶子节点，并且计数为0
+        if (!cur-&gt;left &amp;&amp; !cur-&gt;right) return false; // 遇到叶子节点直接返回
+
+        if (cur-&gt;left) { // 左
+            count -= cur-&gt;left-&gt;val; // 递归，处理节点;
+            if (traversal(cur-&gt;left, count)) return true;
+            count += cur-&gt;left-&gt;val; // 回溯，撤销处理结果
+        }
+        if (cur-&gt;right) { // 右
+            count -= cur-&gt;right-&gt;val; // 递归，处理节点;
+            if (traversal(cur-&gt;right, count)) return true;
+            count += cur-&gt;right-&gt;val; // 回溯，撤销处理结果
+        }
+        return false;
+    }
+
+public:
+    bool hasPathSum(TreeNode* root, int sum) {
+        if (root == NULL) return false;
+        return traversal(root, sum - root-&gt;val);
+    }
+};
+</code></pre>
+<p>以上代码精简之后如下：</p>
+<pre><code class="language-cpp">class Solution {
+public:
+    bool hasPathSum(TreeNode* root, int sum) {
+        if (!root) return false;
+        if (!root-&gt;left &amp;&amp; !root-&gt;right &amp;&amp; sum == root-&gt;val) {
+            return true;
+        }
+        return hasPathSum(root-&gt;left, sum - root-&gt;val) || hasPathSum(root-&gt;right, sum - root-&gt;val);
+    }
+};
+</code></pre>
+<p><strong>是不是发现精简之后的代码，已经完全看不出分析的过程了，所以我们要把题目分析清楚之后，再追求代码精简。</strong> 这一点我已经强调很多次了！</p>
+<h3 id="迭代"><a class="header" href="#迭代">迭代</a></h3>
+<p>如果使用栈模拟递归的话，那么如果做回溯呢？</p>
+<p><strong>此时栈里一个元素不仅要记录该节点指针，还要记录从头结点到该节点的路径数值总和。</strong></p>
+<p>c++就我们用pair结构来存放这个栈里的元素。</p>
+<p>定义为：<code>pair&lt;TreeNode*, int&gt;</code> pair&lt;节点指针，路径数值&gt;</p>
+<p>这个为栈里的一个元素。</p>
+<p>如下代码是使用栈模拟的前序遍历，如下：（详细注释）</p>
+<pre><code class="language-cpp">class solution {
+
+public:
+    bool haspathsum(TreeNode* root, int sum) {
+        if (root == null) return false;
+        // 此时栈里要放的是pair&lt;节点指针，路径数值&gt;
+        stack&lt;pair&lt;TreeNode*, int&gt;&gt; st;
+        st.push(pair&lt;TreeNode*, int&gt;(root, root-&gt;val));
+        while (!st.empty()) {
+            pair&lt;TreeNode*, int&gt; node = st.top();
+            st.pop();
+            // 如果该节点是叶子节点了，同时该节点的路径数值等于sum，那么就返回true
+            if (!node.first-&gt;left &amp;&amp; !node.first-&gt;right &amp;&amp; sum == node.second) return true;
+
+            // 右节点，压进去一个节点的时候，将该节点的路径数值也记录下来
+            if (node.first-&gt;right) {
+                st.push(pair&lt;TreeNode*, int&gt;(node.first-&gt;right, node.second + node.first-&gt;right-&gt;val));
+            }
+
+            // 左节点，压进去一个节点的时候，将该节点的路径数值也记录下来
+            if (node.first-&gt;left) {
+                st.push(pair&lt;TreeNode*, int&gt;(node.first-&gt;left, node.second + node.first-&gt;left-&gt;val));
+            }
+        }
+        return false;
+    }
+};
+</code></pre>
+<h2 id="c解法-3"><a class="header" href="#c解法-3">C++解法</a></h2>
+<p>改造Binary Tree Paths代码的结果如下所示：</p>
+<pre><code class="language-cpp">/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left),
+ * right(right) {}
+ * };
+ */
+class Solution {
+public:
+    void traversal(TreeNode* root, vector&lt;int&gt;&amp; path, vector&lt;int&gt;&amp; result) {
+        path.push_back(root-&gt;val);
+        if (root-&gt;left == NULL &amp;&amp; root-&gt;right == NULL) {
+            int size = path.size();
+            int sum = 0;
+            for (int i = 0; i &lt; size; i++) {
+                sum += path[i];
+            }
+            result.push_back(sum);
+            return;
+        }
+        if (root-&gt;left != NULL) {
+            traversal(root-&gt;left, path, result);
+            path.pop_back();
+        }
+        if (root-&gt;right != NULL) {
+            traversal(root-&gt;right, path, result);
+            path.pop_back();
+        }
+    }
+    bool hasPathSum(TreeNode* root, int targetSum) {
+        vector&lt;int&gt; path;
+        vector&lt;int&gt; result;
+        if(root == NULL){
+            return false;
+        }
+        traversal(root, path, result);
+        for(int res : result){
+            if(res == targetSum){
+                return true;
+            }
+        }
+        return false;
+    }
+};
+</code></pre>
+<p>遍历时就判断结果</p>
+<pre><code class="language-cpp">/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left),
+ * right(right) {}
+ * };
+ */
+class Solution {
+public:
+    bool traversal(TreeNode* root, vector&lt;int&gt;&amp; path,int targetSum) {
+        path.push_back(root-&gt;val);
+        if (root-&gt;left == NULL &amp;&amp; root-&gt;right == NULL) {
+            int size = path.size();
+            int sum = 0;
+            for (int i = 0; i &lt; size; i++) {
+                sum += path[i];
+            }
+            if(sum == targetSum){
+                return true;
+            }
+        }
+        if (root-&gt;left != NULL) {
+            if(!traversal(root-&gt;left, path, targetSum))
+                path.pop_back();
+            else
+                return true;
+        }
+        if (root-&gt;right != NULL) {
+            if(!traversal(root-&gt;right, path, targetSum))
+                path.pop_back();
+            else
+                return true;
+        }
+        return false;
+    }
+    bool hasPathSum(TreeNode* root, int targetSum) {
+        vector&lt;int&gt; path;
+        if(root == NULL){
+            return false;
+        }
+        return traversal(root, path, targetSum);
+    }
+};
+</code></pre>
+<h2 id="java解法-3"><a class="header" href="#java解法-3">Java解法</a></h2>
+<h2 id="python3解法-3"><a class="header" href="#python3解法-3">Python3解法</a></h2>
+<h2 id="go解法-3"><a class="header" href="#go解法-3">Go解法</a></h2>
+<h1 id="113-path-sum-ii"><a class="header" href="#113-path-sum-ii"><a href="https://leetcode.com/problems/path-sum-ii/">113. Path Sum II</a></a></h1>
+<p>Given the <code>root</code> of a binary tree and an integer <code>targetSum</code>, return <em>all <strong>root-to-leaf</strong> paths where the sum of the node values in the path equals</em> <code>targetSum</code><em>. Each path should be returned as a list of the node <strong>values</strong>, not node references</em>.</p>
+<p>A <strong>root-to-leaf</strong> path is a path starting from the root and ending at any leaf node. A <strong>leaf</strong> is a node with no children.</p>
+<p><strong>Example 1:</strong></p>
+<p><img src="https://assets.leetcode.com/uploads/2021/01/18/pathsumii1.jpg" alt="" /></p>
+<p><strong>Input:</strong> <code>root = [5,4,8,11,null,13,4,7,2,null,null,5,1], targetSum = 22</code><br />
+<strong>Output:</strong> <code>[[5,4,11,2],[5,8,4,5]]</code><br />
+<strong>Explanation:</strong> There are two paths whose sum equals targetSum:
+5 + 4 + 11 + 2 = 22
+5 + 8 + 4 + 5 = 22</p>
+<p><strong>Example 2:</strong></p>
+<p><img src="https://assets.leetcode.com/uploads/2021/01/18/pathsum2.jpg" alt="" /></p>
+<p><strong>Input:</strong> <code>root = [1,2,3], targetSum = 5</code><br />
+<strong>Output:</strong> []</p>
+<p><strong>Example 3:</strong></p>
+<p><strong>Input:</strong> <code>root = [1,2], targetSum = 0</code><br />
+<strong>Output:</strong> []</p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li>The number of nodes in the tree is in the range <code>[0, 5000]</code>.</li>
+<li><code>-1000 &lt;= Node.val &lt;= 1000</code></li>
+<li><code>-1000 &lt;= targetSum &lt;= 1000</code></li>
+</ul>
+<h2 id="思路-4"><a class="header" href="#思路-4">思路</a></h2>
+<p>改造PathSum代码</p>
+<h2 id="c解法-4"><a class="header" href="#c解法-4">C++解法</a></h2>
+<p>改造PathSum代码的结果如下所示：</p>
+<pre><code class="language-cpp">/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+    void traversal(TreeNode* root, vector&lt;int&gt;&amp; path, vector&lt;vector&lt;int&gt;&gt;&amp; result, int targetSum) {
+        path.push_back(root-&gt;val);
+        if (root-&gt;left == NULL &amp;&amp; root-&gt;right == NULL) {
+            int size = path.size();
+            int sum = 0;
+            for (int i = 0; i &lt; size; i++) {
+                sum += path[i];
+            }
+            if(sum == targetSum){
+                result.push_back(path);
+            }
+            return;
+        }
+        if (root-&gt;left != NULL) {
+            traversal(root-&gt;left, path, result, targetSum);
+            path.pop_back();
+        }
+        if (root-&gt;right != NULL) {
+            traversal(root-&gt;right, path, result, targetSum);
+            path.pop_back();
+        }
+    }
+    vector&lt;vector&lt;int&gt;&gt; pathSum(TreeNode* root, int targetSum) {
+        vector&lt;int&gt; path;
+        vector&lt;vector&lt;int&gt;&gt; result;
+        if(root == NULL){
+            return result;
+        }
+        traversal(root, path, result, targetSum);
+        return result;
+    }
+};
+</code></pre>
+<p>代码随想录解法：</p>
+<pre><code class="language-cpp">class solution {
+private:
+    vector&lt;vector&lt;int&gt;&gt; result;
+    vector&lt;int&gt; path;
+    // 递归函数不需要返回值，因为我们要遍历整个树
+    void traversal(TreeNode* cur, int count) {
+        if (!cur-&gt;left &amp;&amp; !cur-&gt;right &amp;&amp; count == 0) { // 遇到了叶子节点且找到了和为sum的路径
+            result.push_back(path);
+            return;
+        }
+
+        if (!cur-&gt;left &amp;&amp; !cur-&gt;right) return ; // 遇到叶子节点而没有找到合适的边，直接返回
+
+        if (cur-&gt;left) { // 左 （空节点不遍历）
+            path.push_back(cur-&gt;left-&gt;val);
+            count -= cur-&gt;left-&gt;val;
+            traversal(cur-&gt;left, count);    // 递归
+            count += cur-&gt;left-&gt;val;        // 回溯
+            path.pop_back();                // 回溯
+        }
+        if (cur-&gt;right) { // 右 （空节点不遍历）
+            path.push_back(cur-&gt;right-&gt;val);
+            count -= cur-&gt;right-&gt;val;
+            traversal(cur-&gt;right, count);   // 递归
+            count += cur-&gt;right-&gt;val;       // 回溯
+            path.pop_back();                // 回溯
+        }
+        return ;
+    }
+
+public:
+    vector&lt;vector&lt;int&gt;&gt; pathSum(TreeNode* root, int sum) {
+        result.clear();
+        path.clear();
+        if (root == NULL) return result;
+        path.push_back(root-&gt;val); // 把根节点放进路径
+        traversal(root, sum - root-&gt;val);
+        return result;
+    }
+};
+</code></pre>
+<h2 id="java解法-4"><a class="header" href="#java解法-4">Java解法</a></h2>
+<h2 id="python3解法-4"><a class="header" href="#python3解法-4">Python3解法</a></h2>
+<h2 id="go解法-4"><a class="header" href="#go解法-4">Go解法</a></h2>
+<h1 id="129-sum-root-to-leaf-numbers"><a class="header" href="#129-sum-root-to-leaf-numbers"><a href="https://leetcode.com/problems/sum-root-to-leaf-numbers/">129. Sum Root to Leaf Numbers</a></a></h1>
+<p>You are given the <code>root</code> of a binary tree containing digits from <code>0</code> to <code>9</code> only.</p>
+<p>Each root-to-leaf path in the tree represents a number.</p>
+<ul>
+<li>For example, the root-to-leaf path <code>1 -&gt; 2 -&gt; 3</code> represents the number <code>123</code>.</li>
+</ul>
+<p>Return <em>the total sum of all root-to-leaf numbers</em>. Test cases are generated so that the answer will fit in a <strong>32-bit</strong> integer.</p>
+<p>A <strong>leaf</strong> node is a node with no children.</p>
+<p><strong>Example 1:</strong></p>
+<p><img src="https://assets.leetcode.com/uploads/2021/02/19/num1tree.jpg" alt="" /></p>
+<p><strong>Input:</strong> <code>root = [1,2,3]</code><br />
+<strong>Output:</strong> 25<br />
+<strong>Explanation:</strong>
+The root-to-leaf path <code>1-&gt;2</code> represents the number <code>12</code>.
+The root-to-leaf path <code>1-&gt;3</code> represents the number <code>13</code>.
+Therefore, sum = 12 + 13 = <code>25</code>.</p>
+<p><strong>Example 2:</strong></p>
+<p><img src="https://assets.leetcode.com/uploads/2021/02/19/num2tree.jpg" alt="" /></p>
+<p><strong>Input:</strong> <code>root = [4,9,0,5,1]</code><br />
+<strong>Output:</strong> 1026<br />
+<strong>Explanation:</strong>
+The root-to-leaf path <code>4-&gt;9-&gt;5</code> represents the number 495.
+The root-to-leaf path <code>4-&gt;9-&gt;1</code> represents the number 491.
+The root-to-leaf path <code>4-&gt;0</code> represents the number 40.
+Therefore, sum = 495 + 491 + 40 = <code>1026</code>.</p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li>The number of nodes in the tree is in the range <code>[1, 1000]</code>.</li>
+<li><code>0 &lt;= Node.val &lt;= 9</code></li>
+<li>The depth of the tree will not exceed <code>10</code>.</li>
+</ul>
+<h2 id="思路-5"><a class="header" href="#思路-5">思路</a></h2>
+<p>改造PathSum代码</p>
+<h2 id="c解法-5"><a class="header" href="#c解法-5">C++解法</a></h2>
+<p>改造PathSum代码的结果如下所示：</p>
+<pre><code class="language-cpp">/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+    void traversal(TreeNode* root, vector&lt;int&gt;&amp; path, vector&lt;int&gt;&amp; result) {
+        path.push_back(root-&gt;val);
+        if(root-&gt;left == NULL &amp;&amp; root-&gt;right == NULL){
+            int size = path.size();
+            string strPath;
+            for(int i = 0; i &lt; size; i++){
+                strPath += to_string(path[i]);
+            }
+            result.push_back(stoi(strPath));
+            return;
+        }
+        if(root-&gt;left != NULL){
+            traversal(root-&gt;left, path, result);
+            path.pop_back();
+        }
+        if(root-&gt;right != NULL){
+            traversal(root-&gt;right, path, result);
+            path.pop_back();
+        }
+    }
+    int sumNumbers(TreeNode* root) {
+        vector&lt;int&gt; path;
+        vector&lt;int&gt; result;
+        int sum = 0;
+        if(root == NULL){
+            return sum;
+        }
+        traversal(root, path, result);
+        for(int res : result){
+            sum += res;
+        }
+        return sum;
+    }
+};
+</code></pre>
+<h2 id="java解法-5"><a class="header" href="#java解法-5">Java解法</a></h2>
+<h2 id="python3解法-5"><a class="header" href="#python3解法-5">Python3解法</a></h2>
+<h2 id="go解法-5"><a class="header" href="#go解法-5">Go解法</a></h2>
+<h1 id="437-path-sum-iii"><a class="header" href="#437-path-sum-iii"><a href="https://leetcode.com/problems/path-sum-iii/">437. Path Sum III</a></a></h1>
+<p>Given the <code>root</code> of a binary tree and an integer <code>targetSum</code>, return <em>the number of paths where the sum of the values along the path equals</em> <code>targetSum</code>.</p>
+<p>The path does not need to start or end at the root or a leaf, but it must go downwards (i.e., traveling only from parent nodes to child nodes).</p>
+<p><strong>Example 1:</strong></p>
+<p><img src="https://assets.leetcode.com/uploads/2021/04/09/pathsum3-1-tree.jpg" alt="" /></p>
+<p><strong>Input:</strong> <code>root = [10,5,-3,3,2,null,11,3,-2,null,1], targetSum = 8</code><br />
+<strong>Output:</strong> 3<br />
+<strong>Explanation:</strong> The paths that sum to 8 are shown.</p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> <code>root = [5,4,8,11,null,13,4,7,2,null,null,5,1], targetSum = 22</code><br />
+<strong>Output:</strong> 3</p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li>The number of nodes in the tree is in the range <code>[0, 1000]</code>.</li>
+<li><code>-10^9 &lt;= Node.val &lt;= 10^9</code></li>
+<li><code>-1000 &lt;= targetSum &lt;= 1000</code></li>
+</ul>
+<h2 id="思路-6"><a class="header" href="#思路-6">思路</a></h2>
+<h3 id="方法一深度优先搜索"><a class="header" href="#方法一深度优先搜索">方法一：深度优先搜索</a></h3>
+<p>思路与算法</p>
+<p>我们首先想到的解法是穷举所有的可能，我们访问每一个节点 node，检测以 node 为起始节点且向下延深的路径有多少种。我们递归遍历每一个节点的所有可能的路径，然后将这些路径数目加起来即为返回结果。</p>
+<ul>
+<li>我们首先定义 rootSum(p,val) 表示以节点 p 为起点向下且满足路径总和为 val 的路径数目。我们对二叉树上每个节点 p 求出 rootSum(p,targetSum)，然后对这些路径数目求和即为返回结果。</li>
+<li>我们对节点 p 求 rootSum(p,targetSum) 时，以当前节点 p 为目标路径的起点递归向下进行搜索。假设当前的节点 p 的值为 val，我们对左子树和右子树进行递归搜索，对节点 p 的左孩子节点 pl 求出 rootSum(pl,targetSum−val)，以及对右孩子节点 pr求出 rootSum(pr ,targetSum−val)。节点 p 的 rootSum(p,targetSum) 即等于 rootSum(pl,targetSum−val) 与 rootSum(p,targetSum−val) 之和，同时我们还需要判断一下当前节点 p 的值是否刚好等于 targetSum。</li>
+<li>我们采用递归遍历二叉树的每个节点 p，对节点 p 求 rootSum(p,val)，然后将每个节点所有求的值进行相加求和返回。</li>
+</ul>
+<p>复杂度分析</p>
+<p>时间复杂度：O(N^2 )，其中 N 为该二叉树节点的个数。对于每一个节点，求以该节点为起点的路径数目时，则需要遍历以该节点为根节点的子树的所有节点，因此求该路径所花费的最大时间为 O(N)，我们会对每个节点都求一次以该节点为起点的路径数目，因此时间复杂度为 O(N^2)。</p>
+<p>空间复杂度：O(N)，考虑到递归需要在栈上开辟空间。</p>
+<h3 id="方法二-前缀和"><a class="header" href="#方法二-前缀和">方法二: 前缀和</a></h3>
+<p>思路与算法</p>
+<p>我们仔细思考一下，解法一中应该存在许多重复计算。我们定义节点的前缀和为：由根结点到当前结点的路径上所有节点的和。我们利用先序遍历二叉树，记录下根节点 root 到当前节点 p 的路径上除当前节点以外所有节点的前缀和，在已保存的路径前缀和中查找是否存在前缀和刚好等于当前节点到根节点的前缀和 curr 减去 targetSum。</p>
+<ul>
+<li>对于空路径我们也需要保存预先处理一下，此时因为空路径不经过任何节点，因此它的前缀和为 0。</li>
+<li>假设根节点为 root，我们当前刚好访问节点 node，则此时从根节点 root 到节点 node 的路径（无重复节点）刚好为 root→p1→p2→…→pk→node，此时我们可以已经保存了节点 p1,p2,p3 ,…,pk的前缀和，并且计算出了节点 node 的前缀和。</li>
+<li>假设当前从根节点 root 到节点 node 的前缀和为 curr，则此时我们在已保存的前缀和查找是否存在前缀和刚好等于 curr−targetSum。假设从根节点 root 到节点 node 的路径中存在节点 pi到根节点 root 的前缀和为 curr−targetSum，则节点 pi+1到 node 的路径上所有节点的和一定为 targetSum。</li>
+<li>我们利用深度搜索遍历树，当我们退出当前节点时，我们需要及时更新已经保存的前缀和。</li>
+</ul>
+<p>复杂度分析</p>
+<p>时间复杂度：O(N)，其中 N 为二叉树中节点的个数。利用前缀和只需遍历一次二叉树即可。</p>
+<p>空间复杂度：O(N)。</p>
+<p>作者：力扣官方题解
+链接： https://leetcode.cn/problems/path-sum-iii/solutions/1021296/lu-jing-zong-he-iii-by-leetcode-solution-z9td/
+来源：力扣（LeetCode）
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</p>
+<h2 id="c-解法"><a class="header" href="#c-解法">C++ 解法</a></h2>
+<p>深度优先搜索</p>
+<pre><code class="language-cpp">/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+    int rootSum(TreeNode* root, long targetSum){
+        if(!root) return 0;
+        int ret = 0;
+        if(root-&gt;val == targetSum) ret++;
+        ret += rootSum(root-&gt;left, targetSum - root-&gt;val);
+        ret += rootSum(root-&gt;right, targetSum - root-&gt;val);
+        return ret;
+    }
+    int pathSum(TreeNode* root, long targetSum) {
+        if(!root) return 0;
+        int ret = rootSum(root, targetSum);
+        ret += pathSum(root-&gt;left, targetSum);
+        ret += pathSum(root-&gt;right, targetSum);
+        return ret;
+    }
+};
+</code></pre>
+<h2 id="java-解法"><a class="header" href="#java-解法">Java 解法</a></h2>
+<h2 id="python-解法"><a class="header" href="#python-解法">Python 解法</a></h2>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../二叉树/二叉树层序遍历.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../二叉树/二叉树物理性质.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../二叉树/二叉树层序遍历.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../二叉树/二叉树物理性质.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

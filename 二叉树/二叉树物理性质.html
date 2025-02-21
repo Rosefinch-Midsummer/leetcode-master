@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>二叉树右视图 - 剑指Offer</title>
+        <title>二叉树物理性质 - 剑指Offer</title>
 
 
         <!-- Custom HTML head -->
@@ -153,43 +153,300 @@
                 <div id="content" class="content">
                     <main>
                         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
-<h1 id="199-binary-tree-right-side-view"><a class="header" href="#199-binary-tree-right-side-view"><a href="https://leetcode.com/problems/binary-tree-right-side-view/">199. Binary Tree Right Side View</a></a></h1>
+<h1 id="二叉树物理性质"><a class="header" href="#二叉树物理性质">二叉树物理性质</a></h1>
+<ul>
+<li><a href="#-958-check-completeness-of-a-binary-tree"># 958. Check Completeness of a Binary Tree</a>
+<ul>
+<li><a href="#%E6%80%9D%E8%B7%AF">思路</a></li>
+<li><a href="#c%E8%A7%A3%E6%B3%95">C++解法</a></li>
+<li><a href="#java%E8%A7%A3%E6%B3%95">Java解法</a></li>
+<li><a href="#python3%E8%A7%A3%E6%B3%95">Python3解法</a></li>
+<li><a href="#go%E8%A7%A3%E6%B3%95">Go解法</a></li>
+</ul>
+</li>
+<li><a href="#543-diameter-of-binary-tree">543. Diameter of Binary Tree</a>
 <ul>
 <li><a href="#description">Description</a></li>
-<li><a href="#%E6%80%9D%E8%B7%AF">思路</a>
+<li><a href="#%E6%80%9D%E8%B7%AF-1">思路</a></li>
+<li><a href="#c-%E8%A7%A3%E6%B3%95">C++ 解法</a></li>
+<li><a href="#java-%E8%A7%A3%E6%B3%95">Java 解法</a></li>
+<li><a href="#python-%E8%A7%A3%E6%B3%95">Python 解法</a></li>
+</ul>
+</li>
+<li><a href="#199-binary-tree-right-side-view">199. Binary Tree Right Side View</a>
+<ul>
+<li><a href="#description-1">Description</a></li>
+<li><a href="#%E6%80%9D%E8%B7%AF-2">思路</a>
 <ul>
 <li><a href="#%E6%96%B9%E6%B3%95%E4%B8%80%E6%B7%B1%E5%BA%A6%E4%BC%98%E5%85%88%E6%90%9C%E7%B4%A2">方法一：深度优先搜索</a></li>
 <li><a href="#%E6%96%B9%E6%B3%95%E4%BA%8C%E5%B9%BF%E5%BA%A6%E4%BC%98%E5%85%88%E6%90%9C%E7%B4%A2">方法二：广度优先搜索</a></li>
 </ul>
 </li>
-<li><a href="#c-%E8%A7%A3%E6%B3%95">C++ 解法</a>
+<li><a href="#c-%E8%A7%A3%E6%B3%95-1">C++ 解法</a>
 <ul>
 <li><a href="#dfs">dfs</a></li>
 <li><a href="#bfs">bfs</a></li>
 </ul>
 </li>
-<li><a href="#java-%E8%A7%A3%E6%B3%95">Java 解法</a>
+<li><a href="#java-%E8%A7%A3%E6%B3%95-1">Java 解法</a>
 <ul>
 <li><a href="#dfs-1">dfs</a></li>
 <li><a href="#bfs-1">bfs</a></li>
 </ul>
 </li>
-<li><a href="#python-%E8%A7%A3%E6%B3%95">Python 解法</a>
+<li><a href="#python-%E8%A7%A3%E6%B3%95-1">Python 解法</a>
 <ul>
 <li><a href="#dfs-2">dfs</a></li>
 <li><a href="#bfs-2">bfs</a></li>
 </ul>
 </li>
+</ul>
+</li>
 <li><a href="#226-invert-binary-tree">226. Invert Binary Tree</a>
 <ul>
-<li><a href="#%E6%80%9D%E8%B7%AF-1">思路</a></li>
-<li><a href="#c-%E8%A7%A3%E6%B3%95-1">C++ 解法</a></li>
-<li><a href="#java-%E8%A7%A3%E6%B3%95-1">Java 解法</a></li>
-<li><a href="#python-%E8%A7%A3%E6%B3%95-1">Python 解法</a></li>
+<li><a href="#%E6%80%9D%E8%B7%AF-3">思路</a></li>
+<li><a href="#c-%E8%A7%A3%E6%B3%95-2">C++ 解法</a></li>
+<li><a href="#java-%E8%A7%A3%E6%B3%95-2">Java 解法</a></li>
+<li><a href="#python-%E8%A7%A3%E6%B3%95-2">Python 解法</a></li>
+</ul>
+</li>
+<li><a href="#655-print-binary-tree">655. Print Binary Tree</a>
+<ul>
+<li><a href="#%E6%80%9D%E8%B7%AF-4">思路</a></li>
+<li><a href="#c%E8%A7%A3%E6%B3%95-1">C++解法</a></li>
+<li><a href="#java%E8%A7%A3%E6%B3%95-1">Java解法</a></li>
+<li><a href="#python3%E8%A7%A3%E6%B3%95-1">Python3解法</a></li>
+<li><a href="#go%E8%A7%A3%E6%B3%95-1">Go解法</a></li>
 </ul>
 </li>
 </ul>
+<h1 id="958-check-completeness-of-a-binary-tree"><a class="header" href="#958-check-completeness-of-a-binary-tree"># <a href="https://leetcode.com/problems/check-completeness-of-a-binary-tree/">958. Check Completeness of a Binary Tree</a></a></h1>
+<p>Given the <code>root</code> of a binary tree, determine if it is a <em>complete binary tree</em>.</p>
+<p>In a <strong><a href="http://en.wikipedia.org/wiki/Binary_tree#Types_of_binary_trees">complete binary tree</a></strong>, every level, except possibly the last, is completely filled, and all nodes in the last level are as far left as possible. It can have between <code>1</code> and <code>2h</code> nodes inclusive at the last level <code>h</code>.</p>
+<p><strong>Example 1:</strong></p>
+<p><img src="https://assets.leetcode.com/uploads/2018/12/15/complete-binary-tree-1.png" alt="" /></p>
+<p><strong>Input:</strong> <code>root = [1,2,3,4,5,6]</code><br />
+<strong>Output:</strong> true<br />
+<strong>Explanation:</strong> Every level before the last is full (ie. levels with node-values {1} and {2, 3}), and all nodes in the last level ({4, 5, 6}) are as far left as possible.</p>
+<p><strong>Example 2:</strong></p>
+<p><img src="https://assets.leetcode.com/uploads/2018/12/15/complete-binary-tree-2.png" alt="" /></p>
+<p><strong>Input:</strong> <code>root = [1,2,3,4,5,null,7]</code><br />
+<strong>Output:</strong> false<br />
+<strong>Explanation:</strong> The node with value 7 isn't as far left as possible.</p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li>The number of nodes in the tree is in the range <code>[1, 100]</code>.</li>
+<li><code>1 &lt;= Node.val &lt;= 1000</code></li>
+</ul>
+<h2 id="思路"><a class="header" href="#思路">思路</a></h2>
+<p>Intuition :</p>
+<p>Given the root of a binary tree, determine if it is a complete binary tree.</p>
+<p>Approach : Breadth First Search</p>
+<p>Traverse the tree in level-order using a queue. At each level, we add the left and right child nodes of each node to the queue.</p>
+<p>If we encounter a null node, we still add it to the queue so that we can check if there are any more nodes left in the next step.</p>
+<p>Once we have traversed the entire tree, we check if there are any remaining nodes in the queue.
+If there are, it means the tree is not complete, and we return false.</p>
+<p>Otherwise, the tree is complete, and we return true.</p>
+<p>Complexity :</p>
+<p>Time complexity : O(n)</p>
+<p>Space complexity: O(n)</p>
+<h2 id="c解法"><a class="header" href="#c解法">C++解法</a></h2>
+<pre><code class="language-cpp">// Define the Solution class
+class Solution {
+public:
+    // Define the isCompleteTree function that takes a TreeNode pointer as input and returns a boolean
+    bool isCompleteTree(TreeNode* root) {
+        // Check if the root node is null, if so, return true (an empty tree is complete)
+        if (root == nullptr)
+            return true;
+
+        // Create a queue to store the nodes of the tree in level order
+        queue&lt;TreeNode*&gt; q{{root}};
+
+        // Traverse the tree in level order
+        while (q.front() != nullptr) {
+            // Remove the first node from the queue
+            TreeNode* node = q.front();
+            q.pop();
+            // Add the left and right child nodes of the current node to the queue
+            q.push(node-&gt;left);
+            q.push(node-&gt;right);
+        }
+
+        // Remove any remaining null nodes from the front of the queue
+        while (!q.empty() &amp;&amp; q.front() == nullptr)
+            q.pop();
+
+        // Check if there are any remaining nodes in the queue
+        // If so, the tree is not complete, so return false
+        // Otherwise, the tree is complete, so return true
+        return q.empty();
+    }
+};
+</code></pre>
+<h2 id="java解法"><a class="header" href="#java解法">Java解法</a></h2>
+<pre><code class="language-java">// Define the Solution class
+class Solution {
+  
+  // Define the isCompleteTree function that takes a TreeNode as input and returns a boolean
+  public boolean isCompleteTree(TreeNode root) {
+    // Check if the root node is null, if so, return true (an empty tree is complete)
+    if (root == null)
+      return true;
+
+    // Create a queue to store the nodes of the tree in level order
+    Queue&lt;TreeNode&gt; q = new LinkedList&lt;&gt;(Arrays.asList(root));
+
+    // Traverse the tree in level order
+    while (q.peek() != null) {
+      // Remove the first node from the queue
+      TreeNode node = q.poll();
+      // Add the left and right child nodes of the current node to the queue
+      q.offer(node.left);
+      q.offer(node.right);
+    }
+
+    // Remove any remaining null nodes from the end of the queue
+    while (!q.isEmpty() &amp;&amp; q.peek() == null)
+      q.poll();
+
+    // Check if there are any remaining nodes in the queue
+    // If so, the tree is not complete, so return false
+    // Otherwise, the tree is complete, so return true
+    return q.isEmpty();
+  }
+}
+</code></pre>
+<h2 id="python3解法"><a class="header" href="#python3解法">Python3解法</a></h2>
+<pre><code class="language-python">from collections import deque
+
+class Solution:
+    def isCompleteTree(self, root: TreeNode) -&gt; bool:
+        # Check if the root node is None, if so, return True (an empty tree is complete)
+        if not root:
+            return True
+
+        # Create a deque to store the nodes of the tree in level order
+        q = deque([root])
+
+        # Traverse the tree in level order
+        while q[0] is not None:
+            # Remove the first node from the deque
+            node = q.popleft()
+            # Add the left and right child nodes of the current node to the deque
+            q.append(node.left)
+            q.append(node.right)
+
+        # Remove any remaining None nodes from the beginning of the deque
+        while q and q[0] is None:
+            q.popleft()
+
+        # Check if there are any remaining nodes in the deque
+        # If so, the tree is not complete, so return False
+        # Otherwise, the tree is complete, so return True
+        return not bool(q)
+</code></pre>
+<h2 id="go解法"><a class="header" href="#go解法">Go解法</a></h2>
+<h1 id="543-diameter-of-binary-tree"><a class="header" href="#543-diameter-of-binary-tree"><a href="https://leetcode.com/problems/diameter-of-binary-tree/">543. Diameter of Binary Tree</a></a></h1>
 <h2 id="description"><a class="header" href="#description">Description</a></h2>
+<p>Given the <code>root</code> of a binary tree, return <em>the length of the <strong>diameter</strong> of the tree</em>.</p>
+<p>The <strong>diameter</strong> of a binary tree is the <strong>length</strong> of the longest path between any two nodes in a tree. This path may or may not pass through the <code>root</code>.</p>
+<p>The <strong>length</strong> of a path between two nodes is represented by the number of edges between them.</p>
+<p><strong>Example 1:</strong></p>
+<p><img src="https://assets.leetcode.com/uploads/2021/03/06/diamtree.jpg" alt="" /></p>
+<p><strong>Input:</strong> <code>root = [1,2,3,4,5]</code><br />
+<strong>Output:</strong> 3<br />
+<strong>Explanation:</strong> 3 is the length of the path <code>[4,2,1,3]</code> or <code>[5,2,1,3]</code>.</p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> <code>root = [1,2]</code><br />
+<strong>Output:</strong> 1</p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li>The number of nodes in the tree is in the range <code>[1, 10^4]</code>.</li>
+<li><code>-100 &lt;= Node.val &lt;= 100</code></li>
+</ul>
+<h2 id="思路-1"><a class="header" href="#思路-1">思路</a></h2>
+<p>方法一：深度优先搜索</p>
+<p>首先我们知道一条路径的长度为该路径经过的节点数减一，所以求直径（即求路径长度的最大值）等效于求路径经过节点数的最大值减一。</p>
+<p>而任意一条路径均可以被看作由某个节点为起点，从其左儿子和右儿子向下遍历的路径拼接得到。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Rosefinch-Midsummer/MyImagesHost03/img/20240728101948.png" alt="" /></p>
+<p>如图我们可以知道路径 <code>[9, 4, 2, 5, 7, 8]</code> 可以被看作以 2 为起点，从其左儿子向下遍历的路径 <code>[2, 4, 9]</code> 和从其右儿子向下遍历的路径 <code>[2, 5, 7, 8]</code> 拼接得到。</p>
+<p>假设我们知道对于该节点的左儿子向下遍历经过最多的节点数 L （即以左儿子为根的子树的深度） 和其右儿子向下遍历经过最多的节点数 R （即以右儿子为根的子树的深度），那么以该节点为起点的路径经过节点数的最大值即为 L+R+1 。</p>
+<p>我们记节点 node 为起点的路径经过节点数的最大值为 dnode，那么二叉树的直径就是所有节点 dnode的最大值减一。</p>
+<p>最后的算法流程为：我们定义一个递归函数 depth(node) 计算 dnode ，函数返回该节点为根的子树的深度。先递归调用左儿子和右儿子求得它们为根的子树的深度 L 和 R ，则该节点为根的子树的深度即为max(L,R)+1</p>
+<p>该节点的 dnode值为L+R+1</p>
+<p>递归搜索每个节点并设一个全局变量 ans 记录 dnode的最大值，最后返回 ans-1 即为树的直径。</p>
+<p>作者：力扣官方题解
+链接： https://leetcode.cn/problems/diameter-of-binary-tree/solutions/139683/er-cha-shu-de-zhi-jing-by-leetcode-solution/
+来源：力扣（LeetCode）
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</p>
+<h2 id="c-解法"><a class="header" href="#c-解法">C++ 解法</a></h2>
+<pre><code class="language-cpp">/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+    int diameterOfBinaryTree(TreeNode* root) {
+        int result = INT_MIN;
+        getMaxHeight(root, result);
+        return result;
+    }
+    int getMaxHeight(TreeNode* root, int&amp; result){
+        if(root == NULL){
+            return 0;
+        }
+        int left = getMaxHeight(root-&gt;left, result);
+        int right = getMaxHeight(root-&gt;right, result);
+        result = max(result, left + right);
+        return max(left, right) + 1;
+    }
+};
+</code></pre>
+<p>优化版本：</p>
+<pre><code class="language-cpp">/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+    int diameterOfBinaryTree(TreeNode* root) {
+        int result = INT_MIN;
+        getMaxHeight(root, result);
+        return result;
+    }
+    int getMaxHeight(TreeNode* root, int&amp; result){
+        if(root == NULL){
+            return 0;
+        }
+        if (map.count(root)) return map[root];
+        int left = getMaxHeight(root-&gt;left, result);
+        int right = getMaxHeight(root-&gt;right, result);
+        result = max(result, left + right);
+        return map[root] = max(left, right) + 1;
+    }
+private:
+    unordered_map&lt;TreeNode*, int&gt; map;
+};
+</code></pre>
+<h2 id="java-解法"><a class="header" href="#java-解法">Java 解法</a></h2>
+<h2 id="python-解法"><a class="header" href="#python-解法">Python 解法</a></h2>
+<h1 id="199-binary-tree-right-side-view"><a class="header" href="#199-binary-tree-right-side-view"><a href="https://leetcode.com/problems/binary-tree-right-side-view/">199. Binary Tree Right Side View</a></a></h1>
+<h2 id="description-1"><a class="header" href="#description-1">Description</a></h2>
 <p>Given the <code>root</code> of a binary tree, imagine yourself standing on the <strong>right side</strong> of it, return <em>the values of the nodes you can see ordered from top to bottom</em>.</p>
 <p><strong>Example 1:</strong></p>
 <p><img src="https://assets.leetcode.com/uploads/2021/02/14/tree.jpg" alt="" /></p>
@@ -206,7 +463,7 @@
 <li>The number of nodes in the tree is in the range <code>[0, 100]</code>.</li>
 <li><code>-100 &lt;= Node.val &lt;= 100</code></li>
 </ul>
-<h2 id="思路"><a class="header" href="#思路">思路</a></h2>
+<h2 id="思路-2"><a class="header" href="#思路-2">思路</a></h2>
 <p>层次遍历，每层最后一个节点</p>
 <p>由于树的形状无法提前知晓，不可能设计出优于 O(n) 的算法。因此，我们应该试着寻找线性时间解。带着这个想法，我们来考虑一些同等有效的方案。</p>
 <h3 id="方法一深度优先搜索"><a class="header" href="#方法一深度优先搜索">方法一：深度优先搜索</a></h3>
@@ -233,7 +490,7 @@
 <p>链接： https://leetcode.cn/problems/binary-tree-right-side-view/solutions/213494/er-cha-shu-de-you-shi-tu-by-leetcode-solution/</p>
 <p>来源：力扣（LeetCode）</p>
 <p>著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</p>
-<h2 id="c-解法"><a class="header" href="#c-解法">C++ 解法</a></h2>
+<h2 id="c-解法-1"><a class="header" href="#c-解法-1">C++ 解法</a></h2>
 <h3 id="dfs"><a class="header" href="#dfs">dfs</a></h3>
 <pre><code class="language-cpp">class Solution {
 public:
@@ -314,7 +571,7 @@ public:
     }
 };
 </code></pre>
-<h2 id="java-解法"><a class="header" href="#java-解法">Java 解法</a></h2>
+<h2 id="java-解法-1"><a class="header" href="#java-解法-1">Java 解法</a></h2>
 <h3 id="dfs-1"><a class="header" href="#dfs-1">dfs</a></h3>
 <pre><code class="language-java">class Solution {
     public List&lt;Integer&gt; rightSideView(TreeNode root) {
@@ -393,7 +650,7 @@ public:
     }
 }
 </code></pre>
-<h2 id="python-解法"><a class="header" href="#python-解法">Python 解法</a></h2>
+<h2 id="python-解法-1"><a class="header" href="#python-解法-1">Python 解法</a></h2>
 <h3 id="dfs-2"><a class="header" href="#dfs-2">dfs</a></h3>
 <pre><code class="language-python">class Solution:
     def rightSideView(self, root: TreeNode) -&gt; List[int]:
@@ -456,7 +713,7 @@ public:
 <li>The number of nodes in the tree is in the range <code>[0, 100]</code>.</li>
 <li><code>-100 &lt;= Node.val &lt;= 100</code></li>
 </ul>
-<h2 id="思路-1"><a class="header" href="#思路-1">思路</a></h2>
+<h2 id="思路-3"><a class="header" href="#思路-3">思路</a></h2>
 <ol>
 <li>
 <p>先序遍历，左右交换</p>
@@ -465,7 +722,7 @@ public:
 <p>左右交换，后序遍历</p>
 </li>
 </ol>
-<h2 id="c-解法-1"><a class="header" href="#c-解法-1">C++ 解法</a></h2>
+<h2 id="c-解法-2"><a class="header" href="#c-解法-2">C++ 解法</a></h2>
 <pre><code class="language-cpp">/**
  * Definition for a binary tree node.
  * struct TreeNode {
@@ -490,7 +747,7 @@ public:
     }
 };
 </code></pre>
-<h2 id="java-解法-1"><a class="header" href="#java-解法-1">Java 解法</a></h2>
+<h2 id="java-解法-2"><a class="header" href="#java-解法-2">Java 解法</a></h2>
 <pre><code class="language-java">/**
  * Definition for a binary tree node.
  * public class TreeNode {
@@ -523,7 +780,7 @@ class Solution {
     }
 }
 </code></pre>
-<h2 id="python-解法-1"><a class="header" href="#python-解法-1">Python 解法</a></h2>
+<h2 id="python-解法-2"><a class="header" href="#python-解法-2">Python 解法</a></h2>
 <pre><code class="language-python"># Definition for a binary tree node.
 # class TreeNode:
 #     def __init__(self, val=0, left=None, right=None):
@@ -541,16 +798,160 @@ class Solution:
         self.invertTree(root.right)
         return root
 </code></pre>
+<h1 id="655-print-binary-tree"><a class="header" href="#655-print-binary-tree"><a href="https://leetcode.com/problems/print-binary-tree/">655. Print Binary Tree</a></a></h1>
+<p>Given the <code>root</code> of a binary tree, construct a <strong>0-indexed</strong> <code>m x n</code> string matrix <code>res</code> that represents a <strong>formatted layout</strong> of the tree. The formatted layout matrix should be constructed using the following rules:</p>
+<ul>
+<li>The <strong>height</strong> of the tree is <code>height</code> and the number of rows <code>m</code> should be equal to <code>height + 1</code>.</li>
+<li>The number of columns <code>n</code> should be equal to <code>2^{height+1} - 1</code>.</li>
+<li>Place the <strong>root node</strong> in the <strong>middle</strong> of the <strong>top row</strong> (more formally, at location <code>res[0][(n-1)/2]</code>).</li>
+<li>For each node that has been placed in the matrix at position <code>res[r][c]</code>, place its <strong>left child</strong> at <code>res[r+1][c-2height-r-1]</code> and its <strong>right child</strong> at <code>res[r+1][c+2^{height-r-1}]</code>.</li>
+<li>Continue this process until all the nodes in the tree have been placed.</li>
+<li>Any empty cells should contain the empty string <code>""</code>.</li>
+</ul>
+<p>Return <em>the constructed matrix</em> <code>res</code>.</p>
+<p><strong>Example 1:</strong></p>
+<p><img src="https://assets.leetcode.com/uploads/2021/05/03/print1-tree.jpg" alt="" /></p>
+<p><strong>Input:</strong> <code>root = [1,2]</code>
+<strong>Output:</strong></p>
+<pre><code>[["","1",""],
+ ["2","",""]]
+</code></pre>
+<p><strong>Example 2:</strong></p>
+<p><img src="https://assets.leetcode.com/uploads/2021/05/03/print2-tree.jpg" alt="" /></p>
+<p><strong>Input:</strong> <code>root = [1,2,3,null,4]</code><br />
+<strong>Output:</strong></p>
+<pre><code>[["","","","1","","",""],
+ ["","2","","","","3",""],
+ ["","","4","","","",""]]
+</code></pre>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li>The number of nodes in the tree is in the range <code>[1, 210]</code>.</li>
+<li><code>-99 &lt;= Node.val &lt;= 99</code></li>
+<li>The depth of the tree will be in the range <code>[1, 10]</code>.</li>
+</ul>
+<h2 id="思路-4"><a class="header" href="#思路-4">思路</a></h2>
+<h2 id="c解法-1"><a class="header" href="#c解法-1">C++解法</a></h2>
+<h2 id="java解法-1"><a class="header" href="#java解法-1">Java解法</a></h2>
+<pre><code class="language-java">public List&lt;List&lt;String&gt;&gt; printTree(TreeNode root) {
+    List&lt;List&lt;String&gt;&gt; res = new LinkedList&lt;&gt;();
+    int height = root == null ? 1 : getHeight(root);
+    int rows = height, columns = (int) (Math.pow(2, height) - 1);
+    List&lt;String&gt; row = new ArrayList&lt;&gt;();
+    for(int i = 0; i &lt; columns; i++)  row.add("");
+    for(int i = 0; i &lt; rows; i++)  res.add(new ArrayList&lt;&gt;(row));
+    populateRes(root, res, 0, rows, 0, columns - 1);
+    return res;
+}
+
+public void populateRes(TreeNode root, List&lt;List&lt;String&gt;&gt; res, int row, int totalRows, int i, int j) {
+    if (row == totalRows || root == null) return;
+    res.get(row).set((i+j)/2, Integer.toString(root.val));
+    populateRes(root.left, res, row+1, totalRows, i, (i+j)/2 - 1);
+    populateRes(root.right, res, row+1, totalRows, (i+j)/2+1, j);
+}
+
+public int getHeight(TreeNode root) {
+     if (root == null) return 0;
+     return 1 + Math.max(getHeight(root.left), getHeight(root.right));
+}
+</code></pre>
+<p>这段代码定义了一个树的打印逻辑，用于将二叉树的结构输出为一个二维字符串列表。下面我们将详细讲解该代码，包括类<code>TreeNode</code>及<code>Solution</code>类中的各个方法，特别是<code>populateRes</code>函数的具体实现逻辑。</p>
+<p>getHeight 方法</p>
+<pre><code class="language-java">public int getHeight(TreeNode root) {
+    if (root == null) return 0;
+    else return 1 + Math.max(getHeight(root.left), getHeight(root.right));
+}
+</code></pre>
+<ul>
+<li>该方法用于计算二叉树的高度。树的高度从0开始计数。</li>
+<li>如果节点为空，返回0；否则，返回1加上左子树和右子树的最大高度。</li>
+<li>这有助于确定打印树结构时所需的行数。</li>
+</ul>
+<p>populateRes 方法</p>
+<pre><code class="language-java">public void populateRes(TreeNode root, List&lt;List&lt;String&gt;&gt; res, int row, int totalRows, int i, int j) {
+    if (row == totalRows || root == null) return;
+    res.get(row).set((i + j) / 2, Integer.toString(root.val));
+    populateRes(root.left, res, row + 1, totalRows, i, (i + j) / 2 - 1);
+    populateRes(root.right, res, row + 1, totalRows, (i + j) / 2 + 1, j);
+}
+</code></pre>
+<ul>
+<li>
+<p><strong>目的</strong>: 该方法递归地在结果列表中填充节点值。它基于树的结构定位每个节点的位置。</p>
+</li>
+<li>
+<p><strong>参数</strong>:</p>
+<ul>
+<li><code>TreeNode root</code>：当前处理的节点。</li>
+<li><code>List&lt;List&lt;String&gt;&gt; res</code>：存储结果的二维列表。</li>
+<li><code>int row</code>：当前的树层级。</li>
+<li><code>int totalRows</code>：树的总层数。</li>
+<li><code>int i</code> 和 <code>int j</code>：表示节点在当前行的索引范围。</li>
+</ul>
+</li>
+<li>
+<p><strong>逻辑</strong>:</p>
+<ol>
+<li><strong>基础条件</strong>:
+<ul>
+<li>如果当前层数已经达到总层数，或者当前节点为空，则返回。</li>
+</ul>
+</li>
+<li><strong>填写当前节点值</strong>:
+<ul>
+<li>使用<code>res.get(row).set((i + j) / 2, Integer.toString(root.val));</code>将当前节点的值存储在对应的二维列表中的正确位置。这里的<code>(i + j) / 2</code>计算出当前层节点的中间列索引，确保二叉树的节点以正确的对称方式排列。</li>
+</ul>
+</li>
+<li><strong>递归调用</strong>:
+<ul>
+<li>递归填充左子树和右子树：
+<ul>
+<li>左子树的调用范围是当前行的左半部分：<code>populateRes(root.left, res, row + 1, totalRows, i, (i + j) / 2 - 1);</code></li>
+<li>右子树的调用范围是当前行的右半部分：<code>populateRes(root.right, res, row + 1, totalRows, (i + j) / 2 + 1, j);</code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+<p>printTree 方法</p>
+<pre><code class="language-java">public List&lt;List&lt;String&gt;&gt; printTree(TreeNode root) {
+    List&lt;List&lt;String&gt;&gt; result = new LinkedList&lt;&gt;();
+    int row = getHeight(root);
+    int col = (int) (Math.pow(2, row) - 1);
+    List&lt;String&gt; rowRes = new ArrayList&lt;&gt;();
+    for (int i = 0; i &lt; col; i++) rowRes.add("");
+    for (int i = 0; i &lt; row; i++) result.add(new ArrayList&lt;&gt;(rowRes));
+    populateRes(root, result, 0, row, 0, col);
+    return result;
+}
+</code></pre>
+<ul>
+<li><strong>目的</strong>: 该方法用于生成表示二叉树的二维列表。</li>
+<li><strong>逻辑</strong>:
+<ol>
+<li>计算树的高度<code>row</code>和列数<code>col</code>。列数是基于树的高度计算得来的，最大列数是<code>2^height - 1</code>。</li>
+<li>创建一行的初始结果，即包含所有列的空字符串（<code>rowRes</code>）。</li>
+<li>用内层循环初始化结果列表<code>result</code>，使其中每一行的结构一致。</li>
+<li>调用<code>populateRes</code>来填充结果列表。</li>
+<li>返回填充后的<code>result</code>。</li>
+</ol>
+</li>
+</ul>
+<h2 id="python3解法-1"><a class="header" href="#python3解法-1">Python3解法</a></h2>
+<h2 id="go解法-1"><a class="header" href="#go解法-1">Go解法</a></h2>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../二叉树/二叉树半径.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../二叉树/二叉树路径.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="../回溯/回溯.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../二叉树/二叉树反转对称.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -560,11 +961,11 @@ class Solution:
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../二叉树/二叉树半径.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../二叉树/二叉树路径.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="../回溯/回溯.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../二叉树/二叉树反转对称.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

@@ -1,0 +1,1300 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>二叉树层序遍历 - 剑指Offer</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">剑指Offer</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
+<h1 id="二叉树层序遍历"><a class="header" href="#二叉树层序遍历">二叉树层序遍历</a></h1>
+<ul>
+<li><a href="#102-binary-tree-level-order-traversal">102. Binary Tree Level Order Traversal</a>
+<ul>
+<li><a href="#%E6%80%9D%E8%B7%AF">思路</a></li>
+<li><a href="#c%E8%A7%A3%E6%B3%95">C++解法</a></li>
+<li><a href="#java%E8%A7%A3%E6%B3%95">Java解法</a></li>
+<li><a href="#python3%E8%A7%A3%E6%B3%95">Python3解法</a></li>
+<li><a href="#go%E8%A7%A3%E6%B3%95">Go解法</a></li>
+</ul>
+</li>
+<li><a href="#107-binary-tree-level-order-traversal-ii">107. Binary Tree Level Order Traversal II</a>
+<ul>
+<li><a href="#%E6%80%9D%E8%B7%AF-1">思路</a></li>
+<li><a href="#c%E8%A7%A3%E6%B3%95-1">C++解法</a></li>
+</ul>
+</li>
+<li><a href="#637-average-of-levels-in-binary-tree">637. Average of Levels in Binary Tree</a>
+<ul>
+<li><a href="#%E6%80%9D%E8%B7%AF-2">思路</a></li>
+<li><a href="#c%E8%A7%A3%E6%B3%95-2">C++解法</a></li>
+</ul>
+</li>
+<li><a href="#103-binary-tree-zigzag-level-order-traversal">103. Binary Tree Zigzag Level Order Traversal</a>
+<ul>
+<li><a href="#%E6%80%9D%E8%B7%AF-3">思路</a></li>
+<li><a href="#c%E4%BB%A3%E7%A0%81">C++代码</a></li>
+</ul>
+</li>
+<li><a href="#199-binary-tree-right-side-view">199. Binary Tree Right Side View</a>
+<ul>
+<li><a href="#description">Description</a></li>
+<li><a href="#%E6%80%9D%E8%B7%AF-4">思路</a>
+<ul>
+<li><a href="#%E6%96%B9%E6%B3%95%E4%B8%80%E6%B7%B1%E5%BA%A6%E4%BC%98%E5%85%88%E6%90%9C%E7%B4%A2">方法一：深度优先搜索</a></li>
+<li><a href="#%E6%96%B9%E6%B3%95%E4%BA%8C%E5%B9%BF%E5%BA%A6%E4%BC%98%E5%85%88%E6%90%9C%E7%B4%A2">方法二：广度优先搜索</a></li>
+</ul>
+</li>
+<li><a href="#c-%E8%A7%A3%E6%B3%95">C++ 解法</a>
+<ul>
+<li><a href="#dfs">dfs</a></li>
+<li><a href="#bfs">bfs</a></li>
+</ul>
+</li>
+<li><a href="#java-%E8%A7%A3%E6%B3%95">Java 解法</a>
+<ul>
+<li><a href="#dfs-1">dfs</a></li>
+<li><a href="#bfs-1">bfs</a></li>
+</ul>
+</li>
+<li><a href="#python-%E8%A7%A3%E6%B3%95">Python 解法</a>
+<ul>
+<li><a href="#dfs-2">dfs</a></li>
+<li><a href="#bfs-2">bfs</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#515-find-largest-value-in-each-tree-row">515. Find Largest Value in Each Tree Row</a>
+<ul>
+<li><a href="#%E6%80%9D%E8%B7%AF-5">思路</a></li>
+<li><a href="#c%E8%A7%A3%E6%B3%95-3">C++解法</a></li>
+</ul>
+</li>
+<li><a href="#116-populating-next-right-pointers-in-each-node">116. Populating Next Right Pointers in Each Node</a>
+<ul>
+<li><a href="#%E6%80%9D%E8%B7%AF-6">思路</a></li>
+<li><a href="#c%E4%BB%A3%E7%A0%81-1">C++代码</a></li>
+<li><a href="#java%E8%A7%A3%E6%B3%95-1">Java解法</a></li>
+<li><a href="#python3%E8%A7%A3%E6%B3%95-1">Python3解法</a></li>
+<li><a href="#go%E8%A7%A3%E6%B3%95-1">Go解法</a></li>
+</ul>
+</li>
+<li><a href="#117-populating-next-right-pointers-in-each-node-ii%E5%90%8C%E4%B8%8A">117. Populating Next Right Pointers in Each Node II（同上）</a>
+<ul>
+<li><a href="#%E6%80%9D%E8%B7%AF-7">思路</a></li>
+<li><a href="#c%E8%A7%A3%E6%B3%95-4">C++解法</a></li>
+</ul>
+</li>
+<li><a href="#104-maximum-depth-of-binary-tree">104. Maximum Depth of Binary Tree</a>
+<ul>
+<li><a href="#%E6%80%9D%E8%B7%AF-8">思路</a></li>
+<li><a href="#c%E8%A7%A3%E6%B3%95-5">C++解法</a></li>
+<li><a href="#java%E8%A7%A3%E6%B3%95-2">Java解法</a></li>
+<li><a href="#python3%E8%A7%A3%E6%B3%95-2">Python3解法</a></li>
+<li><a href="#go%E8%A7%A3%E6%B3%95-2">Go解法</a></li>
+</ul>
+</li>
+<li><a href="#111-minimum-depth-of-binary-tree">111. Minimum Depth of Binary Tree</a>
+<ul>
+<li><a href="#%E6%80%9D%E8%B7%AF-9">思路</a></li>
+<li><a href="#c%E8%A7%A3%E6%B3%95-6">C++解法</a></li>
+<li><a href="#java%E8%A7%A3%E6%B3%95-3">Java解法</a></li>
+<li><a href="#python3%E8%A7%A3%E6%B3%95-3">Python3解法</a></li>
+<li><a href="#go%E8%A7%A3%E6%B3%95-3">Go解法</a></li>
+</ul>
+</li>
+</ul>
+<h1 id="102-binary-tree-level-order-traversal"><a class="header" href="#102-binary-tree-level-order-traversal"><a href="https://leetcode.com/problems/binary-tree-level-order-traversal/">102. Binary Tree Level Order Traversal</a></a></h1>
+<p>Given the <code>root</code> of a binary tree, return <em>the level order traversal of its nodes' values</em>. (i.e., from left to right, level by level).</p>
+<p><strong>Example 1:</strong></p>
+<p><img src="https://assets.leetcode.com/uploads/2021/02/19/tree1.jpg" alt="" /></p>
+<p><strong>Input:</strong> <code>root = [3,9,20,null,null,15,7]</code><br />
+<strong>Output:</strong> <code>[[3],[9,20],[15,7]]</code></p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> <code>root = [1]</code><br />
+<strong>Output:</strong> <code>[[1]]</code></p>
+<p><strong>Example 3:</strong></p>
+<p><strong>Input:</strong> <code>root = []</code><br />
+<strong>Output:</strong> <code>[]</code></p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li>The number of nodes in the tree is in the range <code>[0, 2000]</code>.</li>
+<li><code>-1000 &lt;= Node.val &lt;= 1000</code></li>
+</ul>
+<h2 id="思路"><a class="header" href="#思路">思路</a></h2>
+<p>层序遍历一个二叉树。就是从左到右一层一层的去遍历二叉树。这种遍历的方式和我们之前讲过的都不太一样。</p>
+<p>需要借用一个辅助数据结构即队列来实现，<strong>队列先进先出，符合一层一层遍历的逻辑，而用栈先进后出适合模拟深度优先遍历也就是递归的逻辑。</strong></p>
+<p><strong>而这种层序遍历方式就是图论中的广度优先遍历，只不过我们应用在二叉树上。</strong></p>
+<p>使用队列实现二叉树广度优先遍历，动画如下：</p>
+<p><img src="https://code-thinking.cdn.bcebos.com/gifs/102%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E5%B1%82%E5%BA%8F%E9%81%8D%E5%8E%86.gif" alt="102二叉树的层序遍历" /></p>
+<p>这样就实现了层序从左到右遍历二叉树。</p>
+<p>代码如下：<strong>这份代码也可以作为二叉树层序遍历的模板，打十个就靠它了</strong>。</p>
+<h2 id="c解法"><a class="header" href="#c解法">C++解法</a></h2>
+<p>使用队列实现二叉树广度优先遍历</p>
+<pre><code class="language-cpp">class Solution {
+public:
+    vector&lt;vector&lt;int&gt;&gt; levelOrder(TreeNode* root) {
+        queue&lt;TreeNode*&gt; que;
+        if (root != NULL) que.push(root);
+        vector&lt;vector&lt;int&gt;&gt; result;
+        while (!que.empty()) {
+            int size = que.size();
+            vector&lt;int&gt; vec;
+            // 这里一定要使用固定大小size，不要使用que.size()，因为que.size是不断变化的
+            for (int i = 0; i &lt; size; i++) {
+                TreeNode* node = que.front();
+                que.pop();
+                vec.push_back(node-&gt;val);
+                if (node-&gt;left) que.push(node-&gt;left);
+                if (node-&gt;right) que.push(node-&gt;right);
+            }
+            result.push_back(vec);
+        }
+        return result;
+    }
+};
+</code></pre>
+<p>递归法：</p>
+<pre><code class="language-cpp"># 递归法
+class Solution {
+public:
+    void order(TreeNode* cur, vector&lt;vector&lt;int&gt;&gt;&amp; result, int depth)
+    {
+        if (cur == nullptr) return;
+        if (result.size() == depth) result.push_back(vector&lt;int&gt;());
+        result[depth].push_back(cur-&gt;val);
+        order(cur-&gt;left, result, depth + 1);
+        order(cur-&gt;right, result, depth + 1);
+    }
+    vector&lt;vector&lt;int&gt;&gt; levelOrder(TreeNode* root) {
+        vector&lt;vector&lt;int&gt;&gt; result;
+        int depth = 0;
+        order(root, result, depth);
+        return result;
+    }
+};
+</code></pre>
+<h2 id="java解法"><a class="header" href="#java解法">Java解法</a></h2>
+<pre><code class="language-java">// 102.二叉树的层序遍历
+class Solution {
+    public List&lt;List&lt;Integer&gt;&gt; resList = new ArrayList&lt;List&lt;Integer&gt;&gt;();
+
+    public List&lt;List&lt;Integer&gt;&gt; levelOrder(TreeNode root) {
+        //checkFun01(root,0);
+        checkFun02(root);
+
+        return resList;
+    }
+
+    //BFS--递归方式
+    public void checkFun01(TreeNode node, Integer deep) {
+        if (node == null) return;
+        deep++;
+
+        if (resList.size() &lt; deep) {
+            //当层级增加时，list的Item也增加，利用list的索引值进行层级界定
+            List&lt;Integer&gt; item = new ArrayList&lt;Integer&gt;();
+            resList.add(item);
+        }
+        resList.get(deep - 1).add(node.val);
+
+        checkFun01(node.left, deep);
+        checkFun01(node.right, deep);
+    }
+
+    //BFS--迭代方式--借助队列
+    public void checkFun02(TreeNode node) {
+        if (node == null) return;
+        Queue&lt;TreeNode&gt; que = new LinkedList&lt;TreeNode&gt;();
+        que.offer(node);
+
+        while (!que.isEmpty()) {
+            List&lt;Integer&gt; itemList = new ArrayList&lt;Integer&gt;();
+            int len = que.size();
+
+            while (len &gt; 0) {
+                TreeNode tmpNode = que.poll();
+                itemList.add(tmpNode.val);
+
+                if (tmpNode.left != null) que.offer(tmpNode.left);
+                if (tmpNode.right != null) que.offer(tmpNode.right);
+                len--;
+            }
+
+            resList.add(itemList);
+        }
+
+    }
+}
+</code></pre>
+<h2 id="python3解法"><a class="header" href="#python3解法">Python3解法</a></h2>
+<pre><code class="language-python"># 利用长度法
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def levelOrder(self, root: Optional[TreeNode]) -&gt; List[List[int]]:
+        if not root:
+            return []
+        queue = collections.deque([root])
+        result = []
+        while queue:
+            level = []
+            for _ in range(len(queue)):
+                cur = queue.popleft()
+                level.append(cur.val)
+                if cur.left:
+                    queue.append(cur.left)
+                if cur.right:
+                    queue.append(cur.right)
+            result.append(level)
+        return result
+</code></pre>
+<h2 id="go解法"><a class="header" href="#go解法">Go解法</a></h2>
+<pre><code class="language-go">/**
+1. 二叉树的递归遍历
+ */
+func levelOrder(root *TreeNode) [][]int {
+	arr := [][]int{}
+
+	depth := 0
+
+	var order func(root *TreeNode, depth int)
+
+	order = func(root *TreeNode, depth int) {
+		if root == nil {
+			return
+		}
+		if len(arr) == depth {
+			arr = append(arr, []int{})
+		}
+		arr[depth] = append(arr[depth], root.Val)
+
+		order(root.Left, depth+1)
+		order(root.Right, depth+1)
+	}
+
+	order(root, depth)
+
+	return arr
+}
+</code></pre>
+<h1 id="107-binary-tree-level-order-traversal-ii"><a class="header" href="#107-binary-tree-level-order-traversal-ii"><a href="https://leetcode.com/problems/binary-tree-level-order-traversal-ii/">107. Binary Tree Level Order Traversal II</a></a></h1>
+<p>Given the <code>root</code> of a binary tree, return <em>the bottom-up level order traversal of its nodes' values</em>. (i.e., from left to right, level by level from leaf to root).</p>
+<p><strong>Example 1:</strong></p>
+<p><img src="https://assets.leetcode.com/uploads/2021/02/19/tree1.jpg" alt="" /></p>
+<p><strong>Input:</strong> <code>root = [3,9,20,null,null,15,7]</code><br />
+<strong>Output:</strong> <code>[[15,7],[9,20],[3]]</code></p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> <code>root = [1]</code><br />
+<strong>Output:</strong> <code>[[1]]</code></p>
+<p><strong>Example 3:</strong></p>
+<p><strong>Input:</strong> <code>root = []</code>
+<strong>Output:</strong> <code>[]</code></p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li>The number of nodes in the tree is in the range <code>[0, 2000]</code>.</li>
+<li><code>-1000 &lt;= Node.val &lt;= 1000</code></li>
+</ul>
+<h2 id="思路-1"><a class="header" href="#思路-1">思路</a></h2>
+<p>在上面基础上反转下即可</p>
+<h2 id="c解法-1"><a class="header" href="#c解法-1">C++解法</a></h2>
+<pre><code class="language-cpp">/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+    vector&lt;vector&lt;int&gt;&gt; levelOrderBottom(TreeNode* root) {
+        queue&lt;TreeNode*&gt; que;
+        vector&lt;vector&lt;int&gt;&gt; result;
+        if(root == NULL) return result;
+        que.push(root);
+        while(!que.empty()){
+            vector&lt;int&gt; level;
+            int size = que.size();
+            for(int i = 0; i &lt; size; i++){
+                TreeNode* cur = que.front();
+                level.push_back(cur-&gt;val);
+                que.pop();
+                if(cur-&gt;left) que.push(cur-&gt;left);
+                if(cur-&gt;right) que.push(cur-&gt;right);
+            }
+            result.push_back(level);
+        }
+        reverse(result.begin(), result.end());
+        return result;
+    }
+};
+</code></pre>
+<h1 id="637-average-of-levels-in-binary-tree"><a class="header" href="#637-average-of-levels-in-binary-tree"><a href="https://leetcode.com/problems/average-of-levels-in-binary-tree/">637. Average of Levels in Binary Tree</a></a></h1>
+<p>Given the <code>root</code> of a binary tree, return <em>the average value of the nodes on each level in the form of an array</em>. Answers within <code>10-5</code> of the actual answer will be accepted.</p>
+<p><strong>Example 1:</strong></p>
+<p><img src="https://assets.leetcode.com/uploads/2021/03/09/avg1-tree.jpg" alt="" /></p>
+<p><strong>Input:</strong> <code>root = [3,9,20,null,null,15,7]</code><br />
+<strong>Output:</strong> <code>[3.00000,14.50000,11.00000]</code><br />
+Explanation: The average value of nodes on level 0 is 3, on level 1 is 14.5, and on level 2 is 11.
+Hence return <code>[3, 14.5, 11]</code>.</p>
+<p><strong>Example 2:</strong></p>
+<p><img src="https://assets.leetcode.com/uploads/2021/03/09/avg2-tree.jpg" alt="" /></p>
+<p><strong>Input:</strong> <code>root = [3,9,20,15,7]</code><br />
+<strong>Output:</strong> <code>[3.00000,14.50000,11.00000]</code></p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li>The number of nodes in the tree is in the range <code>[1, 10^4]</code>.</li>
+<li><code>-2^31 &lt;= Node.val &lt;= 2^31 - 1</code></li>
+</ul>
+<h2 id="思路-2"><a class="header" href="#思路-2">思路</a></h2>
+<p>每层遍历时就计算下结果</p>
+<h2 id="c解法-2"><a class="header" href="#c解法-2">C++解法</a></h2>
+<pre><code class="language-cpp">/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+    vector&lt;double&gt; averageOfLevels(TreeNode* root) {
+        vector&lt;double&gt; result;
+        queue&lt;TreeNode*&gt; que;
+        if(root == NULL) return result;
+        que.push(root);
+        while(!que.empty()){
+            double sum = 0.0;
+            int size = que.size();
+            for(int i = 0; i &lt; size; i++){
+                TreeNode* cur = que.front();
+                que.pop();
+                sum += cur-&gt;val;
+                if(cur-&gt;left) que.push(cur-&gt;left);
+                if(cur-&gt;right) que.push(cur-&gt;right);
+            }
+            result.push_back(sum / size);
+        }
+        return result;
+    }
+};
+</code></pre>
+<h1 id="103-binary-tree-zigzag-level-order-traversal"><a class="header" href="#103-binary-tree-zigzag-level-order-traversal"><a href="https://leetcode.com/problems/binary-tree-zigzag-level-order-traversal/">103. Binary Tree Zigzag Level Order Traversal</a></a></h1>
+<p>Given the <code>root</code> of a binary tree, return <em>the zigzag level order traversal of its nodes' values</em>. (i.e., from left to right, then right to left for the next level and alternate between).</p>
+<p><strong>Example 1:</strong></p>
+<p><img src="https://assets.leetcode.com/uploads/2021/02/19/tree1.jpg" alt="" /></p>
+<p><strong>Input:</strong> <code>root = [3,9,20,null,null,15,7]</code><br />
+<strong>Output:</strong> <code>[[3],[20,9],[15,7]]</code></p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> <code>root = [1]</code><br />
+<strong>Output:</strong> <code>[[1]]</code></p>
+<p><strong>Example 3:</strong></p>
+<p><strong>Input:</strong> <code>root = []</code><br />
+<strong>Output:</strong> <code>[]</code></p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li>The number of nodes in the tree is in the range <code>[0, 2000]</code>.</li>
+<li><code>-100 &lt;= Node.val &lt;= 100</code></li>
+</ul>
+<h2 id="思路-3"><a class="header" href="#思路-3">思路</a></h2>
+<p>添加状态变量level判断是否需要反转，然后把每层遍历结果加入result</p>
+<h2 id="c代码"><a class="header" href="#c代码">C++代码</a></h2>
+<pre><code class="language-cpp">/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+    vector&lt;vector&lt;int&gt;&gt; zigzagLevelOrder(TreeNode* root) {
+        queue&lt;TreeNode*&gt; que;
+        vector&lt;vector&lt;int&gt;&gt; result;
+        if(root == NULL) return result;
+        que.push(root);
+        int level = 0;
+        while(!que.empty()){
+            vector&lt;int&gt; nums;
+            int size = que.size();
+            for(int i = 0; i &lt; size; i++){
+                TreeNode* cur = que.front();
+                nums.push_back(cur-&gt;val);
+                que.pop();
+                if(cur-&gt;left) que.push(cur-&gt;left);
+                if(cur-&gt;right) que.push(cur-&gt;right);
+            }
+            if(level % 2 == 1)
+                reverse(nums.begin(), nums.end());
+            level++;
+            result.push_back(nums);
+        }
+        return result;
+    }
+};
+</code></pre>
+<h1 id="199-binary-tree-right-side-view"><a class="header" href="#199-binary-tree-right-side-view"><a href="https://leetcode.com/problems/binary-tree-right-side-view/">199. Binary Tree Right Side View</a></a></h1>
+<h2 id="description"><a class="header" href="#description">Description</a></h2>
+<p>Given the <code>root</code> of a binary tree, imagine yourself standing on the <strong>right side</strong> of it, return <em>the values of the nodes you can see ordered from top to bottom</em>.</p>
+<p><strong>Example 1:</strong></p>
+<p><img src="https://assets.leetcode.com/uploads/2021/02/14/tree.jpg" alt="" /></p>
+<p><strong>Input:</strong> <code>root = [1,2,3,null,5,null,4]</code><br />
+<strong>Output:</strong> <code>[1,3,4]</code></p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> <code>root = [1,null,3]</code><br />
+<strong>Output:</strong> <code>[1,3]</code></p>
+<p><strong>Example 3:</strong></p>
+<p><strong>Input:</strong> <code>root = []</code>
+<strong>Output:</strong> <code>[]</code></p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li>The number of nodes in the tree is in the range <code>[0, 100]</code>.</li>
+<li><code>-100 &lt;= Node.val &lt;= 100</code></li>
+</ul>
+<h2 id="思路-4"><a class="header" href="#思路-4">思路</a></h2>
+<p>层次遍历，每层最后一个节点</p>
+<p>由于树的形状无法提前知晓，不可能设计出优于 O(n) 的算法。因此，我们应该试着寻找线性时间解。带着这个想法，我们来考虑一些同等有效的方案。</p>
+<h3 id="方法一深度优先搜索"><a class="header" href="#方法一深度优先搜索">方法一：深度优先搜索</a></h3>
+<p>思路</p>
+<p>我们对树进行深度优先搜索，在搜索过程中，我们总是先访问右子树。那么对于每一层来说，我们在这层见到的第一个结点一定是最右边的结点。</p>
+<p>算法</p>
+<p>这样一来，我们可以存储在每个深度访问的第一个结点，一旦我们知道了树的层数，就可以得到最终的结果数组。</p>
+<p><img src="https://assets.leetcode-cn.com/solution-static/199/fig1.png" alt="dfs" /></p>
+<p>上图表示了问题的一个实例。红色结点自上而下组成答案，边缘以访问顺序标号。</p>
+<p>复杂度分析</p>
+<p>时间复杂度 : O(n)。深度优先搜索最多访问每个结点一次，因此是线性复杂度。</p>
+<p>空间复杂度 : O(n)。最坏情况下，栈内会包含接近树高度的结点数量，占用 O(n) 的空间。</p>
+<h3 id="方法二广度优先搜索"><a class="header" href="#方法二广度优先搜索">方法二：广度优先搜索</a></h3>
+<p>思路</p>
+<p>我们可以对二叉树进行层次遍历，那么对于每层来说，最右边的结点一定是最后被遍历到的。二叉树的层次遍历可以用广度优先搜索实现。</p>
+<p>算法</p>
+<p>执行广度优先搜索，左结点排在右结点之前，这样，我们对每一层都从左到右访问。因此，只保留每个深度最后访问的结点，我们就可以在遍历完整棵树后得到每个深度最右的结点。除了将栈改成队列，并去除了 rightmost_value_at_depth 之前的检查外，算法没有别的改动。</p>
+<p><img src="https://assets.leetcode-cn.com/solution-static/199/fig2.png" alt="bfs" /></p>
+<p>上图表示了同一个示例，红色结点自上而下组成答案，边缘以访问顺序标号。</p>
+<p>复杂度分析</p>
+<p>时间复杂度 : O(n)。 每个节点最多进队列一次，出队列一次，因此广度优先搜索的复杂度为线性。</p>
+<p>空间复杂度 : O(n)。每个节点最多进队列一次，所以队列长度最大不不超过 n，所以这里的空间代价为 O(n)。</p>
+<p>作者：力扣官方题解</p>
+<p>链接： https://leetcode.cn/problems/binary-tree-right-side-view/solutions/213494/er-cha-shu-de-you-shi-tu-by-leetcode-solution/</p>
+<p>来源：力扣（LeetCode）</p>
+<p>著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</p>
+<h2 id="c-解法"><a class="header" href="#c-解法">C++ 解法</a></h2>
+<h3 id="dfs"><a class="header" href="#dfs">dfs</a></h3>
+<pre><code class="language-cpp">class Solution {
+public:
+    vector&lt;int&gt; rightSideView(TreeNode* root) {
+        unordered_map&lt;int, int&gt; rightmostValueAtDepth;
+        int max_depth = -1;
+
+        stack&lt;TreeNode*&gt; nodeStack;
+        stack&lt;int&gt; depthStack;
+        nodeStack.push(root);
+        depthStack.push(0);
+
+        while (!nodeStack.empty()) {
+            TreeNode* node = nodeStack.top();nodeStack.pop();
+            int depth = depthStack.top();depthStack.pop();
+
+            if (node != NULL) {
+            	// 维护二叉树的最大深度
+                max_depth = max(max_depth, depth);
+
+                // 如果不存在对应深度的节点我们才插入
+                if (rightmostValueAtDepth.find(depth) == rightmostValueAtDepth.end()) {
+                    rightmostValueAtDepth[depth] =  node -&gt; val;
+                }
+
+                nodeStack.push(node -&gt; left);
+                nodeStack.push(node -&gt; right);
+                depthStack.push(depth + 1);
+                depthStack.push(depth + 1);
+            }
+        }
+
+        vector&lt;int&gt; rightView;
+        for (int depth = 0; depth &lt;= max_depth; ++depth) {
+            rightView.push_back(rightmostValueAtDepth[depth]);
+        }
+
+        return rightView;
+    }
+};
+</code></pre>
+<h3 id="bfs"><a class="header" href="#bfs">bfs</a></h3>
+<pre><code class="language-cpp">class Solution {
+public:
+    vector&lt;int&gt; rightSideView(TreeNode* root) {
+        unordered_map&lt;int, int&gt; rightmostValueAtDepth;
+        int max_depth = -1;
+
+        queue&lt;TreeNode*&gt; nodeQueue;
+        queue&lt;int&gt; depthQueue;
+        nodeQueue.push(root);
+        depthQueue.push(0);
+
+        while (!nodeQueue.empty()) {
+            TreeNode* node = nodeQueue.front();nodeQueue.pop();
+            int depth = depthQueue.front();depthQueue.pop();
+
+            if (node != NULL) {
+            	// 维护二叉树的最大深度
+                max_depth = max(max_depth, depth);
+
+                // 由于每一层最后一个访问到的节点才是我们要的答案，因此不断更新对应深度的信息即可
+                rightmostValueAtDepth[depth] =  node -&gt; val;
+
+                nodeQueue.push(node -&gt; left);
+                nodeQueue.push(node -&gt; right);
+                depthQueue.push(depth + 1);
+                depthQueue.push(depth + 1);
+            }
+        }
+
+        vector&lt;int&gt; rightView;
+        for (int depth = 0; depth &lt;= max_depth; ++depth) {
+            rightView.push_back(rightmostValueAtDepth[depth]);
+        }
+
+        return rightView;
+    }
+};
+</code></pre>
+<h2 id="java-解法"><a class="header" href="#java-解法">Java 解法</a></h2>
+<h3 id="dfs-1"><a class="header" href="#dfs-1">dfs</a></h3>
+<pre><code class="language-java">class Solution {
+    public List&lt;Integer&gt; rightSideView(TreeNode root) {
+        Map&lt;Integer, Integer&gt; rightmostValueAtDepth = new HashMap&lt;Integer, Integer&gt;();
+        int max_depth = -1;
+
+        Deque&lt;TreeNode&gt; nodeStack = new LinkedList&lt;TreeNode&gt;();
+        Deque&lt;Integer&gt; depthStack = new LinkedList&lt;Integer&gt;();
+        nodeStack.push(root);
+        depthStack.push(0);
+
+        while (!nodeStack.isEmpty()) {
+            TreeNode node = nodeStack.pop();
+            int depth = depthStack.pop();
+
+            if (node != null) {
+            	// 维护二叉树的最大深度
+                max_depth = Math.max(max_depth, depth);
+
+                // 如果不存在对应深度的节点我们才插入
+                if (!rightmostValueAtDepth.containsKey(depth)) {
+                    rightmostValueAtDepth.put(depth, node.val);
+                }
+
+                nodeStack.push(node.left);
+                nodeStack.push(node.right);
+                depthStack.push(depth + 1);
+                depthStack.push(depth + 1);
+            }
+        }
+
+        List&lt;Integer&gt; rightView = new ArrayList&lt;Integer&gt;();
+        for (int depth = 0; depth &lt;= max_depth; depth++) {
+            rightView.add(rightmostValueAtDepth.get(depth));
+        }
+
+        return rightView;
+    }
+}
+</code></pre>
+<h3 id="bfs-1"><a class="header" href="#bfs-1">bfs</a></h3>
+<pre><code class="language-java">class Solution {
+    public List&lt;Integer&gt; rightSideView(TreeNode root) {
+        Map&lt;Integer, Integer&gt; rightmostValueAtDepth = new HashMap&lt;Integer, Integer&gt;();
+        int max_depth = -1;
+
+        Queue&lt;TreeNode&gt; nodeQueue = new LinkedList&lt;TreeNode&gt;();
+        Queue&lt;Integer&gt; depthQueue = new LinkedList&lt;Integer&gt;();
+        nodeQueue.add(root);
+        depthQueue.add(0);
+
+        while (!nodeQueue.isEmpty()) {
+            TreeNode node = nodeQueue.remove();
+            int depth = depthQueue.remove();
+
+            if (node != null) {
+            	// 维护二叉树的最大深度
+                max_depth = Math.max(max_depth, depth);
+
+                // 由于每一层最后一个访问到的节点才是我们要的答案，因此不断更新对应深度的信息即可
+                rightmostValueAtDepth.put(depth, node.val);
+
+                nodeQueue.add(node.left);
+                nodeQueue.add(node.right);
+                depthQueue.add(depth + 1);
+                depthQueue.add(depth + 1);
+            }
+        }
+
+        List&lt;Integer&gt; rightView = new ArrayList&lt;Integer&gt;();
+        for (int depth = 0; depth &lt;= max_depth; depth++) {
+            rightView.add(rightmostValueAtDepth.get(depth));
+        }
+
+        return rightView;
+    }
+}
+</code></pre>
+<h2 id="python-解法"><a class="header" href="#python-解法">Python 解法</a></h2>
+<h3 id="dfs-2"><a class="header" href="#dfs-2">dfs</a></h3>
+<pre><code class="language-python">class Solution:
+    def rightSideView(self, root: TreeNode) -&gt; List[int]:
+        rightmost_value_at_depth = dict() # 深度为索引，存放节点的值
+        max_depth = -1
+
+        stack = [(root, 0)]
+        while stack:
+            node, depth = stack.pop()
+
+            if node is not None:
+                # 维护二叉树的最大深度
+                max_depth = max(max_depth, depth)
+
+                # 如果不存在对应深度的节点我们才插入
+                rightmost_value_at_depth.setdefault(depth, node.val)
+
+                stack.append((node.left, depth + 1))
+                stack.append((node.right, depth + 1))
+
+        return [rightmost_value_at_depth[depth] for depth in range(max_depth + 1)]
+</code></pre>
+<h3 id="bfs-2"><a class="header" href="#bfs-2">bfs</a></h3>
+<pre><code class="language-python">class Solution:
+    def rightSideView(self, root: TreeNode) -&gt; List[int]:
+        rightmost_value_at_depth = dict() # 深度为索引，存放节点的值
+        max_depth = -1
+
+        queue = deque([(root, 0)])
+        while queue:
+            node, depth = queue.popleft()
+
+            if node is not None:
+                # 维护二叉树的最大深度
+                max_depth = max(max_depth, depth)
+
+                # 由于每一层最后一个访问到的节点才是我们要的答案，因此不断更新对应深度的信息即可
+                rightmost_value_at_depth[depth] = node.val
+
+                queue.append((node.left, depth + 1))
+                queue.append((node.right, depth + 1))
+
+        return [rightmost_value_at_depth[depth] for depth in range(max_depth + 1)]
+</code></pre>
+<h1 id="515-find-largest-value-in-each-tree-row"><a class="header" href="#515-find-largest-value-in-each-tree-row"><a href="https://leetcode.com/problems/find-largest-value-in-each-tree-row/">515. Find Largest Value in Each Tree Row</a></a></h1>
+<p>Given the <code>root</code> of a binary tree, return <em>an array of the largest value in each row</em> of the tree <strong>(0-indexed)</strong>.</p>
+<p><strong>Example 1:</strong></p>
+<p><img src="https://assets.leetcode.com/uploads/2020/08/21/largest_e1.jpg" alt="" /></p>
+<p><strong>Input:</strong> <code>root = [1,3,2,5,3,null,9]</code><br />
+<strong>Output:</strong> <code>[1,3,9]</code></p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> <code>root = [1,2,3]</code><br />
+<strong>Output:</strong> <code>[1,3]</code></p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li>The number of nodes in the tree will be in the range <code>[0, 10^4]</code>.</li>
+<li><code>-2^31 &lt;= Node.val &lt;= 2^31 - 1</code></li>
+</ul>
+<h2 id="思路-5"><a class="header" href="#思路-5">思路</a></h2>
+<p>每层计算一次最大值即可</p>
+<h2 id="c解法-3"><a class="header" href="#c解法-3">C++解法</a></h2>
+<pre><code class="language-cpp">/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+    int getMax(vector&lt;int&gt; nums){
+        int maxVal = nums[0];
+        for(int num : nums){
+            if(num &gt; maxVal){
+                maxVal = num;
+            }
+        }
+        return maxVal;
+    }
+    vector&lt;int&gt; largestValues(TreeNode* root) {
+        queue&lt;TreeNode*&gt; que;
+        vector&lt;int&gt; result;
+        if(root == NULL) return result;
+        que.push(root);
+        while(!que.empty()){
+            vector&lt;int&gt; nums;
+            int size = que.size();
+            for(int i = 0; i &lt; size; i++){
+                TreeNode* cur = que.front();
+                nums.push_back(cur-&gt;val);
+                que.pop();
+                if(cur-&gt;left) que.push(cur-&gt;left);
+                if(cur-&gt;right) que.push(cur-&gt;right);
+            }
+            int maxVal = getMax(nums);
+            result.push_back(maxVal);
+        }
+        return result;
+    }
+};
+</code></pre>
+<h1 id="116-populating-next-right-pointers-in-each-node"><a class="header" href="#116-populating-next-right-pointers-in-each-node"><a href="https://leetcode.com/problems/populating-next-right-pointers-in-each-node/">116. Populating Next Right Pointers in Each Node</a></a></h1>
+<p>You are given a <strong>perfect binary tree</strong> where all leaves are on the same level, and every parent has two children. The binary tree has the following definition:</p>
+<pre><code class="language-cpp">struct Node {
+  int val;
+  Node *left;
+  Node *right;
+  Node *next;
+}
+</code></pre>
+<p>Populate each next pointer to point to its next right node. If there is no next right node, the next pointer should be set to <code>NULL</code>.</p>
+<p>Initially, all next pointers are set to <code>NULL</code>.</p>
+<p><strong>Example 1:</strong></p>
+<p><img src="https://assets.leetcode.com/uploads/2019/02/14/116_sample.png" alt="" /></p>
+<p><strong>Input:</strong> <code>root = [1,2,3,4,5,6,7]</code><br />
+<strong>Output:</strong> <code>[1,#,2,3,#,4,5,6,7,#]</code><br />
+<strong>Explanation:</strong> Given the above perfect binary tree (Figure A), your function should populate each next pointer to point to its next right node, just like in Figure B. The serialized output is in level order as connected by the next pointers, with '#' signifying the end of each level.</p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> <code>root = []</code><br />
+<strong>Output:</strong> <code>[]</code></p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li>The number of nodes in the tree is in the range <code>[0, 2^{12} - 1]</code>.</li>
+<li><code>-1000 &lt;= Node.val &lt;= 1000</code></li>
+</ul>
+<p><strong>Follow-up:</strong></p>
+<ul>
+<li>You may only use constant extra space.</li>
+<li>The recursive approach is fine. You may assume implicit stack space does not count as extra space for this problem.</li>
+</ul>
+<h2 id="思路-6"><a class="header" href="#思路-6">思路</a></h2>
+<p>本题依然是层序遍历，只不过在单层遍历的时候记录一下本层的头部节点，然后在遍历的时候让前一个节点指向本节点就可以了</p>
+<h2 id="c代码-1"><a class="header" href="#c代码-1">C++代码</a></h2>
+<pre><code class="language-cpp">class Solution {
+public:
+    Node* connect(Node* root) {
+        queue&lt;Node*&gt; que;
+        if (root != NULL) que.push(root);
+        while (!que.empty()) {
+            int size = que.size();
+            // vector&lt;int&gt; vec;
+            Node* nodePre;
+            Node* node;
+            for (int i = 0; i &lt; size; i++) {
+                if (i == 0) {
+                    nodePre = que.front(); // 取出一层的头结点
+                    que.pop();
+                    node = nodePre;
+                } else {
+                    node = que.front();
+                    que.pop();
+                    nodePre-&gt;next = node; // 本层前一个节点next指向本节点
+                    nodePre = nodePre-&gt;next;
+                }
+                if (node-&gt;left) que.push(node-&gt;left);
+                if (node-&gt;right) que.push(node-&gt;right);
+            }
+            nodePre-&gt;next = NULL; // 本层最后一个节点指向NULL
+        }
+        return root;
+
+    }
+};
+</code></pre>
+<h2 id="java解法-1"><a class="header" href="#java解法-1">Java解法</a></h2>
+<pre><code class="language-java">class Solution {
+    public Node connect(Node root) {
+	Queue&lt;Node&gt; tmpQueue = new LinkedList&lt;Node&gt;();
+	if (root != null) tmpQueue.add(root);
+
+	while (tmpQueue.size() != 0){
+	    int size = tmpQueue.size();
+
+            Node cur = tmpQueue.poll();
+            if (cur.left != null) tmpQueue.add(cur.left);
+            if (cur.right != null) tmpQueue.add(cur.right);
+
+	    for (int index = 1; index &lt; size; index++){
+		Node next = tmpQueue.poll();
+		if (next.left != null) tmpQueue.add(next.left);
+		if (next.right != null) tmpQueue.add(next.right);
+
+                cur.next = next;
+                cur = next;
+	    }
+	}
+
+        return root;
+    }
+}
+</code></pre>
+<h2 id="python3解法-1"><a class="header" href="#python3解法-1">Python3解法</a></h2>
+<pre><code class="language-python">"""
+# Definition for a Node.
+class Node:
+    def __init__(self, val: int = 0, left: 'Node' = None, right: 'Node' = None, next: 'Node' = None):
+        self.val = val
+        self.left = left
+        self.right = right
+        self.next = next
+"""
+class Solution:
+    def connect(self, root: 'Node') -&gt; 'Node':
+        if not root:
+            return root
+        
+        queue = collections.deque([root])
+        
+        while queue:
+            level_size = len(queue)
+            prev = None
+            
+            for i in range(level_size):
+                node = queue.popleft()
+                
+                if prev:
+                    prev.next = node
+                
+                prev = node
+                
+                if node.left:
+                    queue.append(node.left)
+                
+                if node.right:
+                    queue.append(node.right)
+        
+        return root
+</code></pre>
+<h2 id="go解法-1"><a class="header" href="#go解法-1">Go解法</a></h2>
+<pre><code class="language-go">/**
+1. 填充每个节点的下一个右侧节点指针
+2. 填充每个节点的下一个右侧节点指针 II
+ */
+
+func connect(root *Node) *Node {
+    if root == nil { //防止为空
+        return root
+    }
+    queue := list.New()
+    queue.PushBack(root)
+    tmpArr := make([]*Node, 0)
+    for queue.Len() &gt; 0 {
+        length := queue.Len() //保存当前层的长度，然后处理当前层（十分重要，防止添加下层元素影响判断层中元素的个数）
+        for i := 0; i &lt; length; i++ {
+            node := queue.Remove(queue.Front()).(*Node) //出队列
+            if node.Left != nil {
+                queue.PushBack(node.Left)
+            }
+            if node.Right != nil {
+                queue.PushBack(node.Right)
+            }
+            tmpArr = append(tmpArr, node) //将值加入本层切片中
+        }
+        if len(tmpArr) &gt; 1 {
+            // 遍历每层元素,指定next
+            for i := 0; i &lt; len(tmpArr)-1; i++ {
+                tmpArr[i].Next = tmpArr[i+1]
+            }
+        }
+        tmpArr = []*Node{} //清空层的数据
+    }
+    return root
+}
+</code></pre>
+<h1 id="117-populating-next-right-pointers-in-each-node-ii同上"><a class="header" href="#117-populating-next-right-pointers-in-each-node-ii同上"><a href="https://leetcode.com/problems/populating-next-right-pointers-in-each-node-ii/">117. Populating Next Right Pointers in Each Node II</a>（同上）</a></h1>
+<p>Given a binary tree</p>
+<pre><code class="language-cpp">struct Node {
+  int val;
+  Node *left;
+  Node *right;
+  Node *next;
+}
+</code></pre>
+<p>Populate each next pointer to point to its next right node. If there is no next right node, the next pointer should be set to <code>NULL</code>.</p>
+<p>Initially, all next pointers are set to <code>NULL</code>.</p>
+<p><strong>Example 1:</strong></p>
+<p><img src="https://assets.leetcode.com/uploads/2019/02/15/117_sample.png" alt="" /></p>
+<p><strong>Input:</strong> <code>root = [1,2,3,4,5,null,7]</code><br />
+<strong>Output:</strong> <code>[1,#,2,3,#,4,5,7,#]</code><br />
+<strong>Explanation:</strong> Given the above binary tree (Figure A), your function should populate each next pointer to point to its next right node, just like in Figure B. The serialized output is in level order as connected by the next pointers, with '#' signifying the end of each level.</p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> <code>root = []</code><br />
+<strong>Output:</strong> <code>[]</code></p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li>The number of nodes in the tree is in the range <code>[0, 6000]</code>.</li>
+<li><code>-100 &lt;= Node.val &lt;= 100</code></li>
+</ul>
+<p><strong>Follow-up:</strong></p>
+<ul>
+<li>You may only use constant extra space.</li>
+<li>The recursive approach is fine. You may assume implicit stack space does not count as extra space for this problem.</li>
+</ul>
+<h2 id="思路-7"><a class="header" href="#思路-7">思路</a></h2>
+<p>这道题目说是二叉树，但116题目说是完整二叉树，其实没有任何差别，一样的代码一样的逻辑一样的味道</p>
+<h2 id="c解法-4"><a class="header" href="#c解法-4">C++解法</a></h2>
+<pre><code class="language-cpp">class Solution {
+public:
+    Node* connect(Node* root) {
+        queue&lt;Node*&gt; que;
+        if (root != NULL) que.push(root);
+        while (!que.empty()) {
+            int size = que.size();
+            vector&lt;int&gt; vec;
+            Node* nodePre;
+            Node* node;
+            for (int i = 0; i &lt; size; i++) {
+                if (i == 0) {
+                    nodePre = que.front(); // 取出一层的头结点
+                    que.pop();
+                    node = nodePre;
+                } else {
+                    node = que.front();
+                    que.pop();
+                    nodePre-&gt;next = node; // 本层前一个节点next指向本节点
+                    nodePre = nodePre-&gt;next;
+                }
+                if (node-&gt;left) que.push(node-&gt;left);
+                if (node-&gt;right) que.push(node-&gt;right);
+            }
+            nodePre-&gt;next = NULL; // 本层最后一个节点指向NULL
+        }
+        return root;
+    }
+};
+</code></pre>
+<h1 id="104-maximum-depth-of-binary-tree"><a class="header" href="#104-maximum-depth-of-binary-tree"><a href="https://leetcode.com/problems/maximum-depth-of-binary-tree/">104. Maximum Depth of Binary Tree</a></a></h1>
+<p>Given the <code>root</code> of a binary tree, return <em>its maximum depth</em>.</p>
+<p>A binary tree's <strong>maximum depth</strong> is the number of nodes along the longest path from the root node down to the farthest leaf node.</p>
+<p><strong>Example 1:</strong></p>
+<p><img src="https://assets.leetcode.com/uploads/2020/11/26/tmp-tree.jpg" alt="" /></p>
+<p><strong>Input:</strong> <code>root = [3,9,20,null,null,15,7]</code><br />
+<strong>Output:</strong> 3</p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong>  <code>root = [1,null,2]</code><br />
+<strong>Output:</strong> 2</p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li>The number of nodes in the tree is in the range <code>[0, 10^4]</code>.</li>
+<li><code>-100 &lt;= Node.val &lt;= 100</code></li>
+</ul>
+<h2 id="思路-8"><a class="header" href="#思路-8">思路</a></h2>
+<p>递归</p>
+<h2 id="c解法-5"><a class="header" href="#c解法-5">C++解法</a></h2>
+<pre><code class="language-cpp">/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+    int maxDepth(TreeNode* root) {
+        if(root == NULL){
+            return 0;
+        }
+        return max(maxDepth(root-&gt;left), maxDepth(root-&gt;right)) + 1;
+    }
+};
+</code></pre>
+<h2 id="java解法-2"><a class="header" href="#java解法-2">Java解法</a></h2>
+<pre><code class="language-java">/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public int maxDepth(TreeNode root) {
+        if(root == null) return 0;
+        if(root.left == null &amp;&amp; root.right == null) return 1;
+        return Math.max(maxDepth(root.left), maxDepth(root.right)) + 1;
+    }
+}
+</code></pre>
+<h2 id="python3解法-2"><a class="header" href="#python3解法-2">Python3解法</a></h2>
+<h2 id="go解法-2"><a class="header" href="#go解法-2">Go解法</a></h2>
+<h1 id="111-minimum-depth-of-binary-tree"><a class="header" href="#111-minimum-depth-of-binary-tree"><a href="https://leetcode.com/problems/minimum-depth-of-binary-tree/">111. Minimum Depth of Binary Tree</a></a></h1>
+<p>Given a binary tree, find its minimum depth.</p>
+<p>The minimum depth is the number of nodes along the shortest path from the root node down to the nearest leaf node.</p>
+<p><strong>Note:</strong> A leaf is a node with no children.</p>
+<p><strong>Example 1:</strong></p>
+<p><img src="https://assets.leetcode.com/uploads/2020/10/12/ex_depth.jpg" alt="" /></p>
+<p><strong>Input:</strong> <code>root = [3,9,20,null,null,15,7]</code><br />
+<strong>Output:</strong> 2</p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> <code>root = [2,null,3,null,4,null,5,null,6]</code><br />
+<strong>Output:</strong> 5</p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li>The number of nodes in the tree is in the range <code>[0, 10^5]</code>.</li>
+<li><code>-1000 &lt;= Node.val &lt;= 1000</code></li>
+</ul>
+<h2 id="思路-9"><a class="header" href="#思路-9">思路</a></h2>
+<p>递归</p>
+<h2 id="c解法-6"><a class="header" href="#c解法-6">C++解法</a></h2>
+<pre><code class="language-cpp">/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+    int minDepth(TreeNode* root) {
+        if(root == NULL){
+            return 0;
+        }
+        if(root-&gt;left == NULL &amp;&amp; root-&gt;right != NULL){
+            return minDepth(root-&gt;right) + 1;
+        }
+        if(root-&gt;right == NULL &amp;&amp; root-&gt;left != NULL){
+            return minDepth(root-&gt;left) + 1;
+        }
+        return 1 + min(minDepth(root-&gt;left), minDepth(root-&gt;right));
+    }
+};
+</code></pre>
+<h2 id="java解法-3"><a class="header" href="#java解法-3">Java解法</a></h2>
+<h2 id="python3解法-3"><a class="header" href="#python3解法-3">Python3解法</a></h2>
+<h2 id="go解法-3"><a class="header" href="#go解法-3">Go解法</a></h2>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../二叉树/二叉树遍历.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../二叉树/二叉树路径.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../二叉树/二叉树遍历.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../二叉树/二叉树路径.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

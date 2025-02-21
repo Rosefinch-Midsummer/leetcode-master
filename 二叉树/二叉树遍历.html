@@ -153,7 +153,627 @@
                 <div id="content" class="content">
                     <main>
                         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
-<h1 id="二叉树遍历"><a class="header" href="#二叉树遍历">二叉树遍历</a></h1>
+<h1 id="二叉树前中后序遍历"><a class="header" href="#二叉树前中后序遍历">二叉树前中后序遍历</a></h1>
+<ul>
+<li><a href="#%E8%AF%B4%E6%98%8E">说明</a>
+<ul>
+<li><a href="#%E9%80%92%E5%BD%92%E6%80%9D%E8%B7%AF">递归思路</a></li>
+<li><a href="#%E8%BF%AD%E4%BB%A3%E6%80%9D%E8%B7%AF">迭代思路</a>
+<ul>
+<li><a href="#%E5%89%8D%E5%BA%8F%E9%81%8D%E5%8E%86%E8%BF%AD%E4%BB%A3%E6%B3%95">前序遍历（迭代法）</a></li>
+<li><a href="#%E4%B8%AD%E5%BA%8F%E9%81%8D%E5%8E%86%E8%BF%AD%E4%BB%A3%E6%B3%95">中序遍历（迭代法）</a></li>
+<li><a href="#%E5%90%8E%E5%BA%8F%E9%81%8D%E5%8E%86%E8%BF%AD%E4%BB%A3%E6%B3%95">后序遍历（迭代法）</a></li>
+</ul>
+</li>
+<li><a href="#%E6%80%BB%E7%BB%93">总结</a></li>
+</ul>
+</li>
+<li><a href="#94-binary-tree-inorder-traversal">94. Binary Tree Inorder Traversal</a>
+<ul>
+<li><a href="#c%E8%A7%A3%E6%B3%95">C++解法</a></li>
+<li><a href="#java%E8%A7%A3%E6%B3%95">Java解法</a></li>
+<li><a href="#python3%E8%A7%A3%E6%B3%95">Python3解法</a></li>
+<li><a href="#go%E8%A7%A3%E6%B3%95">Go解法</a></li>
+</ul>
+</li>
+<li><a href="#144-binary-tree-preorder-traversal">144. Binary Tree Preorder Traversal</a>
+<ul>
+<li><a href="#c%E8%A7%A3%E6%B3%95-1">C++解法</a></li>
+<li><a href="#java%E8%A7%A3%E6%B3%95-1">Java解法</a></li>
+<li><a href="#python3%E8%A7%A3%E6%B3%95-1">Python3解法</a></li>
+<li><a href="#go%E8%A7%A3%E6%B3%95-1">Go解法</a></li>
+</ul>
+</li>
+<li><a href="#145-binary-tree-postorder-traversal">145. Binary Tree Postorder Traversal</a>
+<ul>
+<li><a href="#c%E8%A7%A3%E6%B3%95-2">C++解法</a></li>
+<li><a href="#java%E8%A7%A3%E6%B3%95-2">Java解法</a></li>
+<li><a href="#python3%E8%A7%A3%E6%B3%95-2">Python3解法</a></li>
+<li><a href="#go%E8%A7%A3%E6%B3%95-2">Go解法</a></li>
+</ul>
+</li>
+</ul>
+<h1 id="说明"><a class="header" href="#说明">说明</a></h1>
+<p>针对二叉树的问题，解题之前一定要想清楚究竟是前中后序遍历，还是层序遍历。</p>
+<p><strong>二叉树解题的大忌就是自己稀里糊涂的过了（因为这道题相对简单），但是也不知道自己是怎么遍历的。</strong></p>
+<p>这也是造成了二叉树的题目“一看就会，一写就废”的原因。</p>
+<p><strong>针对翻转二叉树，我给出了一种递归，三种迭代（两种模拟深度优先遍历，一种层序遍历）的写法，都是之前我们讲过的写法，融汇贯通一下而已。</strong></p>
+<p>大家一定也有自己的解法，但一定要成方法论，这样才能通用，才能举一反三！</p>
+<h2 id="递归思路"><a class="header" href="#递归思路">递归思路</a></h2>
+<p>这次我们要好好谈一谈递归，为什么很多同学看递归算法都是“一看就会，一写就废”。</p>
+<p>主要是对递归不成体系，没有方法论，<strong>每次写递归算法 ，都是靠玄学来写代码</strong>，代码能不能编过都靠运气。</p>
+<p><strong>本篇将介绍前后中序的递归写法，一些同学可能会感觉很简单，其实不然，我们要通过简单题目把方法论确定下来，有了方法论，后面才能应付复杂的递归。</strong></p>
+<p>这里帮助大家确定下来递归算法的三个要素。<strong>每次写递归，都按照这三要素来写，可以保证大家写出正确的递归算法！</strong></p>
+<ol>
+<li>
+<p><strong>确定递归函数的参数和返回值：</strong> 确定哪些参数是递归的过程中需要处理的，那么就在递归函数里加上这个参数， 并且还要明确每次递归的返回值是什么进而确定递归函数的返回类型。</p>
+</li>
+<li>
+<p><strong>确定终止条件：</strong> 写完了递归算法, 运行的时候，经常会遇到栈溢出的错误，就是没写终止条件或者终止条件写的不对，操作系统也是用一个栈的结构来保存每一层递归的信息，如果递归没有终止，操作系统的内存栈必然就会溢出。</p>
+</li>
+<li>
+<p><strong>确定单层递归的逻辑：</strong> 确定每一层递归需要处理的信息。在这里也就会重复调用自己来实现递归的过程。</p>
+</li>
+</ol>
+<p>好了，我们确认了递归的三要素，接下来就来练练手：</p>
+<p><strong>以下以前序遍历为例：</strong></p>
+<ol>
+<li><strong>确定递归函数的参数和返回值</strong>：因为要打印出前序遍历节点的数值，所以参数里需要传入vector来放节点的数值，除了这一点就不需要再处理什么数据了也不需要有返回值，所以递归函数返回类型就是void，代码如下：</li>
+</ol>
+<pre><code class="language-cpp">void traversal(TreeNode* cur, vector&lt;int&gt;&amp; vec)
+</code></pre>
+<ol start="2">
+<li><strong>确定终止条件</strong>：在递归的过程中，如何算是递归结束了呢，当然是当前遍历的节点是空了，那么本层递归就要结束了，所以如果当前遍历的这个节点是空，就直接return，代码如下：</li>
+</ol>
+<pre><code class="language-cpp">if (cur == NULL) return;
+</code></pre>
+<ol start="3">
+<li><strong>确定单层递归的逻辑</strong>：前序遍历是中左右的顺序，所以在单层递归的逻辑，是要先取中节点的数值，代码如下：</li>
+</ol>
+<pre><code class="language-cpp">vec.push_back(cur-&gt;val);    // 中
+traversal(cur-&gt;left, vec);  // 左
+traversal(cur-&gt;right, vec); // 右
+</code></pre>
+<p>单层递归的逻辑就是按照中左右的顺序来处理的，这样二叉树的前序遍历，基本就写完了，再看一下完整代码：</p>
+<p>前序遍历：</p>
+<pre><code class="language-cpp">class Solution {
+public:
+    void traversal(TreeNode* cur, vector&lt;int&gt;&amp; vec) {
+        if (cur == NULL) return;
+        vec.push_back(cur-&gt;val);    // 中
+        traversal(cur-&gt;left, vec);  // 左
+        traversal(cur-&gt;right, vec); // 右
+    }
+    vector&lt;int&gt; preorderTraversal(TreeNode* root) {
+        vector&lt;int&gt; result;
+        traversal(root, result);
+        return result;
+    }
+};
+</code></pre>
+<p>那么前序遍历写出来之后，中序和后序遍历就不难理解了，代码如下：</p>
+<p>中序遍历：</p>
+<pre><code class="language-cpp">void traversal(TreeNode* cur, vector&lt;int&gt;&amp; vec) {
+    if (cur == NULL) return;
+    traversal(cur-&gt;left, vec);  // 左
+    vec.push_back(cur-&gt;val);    // 中
+    traversal(cur-&gt;right, vec); // 右
+}
+</code></pre>
+<p>后序遍历：</p>
+<pre><code class="language-cpp">void traversal(TreeNode* cur, vector&lt;int&gt;&amp; vec) {
+    if (cur == NULL) return;
+    traversal(cur-&gt;left, vec);  // 左
+    traversal(cur-&gt;right, vec); // 右
+    vec.push_back(cur-&gt;val);    // 中
+}
+</code></pre>
+<h2 id="迭代思路"><a class="header" href="#迭代思路">迭代思路</a></h2>
+<p>为什么可以用迭代法（非递归的方式）来实现二叉树的前后中序遍历呢？</p>
+<p>我们在<a href="https://programmercarl.com/1047.%E5%88%A0%E9%99%A4%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E7%9A%84%E6%89%80%E6%9C%89%E7%9B%B8%E9%82%BB%E9%87%8D%E5%A4%8D%E9%A1%B9.html">栈与队列：匹配问题都是栈的强项 (opens new window)</a>中提到了，<strong>递归的实现就是：每一次递归调用都会把函数的局部变量、参数值和返回地址等压入调用栈中</strong>，然后递归返回的时候，从栈顶弹出上一次递归的各项参数，所以这就是递归为什么可以返回上一层位置的原因。</p>
+<p>此时大家应该知道我们用栈也可以是实现二叉树的前后中序遍历了。</p>
+<h3 id="前序遍历迭代法"><a class="header" href="#前序遍历迭代法">前序遍历（迭代法）</a></h3>
+<p>我们先看一下前序遍历。</p>
+<p>前序遍历是中左右，每次先处理的是中间节点，那么先将根节点放入栈中，然后将右孩子加入栈，再加入左孩子。</p>
+<p>为什么要先加入 右孩子，再加入左孩子呢？ 因为这样出栈的时候才是中左右的顺序。</p>
+<p>动画如下：</p>
+<p><img src="https://code-thinking.cdn.bcebos.com/gifs/%E4%BA%8C%E5%8F%89%E6%A0%91%E5%89%8D%E5%BA%8F%E9%81%8D%E5%8E%86%EF%BC%88%E8%BF%AD%E4%BB%A3%E6%B3%95%EF%BC%89.gif" alt="二叉树前序遍历（迭代法）" /></p>
+<p>不难写出如下代码: （<strong>注意代码中空节点不入栈</strong>）</p>
+<pre><code class="language-cpp">class Solution {
+public:
+    vector&lt;int&gt; preorderTraversal(TreeNode* root) {
+        stack&lt;TreeNode*&gt; st;
+        vector&lt;int&gt; result;
+        if (root == NULL) return result;
+        st.push(root);
+        while (!st.empty()) {
+            TreeNode* node = st.top();                       // 中
+            st.pop();
+            result.push_back(node-&gt;val);
+            if (node-&gt;right) st.push(node-&gt;right);           // 右（空节点不入栈）
+            if (node-&gt;left) st.push(node-&gt;left);             // 左（空节点不入栈）
+        }
+        return result;
+    }
+};
+</code></pre>
+<p>此时会发现貌似使用迭代法写出前序遍历并不难，确实不难。</p>
+<p><strong>此时是不是想改一点前序遍历代码顺序就把中序遍历搞出来了？</strong></p>
+<p>其实还真不行！</p>
+<p>但接下来，<strong>再用迭代法写中序遍历的时候，会发现套路又不一样了，目前的前序遍历的逻辑无法直接应用到中序遍历上。</strong></p>
+<h3 id="中序遍历迭代法"><a class="header" href="#中序遍历迭代法">中序遍历（迭代法）</a></h3>
+<p>为了解释清楚，我说明一下 刚刚在迭代的过程中，其实我们有两个操作：</p>
+<ol>
+<li><strong>处理：将元素放进result数组中</strong></li>
+<li><strong>访问：遍历节点</strong></li>
+</ol>
+<p>分析一下为什么刚刚写的前序遍历的代码，不能和中序遍历通用呢，因为前序遍历的顺序是中左右，先访问的元素是中间节点，要处理的元素也是中间节点，所以刚刚才能写出相对简洁的代码，<strong>因为要访问的元素和要处理的元素顺序是一致的，都是中间节点。</strong></p>
+<p>那么再看看中序遍历，中序遍历是左中右，先访问的是二叉树顶部的节点，然后一层一层向下访问，直到到达树左面的最底部，再开始处理节点（也就是在把节点的数值放进result数组中），这就造成了<strong>处理顺序和访问顺序是不一致的。</strong></p>
+<p>那么<strong>在使用迭代法写中序遍历，就需要借用指针的遍历来帮助访问节点，栈则用来处理节点上的元素。</strong></p>
+<p>动画如下：</p>
+<p><img src="https://code-thinking.cdn.bcebos.com/gifs/%E4%BA%8C%E5%8F%89%E6%A0%91%E4%B8%AD%E5%BA%8F%E9%81%8D%E5%8E%86%EF%BC%88%E8%BF%AD%E4%BB%A3%E6%B3%95%EF%BC%89.gif" alt="二叉树中序遍历（迭代法）" /></p>
+<p><strong>中序遍历，可以写出如下代码：</strong></p>
+<pre><code class="language-cpp">class Solution {
+public:
+    vector&lt;int&gt; inorderTraversal(TreeNode* root) {
+        vector&lt;int&gt; result;
+        stack&lt;TreeNode*&gt; st;
+        TreeNode* cur = root;
+        while (cur != NULL || !st.empty()) {
+            if (cur != NULL) { // 指针来访问节点，访问到最底层
+                st.push(cur); // 将访问的节点放进栈
+                cur = cur-&gt;left;                // 左
+            } else {
+                cur = st.top(); // 从栈里弹出的数据，就是要处理的数据（放进result数组里的数据）
+                st.pop();
+                result.push_back(cur-&gt;val);     // 中
+                cur = cur-&gt;right;               // 右
+            }
+        }
+        return result;
+    }
+};
+
+</code></pre>
+<h3 id="后序遍历迭代法"><a class="header" href="#后序遍历迭代法">后序遍历（迭代法）</a></h3>
+<p>再来看后序遍历，先序遍历是中左右，后序遍历是左右中，那么我们只需要调整一下先序遍历的代码顺序，就变成中右左的遍历顺序，然后在反转result数组，输出的结果顺序就是左右中了，如下图：</p>
+<p><img src="https://code-thinking-1253855093.file.myqcloud.com/pics/20200808200338924.png" alt="前序到后序" /></p>
+<p><strong>所以后序遍历只需要前序遍历的代码稍作修改就可以了，代码如下：</strong></p>
+<pre><code class="language-cpp">class Solution {
+public:
+    vector&lt;int&gt; postorderTraversal(TreeNode* root) {
+        stack&lt;TreeNode*&gt; st;
+        vector&lt;int&gt; result;
+        if (root == NULL) return result;
+        st.push(root);
+        while (!st.empty()) {
+            TreeNode* node = st.top();
+            st.pop();
+            result.push_back(node-&gt;val);
+            if (node-&gt;left) st.push(node-&gt;left); // 相对于前序遍历，这更改一下入栈顺序 （空节点不入栈）
+            if (node-&gt;right) st.push(node-&gt;right); // 空节点不入栈
+        }
+        reverse(result.begin(), result.end()); // 将结果反转之后就是左右中的顺序了
+        return result;
+    }
+};
+</code></pre>
+<h2 id="总结"><a class="header" href="#总结">总结</a></h2>
+<p>此时我们用迭代法写出了二叉树的前后中序遍历，大家可以看出前序和中序是完全两种代码风格，并不像递归写法那样代码稍做调整，就可以实现前后中序。</p>
+<p><strong>这是因为前序遍历中访问节点（遍历节点）和处理节点（将元素放进result数组中）可以同步处理，但是中序就无法做到同步！</strong></p>
+<p>上面这句话，可能一些同学不太理解，建议自己亲手用迭代法，先写出来前序，再试试能不能写出中序，就能理解了。</p>
+<p><strong>那么问题又来了，难道二叉树前后中序遍历的迭代法实现，就不能风格统一么（即前序遍历改变代码顺序就可以实现中序 和 后序）？</strong></p>
+<h1 id="94-binary-tree-inorder-traversal"><a class="header" href="#94-binary-tree-inorder-traversal"><a href="https://leetcode.com/problems/binary-tree-inorder-traversal/">94. Binary Tree Inorder Traversal</a></a></h1>
+<p>Given the <code>root</code> of a binary tree, return <em>the inorder traversal of its nodes' values</em>.</p>
+<p><strong>Example 1:</strong></p>
+<p><strong>Input:</strong> <code>root = [1,null,2,3]</code></p>
+<p><strong>Output:</strong> <code>[1,3,2]</code></p>
+<p><strong>Explanation:</strong></p>
+<p><img src="https://assets.leetcode.com/uploads/2024/08/29/screenshot-2024-08-29-202743.png" alt="" /></p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> <code>root = [1,2,3,4,5,null,8,null,null,6,7,9]</code></p>
+<p><strong>Output:</strong> <code>[4,2,6,5,7,1,3,9,8]</code></p>
+<p><strong>Explanation:</strong></p>
+<p><img src="https://assets.leetcode.com/uploads/2024/08/29/tree_2.png" alt="" /></p>
+<p><strong>Example 3:</strong></p>
+<p><strong>Input:</strong> <code>root = []</code></p>
+<p><strong>Output:</strong> <code>[]</code></p>
+<p><strong>Example 4:</strong></p>
+<p><strong>Input:</strong> <code>root = [1]</code></p>
+<p><strong>Output:</strong> <code>[1]</code></p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li>The number of nodes in the tree is in the range <code>[0, 100]</code>.</li>
+<li><code>-100 &lt;= Node.val &lt;= 100</code></li>
+</ul>
+<p><strong>Follow up:</strong> Recursive solution is trivial, could you do it iteratively?</p>
+<h2 id="c解法"><a class="header" href="#c解法">C++解法</a></h2>
+<p>迭代</p>
+<pre><code class="language-cpp">class Solution {
+public:
+    vector&lt;int&gt; inorderTraversal(TreeNode* root) {
+        vector&lt;int&gt; result;
+        stack&lt;TreeNode*&gt; st;
+        TreeNode* cur = root;
+        while (cur != NULL || !st.empty()) {
+            if (cur != NULL) { // 指针来访问节点，访问到最底层
+                st.push(cur); // 将访问的节点放进栈
+                cur = cur-&gt;left;                // 左
+            } else {
+                cur = st.top(); // 从栈里弹出的数据，就是要处理的数据（放进result数组里的数据）
+                st.pop();
+                result.push_back(cur-&gt;val);     // 中
+                cur = cur-&gt;right;               // 右
+            }
+        }
+        return result;
+    }
+};
+</code></pre>
+<h2 id="java解法"><a class="header" href="#java解法">Java解法</a></h2>
+<p>迭代</p>
+<pre><code class="language-java">// 中序遍历顺序: 左-中-右 入栈顺序： 左-右
+class Solution {
+    public List&lt;Integer&gt; inorderTraversal(TreeNode root) {
+        List&lt;Integer&gt; result = new ArrayList&lt;&gt;();
+        if (root == null){
+            return result;
+        }
+        Stack&lt;TreeNode&gt; stack = new Stack&lt;&gt;();
+        TreeNode cur = root;
+        while (cur != null || !stack.isEmpty()){
+           if (cur != null){
+               stack.push(cur);
+               cur = cur.left;
+           }else{
+               cur = stack.pop();
+               result.add(cur.val);
+               cur = cur.right;
+           }
+        }
+        return result;
+    }
+}
+</code></pre>
+<h2 id="python3解法"><a class="header" href="#python3解法">Python3解法</a></h2>
+<pre><code class="language-python"># 中序遍历-迭代-LC94_二叉树的中序遍历
+class Solution:
+    def inorderTraversal(self, root: TreeNode) -&gt; List[int]:
+
+        if not root:
+            return []
+        stack = []  # 不能提前将root节点加入stack中
+
+        result = []
+        cur = root
+        while cur or stack:
+            # 先迭代访问最底层的左子树节点
+            if cur:     
+                stack.append(cur)
+                cur = cur.left		
+            # 到达最左节点后处理栈顶节点    
+            else:		
+                cur = stack.pop()
+                result.append(cur.val)
+                # 取栈顶元素右节点
+                cur = cur.right	
+        return result
+</code></pre>
+<h2 id="go解法"><a class="header" href="#go解法">Go解法</a></h2>
+<p>迭代法中序遍历</p>
+<pre><code class="language-go">func inorderTraversal(root *TreeNode) []int {
+    ans := []int{}
+    if root == nil {
+        return ans
+    }
+
+    st := list.New()
+    cur := root
+
+    for cur != nil || st.Len() &gt; 0 {
+        if cur != nil {
+            st.PushBack(cur)
+            cur = cur.Left
+        } else {
+            cur = st.Remove(st.Back()).(*TreeNode)
+            ans = append(ans, cur.Val)
+            cur = cur.Right
+        }
+    }
+
+    return ans
+}
+</code></pre>
+<h1 id="144-binary-tree-preorder-traversal"><a class="header" href="#144-binary-tree-preorder-traversal"><a href="https://leetcode.com/problems/binary-tree-preorder-traversal/">144. Binary Tree Preorder Traversal</a></a></h1>
+<p>Given the <code>root</code> of a binary tree, return <em>the preorder traversal of its nodes' values</em>.</p>
+<p><strong>Example 1:</strong></p>
+<p><strong>Input:</strong> <code>root = [1,null,2,3]</code></p>
+<p><strong>Output:</strong> <code>[1,2,3]</code></p>
+<p><strong>Explanation:</strong></p>
+<p><img src="https://assets.leetcode.com/uploads/2024/08/29/screenshot-2024-08-29-202743.png" alt="" /></p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> <code>root = [1,2,3,4,5,null,8,null,null,6,7,9]</code></p>
+<p><strong>Output:</strong> <code>[1,2,4,5,6,7,3,8,9]</code></p>
+<p><strong>Explanation:</strong></p>
+<p><img src="https://assets.leetcode.com/uploads/2024/08/29/tree_2.png" alt="" /></p>
+<p><strong>Example 3:</strong></p>
+<p><strong>Input:</strong> <code>root = []</code></p>
+<p><strong>Output:</strong> <code>[]</code></p>
+<p><strong>Example 4:</strong></p>
+<p><strong>Input:</strong> <code>root = [1]</code></p>
+<p><strong>Output:</strong> <code>[1]</code></p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li>The number of nodes in the tree is in the range <code>[0, 100]</code>.</li>
+<li><code>-100 &lt;= Node.val &lt;= 100</code></li>
+</ul>
+<p><strong>Follow up:</strong> Recursive solution is trivial, could you do it iteratively?</p>
+<h2 id="c解法-1"><a class="header" href="#c解法-1">C++解法</a></h2>
+<p>递归</p>
+<pre><code class="language-cpp">class Solution {
+public:
+    void traversal(TreeNode* cur, vector&lt;int&gt;&amp; vec) {
+        if (cur == NULL) return;
+        vec.push_back(cur-&gt;val);    // 中
+        traversal(cur-&gt;left, vec);  // 左
+        traversal(cur-&gt;right, vec); // 右
+    }
+    vector&lt;int&gt; preorderTraversal(TreeNode* root) {
+        vector&lt;int&gt; result;
+        traversal(root, result);
+        return result;
+    }
+};
+</code></pre>
+<p>迭代</p>
+<pre><code class="language-cpp">class Solution {
+public:
+    vector&lt;int&gt; preorderTraversal(TreeNode* root) {
+        stack&lt;TreeNode*&gt; st;
+        vector&lt;int&gt; result;
+        if (root == NULL) return result;
+        st.push(root);
+        while (!st.empty()) {
+            TreeNode* node = st.top();                       // 中
+            st.pop();
+            result.push_back(node-&gt;val);
+            if (node-&gt;right) st.push(node-&gt;right);           // 右（空节点不入栈）
+            if (node-&gt;left) st.push(node-&gt;left);             // 左（空节点不入栈）
+        }
+        return result;
+    }
+};
+</code></pre>
+<h2 id="java解法-1"><a class="header" href="#java解法-1">Java解法</a></h2>
+<p>递归</p>
+<pre><code class="language-java">/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public void traverse(TreeNode root, List&lt;Integer&gt; result){
+        if(root == null){
+            return;
+        }
+        result.add(root.val);
+        traverse(root.left, result);
+        traverse(root.right, result);
+    }
+    public List&lt;Integer&gt; preorderTraversal(TreeNode root) {
+        List&lt;Integer&gt; result = new ArrayList&lt;&gt;();
+        traverse(root, result);
+        return result;
+    }
+}
+</code></pre>
+<p>迭代</p>
+<pre><code class="language-java">// 前序遍历顺序：中-左-右，入栈顺序：中-右-左
+class Solution {
+    public List&lt;Integer&gt; preorderTraversal(TreeNode root) {
+        List&lt;Integer&gt; result = new ArrayList&lt;&gt;();
+        if (root == null){
+            return result;
+        }
+        Stack&lt;TreeNode&gt; stack = new Stack&lt;&gt;();
+        stack.push(root);
+        while (!stack.isEmpty()){
+            TreeNode node = stack.pop();
+            result.add(node.val);
+            if (node.right != null){
+                stack.push(node.right);
+            }
+            if (node.left != null){
+                stack.push(node.left);
+            }
+        }
+        return result;
+    }
+}
+</code></pre>
+<h2 id="python3解法-1"><a class="header" href="#python3解法-1">Python3解法</a></h2>
+<pre><code class="language-python"># 前序遍历-迭代-LC144_二叉树的前序遍历
+class Solution:
+    def preorderTraversal(self, root: TreeNode) -&gt; List[int]:
+        # 根节点为空则返回空列表
+        if not root:
+            return []
+        stack = [root]
+        result = []
+        while stack:
+            node = stack.pop()
+            # 中节点先处理
+            result.append(node.val)
+            # 右孩子先入栈
+            if node.right:
+                stack.append(node.right)
+            # 左孩子后入栈
+            if node.left:
+                stack.append(node.left)
+        return result
+</code></pre>
+<h2 id="go解法-1"><a class="header" href="#go解法-1">Go解法</a></h2>
+<p>迭代法前序遍历</p>
+<pre><code class="language-go">func preorderTraversal(root *TreeNode) []int {
+    ans := []int{}
+
+	if root == nil {
+		return ans
+	}
+
+	st := list.New()
+    st.PushBack(root)
+
+    for st.Len() &gt; 0 {
+        node := st.Remove(st.Back()).(*TreeNode)
+
+        ans = append(ans, node.Val)
+        if node.Right != nil {
+            st.PushBack(node.Right)
+        }
+        if node.Left != nil {
+            st.PushBack(node.Left)
+        }
+    }
+    return ans
+}
+</code></pre>
+<h1 id="145-binary-tree-postorder-traversal"><a class="header" href="#145-binary-tree-postorder-traversal"><a href="https://leetcode.com/problems/binary-tree-postorder-traversal/">145. Binary Tree Postorder Traversal</a></a></h1>
+<p>Given the <code>root</code> of a binary tree, return <em>the postorder traversal of its nodes' values</em>.</p>
+<p><strong>Example 1:</strong></p>
+<p><strong>Input:</strong> <code>root = [1,null,2,3]</code></p>
+<p><strong>Output:</strong> <code>[3,2,1]</code></p>
+<p><strong>Explanation:</strong></p>
+<p><img src="https://assets.leetcode.com/uploads/2024/08/29/screenshot-2024-08-29-202743.png" alt="" /></p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> <code>root = [1,2,3,4,5,null,8,null,null,6,7,9]</code></p>
+<p><strong>Output:</strong> <code>[4,6,7,5,2,9,8,3,1]</code></p>
+<p><strong>Explanation:</strong></p>
+<p><img src="https://assets.leetcode.com/uploads/2024/08/29/tree_2.png" alt="" /></p>
+<p><strong>Example 3:</strong></p>
+<p><strong>Input:</strong> <code>root = []</code></p>
+<p><strong>Output:</strong> <code>[]</code></p>
+<p><strong>Example 4:</strong></p>
+<p><strong>Input:</strong> <code>root = [1]</code></p>
+<p><strong>Output:</strong> <code>[1]</code></p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li>The number of the nodes in the tree is in the range <code>[0, 100]</code>.</li>
+<li><code>-100 &lt;= Node.val &lt;= 100</code></li>
+</ul>
+<p><strong>Follow up:</strong> Recursive solution is trivial, could you do it iteratively?</p>
+<h2 id="c解法-2"><a class="header" href="#c解法-2">C++解法</a></h2>
+<pre><code class="language-cpp">class Solution {
+public:
+    vector&lt;int&gt; postorderTraversal(TreeNode* root) {
+        stack&lt;TreeNode*&gt; st;
+        vector&lt;int&gt; result;
+        if (root == NULL) return result;
+        st.push(root);
+        while (!st.empty()) {
+            TreeNode* node = st.top();
+            st.pop();
+            result.push_back(node-&gt;val);
+            if (node-&gt;left) st.push(node-&gt;left); // 相对于前序遍历，这更改一下入栈顺序 （空节点不入栈）
+            if (node-&gt;right) st.push(node-&gt;right); // 空节点不入栈
+        }
+        reverse(result.begin(), result.end()); // 将结果反转之后就是左右中的顺序了
+        return result;
+    }
+};
+</code></pre>
+<h2 id="java解法-2"><a class="header" href="#java解法-2">Java解法</a></h2>
+<p>迭代</p>
+<pre><code class="language-java">// 后序遍历顺序 左-右-中 入栈顺序：中-左-右 出栈顺序：中-右-左， 最后翻转结果
+class Solution {
+    public List&lt;Integer&gt; postorderTraversal(TreeNode root) {
+        List&lt;Integer&gt; result = new ArrayList&lt;&gt;();
+        if (root == null){
+            return result;
+        }
+        Stack&lt;TreeNode&gt; stack = new Stack&lt;&gt;();
+        stack.push(root);
+        while (!stack.isEmpty()){
+            TreeNode node = stack.pop();
+            result.add(node.val);
+            if (node.left != null){
+                stack.push(node.left);
+            }
+            if (node.right != null){
+                stack.push(node.right);
+            }
+        }
+        Collections.reverse(result);
+        return result;
+    }
+}
+</code></pre>
+<h2 id="python3解法-2"><a class="header" href="#python3解法-2">Python3解法</a></h2>
+<pre><code class="language-python"># 后序遍历-迭代-LC145_二叉树的后序遍历
+class Solution:
+    def postorderTraversal(self, root: TreeNode) -&gt; List[int]:
+        if not root:
+            return []
+        stack = [root]
+        result = []
+        while stack:
+            node = stack.pop()
+            # 中节点先处理
+            result.append(node.val)
+            # 左孩子先入栈
+            if node.left:
+                stack.append(node.left)
+            # 右孩子后入栈
+            if node.right:
+                stack.append(node.right)
+        # 将最终的数组翻转
+        return result[::-1]
+</code></pre>
+<h2 id="go解法-2"><a class="header" href="#go解法-2">Go解法</a></h2>
+<p>迭代法后序遍历</p>
+<pre><code class="language-go">func postorderTraversal(root *TreeNode) []int {
+    ans := []int{}
+
+	if root == nil {
+		return ans
+	}
+
+	st := list.New()
+    st.PushBack(root)
+
+    for st.Len() &gt; 0 {
+        node := st.Remove(st.Back()).(*TreeNode)
+
+        ans = append(ans, node.Val)
+        if node.Left != nil {
+            st.PushBack(node.Left)
+        }
+        if node.Right != nil {
+            st.PushBack(node.Right)
+        }
+    }
+    reverse(ans)
+    return ans
+}
+
+func reverse(a []int) {
+    l, r := 0, len(a) - 1
+    for l &lt; r {
+        a[l], a[r] = a[r], a[l]
+        l, r = l+1, r-1
+    }
+}
+</code></pre>
 
                     </main>
 
@@ -163,7 +783,7 @@
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="../二叉树/路径之和.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../二叉树/二叉树层序遍历.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -177,7 +797,7 @@
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="../二叉树/路径之和.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../二叉树/二叉树层序遍历.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

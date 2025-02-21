@@ -1,0 +1,1106 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>字符串反转系列 - 剑指Offer</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">剑指Offer</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
+<h1 id="字符串反转系列"><a class="header" href="#字符串反转系列">字符串反转系列</a></h1>
+<ul>
+<li><a href="#344-reverse-string">344. Reverse String</a>
+<ul>
+<li><a href="#%E6%80%9D%E8%B7%AF">思路</a></li>
+<li><a href="#c%E8%A7%A3%E6%B3%95">C++解法</a></li>
+<li><a href="#java%E8%A7%A3%E6%B3%95">Java解法</a></li>
+</ul>
+</li>
+<li><a href="#345-reverse-vowels-of-a-string">345. Reverse Vowels of a String</a>
+<ul>
+<li><a href="#%E6%80%9D%E8%B7%AF-1">思路</a></li>
+<li><a href="#c%E8%A7%A3%E6%B3%95-1">C++解法</a></li>
+<li><a href="#java%E8%A7%A3%E6%B3%95-1">Java解法</a></li>
+</ul>
+</li>
+<li><a href="#541-reverse-string-ii">541. Reverse String II</a>
+<ul>
+<li><a href="#%E6%80%9D%E8%B7%AF-2">思路</a></li>
+<li><a href="#c%E8%A7%A3%E6%B3%95-2">C++解法</a></li>
+<li><a href="#java%E8%A7%A3%E6%B3%95-2">Java解法</a></li>
+</ul>
+</li>
+<li><a href="#151-reverse-words-in-a-string">151. Reverse Words in a String</a>
+<ul>
+<li><a href="#%E6%80%9D%E8%B7%AF-3">思路</a></li>
+<li><a href="#c%E8%A7%A3%E6%B3%95-3">C++解法</a></li>
+<li><a href="#java%E8%A7%A3%E6%B3%95-3">Java解法</a></li>
+<li><a href="#python%E8%A7%A3%E6%B3%95">Python解法</a></li>
+<li><a href="#go%E8%A7%A3%E6%B3%95">Go解法</a></li>
+</ul>
+</li>
+<li><a href="#557-reverse-words-in-a-string-iii">557. Reverse Words in a String III</a>
+<ul>
+<li><a href="#%E6%80%9D%E8%B7%AF-4">思路</a></li>
+<li><a href="#c%E8%A7%A3%E6%B3%95-4">C++解法</a></li>
+</ul>
+</li>
+<li><a href="#917-reverse-only-letters">917. Reverse Only Letters</a>
+<ul>
+<li><a href="#%E6%80%9D%E8%B7%AF-5">思路</a></li>
+<li><a href="#c%E8%A7%A3%E6%B3%95-5">C++解法</a></li>
+</ul>
+</li>
+<li><a href="#2810-faulty-keyboard">2810. Faulty Keyboard</a>
+<ul>
+<li><a href="#%E6%80%9D%E8%B7%AF-6">思路</a></li>
+<li><a href="#c%E8%A7%A3%E6%B3%95-6">C++解法</a></li>
+</ul>
+</li>
+</ul>
+<h1 id="344-reverse-string"><a class="header" href="#344-reverse-string"><a href="https://leetcode.com/problems/reverse-string/">344. Reverse String</a></a></h1>
+<p>Write a function that reverses a string. The input string is given as an array of characters <code>s</code>.</p>
+<p>You must do this by modifying the input array <a href="https://en.wikipedia.org/wiki/In-place_algorithm">in-place</a> with <code>O(1)</code> extra memory.</p>
+<p><strong>Example 1:</strong></p>
+<p><strong>Input:</strong> <code>s = ["h","e","l","l","o"]</code><br />
+<strong>Output:</strong> <code>["o","l","l","e","h"]</code></p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> <code>s = ["H","a","n","n","a","h"]</code><br />
+<strong>Output:</strong> <code>["h","a","n","n","a","H"]</code></p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= s.length &lt;= 105</code></li>
+<li><code>s[i]</code> is a <a href="https://en.wikipedia.org/wiki/ASCII#Printable_characters">printable ascii character</a>.</li>
+</ul>
+<h2 id="思路"><a class="header" href="#思路">思路</a></h2>
+<p>方法一：调包，使用String相关函数方法</p>
+<p>方法二：双指针</p>
+<p>The problem requires reversing a string in-place, which means directly modifying the input array without using additional memory for another array. A two-pointer approach works efficiently:</p>
+<ol>
+<li>Place one pointer at the beginning of the array and another at the end.</li>
+<li>Swap the characters at these two pointers.</li>
+<li>Move the pointers closer until they meet.</li>
+</ol>
+<p>Complexity:</p>
+<ul>
+<li><strong>Time Complexity</strong>: ( O(n) ), where ( n ) is the length of the array. Each element is processed once.</li>
+<li><strong>Space Complexity</strong>: ( O(1) ), as no additional memory is used.</li>
+</ul>
+<h2 id="c解法"><a class="header" href="#c解法">C++解法</a></h2>
+<pre><code class="language-cpp">class Solution {
+public:
+    void reverseString(vector&lt;char&gt;&amp; s) {
+        int left = 0;
+        int right = s.size() - 1;
+        while(left &lt; right){
+            swap(s[left++], s[right--]);
+        }
+    }
+};
+</code></pre>
+<h2 id="java解法"><a class="header" href="#java解法">Java解法</a></h2>
+<pre><code class="language-java">class Solution {
+    public void reverseString(char[] s) {
+        int left = 0, right = s.length - 1;
+        while (left &lt; right) {
+            char temp = s[left];
+            s[left] = s[right];
+            s[right] = temp;
+            left++;
+            right--;
+        }
+    }
+}
+</code></pre>
+<p>在Java中，字符串本身是不可变的，因此没有内置的 <code>reverse</code> 函数来直接反转字符串。不过，您可以使用 <code>StringBuilder</code> 或 <code>StringBuffer</code> 来实现字符串的反转，因为它们提供了一个 <code>reverse()</code> 方法。以下是两种实现方法的示例代码：</p>
+<p>使用 <code>StringBuilder</code></p>
+<pre><code class="language-java">public class Main {
+    public static void main(String[] args) {
+        String original = "Hello, World!";
+        String reversed = new StringBuilder(original).reverse().toString();
+        System.out.println(reversed);  // 输出: !dlroW ,olleH
+    }
+}
+</code></pre>
+<p>使用 <code>StringBuffer</code></p>
+<pre><code class="language-java">public class Main {
+    public static void main(String[] args) {
+        String original = "Hello, World!";
+        String reversed = new StringBuffer(original).reverse().toString();
+        System.out.println(reversed);  // 输出: !dlroW ,olleH
+    }
+}
+</code></pre>
+<p>这些代码段通过 <code>StringBuilder</code> 或 <code>StringBuffer</code> 的 <code>reverse()</code> 方法反转给定的字符串，并将结果打印出来。</p>
+<h1 id="345-reverse-vowels-of-a-string"><a class="header" href="#345-reverse-vowels-of-a-string"><a href="https://leetcode.com/problems/reverse-vowels-of-a-string/">345. Reverse Vowels of a String</a></a></h1>
+<p>Given a string <code>s</code>, reverse only all the vowels in the string and return it.</p>
+<p>The vowels are <code>'a'</code>, <code>'e'</code>, <code>'i'</code>, <code>'o'</code>, and <code>'u'</code>, and they can appear in both lower and upper cases, more than once.</p>
+<p><strong>Example 1:</strong></p>
+<p><strong>Input:</strong> s = "IceCreAm"</p>
+<p><strong>Output:</strong> "AceCreIm"</p>
+<p><strong>Explanation:</strong></p>
+<p>The vowels in <code>s</code> are <code>['I', 'e', 'e', 'A']</code>. On reversing the vowels, s becomes <code>"AceCreIm"</code>.</p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> s = "leetcode"</p>
+<p><strong>Output:</strong> "leotcede"</p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= s.length &lt;= 3 * 10^5</code></li>
+<li><code>s</code> consist of <strong>printable ASCII</strong> characters.</li>
+</ul>
+<h2 id="思路-1"><a class="header" href="#思路-1">思路</a></h2>
+<p>双指针，左右指针，找到元音字母就交换</p>
+<h2 id="c解法-1"><a class="header" href="#c解法-1">C++解法</a></h2>
+<pre><code class="language-cpp">#include &lt;string&gt;
+#include &lt;unordered_set&gt;
+
+class Solution {
+public:
+    std::string reverseVowels(std::string s) {
+        int left = 0;
+        int right = s.length() - 1;
+
+        // 定义元音字符集合
+        std::unordered_set&lt;char&gt; vowels{'a', 'e', 'i', 'o', 'u', 
+                                          'A', 'E', 'I', 'O', 'U'};
+
+        while (left &lt; right) {
+            // 找到左边的元音
+            while (left &lt; right &amp;&amp; vowels.find(s[left]) == vowels.end()) {
+                left++;
+            }
+
+            // 找到右边的元音
+            while (left &lt; right &amp;&amp; vowels.find(s[right]) == vowels.end()) {
+                right--;
+            }
+
+            // 如果左边的指针小于右边的指针，则交换元音字符
+            if (left &lt; right) {
+                std::swap(s[left], s[right]);
+                left++;
+                right--;
+            }
+        }
+
+        return s;  // 返回反转元音后的字符串
+    }
+};
+</code></pre>
+<p>代码说明</p>
+<ol>
+<li>
+<p><strong>头文件</strong>: 包含 <code>&lt;string&gt;</code> 和 <code>&lt;unordered_set&gt;</code> 库，以便使用字符串和集合。</p>
+</li>
+<li>
+<p><strong>字符集合</strong>: 使用 <code>std::unordered_set&lt;char&gt;</code> 来存储元音字符，这使得查找是否是元音字符的复杂度为 O(1)，提高了效率。</p>
+</li>
+<li>
+<p><strong>使用 <code>std::swap</code></strong>: C++ 已经提供了 <code>std::swap</code> 函数来交换变量，因此直接使用这个函数来交换左右指针指向的字符。</p>
+</li>
+<li>
+<p><strong>循环结构</strong>: 循环结构与 Java 代码保持相同，确保左右指针逐步向中间靠拢，直到找到元音字符并进行交换。</p>
+</li>
+</ol>
+<h2 id="java解法-1"><a class="header" href="#java解法-1">Java解法</a></h2>
+<pre><code class="language-java">class Solution {
+    public String reverseVowels(String s) {
+        int left = 0;
+        int right = s.length() - 1;
+        char[] chars = s.toCharArray();  // 将字符串转换为字符数组，以便交换字符
+
+        // 定义元音字符集合
+        String vowels = "aeiouAEIOU";
+
+        while (left &lt; right) {
+            // 找到左边的元音
+            while (left &lt; right &amp;&amp; !vowels.contains(String.valueOf(chars[left]))) {
+                left++;
+            }
+
+            // 找到右边的元音
+            while (left &lt; right &amp;&amp; !vowels.contains(String.valueOf(chars[right]))) {
+                right--;
+            }
+
+            // 如果左边的指针小于右边的指针，则交换元音字符
+            if (left &lt; right) {
+                char temp = chars[left];
+                chars[left] = chars[right];
+                chars[right] = temp;
+                left++;
+                right--;
+            }
+        }
+
+        return new String(chars);  // 将字符数组转换回来为字符串
+    }
+}
+</code></pre>
+<p>修正的内容：</p>
+<ol>
+<li>
+<p><strong>字符访问方式</strong>: 原代码使用 <code>s.charAt[left]</code>，正确的方法是使用小括号 <code>s.charAt(left)</code>。</p>
+</li>
+<li>
+<p><strong>条件逻辑</strong>:</p>
+<ul>
+<li>原来的条件使用了逻辑“或” (||)，这会导致不正确的结果。应改为使用逻辑“与” (&amp;&amp;)，要确保当前字符不是元音时才继续移动指针。</li>
+<li>使用 <code>!vowels.contains(...)</code> 更简洁地判断一个字符是否是元音。</li>
+</ul>
+</li>
+<li>
+<p><strong>字符交换</strong>:</p>
+<ul>
+<li>原先代码尝试调用 <code>swap</code> 函数，而在 Java 中没有直接对字符进行交换的函数，合理的做法是使用一个临时变量 <code>temp</code> 来进行手动交换。</li>
+</ul>
+</li>
+<li>
+<p><strong>字符串与字符数组转换</strong>:</p>
+<ul>
+<li>Java 的字符串是不可变的，因此需要将字符串先转换为字符数组，进行所需的修改后再转换回字符串。</li>
+</ul>
+</li>
+<li>
+<p><strong>边界检查</strong>: 添加了 <code>left &lt; right</code> 的检查，确保在交换之前左右指针仍然是有效的。</p>
+</li>
+</ol>
+<h1 id="541-reverse-string-ii"><a class="header" href="#541-reverse-string-ii"><a href="https://leetcode.com/problems/reverse-string-ii/">541. Reverse String II</a></a></h1>
+<p>Given a string <code>s</code> and an integer <code>k</code>, reverse the first <code>k</code> characters for every <code>2k</code> characters counting from the start of the string.</p>
+<p>If there are fewer than <code>k</code> characters left, reverse all of them. If there are less than <code>2k</code> but greater than or equal to <code>k</code> characters, then reverse the first <code>k</code> characters and leave the other as original.</p>
+<p><strong>Example 1:</strong></p>
+<p><strong>Input:</strong> <code>s = "abcdefg", k = 2</code><br />
+<strong>Output:</strong> "bacdfeg"</p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> <code>s = "abcd", k = 2</code><br />
+<strong>Output:</strong> "bacd"</p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= s.length &lt;= 10^4</code></li>
+<li><code>s</code> consists of only lowercase English letters.</li>
+<li><code>1 &lt;= k &lt;= 10^4</code></li>
+</ul>
+<h2 id="思路-2"><a class="header" href="#思路-2">思路</a></h2>
+<p>以2k为单位跳转，但只反转前k个字符</p>
+<h2 id="c解法-2"><a class="header" href="#c解法-2">C++解法</a></h2>
+<pre><code class="language-cpp">class Solution {
+public:
+    string reverseStr(string s, int k) {
+        for(int i = 0; i &lt; s.size(); i += 2 * k){
+            if(i + k &lt;= s.size()){
+                reverse(s.begin() + i,s.begin() + i + k);
+                continue;
+            }
+            reverse(s.begin() + i, s.end());
+        }
+        return s;
+    }
+};
+</code></pre>
+<h2 id="java解法-2"><a class="header" href="#java解法-2">Java解法</a></h2>
+<h1 id="151-reverse-words-in-a-string"><a class="header" href="#151-reverse-words-in-a-string"><a href="https://leetcode.com/problems/reverse-words-in-a-string/">151. Reverse Words in a String</a></a></h1>
+<p>Given an input string <code>s</code>, reverse the order of the <strong>words</strong>.</p>
+<p>A <strong>word</strong> is defined as a sequence of non-space characters. The <strong>words</strong> in <code>s</code> will be separated by at least one space.</p>
+<p>Return <em>a string of the words in reverse order concatenated by a single space.</em></p>
+<p><strong>Note</strong> that <code>s</code> may contain leading or trailing spaces or multiple spaces between two words. The returned string should only have a single space separating the words. Do not include any extra spaces.</p>
+<p><strong>Example 1:</strong></p>
+<p><strong>Input:</strong> <code>s = "the sky is blue"</code><br />
+<strong>Output:</strong> "blue is sky the"</p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> s =<code> "  hello world  "</code>
+<strong>Output:</strong> "world hello"
+<strong>Explanation:</strong> Your reversed string should not contain leading or trailing spaces.</p>
+<p><strong>Example 3:</strong></p>
+<p><strong>Input:</strong> s = <code>"a good   example"</code><br />
+<strong>Output:</strong> "example good a"
+<strong>Explanation:</strong> You need to reduce multiple spaces between two words to a single space in the reversed string.</p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= s.length &lt;= 10^4</code></li>
+<li><code>s</code> contains English letters (upper-case and lower-case), digits, and spaces <code>' '</code>.</li>
+<li>There is <strong>at least one</strong> word in <code>s</code>.</li>
+</ul>
+<p><strong>Follow-up:</strong> If the string data type is mutable in your language, can you solve it <strong>in-place</strong> with <code>O(1)</code> extra space?</p>
+<h2 id="思路-3"><a class="header" href="#思路-3">思路</a></h2>
+<p>先移除多余的空格然后再调整单词的位置</p>
+<h2 id="c解法-3"><a class="header" href="#c解法-3">C++解法</a></h2>
+<pre><code class="language-cpp">class Solution {
+public:
+    void reverse(string&amp; s, int start, int end){ //翻转，区间写法：左闭右闭 []
+        for (int i = start, j = end; i &lt; j; i++, j--) {
+            swap(s[i], s[j]);
+        }
+    }
+
+    void removeExtraSpaces(string&amp; s) {//去除所有空格并在相邻单词之间添加空格, 快慢指针。
+        int slow = 0;   //整体思想参考https://programmercarl.com/0027.移除元素.html
+        for (int i = 0; i &lt; s.size(); ++i) { //
+            if (s[i] != ' ') { //遇到非空格就处理，即删除所有空格。
+                if (slow != 0) s[slow++] = ' '; //手动控制空格，给单词之间添加空格。slow != 0说明不是第一个单词，需要在单词前添加空格。
+                while (i &lt; s.size() &amp;&amp; s[i] != ' ') { //补上该单词，遇到空格说明单词结束。
+                    s[slow++] = s[i++];
+                }
+            }
+        }
+        s.resize(slow); //slow的大小即为去除多余空格后的大小。
+    }
+
+    string reverseWords(string s) {
+        removeExtraSpaces(s); //去除多余空格，保证单词之间之只有一个空格，且字符串首尾没空格。
+        reverse(s, 0, s.size() - 1);
+        int start = 0; //removeExtraSpaces后保证第一个单词的开始下标一定是0。
+        for (int i = 0; i &lt;= s.size(); ++i) {
+            if (i == s.size() || s[i] == ' ') { //到达空格或者串尾，说明一个单词结束。进行翻转。
+                reverse(s, start, i - 1); //翻转，注意是左闭右闭 []的翻转。
+                start = i + 1; //更新下一个单词的开始下标start
+            }
+        }
+        return s;
+    }
+};
+</code></pre>
+<ul>
+<li>时间复杂度: O(n)</li>
+<li>空间复杂度: O(1) 或 O(n)，取决于语言中字符串是否可变</li>
+</ul>
+<h2 id="java解法-3"><a class="header" href="#java解法-3">Java解法</a></h2>
+<pre><code class="language-java">class Solution {
+   /**
+     * 不使用Java内置方法实现
+     * &lt;p&gt;
+     * 1.去除首尾以及中间多余空格
+     * 2.反转整个字符串
+     * 3.反转各个单词
+     */
+    public String reverseWords(String s) {
+        // System.out.println("ReverseWords.reverseWords2() called with: s = [" + s + "]");
+        // 1.去除首尾以及中间多余空格
+        StringBuilder sb = removeSpace(s);
+        // 2.反转整个字符串
+        reverseString(sb, 0, sb.length() - 1);
+        // 3.反转各个单词
+        reverseEachWord(sb);
+        return sb.toString();
+    }
+
+    private StringBuilder removeSpace(String s) {
+        // System.out.println("ReverseWords.removeSpace() called with: s = [" + s + "]");
+        int start = 0;
+        int end = s.length() - 1;
+        while (s.charAt(start) == ' ') start++;
+        while (s.charAt(end) == ' ') end--;
+        StringBuilder sb = new StringBuilder();
+        while (start &lt;= end) {
+            char c = s.charAt(start);
+            if (c != ' ' || sb.charAt(sb.length() - 1) != ' ') {
+                sb.append(c);
+            }
+            start++;
+        }
+        // System.out.println("ReverseWords.removeSpace returned: sb = [" + sb + "]");
+        return sb;
+    }
+
+    /**
+     * 反转字符串指定区间[start, end]的字符
+     */
+    public void reverseString(StringBuilder sb, int start, int end) {
+        // System.out.println("ReverseWords.reverseString() called with: sb = [" + sb + "], start = [" + start + "], end = [" + end + "]");
+        while (start &lt; end) {
+            char temp = sb.charAt(start);
+            sb.setCharAt(start, sb.charAt(end));
+            sb.setCharAt(end, temp);
+            start++;
+            end--;
+        }
+        // System.out.println("ReverseWords.reverseString returned: sb = [" + sb + "]");
+    }
+
+    private void reverseEachWord(StringBuilder sb) {
+        int start = 0;
+        int end = 1;
+        int n = sb.length();
+        while (start &lt; n) {
+            while (end &lt; n &amp;&amp; sb.charAt(end) != ' ') {
+                end++;
+            }
+            reverseString(sb, start, end - 1);
+            start = end + 1;
+            end = start + 1;
+        }
+    }
+}
+</code></pre>
+<pre><code class="language-java">//解法二：创建新字符数组填充。时间复杂度O(n)
+class Solution {
+    public String reverseWords(String s) {
+        //源字符数组
+        char[] initialArr = s.toCharArray();
+        //新字符数组
+        char[] newArr = new char[initialArr.length+1];//下面循环添加"单词 "，最终末尾的空格不会返回
+        int newArrPos = 0;
+        //i来进行整体对源字符数组从后往前遍历
+        int i = initialArr.length-1;
+        while(i&gt;=0){
+            while(i&gt;=0 &amp;&amp; initialArr[i] == ' '){i--;}  //跳过空格
+            //此时i位置是边界或!=空格，先记录当前索引，之后的while用来确定单词的首字母的位置
+            int right = i;
+            while(i&gt;=0 &amp;&amp; initialArr[i] != ' '){i--;} 
+            //指定区间单词取出(由于i为首字母的前一位，所以这里+1,)，取出的每组末尾都带有一个空格
+            for (int j = i+1; j &lt;= right; j++) {
+                newArr[newArrPos++] = initialArr[j];
+                if(j == right){
+                    newArr[newArrPos++] = ' ';//空格
+                }
+            }
+        }
+        //若是原始字符串没有单词，直接返回空字符串；若是有单词，返回0-末尾空格索引前范围的字符数组(转成String返回)
+        if(newArrPos == 0){
+            return "";
+        }else{
+            return new String(newArr,0,newArrPos-1);
+        }
+    }
+}
+</code></pre>
+<pre><code class="language-java">//解法三：双反转+移位，String 的 toCharArray() 方法底层会 new 一个和原字符串相同大小的 char 数组，空间复杂度：O(n)
+class Solution {
+    /**
+     * 思路：
+     *	①反转字符串  "the sky is blue " =&gt; " eulb si yks eht"
+     *	②遍历 " eulb si yks eht"，每次先对某个单词进行反转再移位
+     *	   这里以第一个单词进行为演示：" eulb si yks eht" ==反转=&gt; " blue si yks eht" ==移位=&gt; "blue si yks eht"
+     */
+    public String reverseWords(String s) {
+        //步骤1：字符串整体反转（此时其中的单词也都反转了）
+        char[] initialArr = s.toCharArray();
+        reverse(initialArr, 0, s.length() - 1);
+        int k = 0;
+        for (int i = 0; i &lt; initialArr.length; i++) {
+            if (initialArr[i] == ' ') {
+                continue;
+            }
+            int tempCur = i;
+            while (i &lt; initialArr.length &amp;&amp; initialArr[i] != ' ') {
+                i++;
+            }
+            for (int j = tempCur; j &lt; i; j++) {
+                if (j == tempCur) { //步骤二：二次反转
+                    reverse(initialArr, tempCur, i - 1);//对指定范围字符串进行反转，不反转从后往前遍历一个个填充有问题
+                }
+                //步骤三：移动操作
+                initialArr[k++] = initialArr[j];
+                if (j == i - 1) { //遍历结束
+                    //避免越界情况，例如=&gt; "asdasd df f"，不加判断最后就会数组越界
+                    if (k &lt; initialArr.length) {
+                        initialArr[k++] = ' ';
+                    }
+                }
+            }
+        }
+        if (k == 0) {
+            return "";
+        } else {
+            //参数三：以防出现如"asdasd df f"=&gt;"f df asdasd"正好凑满不需要省略空格情况
+            return new String(initialArr, 0, (k == initialArr.length) &amp;&amp; (initialArr[k - 1] != ' ') ? k : k - 1);
+        }
+    }
+
+    public void reverse(char[] chars, int begin, int end) {
+        for (int i = begin, j = end; i &lt; j; i++, j--) {
+            chars[i] ^= chars[j];
+            chars[j] ^= chars[i];
+            chars[i] ^= chars[j];
+        }
+    }
+}
+</code></pre>
+<pre><code class="language-java">/*
+ * 解法四：时间复杂度 O(n)
+ * 参考卡哥 c++ 代码的三步骤：先移除多余空格，再将整个字符串反转，最后把单词逐个反转
+ * 有别于解法一 ：没有用 StringBuilder  实现，而是对 String 的 char[] 数组操作来实现以上三个步骤
+ */
+class Solution {
+    //用 char[] 来实现 String 的 removeExtraSpaces，reverse 操作
+    public String reverseWords(String s) {
+        char[] chars = s.toCharArray();
+        //1.去除首尾以及中间多余空格
+        chars = removeExtraSpaces(chars);
+        //2.整个字符串反转
+        reverse(chars, 0, chars.length - 1);
+        //3.单词反转
+        reverseEachWord(chars);
+        return new String(chars);
+    }
+
+    //1.用 快慢指针 去除首尾以及中间多余空格，可参考数组元素移除的题解
+    public char[] removeExtraSpaces(char[] chars) {
+        int slow = 0;
+        for (int fast = 0; fast &lt; chars.length; fast++) {
+            //先用 fast 移除所有空格
+            if (chars[fast] != ' ') {
+                //在用 slow 加空格。 除第一个单词外，单词末尾要加空格
+                if (slow != 0)
+                    chars[slow++] = ' ';
+                //fast 遇到空格或遍历到字符串末尾，就证明遍历完一个单词了
+                while (fast &lt; chars.length &amp;&amp; chars[fast] != ' ')
+                    chars[slow++] = chars[fast++];
+            }
+        }
+        //相当于 c++ 里的 resize()
+        char[] newChars = new char[slow];
+        System.arraycopy(chars, 0, newChars, 0, slow); 
+        return newChars;
+    }
+
+    //双指针实现指定范围内字符串反转，可参考字符串反转题解
+    public void reverse(char[] chars, int left, int right) {
+        if (right &gt;= chars.length) {
+            System.out.println("set a wrong right");
+            return;
+        }
+        while (left &lt; right) {
+            chars[left] ^= chars[right];
+            chars[right] ^= chars[left];
+            chars[left] ^= chars[right];
+            left++;
+            right--;
+        }
+    }
+
+    //3.单词反转
+    public void reverseEachWord(char[] chars) {
+        int start = 0;
+        //end &lt;= s.length() 这里的 = ，是为了让 end 永远指向单词末尾后一个位置，这样 reverse 的实参更好设置
+        for (int end = 0; end &lt;= chars.length; end++) {
+            // end 每次到单词末尾后的空格或串尾,开始反转单词
+            if (end == chars.length || chars[end] == ' ') {
+                reverse(chars, start, end - 1);
+                start = end + 1;
+            }
+        }
+    }
+}
+</code></pre>
+<h2 id="python解法"><a class="header" href="#python解法">Python解法</a></h2>
+<p>（版本一）先删除空白，然后整个反转，最后单词反转。 <strong>因为字符串是不可变类型，所以反转单词的时候，需要将其转换成列表，然后通过join函数再将其转换成列表，所以空间复杂度不是O(1)</strong></p>
+<pre><code class="language-python">class Solution:
+    def reverseWords(self, s: str) -&gt; str:
+        # 反转整个字符串
+        s = s[::-1]
+        # 将字符串拆分为单词，并反转每个单词
+        # split()函数能够自动忽略多余的空白字符
+        s = ' '.join(word[::-1] for word in s.split())
+        return s
+
+</code></pre>
+<p>（版本二）使用双指针</p>
+<pre><code class="language-python">class Solution:
+    def reverseWords(self, s: str) -&gt; str:
+        # 将字符串拆分为单词，即转换成列表类型
+        words = s.split()
+
+        # 反转单词
+        left, right = 0, len(words) - 1
+        while left &lt; right:
+            words[left], words[right] = words[right], words[left]
+            left += 1
+            right -= 1
+
+        # 将列表转换成字符串
+        return " ".join(words)
+</code></pre>
+<p>(版本三) 拆分字符串 + 反转列表</p>
+<pre><code class="language-python">class Solution:
+    def reverseWords(self, s):
+        words = s.split() #type(words) --- list
+        words = words[::-1] # 反转单词
+        return ' '.join(words) #列表转换成字符串
+</code></pre>
+<p>(版本四) 将字符串转换为列表后，使用双指针去除空格</p>
+<pre><code class="language-python">class Solution:
+    def single_reverse(self, s, start: int, end: int):
+        while start &lt; end:
+            s[start], s[end] = s[end], s[start]
+            start += 1
+            end -= 1
+
+    def reverseWords(self, s: str) -&gt; str:
+        result = ""
+        fast = 0
+        # 1. 首先将原字符串反转并且除掉空格, 并且加入到新的字符串当中
+        # 由于Python字符串的不可变性，因此只能转换为列表进行处理
+        s = list(s)
+        s.reverse()
+        while fast &lt; len(s):
+            if s[fast] != " ":
+                if len(result) != 0:
+                    result += " "
+                while s[fast] != " " and fast &lt; len(s):
+                    result += s[fast]
+                    fast += 1
+            else:
+                fast += 1
+        # 2.其次将每个单词进行翻转操作
+        slow = 0
+        fast = 0
+        result = list(result)
+        while fast &lt;= len(result):
+            if fast == len(result) or result[fast] == " ":
+                self.single_reverse(result, slow, fast - 1)
+                slow = fast + 1
+                fast += 1
+            else:
+                fast += 1
+
+        return "".join(result)
+</code></pre>
+<p>(版本五) 遇到空格就说明前面的是一个单词，把它加入到一个数组中。</p>
+<pre><code class="language-python">class Solution:
+    def reverseWords(self, s: str) -&gt; str:
+        words = []
+        word = ''
+        s += ' ' # 帮助处理最后一个字词
+
+        for char in s:
+            if char == ' ': # 遇到空格就说明前面的可能是一个单词
+                if word != '': # 确认是单词，把它加入到一个数组中
+                    words.append(word)
+                    word = '' # 清空当前单词
+                continue
+            
+            word += char # 收集单词的字母
+        
+        words.reverse()
+        return ' '.join(words)
+</code></pre>
+<h2 id="go解法"><a class="header" href="#go解法">Go解法</a></h2>
+<p>版本一：</p>
+<pre><code class="language-go">func reverseWords(s string) string {
+    b := []byte(s)
+
+    // 移除前面、中间、后面存在的多余空格
+    slow := 0
+    for i := 0; i &lt; len(b); i++ {
+        if b[i] != ' ' {
+            if slow != 0 {
+                b[slow] = ' '
+                slow++
+            }
+            for i &lt; len(b) &amp;&amp; b[i] != ' ' { // 复制逻辑
+                b[slow] = b[i]
+                slow++
+                i++
+            }
+        }
+    }
+    b = b[0:slow]
+    
+    // 翻转整个字符串
+    reverse(b)
+    // 翻转每个单词
+    last := 0
+    for i := 0; i &lt;= len(b); i++ {
+        if i == len(b) || b[i] == ' ' {
+            reverse(b[last:i])
+            last = i + 1
+        }
+    }
+    return string(b)
+}
+
+func reverse(b []byte) {
+    left := 0
+    right := len(b) - 1
+    for left &lt; right {
+        b[left], b[right] = b[right], b[left]
+        left++
+        right--
+    }
+}
+</code></pre>
+<p>版本二：</p>
+<pre><code class="language-go">import (
+	"fmt"
+)
+
+func reverseWords(s string) string {
+	//1.使用双指针删除冗余的空格
+	slowIndex, fastIndex := 0, 0
+	b := []byte(s)
+	//删除头部冗余空格
+	for len(b) &gt; 0 &amp;&amp; fastIndex &lt; len(b) &amp;&amp; b[fastIndex] == ' ' {
+		fastIndex++
+	}
+    //删除单词间冗余空格
+	for ; fastIndex &lt; len(b); fastIndex++ {
+		if fastIndex-1 &gt; 0 &amp;&amp; b[fastIndex-1] == b[fastIndex] &amp;&amp; b[fastIndex] == ' ' {
+			continue
+		}
+		b[slowIndex] = b[fastIndex]
+		slowIndex++
+	}
+	//删除尾部冗余空格
+	if slowIndex-1 &gt; 0 &amp;&amp; b[slowIndex-1] == ' ' {
+		b = b[:slowIndex-1]
+	} else {
+		b = b[:slowIndex]
+	}
+	//2.反转整个字符串
+	reverse(b)
+	//3.反转单个单词  i单词开始位置，j单词结束位置
+	i := 0
+	for i &lt; len(b) {
+		j := i
+		for ; j &lt; len(b) &amp;&amp; b[j] != ' '; j++ {
+		}
+		reverse(b[i:j])
+		i = j
+		i++
+	}
+	return string(b)
+}
+
+func reverse(b []byte) {
+    left := 0
+    right := len(b) - 1
+    for left &lt; right {
+        b[left], b[right] = b[right], b[left]
+        left++
+        right--
+    }
+}
+</code></pre>
+<h1 id="557-reverse-words-in-a-string-iii"><a class="header" href="#557-reverse-words-in-a-string-iii"><a href="https://leetcode.com/problems/reverse-words-in-a-string-iii/">557. Reverse Words in a String III</a></a></h1>
+<p>Given a string <code>s</code>, reverse the order of characters in each word within a sentence while still preserving whitespace and initial word order.</p>
+<p><strong>Example 1:</strong></p>
+<p><strong>Input:</strong> <code>s = "Let's take LeetCode contest"</code><br />
+<strong>Output:</strong> <code>"s'teL ekat edoCteeL tsetnoc"</code></p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> <code>s = "Mr Ding"</code><br />
+<strong>Output:</strong> <code>"rM gniD"</code></p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= s.length &lt;= 5 * 10^4</code></li>
+<li><code>s</code> contains printable <strong>ASCII</strong> characters.</li>
+<li><code>s</code> does not contain any leading or trailing spaces.</li>
+<li>There is <strong>at least one</strong> word in <code>s</code>.</li>
+<li>All the words in <code>s</code> are separated by a single space.</li>
+</ul>
+<h2 id="思路-4"><a class="header" href="#思路-4">思路</a></h2>
+<p>通过设置<code>start</code>变量确定反转范围</p>
+<h2 id="c解法-4"><a class="header" href="#c解法-4">C++解法</a></h2>
+<pre><code class="language-cpp">class Solution {
+public:
+    void reverse(string&amp; s, int start, int end) {
+        for (int i = start, j = end; i &lt; j; i++, j--) {
+            swap(s[i], s[j]);
+        }
+    }
+    string reverseWords(string s) {
+        int start = 0;
+        for (int i = 0; i &lt;= s.size(); i++) {
+            if (i == s.size() || s[i] == ' ') {
+                reverse(s, start, i - 1);
+                start = i + 1;
+            }
+        }
+        return s;
+    }
+};
+</code></pre>
+<h1 id="917-reverse-only-letters"><a class="header" href="#917-reverse-only-letters"><a href="https://leetcode.com/problems/reverse-only-letters/">917. Reverse Only Letters</a></a></h1>
+<p>Given a string <code>s</code>, reverse the string according to the following rules:</p>
+<ul>
+<li>All the characters that are not English letters remain in the same position.</li>
+<li>All the English letters (lowercase or uppercase) should be reversed.</li>
+</ul>
+<p>Return <code>s</code> <em>after reversing it</em>.</p>
+<p><strong>Example 1:</strong></p>
+<p><strong>Input:</strong> <code>s = "ab-cd"</code><br />
+<strong>Output:</strong> "dc-ba"</p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> <code>s = "a-bC-dEf-ghIj"</code><br />
+<strong>Output:</strong> "j-Ih-gfE-dCba"</p>
+<p><strong>Example 3:</strong></p>
+<p><strong>Input:</strong> <code>s = "Test1ng-Leet=code-Q!"</code><br />
+<strong>Output:</strong> "Qedo1ct-eeLg=ntse-T!"</p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= s.length &lt;= 100</code></li>
+<li><code>s</code> consists of characters with ASCII values in the range <code>[33, 122]</code>.</li>
+<li><code>s</code> does not contain <code>'\"'</code> or <code>'\\'</code>.</li>
+</ul>
+<h2 id="思路-5"><a class="header" href="#思路-5">思路</a></h2>
+<p>This problem is exactly like reversing a normal string except that there are certain characters that we have to simply skip. That should be easy enough to do if you know how to reverse a string using the two-pointer approach.</p>
+<h2 id="c解法-5"><a class="header" href="#c解法-5">C++解法</a></h2>
+<pre><code class="language-cpp">class Solution {
+public:
+    string reverseOnlyLetters(string s) {
+        int left = 0;
+        int right = s.length() - 1;
+        while(left &lt; right){
+            while(left &lt; right &amp;&amp; !isalpha(s[left])) left++;
+            while(left &lt; right &amp;&amp; !isalpha(s[right])) right--;
+            swap(s[left++], s[right--]);
+        }
+        return s;
+    }
+};
+</code></pre>
+<h1 id="2810-faulty-keyboard"><a class="header" href="#2810-faulty-keyboard"><a href="https://leetcode.com/problems/faulty-keyboard/">2810. Faulty Keyboard</a></a></h1>
+<p>Your laptop keyboard is faulty, and whenever you type a character <code>'i'</code> on it, it reverses the string that you have written. Typing other characters works as expected.</p>
+<p>You are given a <strong>0-indexed</strong> string <code>s</code>, and you type each character of <code>s</code> using your faulty keyboard.</p>
+<p>Return <em>the final string that will be present on your laptop screen.</em></p>
+<p><strong>Example 1:</strong></p>
+<p><strong>Input:</strong> s = "string"<br />
+<strong>Output:</strong> "rtsng"</p>
+<p><strong>Explanation:</strong>
+After typing first character, the text on the screen is "s".
+After the second character, the text is "st".
+After the third character, the text is "str".
+Since the fourth character is an 'i', the text gets reversed and becomes "rts".
+After the fifth character, the text is "rtsn".
+After the sixth character, the text is "rtsng".
+Therefore, we return "rtsng".</p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> s = "poiinter"<br />
+<strong>Output:</strong> "ponter"</p>
+<p><strong>Explanation:</strong>
+After the first character, the text on the screen is "p".
+After the second character, the text is "po".
+Since the third character you type is an 'i', the text gets reversed and becomes "op".
+Since the fourth character you type is an 'i', the text gets reversed and becomes "po".
+After the fifth character, the text is "pon".
+After the sixth character, the text is "pont".
+After the seventh character, the text is "ponte".
+After the eighth character, the text is "ponter".
+Therefore, we return "ponter".</p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= s.length &lt;= 100</code></li>
+<li><code>s</code> consists of lowercase English letters.</li>
+<li><code>s[0] != 'i'</code></li>
+</ul>
+<h2 id="思路-6"><a class="header" href="#思路-6">思路</a></h2>
+<p>Try to build a new string by traversing the given string and reversing whenever you get the character ‘i’.</p>
+<p>注意：<code>s[0] != 'i'</code>，reverse时注意不要发生数组越界问题</p>
+<h2 id="c解法-6"><a class="header" href="#c解法-6">C++解法</a></h2>
+<pre><code class="language-cpp">class Solution {
+public:
+    void reverse(string &amp;s, int start, int end){
+        for(int i = start, j = end; i &lt; j; i++, j--){
+            swap(s[i], s[j]);
+        }
+    }
+    string finalString(string s) {
+        string result = "";
+        for(int j = 0; j &lt; s.length(); j++){
+            if(s[j] == 'i'){
+                reverse(result, 0, result.size() - 1);
+            }else{
+                result += s[j];
+            }
+        }
+        return result;
+    }
+};
+</code></pre>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../字符串/字符串.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../双指针/双指针.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../字符串/字符串.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../双指针/双指针.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

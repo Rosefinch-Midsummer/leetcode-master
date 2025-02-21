@@ -1,0 +1,2874 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>二叉搜索树 - 剑指Offer</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">剑指Offer</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
+<h1 id="二叉搜索树"><a class="header" href="#二叉搜索树">二叉搜索树</a></h1>
+<ul>
+<li><a href="#700-search-in-a-binary-search-tree">700. Search in a Binary Search Tree</a>
+<ul>
+<li><a href="#%E6%80%9D%E8%B7%AF">思路</a>
+<ul>
+<li><a href="#%E9%80%92%E5%BD%92%E6%B3%95">递归法</a></li>
+<li><a href="#%E8%BF%AD%E4%BB%A3%E6%B3%95">迭代法</a></li>
+</ul>
+</li>
+<li><a href="#c%E8%A7%A3%E6%B3%95">C++解法</a></li>
+<li><a href="#java%E8%A7%A3%E6%B3%95">Java解法</a></li>
+<li><a href="#python3%E8%A7%A3%E6%B3%95">Python3解法</a></li>
+<li><a href="#go%E8%A7%A3%E6%B3%95">Go解法</a></li>
+</ul>
+</li>
+<li><a href="#98-validate-binary-search-tree">98. Validate Binary Search Tree</a>
+<ul>
+<li><a href="#%E6%80%9D%E8%B7%AF-1">思路</a>
+<ul>
+<li><a href="#%E9%80%92%E5%BD%92%E6%B3%95-1">递归法</a></li>
+<li><a href="#%E8%BF%AD%E4%BB%A3%E6%B3%95-1">迭代法</a></li>
+<li><a href="#%E6%80%BB%E7%BB%93">总结</a></li>
+</ul>
+</li>
+<li><a href="#c%E8%A7%A3%E6%B3%95-1">C++解法</a></li>
+<li><a href="#java%E8%A7%A3%E6%B3%95-1">Java解法</a></li>
+<li><a href="#python3%E8%A7%A3%E6%B3%95-1">Python3解法</a></li>
+<li><a href="#go%E8%A7%A3%E6%B3%95-1">Go解法</a></li>
+</ul>
+</li>
+<li><a href="#530-minimum-absolute-difference-in-bst">530. Minimum Absolute Difference in BST</a>
+<ul>
+<li><a href="#%E6%80%9D%E8%B7%AF-2">思路</a>
+<ul>
+<li><a href="#%E9%80%92%E5%BD%92">递归</a></li>
+<li><a href="#%E8%BF%AD%E4%BB%A3">迭代</a></li>
+<li><a href="#%E6%80%BB%E7%BB%93-1">总结</a></li>
+</ul>
+</li>
+<li><a href="#c%E8%A7%A3%E6%B3%95-2">C++解法</a></li>
+<li><a href="#java%E8%A7%A3%E6%B3%95-2">Java解法</a></li>
+<li><a href="#python3%E8%A7%A3%E6%B3%95-2">Python3解法</a></li>
+<li><a href="#go%E8%A7%A3%E6%B3%95-2">Go解法</a></li>
+</ul>
+</li>
+<li><a href="#783-minimum-distance-between-bst-nodes%E5%90%8C%E4%B8%8A">783. Minimum Distance Between BST Nodes（同上）</a>
+<ul>
+<li><a href="#%E6%80%9D%E8%B7%AF-3">思路</a></li>
+<li><a href="#c%E8%A7%A3%E6%B3%95-3">C++解法</a></li>
+</ul>
+</li>
+<li><a href="#501-find-mode-in-binary-search-tree">501. Find Mode in Binary Search Tree</a>
+<ul>
+<li><a href="#%E6%80%9D%E8%B7%AF-4">思路</a>
+<ul>
+<li><a href="#%E9%80%92%E5%BD%92%E6%B3%95-2">递归法</a></li>
+<li><a href="#%E8%BF%AD%E4%BB%A3%E6%B3%95-2">迭代法</a></li>
+<li><a href="#%E6%80%BB%E7%BB%93-2">总结</a></li>
+</ul>
+</li>
+<li><a href="#c%E8%A7%A3%E6%B3%95-4">C++解法</a></li>
+<li><a href="#java%E8%A7%A3%E6%B3%95-3">Java解法</a></li>
+<li><a href="#python3%E8%A7%A3%E6%B3%95-3">Python3解法</a></li>
+<li><a href="#go%E8%A7%A3%E6%B3%95-3">Go解法</a></li>
+</ul>
+</li>
+<li><a href="#235-lowest-common-ancestor-of-a-binary-search-tree">235. Lowest Common Ancestor of a Binary Search Tree</a>
+<ul>
+<li><a href="#%E6%80%9D%E8%B7%AF-5">思路</a>
+<ul>
+<li><a href="#%E9%80%92%E5%BD%92%E6%B3%95-3">递归法</a></li>
+<li><a href="#%E8%BF%AD%E4%BB%A3%E6%B3%95-3">迭代法</a></li>
+<li><a href="#%E6%80%BB%E7%BB%93-3">总结</a></li>
+</ul>
+</li>
+<li><a href="#c%E8%A7%A3%E6%B3%95-5">C++解法</a></li>
+<li><a href="#java%E8%A7%A3%E6%B3%95-4">Java解法</a></li>
+<li><a href="#python3%E8%A7%A3%E6%B3%95-4">Python3解法</a></li>
+<li><a href="#go%E8%A7%A3%E6%B3%95-4">Go解法</a></li>
+</ul>
+</li>
+<li><a href="#701-insert-into-a-binary-search-tree">701. Insert into a Binary Search Tree</a>
+<ul>
+<li><a href="#%E6%80%9D%E8%B7%AF-6">思路</a>
+<ul>
+<li><a href="#%E9%80%92%E5%BD%92-1">递归</a></li>
+<li><a href="#%E8%BF%AD%E4%BB%A3-1">迭代</a></li>
+<li><a href="#%E6%80%BB%E7%BB%93-4">总结</a></li>
+</ul>
+</li>
+<li><a href="#c%E8%A7%A3%E6%B3%95-6">C++解法</a></li>
+<li><a href="#java%E8%A7%A3%E6%B3%95-5">Java解法</a></li>
+<li><a href="#python3%E8%A7%A3%E6%B3%95-5">Python3解法</a></li>
+<li><a href="#go%E8%A7%A3%E6%B3%95-5">Go解法</a></li>
+</ul>
+</li>
+<li><a href="#450-delete-node-in-a-bst">450. Delete Node in a BST</a>
+<ul>
+<li><a href="#%E6%80%9D%E8%B7%AF-7">思路</a>
+<ul>
+<li><a href="#%E9%80%92%E5%BD%92-2">递归</a></li>
+<li><a href="#%E6%99%AE%E9%80%9A%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E5%88%A0%E9%99%A4%E6%96%B9%E5%BC%8F">普通二叉树的删除方式</a></li>
+<li><a href="#%E8%BF%AD%E4%BB%A3%E6%B3%95-4">迭代法</a></li>
+<li><a href="#%E6%80%BB%E7%BB%93-5">总结</a></li>
+</ul>
+</li>
+<li><a href="#c%E8%A7%A3%E6%B3%95-7">C++解法</a></li>
+<li><a href="#java%E8%A7%A3%E6%B3%95-6">Java解法</a></li>
+<li><a href="#python3%E8%A7%A3%E6%B3%95-6">Python3解法</a></li>
+<li><a href="#go%E8%A7%A3%E6%B3%95-6">Go解法</a></li>
+</ul>
+</li>
+<li><a href="#669-trim-a-binary-search-tree">669. Trim a Binary Search Tree</a>
+<ul>
+<li><a href="#%E6%80%9D%E8%B7%AF-8">思路</a>
+<ul>
+<li><a href="#%E9%80%92%E5%BD%92%E6%B3%95-4">递归法</a></li>
+<li><a href="#%E8%BF%AD%E4%BB%A3%E6%B3%95-5">迭代法</a></li>
+<li><a href="#%E6%80%BB%E7%BB%93-6">总结</a></li>
+</ul>
+</li>
+<li><a href="#c%E8%A7%A3%E6%B3%95-8">C++解法</a></li>
+<li><a href="#java%E8%A7%A3%E6%B3%95-7">Java解法</a></li>
+<li><a href="#python3%E8%A7%A3%E6%B3%95-7">Python3解法</a></li>
+<li><a href="#go%E8%A7%A3%E6%B3%95-7">Go解法</a></li>
+</ul>
+</li>
+<li><a href="#108-convert-sorted-array-to-binary-search-tree">108. Convert Sorted Array to Binary Search Tree</a>
+<ul>
+<li><a href="#%E6%80%9D%E8%B7%AF-9">思路</a>
+<ul>
+<li><a href="#%E9%80%92%E5%BD%92-3">递归</a></li>
+<li><a href="#%E8%BF%AD%E4%BB%A3%E6%B3%95-6">迭代法</a></li>
+<li><a href="#%E6%80%BB%E7%BB%93-7">总结</a></li>
+</ul>
+</li>
+<li><a href="#c%E8%A7%A3%E6%B3%95-9">C++解法</a></li>
+<li><a href="#java%E8%A7%A3%E6%B3%95-8">Java解法</a></li>
+<li><a href="#python3%E8%A7%A3%E6%B3%95-8">Python3解法</a></li>
+<li><a href="#go%E8%A7%A3%E6%B3%95-8">Go解法</a></li>
+</ul>
+</li>
+<li><a href="#109-convert-sorted-list-to-binary-search-tree">109. Convert Sorted List to Binary Search Tree</a>
+<ul>
+<li><a href="#%E6%80%9D%E8%B7%AF-10">思路</a></li>
+<li><a href="#c%E8%A7%A3%E6%B3%95-10">C++解法</a></li>
+<li><a href="#java%E8%A7%A3%E6%B3%95-9">Java解法</a></li>
+<li><a href="#python3%E8%A7%A3%E6%B3%95-9">Python3解法</a></li>
+<li><a href="#go%E8%A7%A3%E6%B3%95-9">Go解法</a></li>
+</ul>
+</li>
+<li><a href="#538-convert-bst-to-greater-tree">538. Convert BST to Greater Tree</a>
+<ul>
+<li><a href="#%E6%80%9D%E8%B7%AF-11">思路</a>
+<ul>
+<li><a href="#%E9%80%92%E5%BD%92-4">递归</a></li>
+<li><a href="#%E8%BF%AD%E4%BB%A3%E6%B3%95-7">迭代法</a></li>
+</ul>
+</li>
+<li><a href="#c%E8%A7%A3%E6%B3%95-11">C++解法</a></li>
+<li><a href="#java%E8%A7%A3%E6%B3%95-10">Java解法</a></li>
+<li><a href="#python3%E8%A7%A3%E6%B3%95-10">Python3解法</a></li>
+<li><a href="#go%E8%A7%A3%E6%B3%95-10">Go解法</a></li>
+</ul>
+</li>
+<li><a href="#1038-binary-search-tree-to-greater-sum-tree%E5%90%8C%E4%B8%8A">1038. Binary Search Tree to Greater Sum Tree（同上）</a></li>
+</ul>
+<h1 id="700-search-in-a-binary-search-tree"><a class="header" href="#700-search-in-a-binary-search-tree"><a href="https://leetcode.com/problems/search-in-a-binary-search-tree/">700. Search in a Binary Search Tree</a></a></h1>
+<p>You are given the <code>root</code> of a binary search tree (BST) and an integer <code>val</code>.</p>
+<p>Find the node in the BST that the node's value equals <code>val</code> and return the subtree rooted with that node. If such a node does not exist, return <code>null</code>.</p>
+<p><strong>Example 1:</strong></p>
+<p><img src="https://assets.leetcode.com/uploads/2021/01/12/tree1.jpg" alt="" /></p>
+<p><strong>Input:</strong> <code>root = [4,2,7,1,3], val = 2</code><br />
+<strong>Output:</strong> <code>[2,1,3]</code></p>
+<p><strong>Example 2:</strong></p>
+<p><img src="https://assets.leetcode.com/uploads/2021/01/12/tree2.jpg" alt="" /></p>
+<p><strong>Input:</strong> <code>root = [4,2,7,1,3], val = 5</code><br />
+<strong>Output:</strong> []</p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li>The number of nodes in the tree is in the range <code>[1, 5000]</code>.</li>
+<li><code>1 &lt;= Node.val &lt;= 10^7</code></li>
+<li><code>root</code> is a binary search tree.</li>
+<li><code>1 &lt;= val &lt;= 10^7</code></li>
+</ul>
+<h2 id="思路"><a class="header" href="#思路">思路</a></h2>
+<p>二叉搜索树是一个有序树：</p>
+<ul>
+<li>若它的左子树不空，则左子树上所有结点的值均小于它的根结点的值；</li>
+<li>若它的右子树不空，则右子树上所有结点的值均大于它的根结点的值；</li>
+<li>它的左、右子树也分别为二叉搜索树</li>
+</ul>
+<p>这就决定了，二叉搜索树，递归遍历和迭代遍历和普通二叉树都不一样。</p>
+<p>本题，其实就是在二叉搜索树中搜索一个节点。那么我们来看看应该如何遍历。</p>
+<h3 id="递归法"><a class="header" href="#递归法">递归法</a></h3>
+<ol>
+<li>确定递归函数的参数和返回值</li>
+</ol>
+<p>递归函数的参数传入的就是根节点和要搜索的数值，返回的就是以这个搜索数值所在的节点。</p>
+<ol start="2">
+<li>确定终止条件</li>
+</ol>
+<p>如果root为空，或者找到这个数值了，就返回root节点。</p>
+<ol start="3">
+<li>确定单层递归的逻辑</li>
+</ol>
+<p>看看二叉搜索树的单层递归逻辑有何不同。</p>
+<p>因为二叉搜索树的节点是有序的，所以可以有方向的去搜索。</p>
+<p>如果root-&gt;val &gt; val，搜索左子树，如果root-&gt;val &lt; val，就搜索右子树，最后如果都没有搜索到，就返回NULL。</p>
+<p>很多录友写递归函数的时候 习惯直接写 <code>searchBST(root-&gt;left, val)</code>，却忘了递归函数还有返回值。</p>
+<p>递归函数的返回值是什么？ 是 左子树如果搜索到了val，要将该节点返回。 如果不用一个变量将其接住，那么返回值不就没了。</p>
+<p>所以要 <code>result = searchBST(root-&gt;left, val)</code>。</p>
+<h3 id="迭代法"><a class="header" href="#迭代法">迭代法</a></h3>
+<p>一提到二叉树遍历的迭代法，可能立刻想起使用栈来模拟深度遍历，使用队列来模拟广度遍历。</p>
+<p>对于二叉搜索树可就不一样了，因为二叉搜索树的特殊性，也就是节点的有序性，可以不使用辅助栈或者队列就可以写出迭代法。</p>
+<p>对于一般二叉树，递归过程中还有回溯的过程，例如走一个左方向的分支走到头了，那么要调头，在走右分支。</p>
+<p>而<strong>对于二叉搜索树，不需要回溯的过程，因为节点的有序性就帮我们确定了搜索的方向。</strong></p>
+<p>例如要搜索元素为3的节点，<strong>我们不需要搜索其他节点，也不需要做回溯，查找的路径已经规划好了。</strong></p>
+<p>中间节点如果大于3就向左走，如果小于3就向右走，如图：</p>
+<p><img src="https://code-thinking-1253855093.file.myqcloud.com/pics/20200812190213280.png" alt="二叉搜索树" /></p>
+<h2 id="c解法"><a class="header" href="#c解法">C++解法</a></h2>
+<p>递归法整体代码如下：</p>
+<pre><code class="language-cpp">class Solution {
+public:
+    TreeNode* searchBST(TreeNode* root, int val) {
+        if (root == NULL || root-&gt;val == val) return root;
+        TreeNode* result = NULL;
+        if (root-&gt;val &gt; val) result = searchBST(root-&gt;left, val);
+        if (root-&gt;val &lt; val) result = searchBST(root-&gt;right, val);
+        return result;
+    }
+};
+</code></pre>
+<p>或者我们也可以这么写</p>
+<pre><code class="language-cpp">class Solution {
+public:
+    TreeNode* searchBST(TreeNode* root, int val) {
+        if (root == NULL || root-&gt;val == val) return root;
+        if (root-&gt;val &gt; val) return searchBST(root-&gt;left, val);
+        if (root-&gt;val &lt; val) return searchBST(root-&gt;right, val);
+        return NULL;
+    }
+};
+</code></pre>
+<p>迭代法代码如下：</p>
+<pre><code class="language-cpp">class Solution {
+public:
+    TreeNode* searchBST(TreeNode* root, int val) {
+        while (root != NULL) {
+            if (root-&gt;val &gt; val) root = root-&gt;left;
+            else if (root-&gt;val &lt; val) root = root-&gt;right;
+            else return root;
+        }
+        return NULL;
+    }
+};
+</code></pre>
+<h2 id="java解法"><a class="header" href="#java解法">Java解法</a></h2>
+<pre><code class="language-java">class Solution {
+    // 迭代，利用二叉搜索树特点，优化，可以不需要栈
+    public TreeNode searchBST(TreeNode root, int val) {
+        while (root != null)
+            if (val &lt; root.val) root = root.left;
+            else if (val &gt; root.val) root = root.right;
+            else return root;
+        return null;
+    }
+}
+</code></pre>
+<h2 id="python3解法"><a class="header" href="#python3解法">Python3解法</a></h2>
+<pre><code class="language-python">class Solution:
+    def searchBST(self, root: TreeNode, val: int) -&gt; TreeNode:
+        # 为什么要有返回值: 
+        #   因为搜索到目标节点就要立即return，
+        #   这样才是找到节点就返回（搜索某一条边），如果不加return，就是遍历整棵树了。
+
+        if not root or root.val == val: 
+            return root
+
+        if root.val &gt; val: 
+            return self.searchBST(root.left, val)
+
+        if root.val &lt; val: 
+            return self.searchBST(root.right, val)
+</code></pre>
+<h2 id="go解法"><a class="header" href="#go解法">Go解法</a></h2>
+<pre><code class="language-go"> //递归法
+func searchBST(root *TreeNode, val int) *TreeNode {
+    if root == nil || root.Val == val {
+        return root
+    }
+    if root.Val &gt; val {
+        return searchBST(root.Left, val)
+    }
+    return searchBST(root.Right, val)
+}
+</code></pre>
+<pre><code class="language-go">//迭代法
+func searchBST(root *TreeNode, val int) *TreeNode {
+    for root != nil {
+        if root.Val &gt; val {
+            root = root.Left
+        } else if root.Val &lt; val {
+            root = root.Right
+        } else {
+            return root
+        }
+    }
+    return nil
+}
+</code></pre>
+<h1 id="98-validate-binary-search-tree"><a class="header" href="#98-validate-binary-search-tree"><a href="https://leetcode.com/problems/validate-binary-search-tree/">98. Validate Binary Search Tree</a></a></h1>
+<p>Given the <code>root</code> of a binary tree, <em>determine if it is a valid binary search tree (BST)</em>.</p>
+<p>A <strong>valid BST</strong> is defined as follows:</p>
+<ul>
+<li>The left subtree of a node contains only nodes with keys <strong>less than</strong> the node's key.</li>
+<li>The right subtree of a node contains only nodes with keys <strong>greater than</strong> the node's key.</li>
+<li>Both the left and right subtrees must also be binary search trees.</li>
+</ul>
+<p><strong>Example 1:</strong></p>
+<p><img src="https://assets.leetcode.com/uploads/2020/12/01/tree1.jpg" alt="" /></p>
+<p><strong>Input:</strong> <code>root = [2,1,3]</code><br />
+<strong>Output:</strong> true</p>
+<p><strong>Example 2:</strong></p>
+<p><img src="https://assets.leetcode.com/uploads/2020/12/01/tree2.jpg" alt="" /></p>
+<p><strong>Input:</strong> <code>root = [5,1,4,null,null,3,6]</code><br />
+<strong>Output:</strong> false
+<strong>Explanation:</strong> The root node's value is 5 but its right child's value is 4.</p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li>The number of nodes in the tree is in the range <code>[1, 10^4]</code>.</li>
+<li><code>-2^31 &lt;= Node.val &lt;= 2^31 - 1</code></li>
+</ul>
+<h2 id="思路-1"><a class="header" href="#思路-1">思路</a></h2>
+<p>要知道中序遍历下，输出的二叉搜索树节点的数值是有序序列。</p>
+<p>有了这个特性，<strong>验证二叉搜索树，就相当于变成了判断一个序列是不是递增的了。</strong></p>
+<h3 id="递归法-1"><a class="header" href="#递归法-1">递归法</a></h3>
+<p>可以递归中序遍历将二叉搜索树转变成一个数组，代码如下：</p>
+<pre><code class="language-cpp">vector&lt;int&gt; vec;
+void traversal(TreeNode* root) {
+    if (root == NULL) return;
+    traversal(root-&gt;left);
+    vec.push_back(root-&gt;val); // 将二叉搜索树转换为有序数组
+    traversal(root-&gt;right);
+}
+</code></pre>
+<p>然后只要比较一下，这个数组是否是有序的，<strong>注意二叉搜索树中不能有重复元素</strong>。</p>
+<pre><code class="language-cpp">traversal(root);
+for (int i = 1; i &lt; vec.size(); i++) {
+    // 注意要小于等于，搜索树里不能有相同元素
+    if (vec[i] &lt;= vec[i - 1]) return false;
+}
+return true;
+</code></pre>
+<p>以上代码中，我们把二叉树转变为数组来判断，是最直观的，但其实不用转变成数组，可以在递归遍历的过程中直接判断是否有序。</p>
+<p>这道题目比较容易陷入两个陷阱：</p>
+<ul>
+<li>陷阱1</li>
+</ul>
+<p><strong>不能单纯的比较左节点小于中间节点，右节点大于中间节点就完事了</strong>。</p>
+<p>写出了类似这样的代码：</p>
+<pre><code class="language-cpp">if (root-&gt;val &gt; root-&gt;left-&gt;val &amp;&amp; root-&gt;val &lt; root-&gt;right-&gt;val) {
+    return true;
+} else {
+    return false;
+}
+</code></pre>
+<p><strong>我们要比较的是 左子树所有节点小于中间节点，右子树所有节点大于中间节点</strong>。所以以上代码的判断逻辑是错误的。</p>
+<p>例如： <code>[10,5,15,null,null,6,20]</code> 这个case：</p>
+<p><img src="https://code-thinking-1253855093.file.myqcloud.com/pics/20230310000824.png" alt="二叉搜索树" /></p>
+<p>节点10大于左节点5，小于右节点15，但右子树里出现了一个6 这就不符合了！</p>
+<ul>
+<li>陷阱2</li>
+</ul>
+<p>样例中最小节点 可能是int的最小值，如果这样使用最小的int来比较也是不行的。</p>
+<p>此时可以初始化比较元素为longlong的最小值。</p>
+<p>问题可以进一步演进：如果样例中根节点的val 可能是longlong的最小值又要怎么办呢？文中会解答。</p>
+<p>了解这些陷阱之后我们来看一下代码应该怎么写：</p>
+<p>递归三部曲：</p>
+<ul>
+<li>确定递归函数，返回值以及参数</li>
+</ul>
+<p>要定义一个longlong的全局变量，用来比较遍历的节点是否有序，因为后台测试数据中有int最小值，所以定义为longlong的类型，初始化为longlong最小值。</p>
+<p>注意递归函数要有bool类型的返回值， 我们在<a href="https://programmercarl.com/0112.%E8%B7%AF%E5%BE%84%E6%80%BB%E5%92%8C.html">二叉树：递归函数究竟什么时候需要返回值，什么时候不要返回值？ (opens new window)</a>中讲了，只有寻找某一条边（或者一个节点）的时候，递归函数会有bool类型的返回值。</p>
+<p>其实本题是同样的道理，我们在寻找一个不符合条件的节点，如果没有找到这个节点就遍历了整个树，如果找到不符合的节点了，立刻返回。</p>
+<p>代码如下：</p>
+<pre><code class="language-cpp">long long maxVal = LONG_MIN; // 因为后台测试数据中有int最小值
+bool isValidBST(TreeNode* root)
+</code></pre>
+<ul>
+<li>确定终止条件</li>
+</ul>
+<p>如果是空节点是不是二叉搜索树呢？</p>
+<p>是的，二叉搜索树也可以为空！</p>
+<p>代码如下：</p>
+<pre><code class="language-cpp">if (root == NULL) return true;
+</code></pre>
+<ul>
+<li>确定单层递归的逻辑</li>
+</ul>
+<p>中序遍历，一直更新maxVal，一旦发现maxVal &gt;= root-&gt;val，就返回false，注意元素相同时候也要返回false。</p>
+<p>代码如下：</p>
+<pre><code class="language-cpp">bool left = isValidBST(root-&gt;left);         // 左
+
+// 中序遍历，验证遍历的元素是不是从小到大
+if (maxVal &lt; root-&gt;val) maxVal = root-&gt;val; // 中
+else return false;
+
+bool right = isValidBST(root-&gt;right);       // 右
+return left &amp;&amp; right;
+</code></pre>
+<p>以上代码是因为后台数据有int最小值测试用例，所以都把maxVal改成了longlong最小值。</p>
+<p>如果测试数据中有 longlong的最小值，怎么办？</p>
+<p>不可能在初始化一个更小的值了吧。 建议避免初始化最小值，如下方法取到最左面节点的数值来比较。代码如下：</p>
+<pre><code class="language-cpp">class Solution {
+public:
+    TreeNode* pre = NULL; // 用来记录前一个节点
+    bool isValidBST(TreeNode* root) {
+        if (root == NULL) return true;
+        bool left = isValidBST(root-&gt;left);
+
+        if (pre != NULL &amp;&amp; pre-&gt;val &gt;= root-&gt;val) return false;
+        pre = root; // 记录前一个节点
+
+        bool right = isValidBST(root-&gt;right);
+        return left &amp;&amp; right;
+    }
+};
+</code></pre>
+<p>最后这份代码看上去整洁一些，思路也清晰。</p>
+<h3 id="迭代法-1"><a class="header" href="#迭代法-1">迭代法</a></h3>
+<p>可以用迭代法模拟二叉树中序遍历，对前中后序迭代法生疏的同学可以看这两篇<a href="https://programmercarl.com/%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E8%BF%AD%E4%BB%A3%E9%81%8D%E5%8E%86.html">二叉树：听说递归能做的，栈也能做！ (opens new window)</a>，<a href="https://programmercarl.com/%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E7%BB%9F%E4%B8%80%E8%BF%AD%E4%BB%A3%E6%B3%95.html">二叉树：前中后序迭代方式统一写法(opens new window)</a></p>
+<p>迭代法中序遍历稍加改动就可以了，代码如下：</p>
+<pre><code class="language-cpp">class Solution {
+public:
+    bool isValidBST(TreeNode* root) {
+        stack&lt;TreeNode*&gt; st;
+        TreeNode* cur = root;
+        TreeNode* pre = NULL; // 记录前一个节点
+        while (cur != NULL || !st.empty()) {
+            if (cur != NULL) {
+                st.push(cur);
+                cur = cur-&gt;left;                // 左
+            } else {
+                cur = st.top();                 // 中
+                st.pop();
+                if (pre != NULL &amp;&amp; cur-&gt;val &lt;= pre-&gt;val)
+                return false;
+                pre = cur; //保存前一个访问的结点
+
+                cur = cur-&gt;right;               // 右
+            }
+        }
+        return true;
+    }
+};
+</code></pre>
+<p>在<a href="https://programmercarl.com/0700.%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91%E4%B8%AD%E7%9A%84%E6%90%9C%E7%B4%A2.html">二叉树：二叉搜索树登场！ (opens new window)</a>中我们分明写出了痛哭流涕的简洁迭代法，怎么在这里不行了呢，因为本题是要验证二叉搜索树啊。</p>
+<h3 id="总结"><a class="header" href="#总结">总结</a></h3>
+<p>这道题目是一个简单题，但对于没接触过的同学还是有难度的。</p>
+<p>所以初学者刚开始学习算法的时候，看到简单题目没有思路很正常，千万别怀疑自己智商，学习过程都是这样的，大家智商都差不多。</p>
+<p>只要把基本类型的题目都做过，总结过之后，思路自然就开阔了，加油💪</p>
+<h2 id="c解法-1"><a class="header" href="#c解法-1">C++解法</a></h2>
+<p>将二叉搜索树转换为有序数组整体代码如下：</p>
+<pre><code class="language-cpp">class Solution {
+private:
+    vector&lt;int&gt; vec;
+    void traversal(TreeNode* root) {
+        if (root == NULL) return;
+        traversal(root-&gt;left);
+        vec.push_back(root-&gt;val); // 将二叉搜索树转换为有序数组
+        traversal(root-&gt;right);
+    }
+public:
+    bool isValidBST(TreeNode* root) {
+        vec.clear(); // 不加这句在leetcode上也可以过，但最好加上
+        traversal(root);
+        for (int i = 1; i &lt; vec.size(); i++) {
+            // 注意要小于等于，搜索树里不能有相同元素
+            if (vec[i] &lt;= vec[i - 1]) return false;
+        }
+        return true;
+    }
+};
+</code></pre>
+<p>不转变成数组，可以在递归遍历的过程中直接判断是否有序。整体代码如下：</p>
+<pre><code class="language-cpp">class Solution {
+public:
+    long long maxVal = LONG_MIN; // 因为后台测试数据中有int最小值
+    bool isValidBST(TreeNode* root) {
+        if (root == NULL) return true;
+
+        bool left = isValidBST(root-&gt;left);
+        // 中序遍历，验证遍历的元素是不是从小到大
+        if (maxVal &lt; root-&gt;val) maxVal = root-&gt;val;
+        else return false;
+        bool right = isValidBST(root-&gt;right);
+
+        return left &amp;&amp; right;
+    }
+};
+</code></pre>
+<p>不可能在初始化一个更小的值了吧。 建议避免初始化最小值，如下方法取到最左面节点的数值来比较。代码如下：</p>
+<pre><code class="language-cpp">class Solution {
+public:
+    TreeNode* pre = NULL; // 用来记录前一个节点
+    bool isValidBST(TreeNode* root) {
+        if (root == NULL) return true;
+        bool left = isValidBST(root-&gt;left);
+
+        if (pre != NULL &amp;&amp; pre-&gt;val &gt;= root-&gt;val) return false;
+        pre = root; // 记录前一个节点
+
+        bool right = isValidBST(root-&gt;right);
+        return left &amp;&amp; right;
+    }
+};
+</code></pre>
+<p>最后这份代码看上去整洁一些，思路也清晰。</p>
+<h2 id="java解法-1"><a class="header" href="#java解法-1">Java解法</a></h2>
+<pre><code class="language-java">// 简洁实现·中序遍历
+class Solution {
+    private long prev = Long.MIN_VALUE;
+    public boolean isValidBST(TreeNode root) {
+        if (root == null) {
+            return true;
+        }
+        if (!isValidBST(root.left)) {
+            return false;
+        }
+        if (root.val &lt;= prev) { // 不满足二叉搜索树条件
+            return false;
+        }
+        prev = root.val;
+        return isValidBST(root.right);
+    }
+}
+</code></pre>
+<h2 id="python3解法-1"><a class="header" href="#python3解法-1">Python3解法</a></h2>
+<p>递归法（版本三）直接取该树的最小值</p>
+<pre><code class="language-python"># Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def __init__(self):
+        self.pre = None  # 用来记录前一个节点
+
+    def isValidBST(self, root):
+        if root is None:
+            return True
+
+        left = self.isValidBST(root.left)
+
+        if self.pre is not None and self.pre.val &gt;= root.val:
+            return False
+        self.pre = root  # 记录前一个节点
+
+        right = self.isValidBST(root.right)
+        return left and right
+</code></pre>
+<h2 id="go解法-1"><a class="header" href="#go解法-1">Go解法</a></h2>
+<pre><code class="language-go">// 中序遍历解法
+func isValidBST(root *TreeNode) bool {
+    // 保存上一个指针
+    var prev *TreeNode
+    var travel func(node *TreeNode) bool
+    travel = func(node *TreeNode) bool {
+        if node == nil {
+            return true
+        }
+        leftRes := travel(node.Left)
+        // 当前值小于等于前一个节点的值，返回false
+        if prev != nil &amp;&amp; node.Val &lt;= prev.Val {
+            return false
+        }
+        prev = node
+        rightRes := travel(node.Right)
+        return leftRes &amp;&amp; rightRes
+    }
+    return travel(root)
+}
+</code></pre>
+<h1 id="530-minimum-absolute-difference-in-bst"><a class="header" href="#530-minimum-absolute-difference-in-bst"><a href="https://leetcode.com/problems/minimum-absolute-difference-in-bst/">530. Minimum Absolute Difference in BST</a></a></h1>
+<p>Given the <code>root</code> of a Binary Search Tree (BST), return <em>the minimum absolute difference between the values of any two different nodes in the tree</em>.</p>
+<p><strong>Example 1:</strong></p>
+<p><img src="https://assets.leetcode.com/uploads/2021/02/05/bst1.jpg" alt="" /></p>
+<p><strong>Input:</strong> <code>root = [4,2,6,1,3]</code><br />
+<strong>Output:</strong> 1</p>
+<p><strong>Example 2:</strong></p>
+<p><img src="https://assets.leetcode.com/uploads/2021/02/05/bst2.jpg" alt="" /></p>
+<p><strong>Input:</strong> <code>root = [1,0,48,null,null,12,49]</code><br />
+<strong>Output:</strong> 1</p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li>The number of nodes in the tree is in the range <code>[2, 10^4]</code>.</li>
+<li><code>0 &lt;= Node.val &lt;= 10^5</code></li>
+</ul>
+<p><strong>Note:</strong> This question is the same as 783: <a href="https://leetcode.com/problems/minimum-distance-between-bst-nodes/">https://leetcode.com/problems/minimum-distance-between-bst-nodes/</a></p>
+<h2 id="思路-2"><a class="header" href="#思路-2">思路</a></h2>
+<p>方法一：中序遍历转为有序数组</p>
+<p>方法二：中序遍历，双指针，直接计算差值</p>
+<p>题目中要求在二叉搜索树上任意两节点的差的绝对值的最小值。</p>
+<p><strong>注意是二叉搜索树</strong>，二叉搜索树可是有序的。</p>
+<p>遇到在二叉搜索树上求什么最值啊，差值之类的，就把它想成在一个有序数组上求最值，求差值，这样就简单多了。</p>
+<h3 id="递归"><a class="header" href="#递归">递归</a></h3>
+<p>那么二叉搜索树采用中序遍历，其实就是一个有序数组。</p>
+<p><strong>在一个有序数组上求两个数最小差值，这是不是就是一道送分题了。</strong></p>
+<p>最直观的想法，就是把二叉搜索树转换成有序数组，然后遍历一遍数组，就统计出来最小差值了。</p>
+<p>代码如下：</p>
+<pre><code class="language-cpp">class Solution {
+private:
+vector&lt;int&gt; vec;
+void traversal(TreeNode* root) {
+    if (root == NULL) return;
+    traversal(root-&gt;left);
+    vec.push_back(root-&gt;val); // 将二叉搜索树转换为有序数组
+    traversal(root-&gt;right);
+}
+public:
+    int getMinimumDifference(TreeNode* root) {
+        vec.clear();
+        traversal(root);
+        if (vec.size() &lt; 2) return 0;
+        int result = INT_MAX;
+        for (int i = 1; i &lt; vec.size(); i++) { // 统计有序数组的最小差值
+            result = min(result, vec[i] - vec[i-1]);
+        }
+        return result;
+    }
+};
+</code></pre>
+<p>以上代码是把二叉搜索树转化为有序数组了，其实在二叉搜素树中序遍历的过程中，我们就可以直接计算了。</p>
+<p>需要用一个pre节点记录一下cur节点的前一个节点。</p>
+<p>如图：</p>
+<p><img src="https://code-thinking-1253855093.file.myqcloud.com/pics/20210204153247458.png" alt="530.二叉搜索树的最小绝对差" /></p>
+<p>一些同学不知道在递归中如何记录前一个节点的指针，其实实现起来是很简单的，大家只要看过一次，写过一次，就掌握了。</p>
+<p>代码如下：</p>
+<pre><code class="language-cpp">class Solution {
+private:
+int result = INT_MAX;
+TreeNode* pre = NULL;
+void traversal(TreeNode* cur) {
+    if (cur == NULL) return;
+    traversal(cur-&gt;left);   // 左
+    if (pre != NULL){       // 中
+        result = min(result, cur-&gt;val - pre-&gt;val);
+    }
+    pre = cur; // 记录前一个
+    traversal(cur-&gt;right);  // 右
+}
+public:
+    int getMinimumDifference(TreeNode* root) {
+        traversal(root);
+        return result;
+    }
+};
+</code></pre>
+<p>是不是看上去也并不复杂！</p>
+<h3 id="迭代"><a class="header" href="#迭代">迭代</a></h3>
+<p>看过这两篇<a href="https://programmercarl.com/%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E8%BF%AD%E4%BB%A3%E9%81%8D%E5%8E%86.html">二叉树：听说递归能做的，栈也能做！ (opens new window)</a>，<a href="https://programmercarl.com/%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E7%BB%9F%E4%B8%80%E8%BF%AD%E4%BB%A3%E6%B3%95.html">二叉树：前中后序迭代方式的写法就不能统一一下么？ (opens new window)</a>文章之后，不难写出两种中序遍历的迭代法。</p>
+<p>下面我给出其中的一种中序遍历的迭代法，代码如下：</p>
+<pre><code class="language-cpp">class Solution {
+public:
+    int getMinimumDifference(TreeNode* root) {
+        stack&lt;TreeNode*&gt; st;
+        TreeNode* cur = root;
+        TreeNode* pre = NULL;
+        int result = INT_MAX;
+        while (cur != NULL || !st.empty()) {
+            if (cur != NULL) { // 指针来访问节点，访问到最底层
+                st.push(cur); // 将访问的节点放进栈
+                cur = cur-&gt;left;                // 左
+            } else {
+                cur = st.top();
+                st.pop();
+                if (pre != NULL) {              // 中
+                    result = min(result, cur-&gt;val - pre-&gt;val);
+                }
+                pre = cur;
+                cur = cur-&gt;right;               // 右
+            }
+        }
+        return result;
+    }
+};
+</code></pre>
+<h3 id="总结-1"><a class="header" href="#总结-1">总结</a></h3>
+<p><strong>遇到在二叉搜索树上求什么最值，求差值之类的，都要思考一下二叉搜索树可是有序的，要利用好这一特点。</strong></p>
+<p>同时要学会在递归遍历的过程中如何记录前后两个指针，这也是一个小技巧，学会了还是很受用的。</p>
+<p>后面我将继续介绍一系列利用二叉搜索树特性的题目。</p>
+<h2 id="c解法-2"><a class="header" href="#c解法-2">C++解法</a></h2>
+<p>方法二：中序遍历，双指针，直接计算差值</p>
+<p>代码如下：</p>
+<pre><code class="language-cpp">class Solution {
+private:
+int result = INT_MAX;
+TreeNode* pre = NULL;
+void traversal(TreeNode* cur) {
+    if (cur == NULL) return;
+    traversal(cur-&gt;left);   // 左
+    if (pre != NULL){       // 中
+        result = min(result, cur-&gt;val - pre-&gt;val);
+    }
+    pre = cur; // 记录前一个
+    traversal(cur-&gt;right);  // 右
+}
+public:
+    int getMinimumDifference(TreeNode* root) {
+        traversal(root);
+        return result;
+    }
+};
+</code></pre>
+<h2 id="java解法-2"><a class="header" href="#java解法-2">Java解法</a></h2>
+<p>迭代法-中序遍历</p>
+<pre><code class="language-java">class Solution {
+    TreeNode pre;
+    Stack&lt;TreeNode&gt; stack;
+    public int getMinimumDifference(TreeNode root) {
+        if (root == null) return 0;
+        stack = new Stack&lt;&gt;();
+        TreeNode cur = root;
+        int result = Integer.MAX_VALUE;
+        while (cur != null || !stack.isEmpty()) {
+            if (cur != null) {
+                stack.push(cur); // 将访问的节点放进栈
+                cur = cur.left; // 左
+            }else {
+                cur = stack.pop(); 
+                if (pre != null) { // 中
+                    result = Math.min(result, cur.val - pre.val);
+                }
+                pre = cur;
+                cur = cur.right; // 右
+            }
+        }
+        return result;
+    }
+}
+</code></pre>
+<h2 id="python3解法-2"><a class="header" href="#python3解法-2">Python3解法</a></h2>
+<p>递归法（版本二）利用中序递增，找到该树最小值</p>
+<pre><code class="language-python">class Solution:
+    def __init__(self):
+        self.result = float('inf')
+        self.pre = None
+
+    def traversal(self, cur):
+        if cur is None:
+            return
+        self.traversal(cur.left)  # 左
+        if self.pre is not None:  # 中
+            self.result = min(self.result, cur.val - self.pre.val)
+        self.pre = cur  # 记录前一个
+        self.traversal(cur.right)  # 右
+
+    def getMinimumDifference(self, root):
+        self.traversal(root)
+        return self.result
+</code></pre>
+<h2 id="go解法-2"><a class="header" href="#go解法-2">Go解法</a></h2>
+<p>中序遍历，然后计算最小差值</p>
+<pre><code class="language-go">// 中序遍历的同时计算最小值
+func getMinimumDifference(root *TreeNode) int {
+    // 保留前一个节点的指针
+    var prev *TreeNode
+    // 定义一个比较大的值
+    min := math.MaxInt64
+    var travel func(node *TreeNode)
+    travel = func(node *TreeNode) {
+        if node == nil {
+            return 
+        }
+        travel(node.Left)
+        if prev != nil &amp;&amp; node.Val - prev.Val &lt; min {
+            min = node.Val - prev.Val
+        }
+        prev = node
+        travel(node.Right)
+    }
+    travel(root)
+    return min
+}
+</code></pre>
+<h1 id="783-minimum-distance-between-bst-nodes同上"><a class="header" href="#783-minimum-distance-between-bst-nodes同上"><a href="https://leetcode.com/problems/minimum-distance-between-bst-nodes/">783. Minimum Distance Between BST Nodes</a>（同上）</a></h1>
+<p>Given the <code>root</code> of a Binary Search Tree (BST), return <em>the minimum absolute difference between the values of any two different nodes in the tree</em>.</p>
+<p><strong>Example 1:</strong></p>
+<p><img src="https://assets.leetcode.com/uploads/2021/02/05/bst1.jpg" alt="" /></p>
+<p><strong>Input:</strong> <code>root = [4,2,6,1,3]</code><br />
+<strong>Output:</strong> 1</p>
+<p><strong>Example 2:</strong></p>
+<p><img src="https://assets.leetcode.com/uploads/2021/02/05/bst2.jpg" alt="" /></p>
+<p><strong>Input:</strong> <code>root = [1,0,48,null,null,12,49]</code><br />
+<strong>Output:</strong> 1</p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li>The number of nodes in the tree is in the range <code>[2, 10^4]</code>.</li>
+<li><code>0 &lt;= Node.val &lt;= 10^5</code></li>
+</ul>
+<h2 id="思路-3"><a class="header" href="#思路-3">思路</a></h2>
+<p>方法一：中序遍历转为有序数组，再计算差值</p>
+<p>方法二：中序遍历，双指针，直接计算差值</p>
+<h2 id="c解法-3"><a class="header" href="#c解法-3">C++解法</a></h2>
+<p>方法一：中序遍历转为有序数组，再计算差值</p>
+<pre><code class="language-cpp">/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+    vector&lt;int&gt; diffs;
+    void traversal(TreeNode* cur){
+        if(cur == NULL) return;
+        traversal(cur-&gt;left);
+        diffs.push_back(cur-&gt;val);
+        traversal(cur-&gt;right);
+    }
+    int minDiffInBST(TreeNode* root) {
+        traversal(root);
+        int result = INT_MAX;
+        for(int i = 0; i &lt; diffs.size() - 1; i++){
+            result = min(result, diffs[i + 1] - diffs[i]);
+        }
+        return result;
+    }
+};
+</code></pre>
+<h1 id="501-find-mode-in-binary-search-tree"><a class="header" href="#501-find-mode-in-binary-search-tree"><a href="https://leetcode.com/problems/find-mode-in-binary-search-tree/">501. Find Mode in Binary Search Tree</a></a></h1>
+<p>Given the <code>root</code> of a binary search tree (BST) with duplicates, return <em>all the <a href="https://en.wikipedia.org/wiki/Mode_(statistics)">mode(s)</a> (i.e., the most frequently occurred element) in it</em>.</p>
+<p>If the tree has more than one mode, return them in <strong>any order</strong>.</p>
+<p>Assume a BST is defined as follows:</p>
+<ul>
+<li>The left subtree of a node contains only nodes with keys <strong>less than or equal to</strong> the node's key.</li>
+<li>The right subtree of a node contains only nodes with keys <strong>greater than or equal to</strong> the node's key.</li>
+<li>Both the left and right subtrees must also be binary search trees.</li>
+</ul>
+<p><strong>Example 1:</strong></p>
+<p><img src="https://assets.leetcode.com/uploads/2021/03/11/mode-tree.jpg" alt="" /></p>
+<p><strong>Input:</strong> <code>root = [1,null,2,2]</code><br />
+<strong>Output:</strong> <code>[2]</code></p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> <code>root = [0]</code><br />
+<strong>Output:</strong> <code>[0]</code></p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li>The number of nodes in the tree is in the range <code>[1, 10^4]</code>.</li>
+<li><code>-10^5 &lt;= Node.val &lt;= 10^5</code></li>
+</ul>
+<p><strong>Follow up:</strong> Could you do that without using any extra space? (Assume that the implicit stack space incurred due to recursion does not count).</p>
+<h2 id="思路-4"><a class="header" href="#思路-4">思路</a></h2>
+<p>这道题目呢，递归法我从两个维度来讲。</p>
+<p>首先如果不是二叉搜索树的话，应该怎么解题，是二叉搜索树，又应该如何解题，两种方式做一个比较，可以加深大家对二叉树的理解。</p>
+<h3 id="递归法-2"><a class="header" href="#递归法-2">递归法</a></h3>
+<p>如果不是二叉搜索树，最直观的方法一定是把这个树都遍历了，用map统计频率，把频率排个序，最后取前面高频的元素的集合。</p>
+<p>具体步骤如下：</p>
+<ol>
+<li>这个树都遍历了，用map统计频率</li>
+</ol>
+<p>至于用前中后序哪种遍历也不重要，因为就是要全遍历一遍，怎么个遍历法都行，层序遍历都没毛病！</p>
+<p>这里采用前序遍历，代码如下：</p>
+<pre><code class="language-cpp">// map&lt;int, int&gt; key:元素，value:出现频率
+void searchBST(TreeNode* cur, unordered_map&lt;int, int&gt;&amp; map) { // 前序遍历
+    if (cur == NULL) return ;
+    map[cur-&gt;val]++; // 统计元素频率
+    searchBST(cur-&gt;left, map);
+    searchBST(cur-&gt;right, map);
+    return ;
+}
+</code></pre>
+<ol start="2">
+<li>把统计的出来的出现频率（即map中的value）排个序</li>
+</ol>
+<p>有的同学可能可以想直接对map中的value排序，还真做不到，C++中如果使用std::map或者std::multimap可以对key排序，但不能对value排序。</p>
+<p>所以要把map转化数组即vector，再进行排序，当然vector里面放的也是<code>pair&lt;int, int&gt;</code>类型的数据，第一个int为元素，第二个int为出现频率。</p>
+<p>代码如下：</p>
+<pre><code class="language-cpp">bool static cmp (const pair&lt;int, int&gt;&amp; a, const pair&lt;int, int&gt;&amp; b) {
+    return a.second &gt; b.second; // 按照频率从大到小排序
+}
+
+vector&lt;pair&lt;int, int&gt;&gt; vec(map.begin(), map.end());
+sort(vec.begin(), vec.end(), cmp); // 给频率排个序
+</code></pre>
+<ol start="3">
+<li>取前面高频的元素</li>
+</ol>
+<p>此时数组vector中已经是存放着按照频率排好序的pair，那么把前面高频的元素取出来就可以了。</p>
+<p>代码如下：</p>
+<pre><code class="language-cpp">result.push_back(vec[0].first);
+for (int i = 1; i &lt; vec.size(); i++) {
+    // 取最高的放到result数组中
+    if (vec[i].second == vec[0].second) result.push_back(vec[i].first);
+    else break;
+}
+return result;
+</code></pre>
+<p><strong>所以如果本题没有说是二叉搜索树的话，那么就按照上面的思路写！</strong></p>
+<p><strong>既然是搜索树，它中序遍历就是有序的</strong>。</p>
+<p>如图：</p>
+<p><img src="https://code-thinking-1253855093.file.myqcloud.com/pics/20210204152758889.png" alt="501.二叉搜索树中的众数1" /></p>
+<p>中序遍历代码如下：</p>
+<pre><code class="language-cpp">void searchBST(TreeNode* cur) {
+    if (cur == NULL) return ;
+    searchBST(cur-&gt;left);       // 左
+    （处理节点）                // 中
+    searchBST(cur-&gt;right);      // 右
+    return ;
+}
+</code></pre>
+<p>遍历有序数组的元素出现频率，从头遍历，那么一定是相邻两个元素作比较，然后就把出现频率最高的元素输出就可以了。</p>
+<p>关键是在有序数组上的话，好搞，在树上怎么搞呢？</p>
+<p>这就考察对树的操作了。</p>
+<p>在<a href="https://programmercarl.com/0530.%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91%E7%9A%84%E6%9C%80%E5%B0%8F%E7%BB%9D%E5%AF%B9%E5%B7%AE.html">二叉树：搜索树的最小绝对差 (opens new window)</a>中我们就使用了pre指针和cur指针的技巧，这次又用上了。</p>
+<p>弄一个指针指向前一个节点，这样每次cur（当前节点）才能和pre（前一个节点）作比较。</p>
+<p>而且初始化的时候pre = NULL，这样当pre为NULL时候，我们就知道这是比较的第一个元素。</p>
+<p>代码如下：</p>
+<pre><code class="language-cpp">if (pre == NULL) { // 第一个节点
+    count = 1; // 频率为1
+} else if (pre-&gt;val == cur-&gt;val) { // 与前一个节点数值相同
+    count++;
+} else { // 与前一个节点数值不同
+    count = 1;
+}
+pre = cur; // 更新上一个节点
+</code></pre>
+<p>此时又有问题了，因为要求最大频率的元素集合（注意是集合，不是一个元素，可以有多个众数），如果是数组上大家一般怎么办？</p>
+<p>应该是先遍历一遍数组，找出最大频率（maxCount），然后再重新遍历一遍数组把出现频率为maxCount的元素放进集合。（因为众数有多个）</p>
+<p>这种方式遍历了两遍数组。</p>
+<p>那么我们遍历两遍二叉搜索树，把众数集合算出来也是可以的。</p>
+<p>但这里其实只需要遍历一次就可以找到所有的众数。</p>
+<p>那么如何只遍历一遍呢？</p>
+<p>如果 频率count 等于 maxCount（最大频率），当然要把这个元素加入到结果集中（以下代码为result数组），代码如下：</p>
+<pre><code class="language-cpp">if (count == maxCount) { // 如果和最大值相同，放进result中
+    result.push_back(cur-&gt;val);
+}
+</code></pre>
+<p>是不是感觉这里有问题，result怎么能轻易就把元素放进去了呢，万一，这个maxCount此时还不是真正最大频率呢。</p>
+<p>所以下面要做如下操作：</p>
+<p>频率count 大于 maxCount的时候，不仅要更新maxCount，而且要清空结果集（以下代码为result数组），因为结果集之前的元素都失效了。</p>
+<pre><code class="language-cpp">if (count &gt; maxCount) { // 如果计数大于最大值
+    maxCount = count;   // 更新最大频率
+    result.clear();     // 很关键的一步，不要忘记清空result，之前result里的元素都失效了
+    result.push_back(cur-&gt;val);
+}
+</code></pre>
+<h3 id="迭代法-2"><a class="header" href="#迭代法-2">迭代法</a></h3>
+<p>只要把中序遍历转成迭代，中间节点的处理逻辑完全一样。</p>
+<p>二叉树前中后序转迭代，传送门：</p>
+<ul>
+<li><a href="https://programmercarl.com/%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E8%BF%AD%E4%BB%A3%E9%81%8D%E5%8E%86.html">二叉树：前中后序迭代法(opens new window)</a></li>
+<li><a href="https://programmercarl.com/%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E7%BB%9F%E4%B8%80%E8%BF%AD%E4%BB%A3%E6%B3%95.html">二叉树：前中后序统一风格的迭代方式(opens new window)</a></li>
+</ul>
+<p>下面我给出其中的一种中序遍历的迭代法，其中间处理逻辑一点都没有变（我从递归法直接粘过来的代码，连注释都没改）</p>
+<p>代码如下：</p>
+<pre><code class="language-cpp">class Solution {
+public:
+    vector&lt;int&gt; findMode(TreeNode* root) {
+        stack&lt;TreeNode*&gt; st;
+        TreeNode* cur = root;
+        TreeNode* pre = NULL;
+        int maxCount = 0; // 最大频率
+        int count = 0; // 统计频率
+        vector&lt;int&gt; result;
+        while (cur != NULL || !st.empty()) {
+            if (cur != NULL) { // 指针来访问节点，访问到最底层
+                st.push(cur); // 将访问的节点放进栈
+                cur = cur-&gt;left;                // 左
+            } else {
+                cur = st.top();
+                st.pop();                       // 中
+                if (pre == NULL) { // 第一个节点
+                    count = 1;
+                } else if (pre-&gt;val == cur-&gt;val) { // 与前一个节点数值相同
+                    count++;
+                } else { // 与前一个节点数值不同
+                    count = 1;
+                }
+                if (count == maxCount) { // 如果和最大值相同，放进result中
+                    result.push_back(cur-&gt;val);
+                }
+
+                if (count &gt; maxCount) { // 如果计数大于最大值频率
+                    maxCount = count;   // 更新最大频率
+                    result.clear();     // 很关键的一步，不要忘记清空result，之前result里的元素都失效了
+                    result.push_back(cur-&gt;val);
+                }
+                pre = cur;
+                cur = cur-&gt;right;               // 右
+            }
+        }
+        return result;
+    }
+};
+</code></pre>
+<h3 id="总结-2"><a class="header" href="#总结-2">总结</a></h3>
+<p>本题在递归法中，我给出了如果是普通二叉树，应该怎么求众数。</p>
+<p>知道了普通二叉树的做法时候，我再进一步给出二叉搜索树又应该怎么求众数，这样鲜明的对比，相信会对二叉树又有更深层次的理解了。</p>
+<p>在递归遍历二叉搜索树的过程中，我还介绍了一个统计最高出现频率元素集合的技巧， 要不然就要遍历两次二叉搜索树才能把这个最高出现频率元素的集合求出来。</p>
+<p><strong>为什么没有这个技巧一定要遍历两次呢？ 因为要求的是集合，会有多个众数，如果规定只有一个众数，那么就遍历一次稳稳的了。</strong></p>
+<p>最后我依然给出对应的迭代法，其实就是迭代法中序遍历的模板加上递归法中中间节点的处理逻辑，分分钟就可以写出来，中间逻辑的代码我都是从递归法中直接粘过来的。</p>
+<p><strong>求二叉搜索树中的众数其实是一道简单题，但大家可以发现我写了这么一大篇幅的文章来讲解，主要是为了尽量从各个角度对本题进剖析，帮助大家更快更深入理解二叉树</strong>。</p>
+<blockquote>
+<p><strong>需要强调的是 leetcode上的耗时统计是非常不准确的，看个大概就行，一样的代码耗时可以差百分之50以上</strong>，所以leetcode的耗时统计别太当回事，知道理论上的效率优劣就行了。</p>
+</blockquote>
+<h2 id="c解法-4"><a class="header" href="#c解法-4">C++解法</a></h2>
+<p>普通二叉树处理方式完整代码如下所示：</p>
+<pre><code class="language-cpp">class Solution {
+private:
+
+void searchBST(TreeNode* cur, unordered_map&lt;int, int&gt;&amp; map) { // 前序遍历
+    if (cur == NULL) return ;
+    map[cur-&gt;val]++; // 统计元素频率
+    searchBST(cur-&gt;left, map);
+    searchBST(cur-&gt;right, map);
+    return ;
+}
+bool static cmp (const pair&lt;int, int&gt;&amp; a, const pair&lt;int, int&gt;&amp; b) {
+    return a.second &gt; b.second;
+}
+public:
+    vector&lt;int&gt; findMode(TreeNode* root) {
+        unordered_map&lt;int, int&gt; map; // key:元素，value:出现频率
+        vector&lt;int&gt; result;
+        if (root == NULL) return result;
+        searchBST(root, map);
+        vector&lt;pair&lt;int, int&gt;&gt; vec(map.begin(), map.end());
+        sort(vec.begin(), vec.end(), cmp); // 给频率排个序
+        result.push_back(vec[0].first);
+        for (int i = 1; i &lt; vec.size(); i++) {
+            // 取最高的放到result数组中
+            if (vec[i].second == vec[0].second) result.push_back(vec[i].first);
+            else break;
+        }
+        return result;
+    }
+};
+</code></pre>
+<p>双指针处理方式完整代码如下：（<strong>只需要遍历一遍二叉搜索树，就求出了众数的集合</strong>）</p>
+<pre><code class="language-cpp">class Solution {
+private:
+    int maxCount = 0; // 最大频率
+    int count = 0; // 统计频率
+    TreeNode* pre = NULL;
+    vector&lt;int&gt; result;
+    void searchBST(TreeNode* cur) {
+        if (cur == NULL) return ;
+
+        searchBST(cur-&gt;left);       // 左
+                                    // 中
+        if (pre == NULL) { // 第一个节点
+            count = 1;
+        } else if (pre-&gt;val == cur-&gt;val) { // 与前一个节点数值相同
+            count++;
+        } else { // 与前一个节点数值不同
+            count = 1;
+        }
+        pre = cur; // 更新上一个节点
+
+        if (count == maxCount) { // 如果和最大值相同，放进result中
+            result.push_back(cur-&gt;val);
+        }
+
+        if (count &gt; maxCount) { // 如果计数大于最大值频率
+            maxCount = count;   // 更新最大频率
+            result.clear();     // 很关键的一步，不要忘记清空result，之前result里的元素都失效了
+            result.push_back(cur-&gt;val);
+        }
+
+        searchBST(cur-&gt;right);      // 右
+        return ;
+    }
+
+public:
+    vector&lt;int&gt; findMode(TreeNode* root) {
+        count = 0;
+        maxCount = 0;
+        pre = NULL; // 记录前一个节点
+        result.clear();
+
+        searchBST(root);
+        return result;
+    }
+};
+</code></pre>
+<h2 id="java解法-3"><a class="header" href="#java解法-3">Java解法</a></h2>
+<p>迭代法</p>
+<pre><code class="language-java">class Solution {
+    public int[] findMode(TreeNode root) {
+        TreeNode pre = null;
+        Stack&lt;TreeNode&gt; stack = new Stack&lt;&gt;();
+        List&lt;Integer&gt; result = new ArrayList&lt;&gt;();
+        int maxCount = 0;
+        int count = 0;
+        TreeNode cur = root;
+        while (cur != null || !stack.isEmpty()) {
+            if (cur != null) {
+                stack.push(cur);
+                cur =cur.left;
+            }else {
+                cur = stack.pop();
+                // 计数
+                if (pre == null || cur.val != pre.val) {
+                    count = 1;
+                }else {
+                    count++;
+                }
+                // 更新结果
+                if (count &gt; maxCount) {
+                    maxCount = count;
+                    result.clear();
+                    result.add(cur.val);
+                }else if (count == maxCount) {
+                    result.add(cur.val);
+                }
+                pre = cur;
+                cur = cur.right;
+            }
+        }
+        return result.stream().mapToInt(Integer::intValue).toArray();
+    }
+}
+</code></pre>
+<h2 id="python3解法-3"><a class="header" href="#python3解法-3">Python3解法</a></h2>
+<p>递归法（版本二）利用二叉搜索树性质</p>
+<pre><code class="language-python">class Solution:
+    def __init__(self):
+        self.maxCount = 0  # 最大频率
+        self.count = 0  # 统计频率
+        self.pre = None
+        self.result = []
+
+    def searchBST(self, cur):
+        if cur is None:
+            return
+
+        self.searchBST(cur.left)  # 左
+        # 中
+        if self.pre is None:  # 第一个节点
+            self.count = 1
+        elif self.pre.val == cur.val:  # 与前一个节点数值相同
+            self.count += 1
+        else:  # 与前一个节点数值不同
+            self.count = 1
+        self.pre = cur  # 更新上一个节点
+
+        if self.count == self.maxCount:  # 如果与最大值频率相同，放进result中
+            self.result.append(cur.val)
+
+        if self.count &gt; self.maxCount:  # 如果计数大于最大值频率
+            self.maxCount = self.count  # 更新最大频率
+            self.result = [cur.val]  # 很关键的一步，不要忘记清空result，之前result里的元素都失效了
+
+        self.searchBST(cur.right)  # 右
+        return
+
+    def findMode(self, root):
+        self.count = 0
+        self.maxCount = 0
+        self.pre = None  # 记录前一个节点
+        self.result = []
+
+        self.searchBST(root)
+        return self.result
+</code></pre>
+<h2 id="go解法-3"><a class="header" href="#go解法-3">Go解法</a></h2>
+<p>计数法，不使用额外空间，利用二叉树性质，中序遍历</p>
+<pre><code class="language-go">func findMode(root *TreeNode) []int {
+    res := make([]int, 0)
+    count := 1
+    max := 1
+    var prev *TreeNode
+    var travel func(node *TreeNode) 
+    travel = func(node *TreeNode) {
+        if node == nil {
+            return
+        }
+        travel(node.Left)
+        if prev != nil &amp;&amp; prev.Val == node.Val {
+            count++
+        } else {
+            count = 1
+        }
+        if count &gt;= max {
+            if count &gt; max &amp;&amp; len(res) &gt; 0 {
+                res = []int{node.Val}
+            } else {
+                res = append(res, node.Val)
+            }
+            max = count
+        }
+        prev = node
+        travel(node.Right)
+    }
+    travel(root)
+    return res
+}
+</code></pre>
+<h1 id="235-lowest-common-ancestor-of-a-binary-search-tree"><a class="header" href="#235-lowest-common-ancestor-of-a-binary-search-tree"><a href="https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-search-tree/">235. Lowest Common Ancestor of a Binary Search Tree</a></a></h1>
+<p>Given a binary search tree (BST), find the lowest common ancestor (LCA) node of two given nodes in the BST.</p>
+<p>According to the <a href="https://en.wikipedia.org/wiki/Lowest_common_ancestor">definition of LCA on Wikipedia</a>: “The lowest common ancestor is defined between two nodes <code>p</code> and <code>q</code> as the lowest node in <code>T</code> that has both <code>p</code> and <code>q</code> as descendants (where we allow <strong>a node to be a descendant of itself</strong>).”</p>
+<p><strong>Example 1:</strong></p>
+<p><img src="https://assets.leetcode.com/uploads/2018/12/14/binarysearchtree_improved.png" alt="" /></p>
+<p><strong>Input:</strong> <code>root = [6,2,8,0,4,7,9,null,null,3,5], p = 2, q = 8</code><br />
+<strong>Output:</strong> 6<br />
+<strong>Explanation:</strong> The LCA of nodes 2 and 8 is 6.</p>
+<p><strong>Example 2:</strong></p>
+<p><img src="https://assets.leetcode.com/uploads/2018/12/14/binarysearchtree_improved.png" alt="" /></p>
+<p><strong>Input:</strong> <code>root = [6,2,8,0,4,7,9,null,null,3,5], p = 2, q = 4</code><br />
+<strong>Output:</strong> 2<br />
+<strong>Explanation:</strong> The LCA of nodes 2 and 4 is 2, since a node can be a descendant of itself according to the LCA definition.</p>
+<p><strong>Example 3:</strong></p>
+<p><strong>Input:</strong> <code>root = [2,1], p = 2, q = 1</code>
+<strong>Output:</strong> 2</p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li>The number of nodes in the tree is in the range <code>[2, 10^5]</code>.</li>
+<li><code>-10^9 &lt;= Node.val &lt;= 10^9</code></li>
+<li>All <code>Node.val</code> are <strong>unique</strong>.</li>
+<li><code>p != q</code></li>
+<li><code>p</code> and <code>q</code> will exist in the BST.</li>
+</ul>
+<h2 id="思路-5"><a class="header" href="#思路-5">思路</a></h2>
+<p>做过<a href="https://programmercarl.com/0236.%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E6%9C%80%E8%BF%91%E5%85%AC%E5%85%B1%E7%A5%96%E5%85%88.html">二叉树：公共祖先问题 (opens new window)</a>题目的同学应该知道，利用回溯从底向上搜索，遇到一个节点的左子树里有p，右子树里有q，那么当前节点就是最近公共祖先。</p>
+<p>那么本题是二叉搜索树，二叉搜索树是有序的，那得好好利用一下这个特点。</p>
+<p>在有序树里，如果判断一个节点的左子树里有p，右子树里有q呢？</p>
+<p>因为是有序树，所以 如果 中间节点是 q 和 p 的公共祖先，那么 中节点的数组 一定是在 [p, q]区间的。即 中节点 &gt; p &amp;&amp; 中节点 &lt; q 或者 中节点 &gt; q &amp;&amp; 中节点 &lt; p。</p>
+<p>那么只要从上到下去遍历，遇到 cur节点是数值在[p, q]区间中则一定可以说明该节点cur就是p 和 q的公共祖先。 那问题来了，<strong>一定是最近公共祖先吗</strong>？</p>
+<p>如图，我们从根节点搜索，第一次遇到 cur节点是数值在[q, p]区间中，即 节点5，此时可以说明 q 和 p 一定分别存在于 节点 5的左子树，和右子树中。</p>
+<p><img src="https://code-thinking-1253855093.file.myqcloud.com/pics/20220926164214.png" alt="235.二叉搜索树的最近公共祖先" /></p>
+<p>此时节点5是不是最近公共祖先？ 如果 从节点5继续向左遍历，那么将错过成为p的祖先， 如果从节点5继续向右遍历则错过成为q的祖先。</p>
+<p>所以当我们从上向下去递归遍历，第一次遇到 cur节点是数值在[q, p]区间中，那么cur就是 q和p的最近公共祖先。</p>
+<p>理解这一点，本题就很好解了。</p>
+<p>而递归遍历顺序，本题就不涉及到 前中后序了（这里没有中节点的处理逻辑，遍历顺序无所谓了）。</p>
+<p>如图所示：p为节点6，q为节点9</p>
+<p><img src="https://code-thinking-1253855093.file.myqcloud.com/pics/20220926165141.png" alt="235.二叉搜索树的最近公共祖先2" /></p>
+<p>可以看出直接按照指定的方向，就可以找到节点8，为最近公共祖先，而且不需要遍历整棵树，找到结果直接返回！</p>
+<h3 id="递归法-3"><a class="header" href="#递归法-3">递归法</a></h3>
+<p>递归三部曲如下：</p>
+<ul>
+<li>确定递归函数返回值以及参数</li>
+</ul>
+<p>参数就是当前节点，以及两个结点 p、q。</p>
+<p>返回值是要返回最近公共祖先，所以是TreeNode * 。</p>
+<p>代码如下：</p>
+<pre><code class="language-cpp">TreeNode* traversal(TreeNode* cur, TreeNode* p, TreeNode* q)
+</code></pre>
+<ul>
+<li>确定终止条件</li>
+</ul>
+<p>遇到空返回就可以了，代码如下：</p>
+<pre><code class="language-cpp">if (cur == NULL) return cur;
+</code></pre>
+<p>其实都不需要这个终止条件，因为题目中说了p、q 为不同节点且均存在于给定的二叉搜索树中。也就是说一定会找到公共祖先的，所以并不存在遇到空的情况。</p>
+<ul>
+<li>确定单层递归的逻辑</li>
+</ul>
+<p>在遍历二叉搜索树的时候就是寻找区间<code>[p-&gt;val, q-&gt;val]</code>（注意这里是左闭又闭）</p>
+<p>那么如果 cur-&gt;val 大于 p-&gt;val，同时 cur-&gt;val 大于q-&gt;val，那么就应该向左遍历（说明目标区间在左子树上）。</p>
+<p><strong>需要注意的是此时不知道p和q谁大，所以两个都要判断</strong></p>
+<p>代码如下：</p>
+<pre><code class="language-cpp">if (cur-&gt;val &gt; p-&gt;val &amp;&amp; cur-&gt;val &gt; q-&gt;val) {
+    TreeNode* left = traversal(cur-&gt;left, p, q);
+    if (left != NULL) {
+        return left;
+    }
+}
+</code></pre>
+<p><strong>细心的同学会发现，在这里调用递归函数的地方，把递归函数的返回值left，直接return</strong>。</p>
+<p>在<a href="https://programmercarl.com/0236.%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E6%9C%80%E8%BF%91%E5%85%AC%E5%85%B1%E7%A5%96%E5%85%88.html">二叉树：公共祖先问题 (opens new window)</a>中，如果递归函数有返回值，如何区分要搜索一条边，还是搜索整个树。</p>
+<p>搜索一条边的写法：</p>
+<pre><code class="language-cpp">if (递归函数(root-&gt;left)) return ;
+if (递归函数(root-&gt;right)) return ;
+</code></pre>
+<p>搜索整个树写法：</p>
+<pre><code class="language-cpp">left = 递归函数(root-&gt;left);
+right = 递归函数(root-&gt;right);
+left与right的逻辑处理;
+</code></pre>
+<p>本题就是标准的搜索一条边的写法，遇到递归函数的返回值，如果不为空，立刻返回。</p>
+<p>如果 cur-&gt;val 小于 p-&gt;val，同时 cur-&gt;val 小于 q-&gt;val，那么就应该向右遍历（目标区间在右子树）。</p>
+<pre><code class="language-cpp">if (cur-&gt;val &lt; p-&gt;val &amp;&amp; cur-&gt;val &lt; q-&gt;val) {
+    TreeNode* right = traversal(cur-&gt;right, p, q);
+    if (right != NULL) {
+        return right;
+    }
+}
+</code></pre>
+<p>剩下的情况，就是cur节点在区间（p-&gt;val &lt;= cur-&gt;val &amp;&amp; cur-&gt;val &lt;= q-&gt;val）或者 （q-&gt;val &lt;= cur-&gt;val &amp;&amp; cur-&gt;val &lt;= p-&gt;val）中，那么cur就是最近公共祖先了，直接返回cur。</p>
+<p>代码如下：</p>
+<pre><code class="language-cpp">return cur;
+</code></pre>
+<h3 id="迭代法-3"><a class="header" href="#迭代法-3">迭代法</a></h3>
+<p>对于二叉搜索树的迭代法，大家应该在<a href="https://programmercarl.com/0700.%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91%E4%B8%AD%E7%9A%84%E6%90%9C%E7%B4%A2.html">二叉树：二叉搜索树登场！ (opens new window)</a>就了解了。</p>
+<p>利用其有序性，迭代的方式还是比较简单的，解题思路在递归中已经分析了。</p>
+<h3 id="总结-3"><a class="header" href="#总结-3">总结</a></h3>
+<p>对于二叉搜索树的最近祖先问题，其实要比<a href="https://programmercarl.com/0236.%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E6%9C%80%E8%BF%91%E5%85%AC%E5%85%B1%E7%A5%96%E5%85%88.html">普通二叉树公共祖先问题 (opens new window)</a>简单的多。</p>
+<p>不用使用回溯，二叉搜索树自带方向性，可以方便的从上向下查找目标区间，遇到目标区间内的节点，直接返回。</p>
+<p>最后给出了对应的迭代法，二叉搜索树的迭代法甚至比递归更容易理解，也是因为其有序性（自带方向性），按照目标区间找就行了。</p>
+<h2 id="c解法-5"><a class="header" href="#c解法-5">C++解法</a></h2>
+<p>那么整体递归代码如下:</p>
+<pre><code class="language-cpp">class Solution {
+private:
+    TreeNode* traversal(TreeNode* cur, TreeNode* p, TreeNode* q) {
+        if (cur == NULL) return cur;
+                                                        // 中
+        if (cur-&gt;val &gt; p-&gt;val &amp;&amp; cur-&gt;val &gt; q-&gt;val) {   // 左
+            TreeNode* left = traversal(cur-&gt;left, p, q);
+            if (left != NULL) {
+                return left;
+            }
+        }
+
+        if (cur-&gt;val &lt; p-&gt;val &amp;&amp; cur-&gt;val &lt; q-&gt;val) {   // 右
+            TreeNode* right = traversal(cur-&gt;right, p, q);
+            if (right != NULL) {
+                return right;
+            }
+        }
+        return cur;
+    }
+public:
+    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+        return traversal(root, p, q);
+    }
+};
+</code></pre>
+<p>精简后代码如下：</p>
+<pre><code class="language-cpp">class Solution {
+public:
+    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+        if (root-&gt;val &gt; p-&gt;val &amp;&amp; root-&gt;val &gt; q-&gt;val) {
+            return lowestCommonAncestor(root-&gt;left, p, q);
+        } else if (root-&gt;val &lt; p-&gt;val &amp;&amp; root-&gt;val &lt; q-&gt;val) {
+            return lowestCommonAncestor(root-&gt;right, p, q);
+        } else return root;
+    }
+};
+</code></pre>
+<p>迭代代码如下：</p>
+<pre><code class="language-cpp">class Solution {
+public:
+    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+        while(root) {
+            if (root-&gt;val &gt; p-&gt;val &amp;&amp; root-&gt;val &gt; q-&gt;val) {
+                root = root-&gt;left;
+            } else if (root-&gt;val &lt; p-&gt;val &amp;&amp; root-&gt;val &lt; q-&gt;val) {
+                root = root-&gt;right;
+            } else return root;
+        }
+        return NULL;
+    }
+};
+</code></pre>
+<p>灵魂拷问：是不是又被简单的迭代法感动到痛哭流涕？</p>
+<h2 id="java解法-4"><a class="header" href="#java解法-4">Java解法</a></h2>
+<p>迭代法</p>
+<pre><code class="language-java">class Solution {
+    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        while (true) {
+            if (root.val &gt; p.val &amp;&amp; root.val &gt; q.val) {
+                root = root.left;
+            } else if (root.val &lt; p.val &amp;&amp; root.val &lt; q.val) {
+                root = root.right;
+            } else {
+                break;
+            }
+        }
+        return root;
+    }
+}
+</code></pre>
+<h2 id="python3解法-4"><a class="header" href="#python3解法-4">Python3解法</a></h2>
+<p>递归法（版本一）</p>
+<pre><code class="language-python">class Solution:
+    def traversal(self, cur, p, q):
+        if cur is None:
+            return cur
+                                                        # 中
+        if cur.val &gt; p.val and cur.val &gt; q.val:           # 左
+            left = self.traversal(cur.left, p, q)
+            if left is not None:
+                return left
+
+        if cur.val &lt; p.val and cur.val &lt; q.val:           # 右
+            right = self.traversal(cur.right, p, q)
+            if right is not None:
+                return right
+
+        return cur
+
+    def lowestCommonAncestor(self, root, p, q):
+        return self.traversal(root, p, q)
+</code></pre>
+<p>递归法（版本二）精简</p>
+<pre><code class="language-python">class Solution:
+    def lowestCommonAncestor(self, root, p, q):
+        if root.val &gt; p.val and root.val &gt; q.val:
+            return self.lowestCommonAncestor(root.left, p, q)
+        elif root.val &lt; p.val and root.val &lt; q.val:
+            return self.lowestCommonAncestor(root.right, p, q)
+        else:
+            return root
+</code></pre>
+<h2 id="go解法-4"><a class="header" href="#go解法-4">Go解法</a></h2>
+<p>递归法</p>
+<pre><code class="language-go">func lowestCommonAncestor(root, p, q *TreeNode) *TreeNode {
+    if root.Val &gt; p.Val &amp;&amp; root.Val &gt; q.Val {
+        return lowestCommonAncestor(root.Left, p, q)
+    } else if root.Val &lt; p.Val &amp;&amp; root.Val &lt; q.Val {
+        return lowestCommonAncestor(root.Right, p, q)
+    } else {
+        return root
+    }
+}
+</code></pre>
+<h1 id="701-insert-into-a-binary-search-tree"><a class="header" href="#701-insert-into-a-binary-search-tree"><a href="https://leetcode.com/problems/insert-into-a-binary-search-tree/">701. Insert into a Binary Search Tree</a></a></h1>
+<p>You are given the <code>root</code> node of a binary search tree (BST) and a <code>value</code> to insert into the tree. Return <em>the root node of the BST after the insertion</em>. It is <strong>guaranteed</strong> that the new value does not exist in the original BST.</p>
+<p><strong>Notice</strong> that there may exist multiple valid ways for the insertion, as long as the tree remains a BST after insertion. You can return <strong>any of them</strong>.</p>
+<p><strong>Example 1:</strong></p>
+<p><img src="https://assets.leetcode.com/uploads/2020/10/05/insertbst.jpg" alt="" /></p>
+<p><strong>Input:</strong> <code>root = [4,2,7,1,3], val = 5</code><br />
+<strong>Output:</strong> <code>[4,2,7,1,3,5]</code><br />
+<strong>Explanation:</strong> Another accepted tree is:
+<img src="https://assets.leetcode.com/uploads/2020/10/05/bst.jpg" alt="" /></p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> <code>root = [40,20,60,10,30,50,70], val = 25</code><br />
+<strong>Output:</strong> <code>[40,20,60,10,30,50,70,null,null,25]</code></p>
+<p><strong>Example 3:</strong></p>
+<p><strong>Input:</strong> <code>root = [4,2,7,1,3,null,null,null,null,null,null], val = 5</code><br />
+<strong>Output:</strong> <code>[4,2,7,1,3,5]</code></p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li>The number of nodes in the tree will be in the range <code>[0, 10^4]</code>.</li>
+<li><code>-10^8 &lt;= Node.val &lt;= 10^8</code></li>
+<li>All the values <code>Node.val</code> are <strong>unique</strong>.</li>
+<li><code>-10^8 &lt;= val &lt;= 10^8</code></li>
+<li>It's <strong>guaranteed</strong> that <code>val</code> does not exist in the original BST.</li>
+</ul>
+<h2 id="思路-6"><a class="header" href="#思路-6">思路</a></h2>
+<p>这道题目其实是一道简单题目，<strong>但是题目中的提示：有多种有效的插入方式，还可以重构二叉搜索树，一下子吓退了不少人</strong>，瞬间感觉题目复杂了很多。</p>
+<p>其实<strong>可以不考虑题目中提示所说的改变树的结构的插入方式。</strong></p>
+<p>如下演示视频中可以看出：只要按照二叉搜索树的规则去遍历，遇到空节点就插入节点就可以了。</p>
+<p><img src="https://code-thinking.cdn.bcebos.com/gifs/701.%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91%E4%B8%AD%E7%9A%84%E6%8F%92%E5%85%A5%E6%93%8D%E4%BD%9C.gif" alt="701.二叉搜索树中的插入操作" /></p>
+<p>例如插入元素10 ，需要找到末尾节点插入便可，一样的道理来插入元素15，插入元素0，插入元素6，<strong>需要调整二叉树的结构么？ 并不需要。</strong>。</p>
+<p>只要遍历二叉搜索树，找到空节点 插入元素就可以了，那么这道题其实就简单了。</p>
+<p>接下来就是遍历二叉搜索树的过程了。</p>
+<h3 id="递归-1"><a class="header" href="#递归-1">递归</a></h3>
+<p>递归三部曲：</p>
+<ul>
+<li>确定递归函数参数以及返回值</li>
+</ul>
+<p>参数就是根节点指针，以及要插入元素，这里递归函数要不要有返回值呢？</p>
+<p>可以有，也可以没有，但递归函数如果没有返回值的话，实现是比较麻烦的，下面也会给出其具体实现代码。</p>
+<p><strong>有返回值的话，可以利用返回值完成新加入的节点与其父节点的赋值操作</strong>。（下面会进一步解释）</p>
+<p>递归函数的返回类型为节点类型TreeNode * 。</p>
+<p>代码如下：</p>
+<pre><code class="language-cpp">TreeNode* insertIntoBST(TreeNode* root, int val)
+</code></pre>
+<ul>
+<li>确定终止条件</li>
+</ul>
+<p>终止条件就是找到遍历的节点为null的时候，就是要插入节点的位置了，并把插入的节点返回。</p>
+<p>代码如下：</p>
+<pre><code class="language-cpp">if (root == NULL) {
+    TreeNode* node = new TreeNode(val);
+    return node;
+}
+</code></pre>
+<p>这里把添加的节点返回给上一层，就完成了父子节点的赋值操作了，详细再往下看。</p>
+<ul>
+<li>确定单层递归的逻辑</li>
+</ul>
+<p>此时要明确，需要遍历整棵树么？</p>
+<p>别忘了这是搜索树，遍历整棵搜索树简直是对搜索树的侮辱。</p>
+<p>搜索树是有方向了，可以根据插入元素的数值，决定递归方向。</p>
+<p>代码如下：</p>
+<pre><code class="language-cpp">if (root-&gt;val &gt; val) root-&gt;left = insertIntoBST(root-&gt;left, val);
+if (root-&gt;val &lt; val) root-&gt;right = insertIntoBST(root-&gt;right, val);
+return root;
+</code></pre>
+<p><strong>到这里，大家应该能感受到，如何通过递归函数返回值完成了新加入节点的父子关系赋值操作了，下一层将加入节点返回，本层用root-&gt;left或者root-&gt;right将其接住</strong>。</p>
+<p>刚刚说了递归函数不用返回值也可以，找到插入的节点位置，直接让其父节点指向插入节点，结束递归，也是可以的。</p>
+<h3 id="迭代-1"><a class="header" href="#迭代-1">迭代</a></h3>
+<p>再来看看迭代法，对二叉搜索树迭代写法不熟悉，可以看这篇：<a href="https://programmercarl.com/0700.%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91%E4%B8%AD%E7%9A%84%E6%90%9C%E7%B4%A2.html">二叉树：二叉搜索树登场！(opens new window)</a></p>
+<p>在迭代法遍历的过程中，需要记录一下当前遍历的节点的父节点，这样才能做插入节点的操作。</p>
+<p>在<a href="https://programmercarl.com/0530.%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91%E7%9A%84%E6%9C%80%E5%B0%8F%E7%BB%9D%E5%AF%B9%E5%B7%AE.html">二叉树：搜索树的最小绝对差 (opens new window)</a>和<a href="https://programmercarl.com/0501.%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91%E4%B8%AD%E7%9A%84%E4%BC%97%E6%95%B0.html">二叉树：我的众数是多少？ (opens new window)</a>中，都是用了记录pre和cur两个指针的技巧，本题也是一样的。</p>
+<h3 id="总结-4"><a class="header" href="#总结-4">总结</a></h3>
+<p>首先在二叉搜索树中的插入操作，大家不用恐惧其重构搜索树，其实根本不用重构。</p>
+<p>然后在递归中，我们重点讲了如何通过递归函数的返回值完成新加入节点和其父节点的赋值操作，并强调了搜索树的有序性。</p>
+<p>最后依然给出了迭代的方法，迭代的方法就需要记录当前遍历节点的父节点了，这个和没有返回值的递归函数实现的代码逻辑是一样的。</p>
+<h2 id="c解法-6"><a class="header" href="#c解法-6">C++解法</a></h2>
+<p>递归法整体代码如下：</p>
+<pre><code class="language-cpp">class Solution {
+public:
+    TreeNode* insertIntoBST(TreeNode* root, int val) {
+        if (root == NULL) {
+            TreeNode* node = new TreeNode(val);
+            return node;
+        }
+        if (root-&gt;val &gt; val) root-&gt;left = insertIntoBST(root-&gt;left, val);
+        if (root-&gt;val &lt; val) root-&gt;right = insertIntoBST(root-&gt;right, val);
+        return root;
+    }
+};
+</code></pre>
+<p>那么递归函数定义如下：</p>
+<pre><code class="language-cpp">TreeNode* parent; // 记录遍历节点的父节点
+void traversal(TreeNode* cur, int val)
+</code></pre>
+<p>没有返回值，需要记录上一个节点（parent），遇到空节点了，就让parent左孩子或者右孩子指向新插入的节点。然后结束递归。</p>
+<p>代码如下：</p>
+<pre><code class="language-cpp">class Solution {
+private:
+    TreeNode* parent;
+    void traversal(TreeNode* cur, int val) {
+        if (cur == NULL) {
+            TreeNode* node = new TreeNode(val);
+            if (val &gt; parent-&gt;val) parent-&gt;right = node;
+            else parent-&gt;left = node;
+            return;
+        }
+        parent = cur;
+        if (cur-&gt;val &gt; val) traversal(cur-&gt;left, val);
+        if (cur-&gt;val &lt; val) traversal(cur-&gt;right, val);
+        return;
+    }
+
+public:
+    TreeNode* insertIntoBST(TreeNode* root, int val) {
+        parent = new TreeNode(0);
+        if (root == NULL) {
+            root = new TreeNode(val);
+        }
+        traversal(root, val);
+        return root;
+    }
+};
+</code></pre>
+<p>可以看出还是麻烦一些的。</p>
+<p>我之所以举这个例子，是想说明通过递归函数的返回值完成父子节点的赋值是可以带来便利的。</p>
+<p><strong>网上千篇一律的代码，可能会误导大家认为通过递归函数返回节点 这样的写法是天经地义，其实这里是有优化的！</strong></p>
+<p>迭代法代码如下：</p>
+<pre><code class="language-cpp">class Solution {
+public:
+    TreeNode* insertIntoBST(TreeNode* root, int val) {
+        if (root == NULL) {
+            TreeNode* node = new TreeNode(val);
+            return node;
+        }
+        TreeNode* cur = root;
+        TreeNode* parent = root; // 这个很重要，需要记录上一个节点，否则无法赋值新节点
+        while (cur != NULL) {
+            parent = cur;
+            if (cur-&gt;val &gt; val) cur = cur-&gt;left;
+            else cur = cur-&gt;right;
+        }
+        TreeNode* node = new TreeNode(val);
+        if (val &lt; parent-&gt;val) parent-&gt;left = node;// 此时是用parent节点的进行赋值
+        else parent-&gt;right = node;
+        return root;
+    }
+};
+</code></pre>
+<h2 id="java解法-5"><a class="header" href="#java解法-5">Java解法</a></h2>
+<p>递归法</p>
+<pre><code class="language-java">class Solution {
+    public TreeNode insertIntoBST(TreeNode root, int val) {
+        if (root == null) // 如果当前节点为空，也就意味着val找到了合适的位置，此时创建节点直接返回。
+            return new TreeNode(val);
+            
+        if (root.val &lt; val){
+            root.right = insertIntoBST(root.right, val); // 递归创建右子树
+        }else if (root.val &gt; val){
+            root.left = insertIntoBST(root.left, val); // 递归创建左子树
+        }
+        return root;
+    }
+}
+</code></pre>
+<h2 id="python3解法-5"><a class="header" href="#python3解法-5">Python3解法</a></h2>
+<p>递归法（版本二）</p>
+<pre><code class="language-python">class Solution:
+    def insertIntoBST(self, root: Optional[TreeNode], val: int) -&gt; Optional[TreeNode]:
+        if root is None or root.val == val:
+            return TreeNode(val)
+        elif root.val &gt; val:
+            if root.left is None:
+                root.left = TreeNode(val)
+            else:
+                self.insertIntoBST(root.left, val)
+        elif root.val &lt; val:
+            if root.right is None:
+                root.right = TreeNode(val)
+            else:
+                self.insertIntoBST(root.right, val)
+        return root
+</code></pre>
+<h2 id="go解法-5"><a class="header" href="#go解法-5">Go解法</a></h2>
+<p>递归法</p>
+<pre><code class="language-go">func insertIntoBST(root *TreeNode, val int) *TreeNode {
+    if root == nil {
+        root = &amp;TreeNode{Val: val}
+        return root
+    }
+    if root.Val &gt; val {
+        root.Left = insertIntoBST(root.Left, val)
+    } else {
+        root.Right = insertIntoBST(root.Right, val)
+    }
+    return root
+}
+</code></pre>
+<h1 id="450-delete-node-in-a-bst"><a class="header" href="#450-delete-node-in-a-bst"><a href="https://leetcode.com/problems/delete-node-in-a-bst/">450. Delete Node in a BST</a></a></h1>
+<p>Given a root node reference of a BST and a key, delete the node with the given key in the BST. Return <em>the <strong>root node reference</strong> (possibly updated) of the BST</em>.</p>
+<p>Basically, the deletion can be divided into two stages:</p>
+<ol start="4">
+<li>Search for a node to remove.</li>
+<li>If the node is found, delete the node.</li>
+</ol>
+<p><strong>Example 1:</strong></p>
+<p><img src="https://assets.leetcode.com/uploads/2020/09/04/del_node_1.jpg" alt="" /></p>
+<p><strong>Input:</strong> <code>root = [5,3,6,2,4,null,7], key = 3</code><br />
+<strong>Output:</strong> <code>[5,4,6,2,null,null,7]</code><br />
+<strong>Explanation:</strong> Given key to delete is 3. So we find the node with value 3 and delete it.
+One valid answer is <code>[5,4,6,2,null,null,7]</code>, shown in the above BST.
+Please notice that another valid answer is <code>[5,2,6,null,4,null,7]</code> and it's also accepted.
+<img src="https://assets.leetcode.com/uploads/2020/09/04/del_node_supp.jpg" alt="" /></p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> <code>root = [5,3,6,2,4,null,7], key = 0</code><br />
+<strong>Output:</strong> <code>[5,3,6,2,4,null,7]</code><br />
+<strong>Explanation:</strong> The tree does not contain a node with value = 0.</p>
+<p><strong>Example 3:</strong></p>
+<p><strong>Input:</strong> <code>root = [], key = 0</code><br />
+<strong>Output:</strong> <code>[]</code></p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li>The number of nodes in the tree is in the range <code>[0, 10^4]</code>.</li>
+<li><code>-10^5 &lt;= Node.val &lt;= 10^5</code></li>
+<li>Each node has a <strong>unique</strong> value.</li>
+<li><code>root</code> is a valid binary search tree.</li>
+<li><code>-10^5 &lt;= key &lt;= 10^5</code></li>
+</ul>
+<p><strong>Follow up:</strong> Could you solve it with time complexity <code>O(height of tree)</code>?</p>
+<h2 id="思路-7"><a class="header" href="#思路-7">思路</a></h2>
+<p>搜索树的节点删除要比节点增加复杂的多，有很多情况需要考虑，做好心理准备。</p>
+<h3 id="递归-2"><a class="header" href="#递归-2">递归</a></h3>
+<p>递归三部曲：</p>
+<ul>
+<li>确定递归函数参数以及返回值</li>
+</ul>
+<p>说到递归函数的返回值，在<a href="https://programmercarl.com/0701.%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91%E4%B8%AD%E7%9A%84%E6%8F%92%E5%85%A5%E6%93%8D%E4%BD%9C.html">二叉树：搜索树中的插入操作 (opens new window)</a>中通过递归返回值来加入新节点， 这里也可以通过递归返回值删除节点。</p>
+<p>代码如下：</p>
+<pre><code class="language-cpp">TreeNode* deleteNode(TreeNode* root, int key)
+</code></pre>
+<ul>
+<li>确定终止条件</li>
+</ul>
+<p>遇到空返回，其实这也说明没找到删除的节点，遍历到空节点直接返回了</p>
+<pre><code class="language-cpp">if (root == nullptr) return root;
+</code></pre>
+<ul>
+<li>确定单层递归的逻辑</li>
+</ul>
+<p>这里就把二叉搜索树中删除节点遇到的情况都搞清楚。</p>
+<p>有以下五种情况：</p>
+<ul>
+<li>第一种情况：没找到删除的节点，遍历到空节点直接返回了</li>
+<li>找到删除的节点
+<ul>
+<li>第二种情况：左右孩子都为空（叶子节点），直接删除节点， 返回NULL为根节点</li>
+<li>第三种情况：删除节点的左孩子为空，右孩子不为空，删除节点，右孩子补位，返回右孩子为根节点</li>
+<li>第四种情况：删除节点的右孩子为空，左孩子不为空，删除节点，左孩子补位，返回左孩子为根节点</li>
+<li>第五种情况：左右孩子节点都不为空，则将删除节点的左子树头结点（左孩子）放到删除节点的右子树的最左面节点的左孩子上，返回删除节点右孩子为新的根节点。</li>
+</ul>
+</li>
+</ul>
+<p>第五种情况有点难以理解，看下面动画：</p>
+<p><img src="https://code-thinking.cdn.bcebos.com/gifs/450.%E5%88%A0%E9%99%A4%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91%E4%B8%AD%E7%9A%84%E8%8A%82%E7%82%B9.gif" alt="450.删除二叉搜索树中的节点" /></p>
+<p>动画中的二叉搜索树中，删除元素7， 那么删除节点（元素7）的左孩子就是5，删除节点（元素7）的右子树的最左面节点是元素8。</p>
+<p>将删除节点（元素7）的左孩子放到删除节点（元素7）的右子树的最左面节点（元素8）的左孩子上，就是把5为根节点的子树移到了8的左孩子的位置。</p>
+<p>要删除的节点（元素7）的右孩子（元素9）为新的根节点。.</p>
+<p>这样就完成删除元素7的逻辑，最好动手画一个图，尝试删除一个节点试试。</p>
+<p>代码如下：</p>
+<pre><code class="language-cpp">if (root-&gt;val == key) {
+    // 第二种情况：左右孩子都为空（叶子节点），直接删除节点， 返回NULL为根节点
+    // 第三种情况：其左孩子为空，右孩子不为空，删除节点，右孩子补位 ，返回右孩子为根节点
+    if (root-&gt;left == nullptr) return root-&gt;right;
+    // 第四种情况：其右孩子为空，左孩子不为空，删除节点，左孩子补位，返回左孩子为根节点
+    else if (root-&gt;right == nullptr) return root-&gt;left;
+    // 第五种情况：左右孩子节点都不为空，则将删除节点的左子树放到删除节点的右子树的最左面节点的左孩子的位置
+    // 并返回删除节点右孩子为新的根节点。
+    else {
+        TreeNode* cur = root-&gt;right; // 找右子树最左面的节点
+        while(cur-&gt;left != nullptr) {
+            cur = cur-&gt;left;
+        }
+        cur-&gt;left = root-&gt;left; // 把要删除的节点（root）左子树放在cur的左孩子的位置
+        TreeNode* tmp = root;   // 把root节点保存一下，下面来删除
+        root = root-&gt;right;     // 返回旧root的右孩子作为新root
+        delete tmp;             // 释放节点内存（这里不写也可以，但C++最好手动释放一下吧）
+        return root;
+    }
+}
+</code></pre>
+<p>这里相当于把新的节点返回给上一层，上一层就要用 root-&gt;left 或者 root-&gt;right接住，代码如下：</p>
+<pre><code class="language-cpp">if (root-&gt;val &gt; key) root-&gt;left = deleteNode(root-&gt;left, key);
+if (root-&gt;val &lt; key) root-&gt;right = deleteNode(root-&gt;right, key);
+return root;
+</code></pre>
+<h3 id="普通二叉树的删除方式"><a class="header" href="#普通二叉树的删除方式">普通二叉树的删除方式</a></h3>
+<p>这里我在介绍一种通用的删除，普通二叉树的删除方式（没有使用搜索树的特性，遍历整棵树），用交换值的操作来删除目标节点。</p>
+<p>代码中目标节点（要删除的节点）被操作了两次：</p>
+<ul>
+<li>第一次是和目标节点的右子树最左面节点交换。</li>
+<li>第二次直接被NULL覆盖了。</li>
+</ul>
+<p>思路有点绕，感兴趣的同学可以画图自己理解一下。</p>
+<p>代码如下：（关键部分已经注释）</p>
+<pre><code class="language-cpp">class Solution {
+public:
+    TreeNode* deleteNode(TreeNode* root, int key) {
+        if (root == nullptr) return root;
+        if (root-&gt;val == key) {
+            if (root-&gt;right == nullptr) { // 这里第二次操作目标值：最终删除的作用
+                return root-&gt;left;
+            }
+            TreeNode *cur = root-&gt;right;
+            while (cur-&gt;left) {
+                cur = cur-&gt;left;
+            }
+            swap(root-&gt;val, cur-&gt;val); // 这里第一次操作目标值：交换目标值其右子树最左面节点。
+        }
+        root-&gt;left = deleteNode(root-&gt;left, key);
+        root-&gt;right = deleteNode(root-&gt;right, key);
+        return root;
+    }
+};
+</code></pre>
+<p>这个代码是简短一些，思路也巧妙，但是不太好想，实操性不强，推荐第一种写法！</p>
+<h3 id="迭代法-4"><a class="header" href="#迭代法-4">迭代法</a></h3>
+<p>删除节点的迭代法还是复杂一些的，但其本质我在递归法里都介绍了，最关键就是删除节点的操作（动画模拟的过程）</p>
+<h3 id="总结-5"><a class="header" href="#总结-5">总结</a></h3>
+<p>读完本篇，大家会发现二叉搜索树删除节点比增加节点复杂的多。</p>
+<p><strong>因为二叉搜索树添加节点只需要在叶子上添加就可以的，不涉及到结构的调整，而删除节点操作涉及到结构的调整</strong>。</p>
+<p>这里我们依然使用递归函数的返回值来完成把节点从二叉树中移除的操作。</p>
+<p><strong>这里最关键的逻辑就是第五种情况（删除一个左右孩子都不为空的节点），这种情况一定要想清楚</strong>。</p>
+<p>而且就算想清楚了，对应的代码也未必可以写出来，所以<strong>这道题目既考察思维逻辑，也考察代码能力</strong>。</p>
+<p>递归中我给出了两种写法，推荐大家学会第一种（利用搜索树的特性）就可以了，第二种递归写法其实是比较绕的。</p>
+<p>最后我也给出了相应的迭代法，就是模拟递归法中的逻辑来删除节点，但需要一个pre记录cur的父节点，方便做删除操作。</p>
+<p>迭代法其实不太容易写出来，所以如果是初学者的话，彻底掌握第一种递归写法就够了。</p>
+<h2 id="c解法-7"><a class="header" href="#c解法-7">C++解法</a></h2>
+<p>递归法<strong>整体代码如下：（注释中：情况1，2，3，4，5和上面分析严格对应）</strong></p>
+<pre><code class="language-cpp">class Solution {
+public:
+    TreeNode* deleteNode(TreeNode* root, int key) {
+        if (root == nullptr) return root; // 第一种情况：没找到删除的节点，遍历到空节点直接返回了
+        if (root-&gt;val == key) {
+            // 第二种情况：左右孩子都为空（叶子节点），直接删除节点， 返回NULL为根节点
+            if (root-&gt;left == nullptr &amp;&amp; root-&gt;right == nullptr) {
+                ///! 内存释放
+                delete root;
+                return nullptr;
+            }
+            // 第三种情况：其左孩子为空，右孩子不为空，删除节点，右孩子补位 ，返回右孩子为根节点
+            else if (root-&gt;left == nullptr) {
+                auto retNode = root-&gt;right;
+                ///! 内存释放
+                delete root;
+                return retNode;
+            }
+            // 第四种情况：其右孩子为空，左孩子不为空，删除节点，左孩子补位，返回左孩子为根节点
+            else if (root-&gt;right == nullptr) {
+                auto retNode = root-&gt;left;
+                ///! 内存释放
+                delete root;
+                return retNode;
+            }
+            // 第五种情况：左右孩子节点都不为空，则将删除节点的左子树放到删除节点的右子树的最左面节点的左孩子的位置
+            // 并返回删除节点右孩子为新的根节点。
+            else {
+                TreeNode* cur = root-&gt;right; // 找右子树最左面的节点
+                while(cur-&gt;left != nullptr) {
+                    cur = cur-&gt;left;
+                }
+                cur-&gt;left = root-&gt;left; // 把要删除的节点（root）左子树放在cur的左孩子的位置
+                TreeNode* tmp = root;   // 把root节点保存一下，下面来删除
+                root = root-&gt;right;     // 返回旧root的右孩子作为新root
+                delete tmp;             // 释放节点内存（这里不写也可以，但C++最好手动释放一下吧）
+                return root;
+            }
+        }
+        if (root-&gt;val &gt; key) root-&gt;left = deleteNode(root-&gt;left, key);
+        if (root-&gt;val &lt; key) root-&gt;right = deleteNode(root-&gt;right, key);
+        return root;
+    }
+};
+</code></pre>
+<p>迭代法代码如下：</p>
+<pre><code class="language-cpp">class Solution {
+private:
+    // 将目标节点（删除节点）的左子树放到 目标节点的右子树的最左面节点的左孩子位置上
+    // 并返回目标节点右孩子为新的根节点
+    // 是动画里模拟的过程
+    TreeNode* deleteOneNode(TreeNode* target) {
+        if (target == nullptr) return target;
+        if (target-&gt;right == nullptr) return target-&gt;left;
+        TreeNode* cur = target-&gt;right;
+        while (cur-&gt;left) {
+            cur = cur-&gt;left;
+        }
+        cur-&gt;left = target-&gt;left;
+        return target-&gt;right;
+    }
+public:
+    TreeNode* deleteNode(TreeNode* root, int key) {
+        if (root == nullptr) return root;
+        TreeNode* cur = root;
+        TreeNode* pre = nullptr; // 记录cur的父节点，用来删除cur
+        while (cur) {
+            if (cur-&gt;val == key) break;
+            pre = cur;
+            if (cur-&gt;val &gt; key) cur = cur-&gt;left;
+            else cur = cur-&gt;right;
+        }
+        if (pre == nullptr) { // 如果搜索树只有头结点
+            return deleteOneNode(cur);
+        }
+        // pre 要知道是删左孩子还是右孩子
+        if (pre-&gt;left &amp;&amp; pre-&gt;left-&gt;val == key) {
+            pre-&gt;left = deleteOneNode(cur);
+        }
+        if (pre-&gt;right &amp;&amp; pre-&gt;right-&gt;val == key) {
+            pre-&gt;right = deleteOneNode(cur);
+        }
+        return root;
+    }
+};
+</code></pre>
+<h2 id="java解法-6"><a class="header" href="#java解法-6">Java解法</a></h2>
+<pre><code class="language-java">// 解法1(最好理解的版本)
+class Solution {
+  public TreeNode deleteNode(TreeNode root, int key) {
+    if (root == null) return root;
+    if (root.val == key) {
+      if (root.left == null) {
+        return root.right;
+      } else if (root.right == null) {
+        return root.left;
+      } else {
+        TreeNode cur = root.right;
+        while (cur.left != null) {
+          cur = cur.left;
+        }
+        cur.left = root.left;
+        root = root.right;
+        return root;
+      }
+    }
+    if (root.val &gt; key) root.left = deleteNode(root.left, key);
+    if (root.val &lt; key) root.right = deleteNode(root.right, key);
+    return root;
+  }
+}
+</code></pre>
+<h2 id="python3解法-6"><a class="header" href="#python3解法-6">Python3解法</a></h2>
+<p>递归法（版本二）</p>
+<pre><code class="language-python">class Solution:
+    def deleteNode(self, root, key):
+        if root is None:  # 如果根节点为空，直接返回
+            return root
+        if root.val == key:  # 找到要删除的节点
+            if root.right is None:  # 如果右子树为空，直接返回左子树作为新的根节点
+                return root.left
+            cur = root.right
+            while cur.left:  # 找到右子树中的最左节点
+                cur = cur.left
+            root.val, cur.val = cur.val, root.val  # 将要删除的节点值与最左节点值交换
+        root.left = self.deleteNode(root.left, key)  # 在左子树中递归删除目标节点
+        root.right = self.deleteNode(root.right, key)  # 在右子树中递归删除目标节点
+        return root
+</code></pre>
+<h2 id="go解法-6"><a class="header" href="#go解法-6">Go解法</a></h2>
+<pre><code class="language-go">// 递归版本
+func deleteNode(root *TreeNode, key int) *TreeNode {
+    if root == nil {
+        return nil
+    }
+    if key &lt; root.Val {
+        root.Left = deleteNode(root.Left, key)
+        return root
+    }
+    if key &gt; root.Val {
+        root.Right = deleteNode(root.Right, key)
+        return root
+    }
+    if root.Right == nil {
+        return root.Left
+    }
+    if root.Left == nil{
+        return root.Right
+    }
+    minnode := root.Right
+    for minnode.Left != nil {
+        minnode = minnode.Left
+    }
+    root.Val = minnode.Val
+    root.Right = deleteNode1(root.Right)
+    return root
+}
+
+func deleteNode1(root *TreeNode)*TreeNode {
+    if root.Left == nil {
+        pRight := root.Right
+        root.Right = nil
+        return pRight
+    }
+    root.Left = deleteNode1(root.Left)
+    return root
+}
+</code></pre>
+<h1 id="669-trim-a-binary-search-tree"><a class="header" href="#669-trim-a-binary-search-tree"><a href="https://leetcode.com/problems/trim-a-binary-search-tree/">669. Trim a Binary Search Tree</a></a></h1>
+<p>Given the <code>root</code> of a binary search tree and the lowest and highest boundaries as <code>low</code> and <code>high</code>, trim the tree so that all its elements lies in <code>[low, high]</code>. Trimming the tree should <strong>not</strong> change the relative structure of the elements that will remain in the tree (i.e., any node's descendant should remain a descendant). It can be proven that there is a <strong>unique answer</strong>.</p>
+<p>Return <em>the root of the trimmed binary search tree</em>. Note that the root may change depending on the given bounds.</p>
+<p><strong>Example 1:</strong></p>
+<p><img src="https://assets.leetcode.com/uploads/2020/09/09/trim1.jpg" alt="" /></p>
+<p><strong>Input:</strong> <code>root = [1,0,2], low = 1, high = 2</code><br />
+<strong>Output:</strong> <code>[1,null,2]</code></p>
+<p><strong>Example 2:</strong></p>
+<p><img src="https://assets.leetcode.com/uploads/2020/09/09/trim2.jpg" alt="" /></p>
+<p><strong>Input:</strong> <code>root = [3,0,4,null,2,null,null,1], low = 1, high = 3</code><br />
+<strong>Output:</strong> <code>[3,2,null,1]</code></p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li>The number of nodes in the tree is in the range <code>[1, 10^4]</code>.</li>
+<li><code>0 &lt;= Node.val &lt;= 10^4</code></li>
+<li>The value of each node in the tree is <strong>unique</strong>.</li>
+<li><code>root</code> is guaranteed to be a valid binary search tree.</li>
+<li><code>0 &lt;= low &lt;= high &lt;= 10^4</code></li>
+</ul>
+<h2 id="思路-8"><a class="header" href="#思路-8">思路</a></h2>
+<p>相信看到这道题目大家都感觉是一道简单题（事实上leetcode上也标明是简单）。</p>
+<p>但还真的不简单！</p>
+<h3 id="递归法-4"><a class="header" href="#递归法-4">递归法</a></h3>
+<p>直接想法就是：递归处理，然后遇到 <code>root-&gt;val &lt; low || root-&gt;val &gt; high</code> 的时候直接return NULL，一波修改，赶紧利落。</p>
+<p>不难写出如下代码：</p>
+<pre><code class="language-cpp">class Solution {
+public:
+    TreeNode* trimBST(TreeNode* root, int low, int high) {
+        if (root == nullptr || root-&gt;val &lt; low || root-&gt;val &gt; high) return nullptr;
+        root-&gt;left = trimBST(root-&gt;left, low, high);
+        root-&gt;right = trimBST(root-&gt;right, low, high);
+        return root;
+    }
+};
+</code></pre>
+<p><strong>然而<code>[1, 3]</code>区间在二叉搜索树的中可不是单纯的节点3和左孩子节点0就决定的，还要考虑节点0的右子树</strong>。</p>
+<p>我们在重新关注一下第二个示例，如图：</p>
+<p><img src="https://code-thinking-1253855093.file.myqcloud.com/pics/20210204155302751.png" alt="669.修剪二叉搜索树" /></p>
+<p><strong>所以以上的代码是不可行的！</strong></p>
+<p>从图中可以看出需要重构二叉树，想想是不是本题就有点复杂了。</p>
+<p>其实不用重构那么复杂。</p>
+<p>在上图中我们发现节点0并不符合区间要求，那么将节点0的右孩子 节点2 直接赋给 节点3的左孩子就可以了（就是把节点0从二叉树中移除），如图：</p>
+<p><img src="https://code-thinking-1253855093.file.myqcloud.com/pics/20210204155327203.png" alt="669.修剪二叉搜索树1" /></p>
+<p>理解了最关键部分了我们再递归三部曲：</p>
+<ul>
+<li>确定递归函数的参数以及返回值</li>
+</ul>
+<p>这里我们为什么需要返回值呢？</p>
+<p>因为是要遍历整棵树，做修改，其实不需要返回值也可以，我们也可以完成修剪（其实就是从二叉树中移除节点）的操作。</p>
+<p>但是有返回值，更方便，可以通过递归函数的返回值来移除节点。</p>
+<p>这样的做法在<a href="https://programmercarl.com/0701.%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91%E4%B8%AD%E7%9A%84%E6%8F%92%E5%85%A5%E6%93%8D%E4%BD%9C.html">二叉树：搜索树中的插入操作 (opens new window)</a>和<a href="https://programmercarl.com/0450.%E5%88%A0%E9%99%A4%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91%E4%B8%AD%E7%9A%84%E8%8A%82%E7%82%B9.html">二叉树：搜索树中的删除操作 (opens new window)</a>中大家已经了解过了。</p>
+<p>代码如下：</p>
+<pre><code class="language-cpp">TreeNode* trimBST(TreeNode* root, int low, int high)
+</code></pre>
+<ul>
+<li>确定终止条件</li>
+</ul>
+<p>修剪的操作并不是在终止条件上进行的，所以就是遇到空节点返回就可以了。</p>
+<pre><code class="language-cpp">if (root == nullptr ) return nullptr;
+</code></pre>
+<ul>
+<li>确定单层递归的逻辑</li>
+</ul>
+<p>如果root（当前节点）的元素小于low的数值，那么应该递归右子树，并返回右子树符合条件的头结点。</p>
+<p>代码如下：</p>
+<pre><code class="language-cpp">if (root-&gt;val &lt; low) {
+    TreeNode* right = trimBST(root-&gt;right, low, high); // 寻找符合区间[low, high]的节点
+    return right;
+}
+</code></pre>
+<p>如果root(当前节点)的元素大于high的，那么应该递归左子树，并返回左子树符合条件的头结点。</p>
+<p>代码如下：</p>
+<pre><code class="language-cpp">if (root-&gt;val &gt; high) {
+    TreeNode* left = trimBST(root-&gt;left, low, high); // 寻找符合区间[low, high]的节点
+    return left;
+}
+</code></pre>
+<p>接下来要将下一层处理完左子树的结果赋给root-&gt;left，处理完右子树的结果赋给root-&gt;right。</p>
+<p>最后返回root节点，代码如下：</p>
+<pre><code class="language-cpp">root-&gt;left = trimBST(root-&gt;left, low, high); // root-&gt;left接入符合条件的左孩子
+root-&gt;right = trimBST(root-&gt;right, low, high); // root-&gt;right接入符合条件的右孩子
+return root;
+</code></pre>
+<p>此时大家是不是还没发现这多余的节点究竟是如何从二叉树中移除的呢？</p>
+<p>在回顾一下上面的代码，针对下图中二叉树的情况：</p>
+<p><img src="https://code-thinking-1253855093.file.myqcloud.com/pics/20210204155327203-20230310120126738.png" alt="669.修剪二叉搜索树1" /></p>
+<p>如下代码相当于把节点0的右孩子（节点2）返回给上一层，</p>
+<pre><code class="language-cpp">if (root-&gt;val &lt; low) {
+    TreeNode* right = trimBST(root-&gt;right, low, high); // 寻找符合区间[low, high]的节点
+    return right;
+}
+</code></pre>
+<p>然后如下代码相当于用节点3的左孩子 把下一层返回的 节点0的右孩子（节点2） 接住。</p>
+<pre><code class="language-cpp">root-&gt;left = trimBST(root-&gt;left, low, high);
+</code></pre>
+<p>此时节点3的左孩子就变成了节点2，将节点0从二叉树中移除了。</p>
+<h3 id="迭代法-5"><a class="header" href="#迭代法-5">迭代法</a></h3>
+<p>因为二叉搜索树的有序性，不需要使用栈模拟递归的过程。</p>
+<p>在剪枝的时候，可以分为三步：</p>
+<ul>
+<li>将root移动到<code>[L, R]</code> 范围内，注意是左闭右闭区间</li>
+<li>剪枝左子树</li>
+<li>剪枝右子树</li>
+</ul>
+<h3 id="总结-6"><a class="header" href="#总结-6">总结</a></h3>
+<p>修剪二叉搜索树其实并不难，但在递归法中大家可看出我费了很大的功夫来讲解如何删除节点的，这个思路其实是比较绕的。</p>
+<p>最终的代码倒是很简洁。</p>
+<p><strong>如果不对递归有深刻的理解，这道题目还是有难度的！</strong></p>
+<p>本题我依然给出递归法和迭代法，初学者掌握递归就可以了，如果想进一步学习，就把迭代法也写一写。</p>
+<h2 id="c解法-8"><a class="header" href="#c解法-8">C++解法</a></h2>
+<p>递归法最后整体代码如下：</p>
+<pre><code class="language-cpp">class Solution {
+public:
+    TreeNode* trimBST(TreeNode* root, int low, int high) {
+        if (root == nullptr ) return nullptr;
+        if (root-&gt;val &lt; low) {
+            TreeNode* right = trimBST(root-&gt;right, low, high); // 寻找符合区间[low, high]的节点
+            return right;
+        }
+        if (root-&gt;val &gt; high) {
+            TreeNode* left = trimBST(root-&gt;left, low, high); // 寻找符合区间[low, high]的节点
+            return left;
+        }
+        root-&gt;left = trimBST(root-&gt;left, low, high); // root-&gt;left接入符合条件的左孩子
+        root-&gt;right = trimBST(root-&gt;right, low, high); // root-&gt;right接入符合条件的右孩子
+        return root;
+    }
+};
+</code></pre>
+<p>精简之后代码如下：</p>
+<pre><code class="language-cpp">class Solution {
+public:
+    TreeNode* trimBST(TreeNode* root, int low, int high) {
+        if (root == nullptr) return nullptr;
+        if (root-&gt;val &lt; low) return trimBST(root-&gt;right, low, high);
+        if (root-&gt;val &gt; high) return trimBST(root-&gt;left, low, high);
+        root-&gt;left = trimBST(root-&gt;left, low, high);
+        root-&gt;right = trimBST(root-&gt;right, low, high);
+        return root;
+    }
+};
+</code></pre>
+<p>只看代码，其实不太好理解节点是如何移除的，这一块大家可以自己再模拟模拟！</p>
+<p>迭代法代码如下：</p>
+<pre><code class="language-cpp">class Solution {
+public:
+    TreeNode* trimBST(TreeNode* root, int L, int R) {
+        if (!root) return nullptr;
+
+        // 处理头结点，让root移动到[L, R] 范围内，注意是左闭右闭
+        while (root != nullptr &amp;&amp; (root-&gt;val &lt; L || root-&gt;val &gt; R)) {
+            if (root-&gt;val &lt; L) root = root-&gt;right; // 小于L往右走
+            else root = root-&gt;left; // 大于R往左走
+        }
+        TreeNode *cur = root;
+        // 此时root已经在[L, R] 范围内，处理左孩子元素小于L的情况
+        while (cur != nullptr) {
+            while (cur-&gt;left &amp;&amp; cur-&gt;left-&gt;val &lt; L) {
+                cur-&gt;left = cur-&gt;left-&gt;right;
+            }
+            cur = cur-&gt;left;
+        }
+        cur = root;
+
+        // 此时root已经在[L, R] 范围内，处理右孩子大于R的情况
+        while (cur != nullptr) {
+            while (cur-&gt;right &amp;&amp; cur-&gt;right-&gt;val &gt; R) {
+                cur-&gt;right = cur-&gt;right-&gt;left;
+            }
+            cur = cur-&gt;right;
+        }
+        return root;
+    }
+};
+</code></pre>
+<h2 id="java解法-7"><a class="header" href="#java解法-7">Java解法</a></h2>
+<p>递归法</p>
+<pre><code class="language-java">class Solution {
+    public TreeNode trimBST(TreeNode root, int low, int high) {
+        if (root == null) {
+            return null;
+        }
+        if (root.val &lt; low) {
+            return trimBST(root.right, low, high);
+        }
+        if (root.val &gt; high) {
+            return trimBST(root.left, low, high);
+        }
+        // root在[low,high]范围内
+        root.left = trimBST(root.left, low, high);
+        root.right = trimBST(root.right, low, high);
+        return root;
+    }
+}
+</code></pre>
+<h2 id="python3解法-7"><a class="header" href="#python3解法-7">Python3解法</a></h2>
+<p>递归法</p>
+<pre><code class="language-python">class Solution:
+    def trimBST(self, root: TreeNode, low: int, high: int) -&gt; TreeNode:
+        if root is None:
+            return None
+        if root.val &lt; low:
+            # 寻找符合区间 [low, high] 的节点
+            return self.trimBST(root.right, low, high)
+        if root.val &gt; high:
+            # 寻找符合区间 [low, high] 的节点
+            return self.trimBST(root.left, low, high)
+        root.left = self.trimBST(root.left, low, high)  # root.left 接入符合条件的左孩子
+        root.right = self.trimBST(root.right, low, high)  # root.right 接入符合条件的右孩子
+        return root
+</code></pre>
+<h2 id="go解法-7"><a class="header" href="#go解法-7">Go解法</a></h2>
+<pre><code class="language-go">// 递归
+func trimBST(root *TreeNode, low int, high int) *TreeNode {
+    if root == nil {
+        return nil
+    }
+    if root.Val &lt; low {     //如果该节点值小于最小值，则该节点更换为该节点的右节点值，继续遍历
+        right := trimBST(root.Right, low, high)
+        return right
+    }
+    if root.Val &gt; high {    //如果该节点的值大于最大值，则该节点更换为该节点的左节点值，继续遍历
+        left := trimBST(root.Left, low, high)
+        return left
+    }
+    root.Left = trimBST(root.Left, low, high)
+    root.Right = trimBST(root.Right, low, high)
+    return root
+}
+
+</code></pre>
+<h1 id="108-convert-sorted-array-to-binary-search-tree"><a class="header" href="#108-convert-sorted-array-to-binary-search-tree"><a href="https://leetcode.com/problems/convert-sorted-array-to-binary-search-tree/">108. Convert Sorted Array to Binary Search Tree</a></a></h1>
+<p>Given an integer array <code>nums</code> where the elements are sorted in <strong>ascending order</strong>, convert <em>it to a</em> <strong><em>height-balanced</em></strong> <em>binary search tree</em>.</p>
+<p><strong>Example 1:</strong></p>
+<p><img src="https://assets.leetcode.com/uploads/2021/02/18/btree1.jpg" alt="" /></p>
+<p><strong>Input:</strong> <code>nums = [-10,-3,0,5,9]</code><br />
+<strong>Output:</strong> <code>[0,-3,9,-10,null,5]</code><br />
+<strong>Explanation:</strong> <code>[0,-10,5,null,-3,null,9]</code> is also accepted:
+<img src="https://assets.leetcode.com/uploads/2021/02/18/btree2.jpg" alt="" /></p>
+<p><strong>Example 2:</strong></p>
+<p><img src="https://assets.leetcode.com/uploads/2021/02/18/btree.jpg" alt="" /></p>
+<p><strong>Input:</strong> <code>nums = [1,3]</code><br />
+<strong>Output:</strong> <code>[3,1]</code><br />
+<strong>Explanation:</strong> <code>[1,null,3]</code> and <code>[3,1]</code> are both height-balanced BSTs.</p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= nums.length &lt;= 10^4</code></li>
+<li><code>-10^4 &lt;= nums[i] &lt;= 10^4</code></li>
+<li><code>nums</code> is sorted in a <strong>strictly increasing</strong> order.</li>
+</ul>
+<h2 id="思路-9"><a class="header" href="#思路-9">思路</a></h2>
+<p>题目中说要转换为一棵高度平衡二叉搜索树。为什么强调要平衡呢？</p>
+<p>因为只要给我们一个有序数组，如果不强调平衡，都可以以线性结构来构造二叉搜索树。</p>
+<p>上图中，是符合二叉搜索树的特性吧，如果要这么做的话，是不是本题意义就不大了，所以才强调是平衡二叉搜索树。</p>
+<p>其实数组构造二叉树，构成平衡树是自然而然的事情，因为大家默认都是从数组中间位置取值作为节点元素，一般不会随机取。<strong>所以想构成不平衡的二叉树是自找麻烦</strong>。</p>
+<p>在<a href="https://programmercarl.com/0106.%E4%BB%8E%E4%B8%AD%E5%BA%8F%E4%B8%8E%E5%90%8E%E5%BA%8F%E9%81%8D%E5%8E%86%E5%BA%8F%E5%88%97%E6%9E%84%E9%80%A0%E4%BA%8C%E5%8F%89%E6%A0%91.html">二叉树：构造二叉树登场！ (opens new window)</a>和<a href="https://programmercarl.com/0654.%E6%9C%80%E5%A4%A7%E4%BA%8C%E5%8F%89%E6%A0%91.html">二叉树：构造一棵最大的二叉树 (opens new window)</a>中其实已经讲过了，如果根据数组构造一棵二叉树。</p>
+<p><strong>本质就是寻找分割点，分割点作为当前节点，然后递归左区间和右区间</strong>。</p>
+<p>本题其实要比<a href="https://programmercarl.com/0106.%E4%BB%8E%E4%B8%AD%E5%BA%8F%E4%B8%8E%E5%90%8E%E5%BA%8F%E9%81%8D%E5%8E%86%E5%BA%8F%E5%88%97%E6%9E%84%E9%80%A0%E4%BA%8C%E5%8F%89%E6%A0%91.html">二叉树：构造二叉树登场！ (opens new window)</a>和 <a href="https://programmercarl.com/0654.%E6%9C%80%E5%A4%A7%E4%BA%8C%E5%8F%89%E6%A0%91.html">二叉树：构造一棵最大的二叉树 (opens new window)</a>简单一些，因为有序数组构造二叉搜索树，寻找分割点就比较容易了。</p>
+<p>分割点就是数组中间位置的节点。</p>
+<p>那么为问题来了，如果数组长度为偶数，中间节点有两个，取哪一个？</p>
+<p>取哪一个都可以，只不过构成了不同的平衡二叉搜索树。</p>
+<p>例如：输入：<code>[-10,-3,0,5,9]</code></p>
+<p>如下两棵树，都是这个数组的平衡二叉搜索树：</p>
+<p><img src="https://code-thinking.cdn.bcebos.com/pics/108.%E5%B0%86%E6%9C%89%E5%BA%8F%E6%95%B0%E7%BB%84%E8%BD%AC%E6%8D%A2%E4%B8%BA%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91.png" alt="108.将有序数组转换为二叉搜索树" /></p>
+<p>如果要分割的数组长度为偶数的时候，中间元素为两个，是取左边元素 就是树1，取右边元素就是树2。</p>
+<p><strong>这也是题目中强调答案不是唯一的原因。 理解这一点，这道题目算是理解到位了</strong>。</p>
+<h3 id="递归-3"><a class="header" href="#递归-3">递归</a></h3>
+<p>递归三部曲：</p>
+<ul>
+<li>确定递归函数返回值及其参数</li>
+</ul>
+<p>删除二叉树节点，增加二叉树节点，都是用递归函数的返回值来完成，这样是比较方便的。</p>
+<p>相信大家如果仔细看了<a href="https://programmercarl.com/0701.%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91%E4%B8%AD%E7%9A%84%E6%8F%92%E5%85%A5%E6%93%8D%E4%BD%9C.html">二叉树：搜索树中的插入操作 (opens new window)</a>和<a href="https://programmercarl.com/0450.%E5%88%A0%E9%99%A4%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91%E4%B8%AD%E7%9A%84%E8%8A%82%E7%82%B9.html">二叉树：搜索树中的删除操作 (opens new window)</a>，一定会对递归函数返回值的作用深有感触。</p>
+<p>那么本题要构造二叉树，依然用递归函数的返回值来构造中节点的左右孩子。</p>
+<p>再来看参数，首先是传入数组，然后就是左下标left和右下标right，我们在<a href="https://programmercarl.com/0106.%E4%BB%8E%E4%B8%AD%E5%BA%8F%E4%B8%8E%E5%90%8E%E5%BA%8F%E9%81%8D%E5%8E%86%E5%BA%8F%E5%88%97%E6%9E%84%E9%80%A0%E4%BA%8C%E5%8F%89%E6%A0%91.html">二叉树：构造二叉树登场！ (opens new window)</a>中提过，在构造二叉树的时候尽量不要重新定义左右区间数组，而是用下标来操作原数组。</p>
+<p>所以代码如下：</p>
+<pre><code class="language-cpp">// 左闭右闭区间[left, right]
+TreeNode* traversal(vector&lt;int&gt;&amp; nums, int left, int right)
+</code></pre>
+<p>这里注意，<strong>我这里定义的是左闭右闭区间，在不断分割的过程中，也会坚持左闭右闭的区间，这又涉及到我们讲过的循环不变量</strong>。</p>
+<p>在<a href="https://programmercarl.com/0106.%E4%BB%8E%E4%B8%AD%E5%BA%8F%E4%B8%8E%E5%90%8E%E5%BA%8F%E9%81%8D%E5%8E%86%E5%BA%8F%E5%88%97%E6%9E%84%E9%80%A0%E4%BA%8C%E5%8F%89%E6%A0%91.html">二叉树：构造二叉树登场！ (opens new window)</a>，<a href="https://programmercarl.com/0035.%E6%90%9C%E7%B4%A2%E6%8F%92%E5%85%A5%E4%BD%8D%E7%BD%AE.html">35.搜索插入位置 (opens new window)</a>和<a href="https://programmercarl.com/0059.%E8%9E%BA%E6%97%8B%E7%9F%A9%E9%98%B5II.html">59.螺旋矩阵II (opens new window)</a>都详细讲过循环不变量。</p>
+<ul>
+<li>确定递归终止条件</li>
+</ul>
+<p>这里定义的是左闭右闭的区间，所以当区间 left &gt; right的时候，就是空节点了。</p>
+<p>代码如下：</p>
+<pre><code class="language-cpp">if (left &gt; right) return nullptr;
+</code></pre>
+<ul>
+<li>确定单层递归的逻辑</li>
+</ul>
+<p>首先取数组中间元素的位置，不难写出<code>int mid = (left + right) / 2;</code>，<strong>这么写其实有一个问题，就是数值越界，例如left和right都是最大int，这么操作就越界了，在<a href="https://programmercarl.com/0035.%E6%90%9C%E7%B4%A2%E6%8F%92%E5%85%A5%E4%BD%8D%E7%BD%AE.html">二分法 (opens new window)</a>中尤其需要注意！</strong></p>
+<p>所以可以这么写：<code>int mid = left + ((right - left) / 2);</code></p>
+<p>但本题leetcode的测试数据并不会越界，所以怎么写都可以。但需要有这个意识！</p>
+<p>取了中间位置，就开始以中间位置的元素构造节点，代码：<code>TreeNode* root = new TreeNode(nums[mid]);</code>。</p>
+<p>接着划分区间，root的左孩子接住下一层左区间的构造节点，右孩子接住下一层右区间构造的节点。</p>
+<p>最后返回root节点，单层递归整体代码如下：</p>
+<pre><code class="language-cpp">int mid = left + ((right - left) / 2);
+TreeNode* root = new TreeNode(nums[mid]);
+root-&gt;left = traversal(nums, left, mid - 1);
+root-&gt;right = traversal(nums, mid + 1, right);
+return root;
+</code></pre>
+<p>这里<code>int mid = left + ((right - left) / 2);</code>的写法相当于是如果数组长度为偶数，中间位置有两个元素，取靠左边的。</p>
+<h3 id="迭代法-6"><a class="header" href="#迭代法-6">迭代法</a></h3>
+<p>迭代法可以通过三个队列来模拟，一个队列放遍历的节点，一个队列放左区间下标，一个队列放右区间下标。</p>
+<h3 id="总结-7"><a class="header" href="#总结-7">总结</a></h3>
+<p><strong>在<a href="https://programmercarl.com/0106.%E4%BB%8E%E4%B8%AD%E5%BA%8F%E4%B8%8E%E5%90%8E%E5%BA%8F%E9%81%8D%E5%8E%86%E5%BA%8F%E5%88%97%E6%9E%84%E9%80%A0%E4%BA%8C%E5%8F%89%E6%A0%91.html">二叉树：构造二叉树登场！ (opens new window)</a>和 <a href="https://programmercarl.com/0654.%E6%9C%80%E5%A4%A7%E4%BA%8C%E5%8F%89%E6%A0%91.html">二叉树：构造一棵最大的二叉树 (opens new window)</a>之后，我们顺理成章的应该构造一下二叉搜索树了，一不小心还是一棵平衡二叉搜索树</strong>。</p>
+<p>其实思路也是一样的，不断中间分割，然后递归处理左区间，右区间，也可以说是分治。</p>
+<p>此时相信大家应该对通过递归函数的返回值来增删二叉树很熟悉了，这也是常规操作。</p>
+<p>在定义区间的过程中我们又一次强调了循环不变量的重要性。</p>
+<p>最后依然给出迭代的方法，其实就是模拟取中间元素，然后不断分割去构造二叉树的过程。</p>
+<h2 id="c解法-9"><a class="header" href="#c解法-9">C++解法</a></h2>
+<p>递归整体代码如下：</p>
+<pre><code class="language-cpp">class Solution {
+private:
+    TreeNode* traversal(vector&lt;int&gt;&amp; nums, int left, int right) {
+        if (left &gt; right) return nullptr;
+        int mid = left + ((right - left) / 2);
+        TreeNode* root = new TreeNode(nums[mid]);
+        root-&gt;left = traversal(nums, left, mid - 1);
+        root-&gt;right = traversal(nums, mid + 1, right);
+        return root;
+    }
+public:
+    TreeNode* sortedArrayToBST(vector&lt;int&gt;&amp; nums) {
+        TreeNode* root = traversal(nums, 0, nums.size() - 1);
+        return root;
+    }
+};
+</code></pre>
+<p><strong>注意：在调用traversal的时候传入的left和right为什么是0和nums.size() - 1，因为定义的区间为左闭右闭</strong>。</p>
+<p>迭代法模拟的就是不断分割的过程，C++代码如下：（我已经详细注释）</p>
+<pre><code class="language-cpp">class Solution {
+public:
+    TreeNode* sortedArrayToBST(vector&lt;int&gt;&amp; nums) {
+        if (nums.size() == 0) return nullptr;
+
+        TreeNode* root = new TreeNode(0);   // 初始根节点
+        queue&lt;TreeNode*&gt; nodeQue;           // 放遍历的节点
+        queue&lt;int&gt; leftQue;                 // 保存左区间下标
+        queue&lt;int&gt; rightQue;                // 保存右区间下标
+        nodeQue.push(root);                 // 根节点入队列
+        leftQue.push(0);                    // 0为左区间下标初始位置
+        rightQue.push(nums.size() - 1);     // nums.size() - 1为右区间下标初始位置
+
+        while (!nodeQue.empty()) {
+            TreeNode* curNode = nodeQue.front();
+            nodeQue.pop();
+            int left = leftQue.front(); leftQue.pop();
+            int right = rightQue.front(); rightQue.pop();
+            int mid = left + ((right - left) / 2);
+
+            curNode-&gt;val = nums[mid];       // 将mid对应的元素给中间节点
+
+            if (left &lt;= mid - 1) {          // 处理左区间
+                curNode-&gt;left = new TreeNode(0);
+                nodeQue.push(curNode-&gt;left);
+                leftQue.push(left);
+                rightQue.push(mid - 1);
+            }
+
+            if (right &gt;= mid + 1) {         // 处理右区间
+                curNode-&gt;right = new TreeNode(0);
+                nodeQue.push(curNode-&gt;right);
+                leftQue.push(mid + 1);
+                rightQue.push(right);
+            }
+        }
+        return root;
+    }
+};
+</code></pre>
+<h2 id="java解法-8"><a class="header" href="#java解法-8">Java解法</a></h2>
+<p>递归: 左闭右开 <code>[left,right)</code></p>
+<pre><code class="language-java">class Solution {
+    public TreeNode sortedArrayToBST(int[] nums) {
+        return sortedArrayToBST(nums, 0, nums.length);
+    }
+    
+    public TreeNode sortedArrayToBST(int[] nums, int left, int right) {
+        if (left &gt;= right) {
+            return null;
+        }
+        if (right - left == 1) {
+            return new TreeNode(nums[left]);
+        }
+        int mid = left + (right - left) / 2;
+        TreeNode root = new TreeNode(nums[mid]);
+        root.left = sortedArrayToBST(nums, left, mid);
+        root.right = sortedArrayToBST(nums, mid + 1, right);
+        return root;
+    }
+}
+</code></pre>
+<h2 id="python3解法-8"><a class="header" href="#python3解法-8">Python3解法</a></h2>
+<p>递归 精简(自身调用)</p>
+<pre><code class="language-python">class Solution:
+    def sortedArrayToBST(self, nums: List[int]) -&gt; Optional[TreeNode]:
+        if not nums:
+            return
+        mid = len(nums) // 2
+        root = TreeNode(nums[mid])
+        root.left = self.sortedArrayToBST(nums[:mid])
+        root.right = self.sortedArrayToBST(nums[mid + 1 :])
+        return root
+</code></pre>
+<h2 id="go解法-8"><a class="header" href="#go解法-8">Go解法</a></h2>
+<p>递归（隐含回溯）</p>
+<pre><code class="language-go">func sortedArrayToBST(nums []int) *TreeNode {
+    if len(nums) == 0 {    //终止条件，最后数组为空则可以返回
+        return nil
+    }
+    idx := len(nums)/2
+    root := &amp;TreeNode{Val: nums[idx]} 
+     
+    root.Left = sortedArrayToBST(nums[:idx])
+    root.Right = sortedArrayToBST(nums[idx+1:])
+
+    return root
+}
+</code></pre>
+<h1 id="109-convert-sorted-list-to-binary-search-tree"><a class="header" href="#109-convert-sorted-list-to-binary-search-tree"><a href="https://leetcode.com/problems/convert-sorted-list-to-binary-search-tree/">109. Convert Sorted List to Binary Search Tree</a></a></h1>
+<p>Given the <code>head</code> of a singly linked list where elements are sorted in <strong>ascending order</strong>, convert <em>it to a</em><strong><em>height-balanced</em></strong> <em>binary search tree</em>.</p>
+<p><strong>Example 1:</strong></p>
+<p><img src="https://assets.leetcode.com/uploads/2020/08/17/linked.jpg" alt="" /></p>
+<p><strong>Input:</strong> <code>head = [-10,-3,0,5,9]</code><br />
+<strong>Output:</strong> <code>[0,-3,9,-10,null,5]</code><br />
+<strong>Explanation:</strong> One possible answer is <code>[0,-3,9,-10,null,5]</code>, which represents the shown height balanced BST.</p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> <code>head = []</code><br />
+<strong>Output:</strong> <code>[]</code></p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li>The number of nodes in <code>head</code> is in the range <code>[0, 2 * 10^4]</code>.</li>
+<li><code>-10^5 &lt;= Node.val &lt;= 10^5</code></li>
+</ul>
+<h2 id="思路-10"><a class="header" href="#思路-10">思路</a></h2>
+<p>方法一：转为数组然后处理</p>
+<p>方法二：双指针找中间位置，再分区处理</p>
+<p>Intuition</p>
+<p>The problem requires converting a sorted linked list into a height-balanced binary search tree (BST). Since the linked list is sorted, the middle element naturally serves as the root, ensuring balance.</p>
+<p>Approach</p>
+<p>Find the Middle Node:</p>
+<p>Use the slow and fast pointer method to locate the middle element.</p>
+<p>This middle node becomes the root of the BST.</p>
+<p>Recursively Construct the Left and Right Subtrees:</p>
+<p>The left half of the list (before the middle node) forms theleft subtree.</p>
+<p>The right half of the list (after the middle node) forms theright subtree.</p>
+<p>Base Case:</p>
+<p>If head == tail, return nullptr, as there are no elements to process.</p>
+<p>Complexity Analysis</p>
+<p>Time Complexity:O(nlogn)</p>
+<p>Finding the middle element takesO(n), and we perform thislog ntimes.</p>
+<p>Space Complexity:O(logn)</p>
+<p>Due to recursive stack space.</p>
+<h2 id="c解法-10"><a class="header" href="#c解法-10">C++解法</a></h2>
+<pre><code class="language-cpp">/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+    TreeNode* sortedArrayToBST(vector&lt;int&gt;&amp; nums) {
+        if(nums.size() == 0){
+            return NULL;
+        }
+        if(nums.size() == 1){
+            return new TreeNode(nums[0]);
+        }
+        int rootVal = nums[nums.size() / 2];
+        TreeNode* root = new TreeNode(rootVal);
+        vector&lt;int&gt; left(nums.begin(), nums.begin() + nums.size() / 2);
+        root-&gt;left = sortedArrayToBST(left);
+        vector&lt;int&gt; right(nums.begin() + nums.size() / 2 + 1 , nums.end());
+        root-&gt;right = sortedArrayToBST(right);
+        return root;
+    }
+    TreeNode* sortedListToBST(ListNode* head) {
+        vector&lt;int&gt; nums;
+        ListNode* cur = head;
+        while(cur){
+            nums.push_back(cur-&gt;val);
+            cur = cur-&gt;next;
+        }
+        return sortedArrayToBST(nums);
+    }
+};
+</code></pre>
+<p>方法二：</p>
+<pre><code class="language-cpp">class Solution {
+public:
+    ListNode* find_middle(ListNode* head, ListNode* tail) {
+        if (!head)
+            return nullptr;
+        ListNode *slow = head, *fast = head;
+        while (fast != tail &amp;&amp; fast-&gt;next != tail) {
+            slow = slow-&gt;next;
+            fast = fast-&gt;next-&gt;next;
+        }
+        return slow;
+    }
+    TreeNode* helper(ListNode* head, ListNode* tail) {
+        if (head == tail)
+            return nullptr;
+        ListNode* middle = find_middle(head, tail);
+        TreeNode* root = new TreeNode(middle-&gt;val);
+        root-&gt;left = helper(head, middle);
+        root-&gt;right = helper(middle-&gt;next, tail);
+        return root;
+    }
+    TreeNode* sortedListToBST(ListNode* head) {
+        if (!head)
+            return nullptr;
+        return helper(head, nullptr);
+    }
+};
+</code></pre>
+<h2 id="java解法-9"><a class="header" href="#java解法-9">Java解法</a></h2>
+<h2 id="python3解法-9"><a class="header" href="#python3解法-9">Python3解法</a></h2>
+<h2 id="go解法-9"><a class="header" href="#go解法-9">Go解法</a></h2>
+<h1 id="538-convert-bst-to-greater-tree"><a class="header" href="#538-convert-bst-to-greater-tree"><a href="https://leetcode.com/problems/convert-bst-to-greater-tree/">538. Convert BST to Greater Tree</a></a></h1>
+<p>Given the <code>root</code> of a Binary Search Tree (BST), convert it to a Greater Tree such that every key of the original BST is changed to the original key plus the sum of all keys greater than the original key in BST.</p>
+<p>As a reminder, a <em>binary search tree</em> is a tree that satisfies these constraints:</p>
+<ul>
+<li>The left subtree of a node contains only nodes with keys <strong>less than</strong> the node's key.</li>
+<li>The right subtree of a node contains only nodes with keys <strong>greater than</strong> the node's key.</li>
+<li>Both the left and right subtrees must also be binary search trees.</li>
+</ul>
+<p><strong>Example 1:</strong></p>
+<p><img src="https://assets.leetcode.com/uploads/2019/05/02/tree.png" alt="" /></p>
+<p><strong>Input:</strong> <code>root = [4,1,6,0,2,5,7,null,null,null,3,null,null,null,8]</code><br />
+<strong>Output:</strong> <code>[30,36,21,36,35,26,15,null,null,null,33,null,null,null,8]</code></p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> <code>root = [0,null,1]</code><br />
+<strong>Output:</strong> <code>[1,null,1]</code></p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li>The number of nodes in the tree is in the range <code>[0, 10^4]</code>.</li>
+<li><code>-10^4 &lt;= Node.val &lt;= 10^4</code></li>
+<li>All the values in the tree are <strong>unique</strong>.</li>
+<li><code>root</code> is guaranteed to be a valid binary search tree.</li>
+</ul>
+<p><strong>Note:</strong> This question is the same as 1038: <a href="https://leetcode.com/problems/binary-search-tree-to-greater-sum-tree/">https://leetcode.com/problems/binary-search-tree-to-greater-sum-tree/</a></p>
+<h2 id="思路-11"><a class="header" href="#思路-11">思路</a></h2>
+<p>一看到累加树，相信很多小伙伴都会疑惑：如何累加？遇到一个节点，然后再遍历其他节点累加？怎么一想这么麻烦呢。</p>
+<p>然后再发现这是一棵二叉搜索树，二叉搜索树啊，这是有序的啊。</p>
+<p>那么有序的元素如何求累加呢？</p>
+<p><strong>其实这就是一棵树，大家可能看起来有点别扭，换一个角度来看，这就是一个有序数组<code>[2, 5, 13]</code>，求从后到前的累加数组，也就是<code>[20, 18, 13]</code>，是不是感觉这就简单了。</strong></p>
+<p>为什么变成数组就是感觉简单了呢？</p>
+<p>因为数组大家都知道怎么遍历啊，从后向前，挨个累加就完事了，这换成了二叉搜索树，看起来就别扭了一些是不是。</p>
+<p>那么知道如何遍历这个二叉树，也就迎刃而解了，<strong>从树中可以看出累加的顺序是右中左，所以我们需要反中序遍历这个二叉树，然后顺序累加就可以了</strong>。</p>
+<h3 id="递归-4"><a class="header" href="#递归-4">递归</a></h3>
+<p>遍历顺序如图所示：</p>
+<p><img src="https://code-thinking-1253855093.file.myqcloud.com/pics/20210204153440666.png" alt="538.把二叉搜索树转换为累加树" /></p>
+<p>本题依然需要一个pre指针记录当前遍历节点cur的前一个节点，这样才方便做累加。</p>
+<p>pre指针的使用技巧，我们在<a href="https://programmercarl.com/0530.%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91%E7%9A%84%E6%9C%80%E5%B0%8F%E7%BB%9D%E5%AF%B9%E5%B7%AE.html">二叉树：搜索树的最小绝对差 (opens new window)</a>和<a href="https://programmercarl.com/0501.%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91%E4%B8%AD%E7%9A%84%E4%BC%97%E6%95%B0.html">二叉树：我的众数是多少？ (opens new window)</a>都提到了，这是常用的操作手段。</p>
+<ul>
+<li>递归函数参数以及返回值</li>
+</ul>
+<p>这里很明确了，不需要递归函数的返回值做什么操作了，要遍历整棵树。</p>
+<p>同时需要定义一个全局变量pre，用来保存cur节点的前一个节点的数值，定义为int型就可以了。</p>
+<p>代码如下：</p>
+<pre><code class="language-cpp">int pre = 0; // 记录前一个节点的数值
+void traversal(TreeNode* cur)
+</code></pre>
+<ul>
+<li>确定终止条件</li>
+</ul>
+<p>遇空就终止。</p>
+<pre><code class="language-cpp">if (cur == NULL) return;
+</code></pre>
+<ul>
+<li>确定单层递归的逻辑</li>
+</ul>
+<p>注意<strong>要右中左来遍历二叉树</strong>， 中节点的处理逻辑就是让cur的数值加上前一个节点的数值。</p>
+<p>代码如下：</p>
+<pre><code class="language-cpp">traversal(cur-&gt;right);  // 右
+cur-&gt;val += pre;        // 中
+pre = cur-&gt;val;
+traversal(cur-&gt;left);   // 左
+</code></pre>
+<h3 id="迭代法-7"><a class="header" href="#迭代法-7">迭代法</a></h3>
+<p>迭代法其实就是中序模板题了，在<a href="https://programmercarl.com/%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E8%BF%AD%E4%BB%A3%E9%81%8D%E5%8E%86.html">二叉树：前中后序迭代法 (opens new window)</a>和<a href="https://programmercarl.com/%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E7%BB%9F%E4%B8%80%E8%BF%AD%E4%BB%A3%E6%B3%95.html">二叉树：前中后序统一方式迭代法 (opens new window)</a>可以选一种自己习惯的写法。</p>
+<h2 id="c解法-11"><a class="header" href="#c解法-11">C++解法</a></h2>
+<p>递归法整体代码如下：</p>
+<pre><code class="language-cpp">class Solution {
+private:
+    int pre = 0; // 记录前一个节点的数值
+    void traversal(TreeNode* cur) { // 右中左遍历
+        if (cur == NULL) return;
+        traversal(cur-&gt;right);
+        cur-&gt;val += pre;
+        pre = cur-&gt;val;
+        traversal(cur-&gt;left);
+    }
+public:
+    TreeNode* convertBST(TreeNode* root) {
+        pre = 0;
+        traversal(root);
+        return root;
+    }
+};
+</code></pre>
+<p>迭代法的一种代码如下：</p>
+<pre><code class="language-cpp">class Solution {
+private:
+    int pre; // 记录前一个节点的数值
+    void traversal(TreeNode* root) {
+        stack&lt;TreeNode*&gt; st;
+        TreeNode* cur = root;
+        while (cur != NULL || !st.empty()) {
+            if (cur != NULL) {
+                st.push(cur);
+                cur = cur-&gt;right;   // 右
+            } else {
+                cur = st.top();     // 中
+                st.pop();
+                cur-&gt;val += pre;
+                pre = cur-&gt;val;
+                cur = cur-&gt;left;    // 左
+            }
+        }
+    }
+public:
+    TreeNode* convertBST(TreeNode* root) {
+        pre = 0;
+        traversal(root);
+        return root;
+    }
+};
+</code></pre>
+<h2 id="java解法-10"><a class="header" href="#java解法-10">Java解法</a></h2>
+<p>递归法</p>
+<pre><code class="language-java">class Solution {
+    int sum;
+    public TreeNode convertBST(TreeNode root) {
+        sum = 0;
+        convertBST1(root);
+        return root;
+    }
+
+    // 按右中左顺序遍历，累加即可
+    public void convertBST1(TreeNode root) {
+        if (root == null) {
+            return;
+        }
+        convertBST1(root.right);
+        sum += root.val;
+        root.val = sum;
+        convertBST1(root.left);
+    }
+}
+</code></pre>
+<h2 id="python3解法-10"><a class="header" href="#python3解法-10">Python3解法</a></h2>
+<p>迭代法（版本一）</p>
+<pre><code class="language-python">class Solution:
+    def __init__(self):
+        self.pre = 0  # 记录前一个节点的数值
+    
+    def traversal(self, root):
+        stack = []
+        cur = root
+        while cur or stack:
+            if cur:
+                stack.append(cur)
+                cur = cur.right  # 右
+            else:
+                cur = stack.pop()  # 中
+                cur.val += self.pre
+                self.pre = cur.val
+                cur = cur.left  # 左
+    
+    def convertBST(self, root):
+        self.pre = 0
+        self.traversal(root)
+        return root
+</code></pre>
+<h2 id="go解法-10"><a class="header" href="#go解法-10">Go解法</a></h2>
+<p>弄一个sum暂存其和值</p>
+<pre><code class="language-go">var pre int
+func convertBST(root *TreeNode) *TreeNode {
+    pre = 0
+    traversal(root)
+    return root
+}
+
+func traversal(cur *TreeNode) {
+    if cur == nil {
+        return
+    }
+    traversal(cur.Right)
+    cur.Val += pre
+    pre = cur.Val
+    traversal(cur.Left)
+}
+</code></pre>
+<h1 id="1038-binary-search-tree-to-greater-sum-tree同上"><a class="header" href="#1038-binary-search-tree-to-greater-sum-tree同上"><a href="https://leetcode.com/problems/binary-search-tree-to-greater-sum-tree/">1038. Binary Search Tree to Greater Sum Tree</a>（同上）</a></h1>
+<p>Given the <code>root</code> of a Binary Search Tree (BST), convert it to a Greater Tree such that every key of the original BST is changed to the original key plus the sum of all keys greater than the original key in BST.</p>
+<p>As a reminder, a <em>binary search tree</em> is a tree that satisfies these constraints:</p>
+<ul>
+<li>The left subtree of a node contains only nodes with keys <strong>less than</strong> the node's key.</li>
+<li>The right subtree of a node contains only nodes with keys <strong>greater than</strong> the node's key.</li>
+<li>Both the left and right subtrees must also be binary search trees.</li>
+</ul>
+<p><strong>Example 1:</strong></p>
+<p><img src="https://assets.leetcode.com/uploads/2019/05/02/tree.png" alt="" /></p>
+<p><strong>Input:</strong> <code>root = [4,1,6,0,2,5,7,null,null,null,3,null,null,null,8]</code><br />
+<strong>Output:</strong> <code>[30,36,21,36,35,26,15,null,null,null,33,null,null,null,8]</code></p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> <code>root = [0,null,1]</code><br />
+<strong>Output:</strong> <code>[1,null,1]</code></p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li>The number of nodes in the tree is in the range <code>[0, 10^4]</code>.</li>
+<li><code>-10^4 &lt;= Node.val &lt;= 10^4</code></li>
+<li>All the values in the tree are <strong>unique</strong>.</li>
+<li><code>root</code> is guaranteed to be a valid binary search tree.</li>
+</ul>
+<p><strong>Note:</strong> This question is the same as 538: <a href="https://leetcode.com/problems/convert-bst-to-greater-tree/">https://leetcode.com/problems/convert-bst-to-greater-tree/</a></p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../二叉树/二叉树构造.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../二叉树/最低公共祖先.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../二叉树/二叉树构造.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../二叉树/最低公共祖先.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

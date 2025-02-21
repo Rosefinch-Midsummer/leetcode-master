@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>二叉树半径 - 剑指Offer</title>
+        <title>二叉树反转对称 - 剑指Offer</title>
 
 
         <!-- Custom HTML head -->
@@ -153,47 +153,48 @@
                 <div id="content" class="content">
                     <main>
                         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
-<h1 id="543-diameter-of-binary-tree"><a class="header" href="#543-diameter-of-binary-tree"><a href="https://leetcode.com/problems/diameter-of-binary-tree/">543. Diameter of Binary Tree</a></a></h1>
+<h1 id="二叉树反转对称"><a class="header" href="#二叉树反转对称">二叉树反转对称</a></h1>
 <ul>
-<li><a href="#description">Description</a></li>
+<li><a href="#226-invert-binary-tree">226. Invert Binary Tree</a>
+<ul>
 <li><a href="#%E6%80%9D%E8%B7%AF">思路</a></li>
-<li><a href="#c-%E8%A7%A3%E6%B3%95">C++ 解法</a></li>
-<li><a href="#java-%E8%A7%A3%E6%B3%95">Java 解法</a></li>
-<li><a href="#python-%E8%A7%A3%E6%B3%95">Python 解法</a></li>
+<li><a href="#c%E8%A7%A3%E6%B3%95">C++解法</a></li>
+<li><a href="#java%E8%A7%A3%E6%B3%95">Java解法</a></li>
+<li><a href="#python3%E8%A7%A3%E6%B3%95">Python3解法</a></li>
+<li><a href="#go%E8%A7%A3%E6%B3%95">Go解法</a></li>
 </ul>
-<h2 id="description"><a class="header" href="#description">Description</a></h2>
-<p>Given the <code>root</code> of a binary tree, return <em>the length of the <strong>diameter</strong> of the tree</em>.</p>
-<p>The <strong>diameter</strong> of a binary tree is the <strong>length</strong> of the longest path between any two nodes in a tree. This path may or may not pass through the <code>root</code>.</p>
-<p>The <strong>length</strong> of a path between two nodes is represented by the number of edges between them.</p>
+</li>
+<li><a href="#101-symmetric-tree">101. Symmetric Tree</a>
+<ul>
+<li><a href="#%E6%80%9D%E8%B7%AF-1">思路</a></li>
+<li><a href="#c%E8%A7%A3%E6%B3%95-1">C++解法</a></li>
+<li><a href="#java%E8%A7%A3%E6%B3%95-1">Java解法</a></li>
+<li><a href="#python3%E8%A7%A3%E6%B3%95-1">Python3解法</a></li>
+<li><a href="#go%E8%A7%A3%E6%B3%95-1">Go解法</a></li>
+</ul>
+</li>
+</ul>
+<h1 id="226-invert-binary-tree"><a class="header" href="#226-invert-binary-tree"><a href="https://leetcode.com/problems/invert-binary-tree/">226. Invert Binary Tree</a></a></h1>
+<p>Given the <code>root</code> of a binary tree, invert the tree, and return <em>its root</em>.</p>
 <p><strong>Example 1:</strong></p>
-<p><img src="https://assets.leetcode.com/uploads/2021/03/06/diamtree.jpg" alt="" /></p>
-<p><strong>Input:</strong> <code>root = [1,2,3,4,5]</code><br />
-<strong>Output:</strong> 3<br />
-<strong>Explanation:</strong> 3 is the length of the path <code>[4,2,1,3]</code> or <code>[5,2,1,3]</code>.</p>
+<p><img src="https://assets.leetcode.com/uploads/2021/03/14/invert1-tree.jpg" alt="" /></p>
+<p><strong>Input:</strong> <code>root = [4,2,7,1,3,6,9]</code><br />
+<strong>Output:</strong> <code>[4,7,2,9,6,3,1]</code></p>
 <p><strong>Example 2:</strong></p>
-<p><strong>Input:</strong> <code>root = [1,2]</code><br />
-<strong>Output:</strong> 1</p>
+<p><img src="https://assets.leetcode.com/uploads/2021/03/14/invert2-tree.jpg" alt="" /></p>
+<p><strong>Input:</strong> <code>root = [2,1,3]</code><br />
+<strong>Output:</strong> <code>[2,3,1]</code></p>
+<p><strong>Example 3:</strong></p>
+<p><strong>Input:</strong> <code>root = []</code><br />
+<strong>Output:</strong> <code>[]</code></p>
 <p><strong>Constraints:</strong></p>
 <ul>
-<li>The number of nodes in the tree is in the range <code>[1, 10^4]</code>.</li>
+<li>The number of nodes in the tree is in the range <code>[0, 100]</code>.</li>
 <li><code>-100 &lt;= Node.val &lt;= 100</code></li>
 </ul>
 <h2 id="思路"><a class="header" href="#思路">思路</a></h2>
-<p>方法一：深度优先搜索</p>
-<p>首先我们知道一条路径的长度为该路径经过的节点数减一，所以求直径（即求路径长度的最大值）等效于求路径经过节点数的最大值减一。</p>
-<p>而任意一条路径均可以被看作由某个节点为起点，从其左儿子和右儿子向下遍历的路径拼接得到。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/Rosefinch-Midsummer/MyImagesHost03/img/20240728101948.png" alt="" /></p>
-<p>如图我们可以知道路径 <code>[9, 4, 2, 5, 7, 8]</code> 可以被看作以 2 为起点，从其左儿子向下遍历的路径 <code>[2, 4, 9]</code> 和从其右儿子向下遍历的路径 <code>[2, 5, 7, 8]</code> 拼接得到。</p>
-<p>假设我们知道对于该节点的左儿子向下遍历经过最多的节点数 L （即以左儿子为根的子树的深度） 和其右儿子向下遍历经过最多的节点数 R （即以右儿子为根的子树的深度），那么以该节点为起点的路径经过节点数的最大值即为 L+R+1 。</p>
-<p>我们记节点 node 为起点的路径经过节点数的最大值为 dnode，那么二叉树的直径就是所有节点 dnode的最大值减一。</p>
-<p>最后的算法流程为：我们定义一个递归函数 depth(node) 计算 dnode ，函数返回该节点为根的子树的深度。先递归调用左儿子和右儿子求得它们为根的子树的深度 L 和 R ，则该节点为根的子树的深度即为max(L,R)+1</p>
-<p>该节点的 dnode值为L+R+1</p>
-<p>递归搜索每个节点并设一个全局变量 ans 记录 dnode的最大值，最后返回 ans-1 即为树的直径。</p>
-<p>作者：力扣官方题解
-链接： https://leetcode.cn/problems/diameter-of-binary-tree/solutions/139683/er-cha-shu-de-zhi-jing-by-leetcode-solution/
-来源：力扣（LeetCode）
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</p>
-<h2 id="c-解法"><a class="header" href="#c-解法">C++ 解法</a></h2>
+<p>确定遍历顺序，推荐使用前序遍历和后序遍历。</p>
+<h2 id="c解法"><a class="header" href="#c解法">C++解法</a></h2>
 <pre><code class="language-cpp">/**
  * Definition for a binary tree node.
  * struct TreeNode {
@@ -207,23 +208,88 @@
  */
 class Solution {
 public:
-    int diameterOfBinaryTree(TreeNode* root) {
-        int result = INT_MIN;
-        getMaxHeight(root, result);
-        return result;
-    }
-    int getMaxHeight(TreeNode* root, int&amp; result){
-        if(root == NULL){
-            return 0;
+    TreeNode* invertTree(TreeNode* root) {
+        if(root == nullptr){
+            return root;
         }
-        int left = getMaxHeight(root-&gt;left, result);
-        int right = getMaxHeight(root-&gt;right, result);
-        result = max(result, left + right);
-        return max(left, right) + 1;
+        invertTree(root-&gt;left);
+        invertTree(root-&gt;right);
+        swap(root-&gt;left, root-&gt;right);
+        return root;
     }
 };
 </code></pre>
-<p>优化版本：</p>
+<h2 id="java解法"><a class="header" href="#java解法">Java解法</a></h2>
+<pre><code class="language-java">/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public TreeNode invertTree(TreeNode root) {
+        if(root == null){
+            return null;
+        }
+        if(root.left == null &amp;&amp; root.right == null){
+            return root;
+        }
+        TreeNode temp = root.left;
+        root.left = root.right;
+        root.right = temp;
+        root.left = invertTree(root.left);
+        root.right = invertTree(root.right);
+        return root;
+    }
+}
+</code></pre>
+<h2 id="python3解法"><a class="header" href="#python3解法">Python3解法</a></h2>
+<pre><code class="language-python"># Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def invertTree(self, root: Optional[TreeNode]) -&gt; Optional[TreeNode]:
+        if not root:
+            return
+        temp = root.left
+        root.left = root.right
+        root.right = temp
+        self.invertTree(root.left)
+        self.invertTree(root.right)
+        return root
+</code></pre>
+<h2 id="go解法"><a class="header" href="#go解法">Go解法</a></h2>
+<h1 id="101-symmetric-tree"><a class="header" href="#101-symmetric-tree"><a href="https://leetcode.com/problems/symmetric-tree/">101. Symmetric Tree</a></a></h1>
+<p>Given the <code>root</code> of a binary tree, <em>check whether it is a mirror of itself</em> (i.e., symmetric around its center).</p>
+<p><strong>Example 1:</strong></p>
+<p><img src="https://assets.leetcode.com/uploads/2021/02/19/symtree1.jpg" alt="" /></p>
+<p><strong>Input:</strong> <code>root = [1,2,2,3,4,4,3]</code><br />
+<strong>Output:</strong> true</p>
+<p><strong>Example 2:</strong></p>
+<p><img src="https://assets.leetcode.com/uploads/2021/02/19/symtree2.jpg" alt="" /></p>
+<p><strong>Input:</strong> <code>root = [1,2,2,null,3,null,3]</code><br />
+<strong>Output:</strong> false</p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li>The number of nodes in the tree is in the range <code>[1, 1000]</code>.</li>
+<li><code>-100 &lt;= Node.val &lt;= 100</code></li>
+</ul>
+<p><strong>Follow up:</strong> Could you solve it both recursively and iteratively?</p>
+<h2 id="思路-1"><a class="header" href="#思路-1">思路</a></h2>
+<p>只能使用后序遍历</p>
+<h2 id="c解法-1"><a class="header" href="#c解法-1">C++解法</a></h2>
 <pre><code class="language-cpp">/**
  * Definition for a binary tree node.
  * struct TreeNode {
@@ -237,37 +303,91 @@ public:
  */
 class Solution {
 public:
-    int diameterOfBinaryTree(TreeNode* root) {
-        int result = INT_MIN;
-        getMaxHeight(root, result);
-        return result;
-    }
-    int getMaxHeight(TreeNode* root, int&amp; result){
-        if(root == NULL){
-            return 0;
+    bool compare(TreeNode* left, TreeNode* right){
+        if(left == NULL &amp;&amp; right == NULL){
+            return true;
+        }else if(left == NULL || right == NULL){
+            return false;
+        }else if(left-&gt;val == right-&gt;val){
+            return compare(left-&gt;right, right-&gt;left) &amp;&amp; compare(left-&gt;left, right-&gt;right);
+        }else{
+            return false;
         }
-        if (map.count(root)) return map[root];
-        int left = getMaxHeight(root-&gt;left, result);
-        int right = getMaxHeight(root-&gt;right, result);
-        result = max(result, left + right);
-        return map[root] = max(left, right) + 1;
     }
-private:
-    unordered_map&lt;TreeNode*, int&gt; map;
+    bool isSymmetric(TreeNode* root) {
+        if(root == NULL){
+            return true;
+        }
+        return compare(root-&gt;left, root-&gt;right);
+    }
 };
 </code></pre>
-<h2 id="java-解法"><a class="header" href="#java-解法">Java 解法</a></h2>
-<h2 id="python-解法"><a class="header" href="#python-解法">Python 解法</a></h2>
+<h2 id="java解法-1"><a class="header" href="#java解法-1">Java解法</a></h2>
+<pre><code class="language-java">/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public boolean isSymmetric(TreeNode root) {
+        if(root == null) return true;
+        return isMirror(root.left, root.right);
+        
+    }
+    public boolean isMirror(TreeNode left, TreeNode right){
+        if(left == null &amp;&amp; right == null) return true;
+        else if(left == null || right == null) return false;
+        else if(left.val != right.val) return false;
+        return isMirror(left.left, right.right) &amp;&amp; isMirror(left.right, right.left);
+    }
+}
+</code></pre>
+<h2 id="python3解法-1"><a class="header" href="#python3解法-1">Python3解法</a></h2>
+<pre><code class="language-python"># Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution(object):
+    def isSymmetric(self, root):
+        """
+        :type root: TreeNode
+        :rtype: bool
+        """
+        if not root:
+            return True
+        return self.isMirror(root.left, root.right)
+
+    def isMirror(self, left, right):
+        if not left and not right:
+            return True
+        if not left or not right:
+            return False
+        return left.val == right.val and self.isMirror(left.left, right.right) and self.isMirror(left.right, right.left)
+        
+</code></pre>
+<h2 id="go解法-1"><a class="header" href="#go解法-1">Go解法</a></h2>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../二叉树/路径之和.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../二叉树/二叉树物理性质.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="../二叉树/二叉树右视图.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../二叉树/二叉树深度高度节点数.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -277,11 +397,11 @@ private:
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../二叉树/路径之和.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../二叉树/二叉树物理性质.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="../二叉树/二叉树右视图.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../二叉树/二叉树深度高度节点数.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>
