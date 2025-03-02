@@ -1,0 +1,573 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>子集 - 剑指Offer</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">剑指Offer</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
+<h1 id="子集"><a class="header" href="#子集">子集</a></h1>
+<ul>
+<li><a href="#78-subsets">78. Subsets</a>
+<ul>
+<li><a href="#%E6%80%9D%E8%B7%AF">思路</a></li>
+<li><a href="#c%E8%A7%A3%E6%B3%95">C++解法</a></li>
+</ul>
+</li>
+<li><a href="#90-subsets-ii">90. Subsets II</a>
+<ul>
+<li><a href="#%E6%80%9D%E8%B7%AF-1">思路</a></li>
+<li><a href="#c%E8%A7%A3%E6%B3%95-1">C++解法</a></li>
+</ul>
+</li>
+<li><a href="#491-non-decreasing-subsequences">491. Non-decreasing Subsequences</a>
+<ul>
+<li><a href="#%E6%80%9D%E8%B7%AF-2">思路</a>
+<ul>
+<li><a href="#%E4%BC%98%E5%8C%96">优化</a></li>
+</ul>
+</li>
+<li><a href="#c%E8%A7%A3%E6%B3%95-2">C++解法</a></li>
+</ul>
+</li>
+</ul>
+<h1 id="78-subsets"><a class="header" href="#78-subsets"><a href="https://leetcode.com/problems/subsets/">78. Subsets</a></a></h1>
+<p>Given an integer array <code>nums</code> of <strong>unique</strong> elements, return <em>all possible</em> <em>subsets</em> <em>(the power set)</em>.</p>
+<p>The solution set <strong>must not</strong> contain duplicate subsets. Return the solution in <strong>any order</strong>.</p>
+<p><strong>Example 1:</strong></p>
+<p><strong>Input:</strong> <code>nums = [1,2,3]</code><br />
+<strong>Output:</strong> <code>[[],[1],[2],[1,2],[3],[1,3],[2,3],[1,2,3]]</code></p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> <code>nums = [0]</code><br />
+<strong>Output:</strong> <code>[[],[0]]</code></p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= nums.length &lt;= 10</code></li>
+<li><code>-10 &lt;= nums[i] &lt;= 10</code></li>
+<li>All the numbers of <code>nums</code> are <strong>unique</strong>.</li>
+</ul>
+<h2 id="思路"><a class="header" href="#思路">思路</a></h2>
+<p>求子集问题和<a href="https://programmercarl.com/0077.%E7%BB%84%E5%90%88.html">77.组合</a>和<a href="https://programmercarl.com/0131.%E5%88%86%E5%89%B2%E5%9B%9E%E6%96%87%E4%B8%B2.html">131.分割回文串</a>又不一样了。</p>
+<p>如果把 子集问题、组合问题、分割问题都抽象为一棵树的话，<strong>那么组合问题和分割问题都是收集树的叶子节点，而子集问题是找树的所有节点！</strong></p>
+<p>其实子集也是一种组合问题，因为它的集合是无序的，子集{1,2} 和 子集{2,1}是一样的。</p>
+<p><strong>那么既然是无序，取过的元素不会重复取，写回溯算法的时候，for就要从startIndex开始，而不是从0开始！</strong></p>
+<p>有同学问了，什么时候for可以从0开始呢？</p>
+<p>求排列问题的时候，就要从0开始，因为集合是有序的，{1, 2} 和{2, 1}是两个集合，排列问题我们后续的文章就会讲到的。</p>
+<p>以示例中nums = [1,2,3]为例把求子集抽象为树型结构，如下：</p>
+<p><img src="https://code-thinking.cdn.bcebos.com/pics/78.%E5%AD%90%E9%9B%86.png" alt="78.子集" /></p>
+<p>从图中红线部分，可以看出<strong>遍历这个树的时候，把所有节点都记录下来，就是要求的子集集合</strong>。</p>
+<ul>
+<li>递归函数参数</li>
+</ul>
+<p>全局变量数组path为子集收集元素，二维数组result存放子集组合。（也可以放到递归函数参数里）</p>
+<p>递归函数参数在上面讲到了，需要startIndex。</p>
+<p>代码如下：</p>
+<pre><code class="language-cpp">vector&lt;vector&lt;int&gt;&gt; result;  
+vector&lt;int&gt; path;  
+void backtracking(vector&lt;int&gt;&amp; nums, int startIndex) {}
+</code></pre>
+<p>递归终止条件</p>
+<p>从图中可以看出：</p>
+<p><img src="https://code-thinking.cdn.bcebos.com/pics/78.%E5%AD%90%E9%9B%86.png" alt="78.子集" /></p>
+<p>剩余集合为空的时候，就是叶子节点。</p>
+<p>那么什么时候剩余集合为空呢？</p>
+<p>就是startIndex已经大于数组的长度了，就终止了，因为没有元素可取了，代码如下:</p>
+<pre><code class="language-cpp">if (startIndex &gt;= nums.size()) {  
+    return;  
+}
+</code></pre>
+<p><strong>其实可以不需要加终止条件，因为startIndex &gt;= nums.size()，本层for循环本来也结束了</strong>。</p>
+<ul>
+<li>单层搜索逻辑</li>
+</ul>
+<p><strong>求取子集问题，不需要任何剪枝！因为子集就是要遍历整棵树</strong>。</p>
+<p>那么单层递归逻辑代码如下：</p>
+<pre><code class="language-cpp">for (int i = startIndex; i &lt; nums.size(); i++) {  
+    path.push_back(nums[i]);    // 子集收集元素  
+    backtracking(nums, i + 1);  // 注意从i+1开始，元素不重复取  
+    path.pop_back();            // 回溯  
+}
+</code></pre>
+<h2 id="c解法"><a class="header" href="#c解法">C++解法</a></h2>
+<pre><code class="language-cpp">class Solution {
+private:
+    vector&lt;vector&lt;int&gt;&gt; result;
+    vector&lt;int&gt; path;
+    void backtracking(vector&lt;int&gt;&amp; nums, int startIndex) {
+        result.push_back(path); // 收集子集，要放在终止添加的上面，否则会漏掉自己
+        if (startIndex &gt;= nums.size()) { // 终止条件可以不加
+            return;
+        }
+        for (int i = startIndex; i &lt; nums.size(); i++) {
+            path.push_back(nums[i]);
+            backtracking(nums, i + 1);
+            path.pop_back();
+        }
+    }
+public:
+    vector&lt;vector&lt;int&gt;&gt; subsets(vector&lt;int&gt;&amp; nums) {
+        result.clear();
+        path.clear();
+        backtracking(nums, 0);
+        return result;
+    }
+};
+</code></pre>
+<ul>
+<li>时间复杂度: O(n * 2^n)</li>
+<li>空间复杂度: O(n)</li>
+</ul>
+<p>在注释中，可以发现可以不写终止条件，因为本来我们就要遍历整棵树。</p>
+<p>有的同学可能担心不写终止条件会不会无限递归？</p>
+<p>并不会，因为每次递归的下一层就是从i+1开始的。</p>
+<h1 id="90-subsets-ii"><a class="header" href="#90-subsets-ii"><a href="https://leetcode.com/problems/subsets-ii/">90. Subsets II</a></a></h1>
+<p>Given an integer array <code>nums</code> that may contain duplicates, return <em>all possible</em> <em>subsets</em> <em>(the power set)</em>.</p>
+<p>The solution set <strong>must not</strong> contain duplicate subsets. Return the solution in <strong>any order</strong>.</p>
+<p><strong>Example 1:</strong></p>
+<p><strong>Input:</strong> <code>nums = [1,2,2]</code><br />
+<strong>Output:</strong> <code>[[],[1],[1,2],[1,2,2],[2],[2,2]]</code></p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> <code>nums = [0]</code><br />
+<strong>Output:</strong> <code>[[],[0]]</code></p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= nums.length &lt;= 10</code></li>
+<li><code>-10 &lt;= nums[i] &lt;= 10</code></li>
+</ul>
+<h2 id="思路-1"><a class="header" href="#思路-1">思路</a></h2>
+<p>树层去重需要先排序</p>
+<p>做本题之前一定要先做<a href="https://programmercarl.com/0078.%E5%AD%90%E9%9B%86.html">78.子集</a>。</p>
+<p>这道题目和<a href="https://programmercarl.com/0078.%E5%AD%90%E9%9B%86.html">78.子集</a>区别就是集合里有重复元素了，而且求取的子集要去重。</p>
+<p>那么关于回溯算法中的去重问题，<strong>在<a href="https://programmercarl.com/0040.%E7%BB%84%E5%90%88%E6%80%BB%E5%92%8CII.html">40.组合总和II</a>中已经详细讲解过了，和本题是一个套路</strong>。</p>
+<p><strong>剧透一下，后期要讲解的排列问题里去重也是这个套路，所以理解“树层去重”和“树枝去重”非常重要</strong>。</p>
+<p>用示例中的[1, 2, 2] 来举例，如图所示： （<strong>注意去重需要先对集合排序</strong>）</p>
+<p><img src="https://code-thinking-1253855093.file.myqcloud.com/pics/20201124195411977.png" alt="90.子集II" /></p>
+<p>从图中可以看出，同一树层上重复取2 就要过滤掉，同一树枝上就可以重复取2，因为同一树枝上元素的集合才是唯一子集！</p>
+<h2 id="c解法-1"><a class="header" href="#c解法-1">C++解法</a></h2>
+<pre><code class="language-cpp">class Solution {
+private:
+    vector&lt;vector&lt;int&gt;&gt; result;
+    vector&lt;int&gt; path;
+    void backtracking(vector&lt;int&gt;&amp; nums, int startIndex, vector&lt;bool&gt;&amp; used) {
+        result.push_back(path);
+        for (int i = startIndex; i &lt; nums.size(); i++) {
+            // used[i - 1] == true，说明同一树枝nums[i - 1]使用过
+            // used[i - 1] == false，说明同一树层nums[i - 1]使用过
+            // 而我们要对同一树层使用过的元素进行跳过
+            if (i &gt; 0 &amp;&amp; nums[i] == nums[i - 1] &amp;&amp; used[i - 1] == false) {
+                continue;
+            }
+            path.push_back(nums[i]);
+            used[i] = true;
+            backtracking(nums, i + 1, used);
+            used[i] = false;
+            path.pop_back();
+        }
+    }
+
+public:
+    vector&lt;vector&lt;int&gt;&gt; subsetsWithDup(vector&lt;int&gt;&amp; nums) {
+        result.clear();
+        path.clear();
+        vector&lt;bool&gt; used(nums.size(), false);
+        sort(nums.begin(), nums.end()); // 去重需要排序
+        backtracking(nums, 0, used);
+        return result;
+    }
+};
+</code></pre>
+<ul>
+<li>时间复杂度: O(n * 2^n)</li>
+<li>空间复杂度: O(n)</li>
+</ul>
+<p>使用set去重的版本。</p>
+<pre><code class="language-cpp">class Solution {
+private:
+    vector&lt;vector&lt;int&gt;&gt; result;
+    vector&lt;int&gt; path;
+    void backtracking(vector&lt;int&gt;&amp; nums, int startIndex) {
+        result.push_back(path);
+        unordered_set&lt;int&gt; uset;
+        for (int i = startIndex; i &lt; nums.size(); i++) {
+            if (uset.find(nums[i]) != uset.end()) {
+                continue;
+            }
+            uset.insert(nums[i]);
+            path.push_back(nums[i]);
+            backtracking(nums, i + 1);
+            path.pop_back();
+        }
+    }
+
+public:
+    vector&lt;vector&lt;int&gt;&gt; subsetsWithDup(vector&lt;int&gt;&amp; nums) {
+        result.clear();
+        path.clear();
+        sort(nums.begin(), nums.end()); // 去重需要排序
+        backtracking(nums, 0);
+        return result;
+    }
+};
+</code></pre>
+<p>本题也可以不使用used数组来去重，因为递归的时候下一个startIndex是i+1而不是0。</p>
+<p>如果要是全排列的话，每次要从0开始遍历，为了跳过已入栈的元素，需要使用used。</p>
+<p>完整代码如下所示：</p>
+<pre><code class="language-cpp">class Solution {
+private:
+    vector&lt;vector&lt;int&gt;&gt; result;
+    vector&lt;int&gt; path;
+    void backtracking(vector&lt;int&gt;&amp; nums, int startIndex) {
+        result.push_back(path);
+        for (int i = startIndex; i &lt; nums.size(); i++) {
+            // 而我们要对同一树层使用过的元素进行跳过
+            if (i &gt; startIndex &amp;&amp; nums[i] == nums[i - 1] ) { // 注意这里使用i &gt; startIndex
+                continue;
+            }
+            path.push_back(nums[i]);
+            backtracking(nums, i + 1);
+            path.pop_back();
+        }
+    }
+
+public:
+    vector&lt;vector&lt;int&gt;&gt; subsetsWithDup(vector&lt;int&gt;&amp; nums) {
+        result.clear();
+        path.clear();
+        sort(nums.begin(), nums.end()); // 去重需要排序
+        backtracking(nums, 0);
+        return result;
+    }
+};
+</code></pre>
+<h1 id="491-non-decreasing-subsequences"><a class="header" href="#491-non-decreasing-subsequences"><a href="https://leetcode.com/problems/non-decreasing-subsequences/">491. Non-decreasing Subsequences</a></a></h1>
+<p>Given an integer array <code>nums</code>, return <em>all the different possible non-decreasing subsequences of the given array with at least two elements</em>. You may return the answer in <strong>any order</strong>.</p>
+<p><strong>Example 1:</strong></p>
+<p><strong>Input:</strong> <code>nums = [4,6,7,7]</code><br />
+<strong>Output:</strong> <code>[[4,6],[4,6,7],[4,6,7,7],[4,7],[4,7,7],[6,7],[6,7,7],[7,7]]</code></p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> <code>nums = [4,4,3,2,1]</code><br />
+<strong>Output:</strong> <code>[[4,4]]</code></p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= nums.length &lt;= 15</code></li>
+<li><code>-100 &lt;= nums[i] &lt;= 100</code></li>
+</ul>
+<h2 id="思路-2"><a class="header" href="#思路-2">思路</a></h2>
+<p>这个递增子序列比较像是取有序的子集。而且本题也要求不能有相同的递增子序列。</p>
+<p>这又是子集，又是去重，是不是不由自主的想起了刚刚讲过的<a href="https://programmercarl.com/0090.%E5%AD%90%E9%9B%86II.html">90.子集II</a>。</p>
+<p>就是因为太像了，更要注意差别所在，要不就掉坑里了！</p>
+<p>在<a href="https://programmercarl.com/0090.%E5%AD%90%E9%9B%86II.html">90.子集II</a>中我们是通过排序，再加一个标记数组来达到去重的目的。</p>
+<p>而本题求自增子序列，是不能对原数组进行排序的，排完序的数组都是自增子序列了。</p>
+<p><strong>所以不能使用之前的去重逻辑！</strong></p>
+<p>本题给出的示例，还是一个有序数组 [4, 6, 7, 7]，这更容易误导大家按照排序的思路去做了。</p>
+<p>为了有鲜明的对比，我用[4, 7, 6, 7]这个数组来举例，抽象为树形结构如图：</p>
+<p><img src="https://code-thinking-1253855093.file.myqcloud.com/pics/20201124200229824.png" alt="491. 递增子序列1" /></p>
+<ul>
+<li>递归函数参数</li>
+</ul>
+<p>本题求子序列，很明显一个元素不能重复使用，所以需要startIndex，调整下一层递归的起始位置。</p>
+<p>代码如下：</p>
+<pre><code class="language-cpp">vector&lt;vector&lt;int&gt;&gt; result;  
+vector&lt;int&gt; path;  
+void backtracking(vector&lt;int&gt;&amp; nums, int startIndex)
+</code></pre>
+<ul>
+<li>终止条件</li>
+</ul>
+<p>本题其实类似求子集问题，也是要遍历树形结构找每一个节点，所以和<a href="https://programmercarl.com/0078.%E5%AD%90%E9%9B%86.html">回溯算法：求子集问题！</a>一样，可以不加终止条件，startIndex每次都会加1，并不会无限递归。</p>
+<p>但本题收集结果有所不同，题目要求递增子序列大小至少为2，所以代码如下：</p>
+<pre><code class="language-cpp">if (path.size() &gt; 1) {  
+    result.push_back(path);  
+    // 注意这里不要加return，因为要取树上的所有节点  
+}
+</code></pre>
+<ul>
+<li>单层搜索逻辑</li>
+</ul>
+<p><img src="https://code-thinking-1253855093.file.myqcloud.com/pics/20201124200229824-20230310131640070.png" alt="491. 递增子序列1" /></p>
+<p>在图中可以看出，<strong>同一父节点下的同层上使用过的元素就不能再使用了</strong></p>
+<p>那么单层搜索代码如下：</p>
+<pre><code class="language-cpp">unordered_set&lt;int&gt; uset; // 使用set来对本层元素进行去重  
+for (int i = startIndex; i &lt; nums.size(); i++) {  
+    if ((!path.empty() &amp;&amp; nums[i] &lt; path.back())  
+            || uset.find(nums[i]) != uset.end()) {  
+            continue;  
+    }  
+    uset.insert(nums[i]); // 记录这个元素在本层用过了，本层后面不能再用了  
+    path.push_back(nums[i]);  
+    backtracking(nums, i + 1);  
+    path.pop_back();  
+}
+</code></pre>
+<p><strong>对于已经习惯写回溯的同学，看到递归函数上面的<code>uset.insert(nums[i]);</code>，下面却没有对应的pop之类的操作，应该很不习惯吧</strong></p>
+<p><strong>这也是需要注意的点，<code>unordered_set&lt;int&gt; uset;</code> 是记录本层元素是否重复使用，新的一层uset都会重新定义（清空），所以要知道uset只负责本层！</strong></p>
+<h3 id="优化"><a class="header" href="#优化">优化</a></h3>
+<p>以上代码用我用了<code>unordered_set&lt;int&gt;</code>来记录本层元素是否重复使用。</p>
+<p><strong>其实用数组来做哈希，效率就高了很多</strong>。</p>
+<p>注意题目中说了，数值范围[-100,100]，所以完全可以用数组来做哈希。</p>
+<p>程序运行的时候对unordered_set 频繁的insert，unordered_set需要做哈希映射（也就是把key通过hash function映射为唯一的哈希值）相对费时间，而且每次重新定义set，insert的时候其底层的符号表也要做相应的扩充，也是费事的。</p>
+<h2 id="c解法-2"><a class="header" href="#c解法-2">C++解法</a></h2>
+<p>使用<code>unordered_set</code></p>
+<pre><code class="language-cpp">// 版本一
+class Solution {
+private:
+    vector&lt;vector&lt;int&gt;&gt; result;
+    vector&lt;int&gt; path;
+    void backtracking(vector&lt;int&gt;&amp; nums, int startIndex) {
+        if (path.size() &gt; 1) {
+            result.push_back(path);
+            // 注意这里不要加return，要取树上的节点
+        }
+        unordered_set&lt;int&gt; uset; // 使用set对本层元素进行去重
+        for (int i = startIndex; i &lt; nums.size(); i++) {
+            if ((!path.empty() &amp;&amp; nums[i] &lt; path.back())
+                    || uset.find(nums[i]) != uset.end()) {
+                    continue;
+            }
+            uset.insert(nums[i]); // 记录这个元素在本层用过了，本层后面不能再用了
+            path.push_back(nums[i]);
+            backtracking(nums, i + 1);
+            path.pop_back();
+        }
+    }
+public:
+    vector&lt;vector&lt;int&gt;&gt; findSubsequences(vector&lt;int&gt;&amp; nums) {
+        result.clear();
+        path.clear();
+        backtracking(nums, 0);
+        return result;
+    }
+};
+</code></pre>
+<p>使用数组</p>
+<pre><code class="language-cpp">// 版本二
+class Solution {
+private:
+    vector&lt;vector&lt;int&gt;&gt; result;
+    vector&lt;int&gt; path;
+    void backtracking(vector&lt;int&gt;&amp; nums, int startIndex) {
+        if (path.size() &gt; 1) {
+            result.push_back(path);
+        }
+        int used[201] = {0}; // 这里使用数组来进行去重操作，题目说数值范围[-100, 100]
+        for (int i = startIndex; i &lt; nums.size(); i++) {
+            if ((!path.empty() &amp;&amp; nums[i] &lt; path.back())
+                    || used[nums[i] + 100] == 1) {
+                    continue;
+            }
+            used[nums[i] + 100] = 1; // 记录这个元素在本层用过了，本层后面不能再用了
+            path.push_back(nums[i]);
+            backtracking(nums, i + 1);
+            path.pop_back();
+        }
+    }
+public:
+    vector&lt;vector&lt;int&gt;&gt; findSubsequences(vector&lt;int&gt;&amp; nums) {
+        result.clear();
+        path.clear();
+        backtracking(nums, 0);
+        return result;
+    }
+};
+</code></pre>
+<p>这份代码在leetcode上提交，要比版本一耗时要好的多。</p>
+<p><strong>所以正如在<a href="https://programmercarl.com/%E5%93%88%E5%B8%8C%E8%A1%A8%E6%80%BB%E7%BB%93.html">哈希表：总结篇！（每逢总结必经典）</a>中说的那样，数组，set，map都可以做哈希表，而且数组干的活，map和set都能干，但如果数值范围小的话能用数组尽量用数组</strong>。</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../回溯/分割.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../回溯/排列.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../回溯/分割.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../回溯/排列.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

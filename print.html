@@ -18968,7 +18968,2534 @@ public:
         return list(leaves)
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
-<h1 id="回溯"><a class="header" href="#回溯">回溯</a></h1>
+<h1 id="回溯算法"><a class="header" href="#回溯算法">回溯算法</a></h1>
+<ul>
+<li><a href="%E5%9B%9E%E6%BA%AF/%E5%9B%9E%E6%BA%AF.html#%E7%90%86%E8%AE%BA%E5%9F%BA%E7%A1%80">理论基础</a>
+<ul>
+<li><a href="%E5%9B%9E%E6%BA%AF/%E5%9B%9E%E6%BA%AF.html#%E4%BB%80%E4%B9%88%E6%98%AF%E5%9B%9E%E6%BA%AF%E6%B3%95">什么是回溯法</a></li>
+<li><a href="%E5%9B%9E%E6%BA%AF/%E5%9B%9E%E6%BA%AF.html#%E5%9B%9E%E6%BA%AF%E6%B3%95%E7%9A%84%E6%95%88%E7%8E%87">回溯法的效率</a></li>
+<li><a href="%E5%9B%9E%E6%BA%AF/%E5%9B%9E%E6%BA%AF.html#%E5%9B%9E%E6%BA%AF%E6%B3%95%E8%A7%A3%E5%86%B3%E7%9A%84%E9%97%AE%E9%A2%98">回溯法解决的问题</a></li>
+<li><a href="%E5%9B%9E%E6%BA%AF/%E5%9B%9E%E6%BA%AF.html#%E5%A6%82%E4%BD%95%E7%90%86%E8%A7%A3%E5%9B%9E%E6%BA%AF%E6%B3%95">如何理解回溯法</a></li>
+<li><a href="%E5%9B%9E%E6%BA%AF/%E5%9B%9E%E6%BA%AF.html#%E5%9B%9E%E6%BA%AF%E6%B3%95%E6%A8%A1%E6%9D%BF">回溯法模板</a></li>
+</ul>
+</li>
+<li><a href="%E5%9B%9E%E6%BA%AF/%E5%9B%9E%E6%BA%AF.html#%E6%80%BB%E7%BB%93">总结</a></li>
+</ul>
+<h2 id="理论基础"><a class="header" href="#理论基础">理论基础</a></h2>
+<h3 id="什么是回溯法"><a class="header" href="#什么是回溯法">什么是回溯法</a></h3>
+<p>回溯法也可以叫做回溯搜索法，它是一种搜索的方式。</p>
+<p>在二叉树系列中，我们已经不止一次，提到了回溯，例如<a href="https://programmercarl.com/%E4%BA%8C%E5%8F%89%E6%A0%91%E4%B8%AD%E9%80%92%E5%BD%92%E5%B8%A6%E7%9D%80%E5%9B%9E%E6%BA%AF.html">二叉树：以为使用了递归，其实还隐藏着回溯</a>。</p>
+<p>回溯是递归的副产品，只要有递归就会有回溯。</p>
+<p><strong>所以以下讲解中，回溯函数也就是递归函数，指的都是一个函数</strong>。</p>
+<h3 id="回溯法的效率"><a class="header" href="#回溯法的效率">回溯法的效率</a></h3>
+<p>回溯法的性能如何呢，这里要和大家说清楚了，<strong>虽然回溯法很难，很不好理解，但是回溯法并不是什么高效的算法</strong>。</p>
+<p><strong>因为回溯的本质是穷举，穷举所有可能，然后选出我们想要的答案</strong>，如果想让回溯法高效一些，可以加一些剪枝的操作，但也改不了回溯法就是穷举的本质。</p>
+<p>那么既然回溯法并不高效为什么还要用它呢？</p>
+<p>因为没得选，一些问题能暴力搜出来就不错了，撑死了再剪枝一下，还没有更高效的解法。</p>
+<p>此时大家应该好奇了，都什么问题，这么牛逼，只能暴力搜索。</p>
+<h3 id="回溯法解决的问题"><a class="header" href="#回溯法解决的问题">回溯法解决的问题</a></h3>
+<p>回溯法，一般可以解决如下几种问题：</p>
+<ul>
+<li>组合问题：N个数里面按一定规则找出k个数的集合</li>
+<li>切割问题：一个字符串按一定规则有几种切割方式</li>
+<li>子集问题：一个N个数的集合里有多少符合条件的子集</li>
+<li>排列问题：N个数按一定规则全排列，有几种排列方式</li>
+<li>棋盘问题：N皇后，解数独等等</li>
+</ul>
+<p><strong>相信大家看着这些之后会发现，每个问题，都不简单！</strong></p>
+<p>另外，会有一些同学可能分不清什么是组合，什么是排列？</p>
+<p><strong>组合是不强调元素顺序的，排列是强调元素顺序</strong>。</p>
+<p>例如：{1, 2} 和 {2, 1} 在组合上，就是一个集合，因为不强调顺序，而要是排列的话，{1, 2} 和 {2, 1} 就是两个集合了。</p>
+<p>记住组合无序，排列有序，就可以了。</p>
+<h3 id="如何理解回溯法"><a class="header" href="#如何理解回溯法">如何理解回溯法</a></h3>
+<p><strong>回溯法解决的问题都可以抽象为树形结构</strong>，是的，我指的是所有回溯法的问题都可以抽象为树形结构！</p>
+<p>因为回溯法解决的都是在集合中递归查找子集，<strong>集合的大小就构成了树的宽度，递归的深度就构成了树的深度</strong>。</p>
+<p>递归就要有终止条件，所以必然是一棵高度有限的树（N叉树）。</p>
+<p>这块可能初学者还不太理解，后面的回溯算法解决的所有题目中，我都会强调这一点并画图举相应的例子，现在有一个印象就行。</p>
+<h3 id="回溯法模板"><a class="header" href="#回溯法模板">回溯法模板</a></h3>
+<p>这里给出Carl总结的回溯算法模板。</p>
+<p>在讲<a href="https://programmercarl.com/%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E9%80%92%E5%BD%92%E9%81%8D%E5%8E%86.html">二叉树的递归</a>中我们说了递归三部曲，这里我再给大家列出回溯三部曲。</p>
+<ul>
+<li>回溯函数模板返回值以及参数</li>
+</ul>
+<p>在回溯算法中，我的习惯是函数起名字为backtracking，这个起名大家随意。</p>
+<p>回溯算法中函数返回值一般为void。</p>
+<p>再来看一下参数，因为回溯算法需要的参数可不像二叉树递归的时候那么容易一次性确定下来，所以一般是先写逻辑，然后需要什么参数，就填什么参数。</p>
+<p>但后面的回溯题目的讲解中，为了方便大家理解，我在一开始就帮大家把参数确定下来。</p>
+<p>回溯函数伪代码如下：</p>
+<pre><code class="language-cpp">void backtracking(参数)
+</code></pre>
+<ul>
+<li>回溯函数终止条件</li>
+</ul>
+<p>既然是树形结构，那么我们在讲解<a href="https://programmercarl.com/%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E9%80%92%E5%BD%92%E9%81%8D%E5%8E%86.html">二叉树的递归</a>的时候，就知道遍历树形结构一定要有终止条件。</p>
+<p>所以回溯也有要终止条件。</p>
+<p>什么时候达到了终止条件，树中就可以看出，一般来说搜到叶子节点了，也就找到了满足条件的一条答案，把这个答案存放起来，并结束本层递归。</p>
+<p>所以回溯函数终止条件伪代码如下：</p>
+<pre><code class="language-cpp">if (终止条件) {
+    存放结果;
+    return;
+}
+</code></pre>
+<ul>
+<li>回溯搜索的遍历过程</li>
+</ul>
+<p>在上面我们提到了，回溯法一般是在集合中递归搜索，集合的大小构成了树的宽度，递归的深度构成的树的深度。</p>
+<p>如图：</p>
+<p><img src="https://code-thinking-1253855093.file.myqcloud.com/pics/20210130173631174.png" alt="回溯算法理论基础" /></p>
+<p>注意图中，我特意举例集合大小和孩子的数量是相等的！</p>
+<p>回溯函数遍历过程伪代码如下：</p>
+<pre><code class="language-cpp">for (选择：本层集合中元素（树中节点孩子的数量就是集合的大小）) {
+    处理节点;
+    backtracking(路径，选择列表); // 递归
+    回溯，撤销处理结果
+}
+</code></pre>
+<p>for循环就是遍历集合区间，可以理解一个节点有多少个孩子，这个for循环就执行多少次。</p>
+<p>backtracking这里自己调用自己，实现递归。</p>
+<p>大家可以从图中看出<strong>for循环可以理解是横向遍历，backtracking（递归）就是纵向遍历</strong>，这样就把这棵树全遍历完了，一般来说，搜索叶子节点就是找的其中一个结果了。</p>
+<p>分析完过程，回溯算法模板框架如下：</p>
+<pre><code class="language-cpp">void backtracking(参数) {
+    if (终止条件) {
+        存放结果;
+        return;
+    }
+
+    for (选择：本层集合中元素（树中节点孩子的数量就是集合的大小）) {
+        处理节点;
+        backtracking(路径，选择列表); // 递归
+        回溯，撤销处理结果
+    }
+}
+
+</code></pre>
+<p><strong>这份模板很重要，后面做回溯法的题目都靠它了！</strong></p>
+<p>如果从来没有学过回溯算法的录友们，看到这里会有点懵，后面开始讲解具体题目的时候就会好一些了，已经做过回溯法题目的录友，看到这里应该会感同身受了。</p>
+<h2 id="总结-14"><a class="header" href="#总结-14">总结</a></h2>
+<p>本篇我们讲解了，什么是回溯算法，知道了回溯和递归是相辅相成的。</p>
+<p>接着提到了回溯法的效率，回溯法其实就是暴力查找，并不是什么高效的算法。</p>
+<p>然后列出了回溯法可以解决几类问题，可以看出每一类问题都不简单。</p>
+<p>最后我们讲到回溯法解决的问题都可以抽象为树形结构（N叉树），并给出了回溯法的模板。</p>
+<div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
+<h1 id="组合"><a class="header" href="#组合">组合</a></h1>
+<ul>
+<li><a href="%E5%9B%9E%E6%BA%AF/%E7%BB%84%E5%90%88.html#77-combinations">77. Combinations</a>
+<ul>
+<li><a href="%E5%9B%9E%E6%BA%AF/%E7%BB%84%E5%90%88.html#%E6%80%9D%E8%B7%AF">思路</a></li>
+<li><a href="%E5%9B%9E%E6%BA%AF/%E7%BB%84%E5%90%88.html#c%E8%A7%A3%E6%B3%95">C++解法</a></li>
+</ul>
+</li>
+<li><a href="%E5%9B%9E%E6%BA%AF/%E7%BB%84%E5%90%88.html#216-combination-sum-iii">216. Combination Sum III</a>
+<ul>
+<li><a href="%E5%9B%9E%E6%BA%AF/%E7%BB%84%E5%90%88.html#%E6%80%9D%E8%B7%AF-1">思路</a>
+<ul>
+<li><a href="%E5%9B%9E%E6%BA%AF/%E7%BB%84%E5%90%88.html#%E5%89%AA%E6%9E%9D">剪枝</a></li>
+</ul>
+</li>
+<li><a href="%E5%9B%9E%E6%BA%AF/%E7%BB%84%E5%90%88.html#c%E8%A7%A3%E6%B3%95-1">C++解法</a></li>
+</ul>
+</li>
+<li><a href="%E5%9B%9E%E6%BA%AF/%E7%BB%84%E5%90%88.html#17-letter-combinations-of-a-phone-number">17. Letter Combinations of a Phone Number</a>
+<ul>
+<li><a href="%E5%9B%9E%E6%BA%AF/%E7%BB%84%E5%90%88.html#%E6%80%9D%E8%B7%AF-2">思路</a>
+<ul>
+<li><a href="%E5%9B%9E%E6%BA%AF/%E7%BB%84%E5%90%88.html#%E6%95%B0%E5%AD%97%E5%92%8C%E5%AD%97%E6%AF%8D%E5%A6%82%E4%BD%95%E6%98%A0%E5%B0%84">数字和字母如何映射</a></li>
+<li><a href="%E5%9B%9E%E6%BA%AF/%E7%BB%84%E5%90%88.html#%E5%9B%9E%E6%BA%AF%E6%B3%95%E6%9D%A5%E8%A7%A3%E5%86%B3n%E4%B8%AAfor%E5%BE%AA%E7%8E%AF%E7%9A%84%E9%97%AE%E9%A2%98">回溯法来解决n个for循环的问题</a></li>
+</ul>
+</li>
+<li><a href="%E5%9B%9E%E6%BA%AF/%E7%BB%84%E5%90%88.html#c%E8%A7%A3%E6%B3%95-2">C++解法</a></li>
+</ul>
+</li>
+<li><a href="%E5%9B%9E%E6%BA%AF/%E7%BB%84%E5%90%88.html#39-combination-sum">39. Combination Sum</a>
+<ul>
+<li><a href="%E5%9B%9E%E6%BA%AF/%E7%BB%84%E5%90%88.html#%E6%80%9D%E8%B7%AF-3">思路</a>
+<ul>
+<li><a href="%E5%9B%9E%E6%BA%AF/%E7%BB%84%E5%90%88.html#%E5%89%AA%E6%9E%9D%E4%BC%98%E5%8C%96">剪枝优化</a></li>
+</ul>
+</li>
+<li><a href="%E5%9B%9E%E6%BA%AF/%E7%BB%84%E5%90%88.html#c%E8%A7%A3%E6%B3%95-3">C++解法</a></li>
+</ul>
+</li>
+<li><a href="%E5%9B%9E%E6%BA%AF/%E7%BB%84%E5%90%88.html#40-combination-sum-ii">40. Combination Sum II</a>
+<ul>
+<li><a href="%E5%9B%9E%E6%BA%AF/%E7%BB%84%E5%90%88.html#%E6%80%9D%E8%B7%AF-4">思路</a></li>
+<li><a href="%E5%9B%9E%E6%BA%AF/%E7%BB%84%E5%90%88.html#c%E8%A7%A3%E6%B3%95-4">C++解法</a></li>
+</ul>
+</li>
+</ul>
+<h1 id="77-combinations"><a class="header" href="#77-combinations"><a href="https://leetcode.com/problems/combinations/">77. Combinations</a></a></h1>
+<p>Given two integers <code>n</code> and <code>k</code>, return <em>all possible combinations of</em> <code>k</code> <em>numbers chosen from the range</em> <code>[1, n]</code>.</p>
+<p>You may return the answer in <strong>any order</strong>.</p>
+<p><strong>Example 1:</strong></p>
+<p><strong>Input:</strong> <code>n = 4, k = 2</code><br />
+<strong>Output:</strong> <code>[[1,2],[1,3],[1,4],[2,3],[2,4],[3,4]]</code><br />
+<strong>Explanation:</strong> There are 4 choose 2 = 6 total combinations.<br />
+Note that combinations are unordered, i.e., <code>[1,2]</code> and <code>[2,1]</code> are considered to be the same combination.</p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> <code>n = 1, k = 1</code><br />
+<strong>Output:</strong> <code>[[1]]</code><br />
+<strong>Explanation:</strong> There is 1 choose 1 = 1 total combination.</p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= n &lt;= 20</code></li>
+<li><code>1 &lt;= k &lt;= n</code></li>
+</ul>
+<h2 id="思路-119"><a class="header" href="#思路-119">思路</a></h2>
+<p>通过path的大小控制递归深度。</p>
+<p>本题是回溯法的经典题目。</p>
+<p>直接的解法当然是使用for循环，例如示例中k为2，很容易想到 用两个for循环，这样就可以输出和示例中一样的结果。</p>
+<p><strong>如果n为100，k为50呢，那就50层for循环，是不是开始窒息</strong>。</p>
+<p><strong>此时就会发现虽然想暴力搜索，但是用for循环嵌套连暴力都写不出来！</strong></p>
+<p>咋整？</p>
+<p>回溯搜索法来了，虽然回溯法也是暴力，但至少能写出来，不像for循环嵌套k层让人绝望。</p>
+<p>那么回溯法怎么暴力搜呢？</p>
+<p>上面我们说了<strong>要解决 n为100，k为50的情况，暴力写法需要嵌套50层for循环，那么回溯法就用递归来解决嵌套层数的问题</strong>。</p>
+<p>递归来做层叠嵌套（可以理解是开k层for循环），<strong>每一次的递归中嵌套一个for循环，那么递归就可以用于解决多层嵌套循环的问题了</strong>。</p>
+<p>此时递归的层数大家应该知道了，例如：n为100，k为50的情况下，就是递归50层。</p>
+<p>一些同学本来对递归就懵，回溯法中递归还要嵌套for循环，可能就直接晕倒了！</p>
+<p>如果脑洞模拟回溯搜索的过程，绝对可以让人窒息，所以需要抽象图形结构来进一步理解。</p>
+<p><strong>我们在<a href="https://programmercarl.com/%E5%9B%9E%E6%BA%AF%E7%AE%97%E6%B3%95%E7%90%86%E8%AE%BA%E5%9F%BA%E7%A1%80.html">关于回溯算法，你该了解这些！</a>中说到回溯法解决的问题都可以抽象为树形结构（N叉树），用树形结构来理解回溯就容易多了</strong>。</p>
+<p>那么我把组合问题抽象为如下树形结构：</p>
+<p><img src="https://code-thinking-1253855093.file.myqcloud.com/pics/20201123195223940.png" alt="77.组合" /></p>
+<p>可以看出这棵树，一开始集合是 1，2，3，4， 从左向右取数，取过的数，不再重复取。</p>
+<p>第一次取1，集合变为2，3，4 ，因为k为2，我们只需要再取一个数就可以了，分别取2，3，4，得到集合<code>[1,2] [1,3] [1,4]</code>，以此类推。</p>
+<p><strong>每次从集合中选取元素，可选择的范围随着选择的进行而收缩，调整可选择的范围</strong>。</p>
+<p><strong>图中可以发现n相当于树的宽度，k相当于树的深度</strong>。</p>
+<p>那么如何在这个树上遍历，然后收集到我们要的结果集呢？</p>
+<p><strong>图中每次搜索到了叶子节点，我们就找到了一个结果</strong>。</p>
+<p>相当于只需要把达到叶子节点的结果收集起来，就可以求得 n个数中k个数的组合集合。</p>
+<p>在<a href="https://programmercarl.com/%E5%9B%9E%E6%BA%AF%E7%AE%97%E6%B3%95%E7%90%86%E8%AE%BA%E5%9F%BA%E7%A1%80.html">关于回溯算法，你该了解这些！</a>中我们提到了回溯法三部曲，那么我们按照回溯法三部曲开始正式讲解代码了。</p>
+<ul>
+<li>递归函数的返回值以及参数</li>
+</ul>
+<p>在这里要定义两个全局变量，一个用来存放符合条件单一结果，一个用来存放符合条件结果的集合。</p>
+<p>代码如下：</p>
+<pre><code class="language-cpp">vector&lt;vector&lt;int&gt;&gt; result; // 存放符合条件结果的集合  
+vector&lt;int&gt; path; // 用来存放符合条件结果
+</code></pre>
+<p>其实不定义这两个全局变量也是可以的，把这两个变量放进递归函数的参数里，但函数里参数太多影响可读性，所以我定义全局变量了。</p>
+<p>函数里一定有两个参数，既然是集合n里面取k个数，那么n和k是两个int型的参数。</p>
+<p>然后还需要一个参数，为int型变量startIndex，这个参数用来记录本层递归的中，集合从哪里开始遍历（集合就是[1,...,n] ）。</p>
+<p>为什么要有这个startIndex呢？</p>
+<p><strong>建议在<a href="https://www.bilibili.com/video/BV1ti4y1L7cv">77.组合视频讲解</a>中，07:36的时候开始听，startIndex 就是防止出现重复的组合</strong>。</p>
+<p>从下图中红线部分可以看出，在集合[1,2,3,4]取1之后，下一层递归，就要在[2,3,4]中取数了，那么下一层递归如何知道从[2,3,4]中取数呢，靠的就是startIndex。</p>
+<p><img src="https://code-thinking-1253855093.file.myqcloud.com/pics/20201123195328976.png" alt="77.组合2" /></p>
+<p>所以需要startIndex来记录下一层递归，搜索的起始位置。</p>
+<p>那么整体代码如下：</p>
+<pre><code class="language-cpp">vector&lt;vector&lt;int&gt;&gt; result; // 存放符合条件结果的集合  
+vector&lt;int&gt; path; // 用来存放符合条件单一结果  
+void backtracking(int n, int k, int startIndex)
+</code></pre>
+<ul>
+<li>回溯函数终止条件</li>
+</ul>
+<p>什么时候到达所谓的叶子节点了呢？</p>
+<p>path这个数组的大小如果达到k，说明我们找到了一个子集大小为k的组合了，在图中path存的就是根节点到叶子节点的路径。</p>
+<p>如图红色部分：</p>
+<p><img src="https://code-thinking-1253855093.file.myqcloud.com/pics/20201123195407907.png" alt="77.组合3" /></p>
+<p>此时用result二维数组，把path保存起来，并终止本层递归。</p>
+<p>所以终止条件代码如下：</p>
+<pre><code class="language-cpp">if (path.size() == k) {  
+    result.push_back(path);  
+    return;  
+}
+</code></pre>
+<ul>
+<li>单层搜索的过程</li>
+</ul>
+<p>回溯法的搜索过程就是一个树型结构的遍历过程，在如下图中，可以看出for循环用来横向遍历，递归的过程是纵向遍历。</p>
+<p><img src="https://code-thinking-1253855093.file.myqcloud.com/pics/20201123195242899.png" alt="77.组合1" /></p>
+<p>如此我们才遍历完图中的这棵树。</p>
+<p>for循环每次从startIndex开始遍历，然后用path保存取到的节点i。</p>
+<p>代码如下：</p>
+<pre><code class="language-cpp">for (int i = startIndex; i &lt;= n; i++) { // 控制树的横向遍历  
+    path.push_back(i); // 处理节点  
+    backtracking(n, k, i + 1); // 递归：控制树的纵向遍历，注意下一层搜索要从i+1开始  
+    path.pop_back(); // 回溯，撤销处理的节点  
+}
+</code></pre>
+<p>可以看出backtracking（递归函数）通过不断调用自己一直往深处遍历，总会遇到叶子节点，遇到了叶子节点就要返回。</p>
+<p>backtracking的下面部分就是回溯的操作了，撤销本次处理的结果。</p>
+<h2 id="c解法-101"><a class="header" href="#c解法-101">C++解法</a></h2>
+<pre><code class="language-cpp">class Solution {
+private:
+    vector&lt;vector&lt;int&gt;&gt; result; // 存放符合条件结果的集合
+    vector&lt;int&gt; path; // 用来存放符合条件结果
+    void backtracking(int n, int k, int startIndex) {
+        if (path.size() == k) {
+            result.push_back(path);
+            return;
+        }
+        for (int i = startIndex; i &lt;= n; i++) {
+            path.push_back(i); // 处理节点
+            backtracking(n, k, i + 1); // 递归
+            path.pop_back(); // 回溯，撤销处理的节点
+        }
+    }
+public:
+    vector&lt;vector&lt;int&gt;&gt; combine(int n, int k) {
+        result.clear(); // 可以不写
+        path.clear();   // 可以不写
+        backtracking(n, k, 1);
+        return result;
+    }
+};
+</code></pre>
+<ul>
+<li>时间复杂度: O(n * 2^n)</li>
+<li>空间复杂度: O(n)</li>
+</ul>
+<h1 id="216-combination-sum-iii"><a class="header" href="#216-combination-sum-iii"><a href="https://leetcode.com/problems/combination-sum-iii/">216. Combination Sum III</a></a></h1>
+<p>Find all valid combinations of <code>k</code> numbers that sum up to <code>n</code> such that the following conditions are true:</p>
+<ul>
+<li>Only numbers <code>1</code> through <code>9</code> are used.</li>
+<li>Each number is used <strong>at most once</strong>.</li>
+</ul>
+<p>Return <em>a list of all possible valid combinations</em>. The list must not contain the same combination twice, and the combinations may be returned in any order.</p>
+<p><strong>Example 1:</strong></p>
+<p><strong>Input:</strong> <code>k = 3, n = 7</code><br />
+<strong>Output:</strong> <code>[[1,2,4]]</code><br />
+<strong>Explanation:</strong><br />
+1 + 2 + 4 = 7<br />
+There are no other valid combinations.</p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> <code>k = 3, n = 9</code><br />
+<strong>Output:</strong> <code>[[1,2,6],[1,3,5],[2,3,4]]</code><br />
+<strong>Explanation:</strong><br />
+1 + 2 + 6 = 9<br />
+1 + 3 + 5 = 9<br />
+2 + 3 + 4 = 9<br />
+There are no other valid combinations.</p>
+<p><strong>Example 3:</strong></p>
+<p><strong>Input:</strong> <code>k = 4, n = 1</code><br />
+<strong>Output:</strong> <code>[]</code><br />
+<strong>Explanation:</strong> There are no valid combinations.<br />
+Using 4 different numbers in the range <code>[1,9]</code>, the smallest sum we can get is 1+2+3+4 = 10 and since 10 &gt; 1, there are no valid combination.</p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>2 &lt;= k &lt;= 9</code></li>
+<li><code>1 &lt;= n &lt;= 60</code></li>
+</ul>
+<h2 id="思路-120"><a class="header" href="#思路-120">思路</a></h2>
+<p>本题就是在[1,2,3,4,5,6,7,8,9]这个集合中找到和为n的k个数的组合。</p>
+<p>相对于<a href="https://programmercarl.com/0077.%E7%BB%84%E5%90%88.html">77. 组合</a>，无非就是多了一个限制，本题是要找到和为n的k个数的组合，而整个集合已经是固定的了[1,...,9]。</p>
+<p>想到这一点了，做过<a href="https://programmercarl.com/0077.%E7%BB%84%E5%90%88.html">77. 组合</a>之后，本题是简单一些了。</p>
+<p>本题k相当于树的深度，9（因为整个集合就是9个数）就是树的宽度。</p>
+<p>例如 k = 2，n = 4的话，就是在集合[1,2,3,4,5,6,7,8,9]中求 k（个数） = 2, n（和） = 4的组合。</p>
+<p>选取过程如图：</p>
+<p><img src="https://code-thinking-1253855093.file.myqcloud.com/pics/20201123195717975.png" alt="216.组合总和III" /></p>
+<p>图中，可以看出，只有最后取到集合（1，3）和为4 符合条件。</p>
+<ul>
+<li><strong>确定递归函数参数</strong></li>
+</ul>
+<p>和<a href="https://programmercarl.com/0077.%E7%BB%84%E5%90%88.html">77. 组合</a>一样，依然需要一维数组path来存放符合条件的结果，二维数组result来存放结果集。</p>
+<p>这里我依然定义path 和 result为全局变量。</p>
+<p>至于为什么取名为path？从上面树形结构中，可以看出，结果其实就是一条根节点到叶子节点的路径。</p>
+<pre><code class="language-cpp">vector&lt;vector&lt;int&gt;&gt; result; // 存放结果集  
+vector&lt;int&gt; path; // 符合条件的结果
+</code></pre>
+<p>接下来还需要如下参数：</p>
+<ul>
+<li>targetSum（int）目标和，也就是题目中的n。</li>
+<li>k（int）就是题目中要求k个数的集合。</li>
+<li>sum（int）为已经收集的元素的总和，也就是path里元素的总和。</li>
+<li>startIndex（int）为下一层for循环搜索的起始位置。</li>
+</ul>
+<p>所以代码如下：</p>
+<pre><code class="language-cpp">vector&lt;vector&lt;int&gt;&gt; result;  
+vector&lt;int&gt; path;  
+void backtracking(int targetSum, int k, int sum, int startIndex)
+</code></pre>
+<p>其实这里sum这个参数也可以省略，每次targetSum减去选取的元素数值，然后判断如果targetSum为0了，说明收集到符合条件的结果了，我这里为了直观便于理解，还是加一个sum参数。</p>
+<p>还要强调一下，回溯法中递归函数参数很难一次性确定下来，一般先写逻辑，需要啥参数了，填什么参数。</p>
+<ul>
+<li>确定终止条件</li>
+</ul>
+<p>什么时候终止呢？</p>
+<p>在上面已经说了，k其实就已经限制树的深度，因为就取k个元素，树再往下深了没有意义。</p>
+<p>所以如果path.size() 和 k相等了，就终止。</p>
+<p>如果此时path里收集到的元素和（sum） 和targetSum（就是题目描述的n）相同了，就用result收集当前的结果。</p>
+<p>所以 终止代码如下：</p>
+<pre><code class="language-cpp">if (path.size() == k) {  
+    if (sum == targetSum) result.push_back(path);  
+    return; // 如果path.size() == k 但sum != targetSum 直接返回  
+}
+</code></pre>
+<ul>
+<li><strong>单层搜索过程</strong></li>
+</ul>
+<p>本题和<a href="https://programmercarl.com/0077.%E7%BB%84%E5%90%88.html">77. 组合</a>区别之一就是集合固定的就是9个数[1,...,9]，所以for循环固定i&lt;=9</p>
+<p>如图： <img src="https://code-thinking-1253855093.file.myqcloud.com/pics/20201123195717975-20230310113546003.png" alt="216.组合总和III" /></p>
+<p>处理过程就是 path收集每次选取的元素，相当于树型结构里的边，sum来统计path里元素的总和。</p>
+<p>代码如下：</p>
+<pre><code class="language-cpp">for (int i = startIndex; i &lt;= 9; i++) {  
+    sum += i;  
+    path.push_back(i);  
+    backtracking(targetSum, k, sum, i + 1); // 注意i+1调整startIndex  
+    sum -= i; // 回溯  
+    path.pop_back(); // 回溯  
+}
+</code></pre>
+<p><strong>别忘了处理过程 和 回溯过程是一一对应的，处理有加，回溯就要有减！</strong></p>
+<h3 id="剪枝"><a class="header" href="#剪枝">剪枝</a></h3>
+<p>这道题目，剪枝操作其实是很容易想到了，想必大家看上面的树形图的时候已经想到了。</p>
+<p>如图： <img src="https://code-thinking-1253855093.file.myqcloud.com/pics/2020112319580476.png" alt="216.组合总和III1" /></p>
+<p>已选元素总和如果已经大于n（图中数值为4）了，那么往后遍历就没有意义了，直接剪掉。</p>
+<p>那么剪枝的地方可以放在递归函数开始的地方，剪枝代码如下：</p>
+<pre><code class="language-cpp">if (sum &gt; targetSum) { // 剪枝操作  
+    return;  
+}
+</code></pre>
+<p>当然这个剪枝也可以放在 调用递归之前，即放在这里，只不过要记得 要回溯操作给做了。</p>
+<pre><code class="language-cpp">for (int i = startIndex; i &lt;= 9 - (k - path.size()) + 1; i++) { // 剪枝  
+    sum += i; // 处理  
+    path.push_back(i); // 处理  
+    if (sum &gt; targetSum) { // 剪枝操作  
+        sum -= i; // 剪枝之前先把回溯做了  
+        path.pop_back(); // 剪枝之前先把回溯做了  
+        return;  
+    }  
+    backtracking(targetSum, k, sum, i + 1); // 注意i+1调整startIndex  
+    sum -= i; // 回溯  
+    path.pop_back(); // 回溯  
+}
+</code></pre>
+<p>和<a href="https://programmercarl.com/0077.%E7%BB%84%E5%90%88%E4%BC%98%E5%8C%96.html">回溯算法：组合问题再剪剪枝</a> 一样，for循环的范围也可以剪枝，i &lt;= 9 - (k - path.size()) + 1就可以了。</p>
+<h2 id="c解法-102"><a class="header" href="#c解法-102">C++解法</a></h2>
+<pre><code class="language-cpp">class Solution {
+private:
+    vector&lt;vector&lt;int&gt;&gt; result; // 存放结果集
+    vector&lt;int&gt; path; // 符合条件的结果
+    void backtracking(int targetSum, int k, int sum, int startIndex) {
+        if (sum &gt; targetSum) { // 剪枝操作
+            return; 
+        }
+        if (path.size() == k) {
+            if (sum == targetSum) result.push_back(path);
+            return; // 如果path.size() == k 但sum != targetSum 直接返回
+        }
+        for (int i = startIndex; i &lt;= 9 - (k - path.size()) + 1; i++) { // 剪枝
+            sum += i; // 处理
+            path.push_back(i); // 处理
+            backtracking(targetSum, k, sum, i + 1); // 注意i+1调整startIndex
+            sum -= i; // 回溯
+            path.pop_back(); // 回溯
+        }
+    }
+
+public:
+    vector&lt;vector&lt;int&gt;&gt; combinationSum3(int k, int n) {
+        result.clear(); // 可以不加
+        path.clear();   // 可以不加
+        backtracking(n, k, 0, 1);
+        return result;
+    }
+};
+</code></pre>
+<ul>
+<li>时间复杂度: O(n * 2^n)</li>
+<li>空间复杂度: O(n)</li>
+</ul>
+<h1 id="17-letter-combinations-of-a-phone-number"><a class="header" href="#17-letter-combinations-of-a-phone-number"><a href="https://leetcode.com/problems/letter-combinations-of-a-phone-number/">17. Letter Combinations of a Phone Number</a></a></h1>
+<p>Given a string containing digits from <code>2-9</code> inclusive, return all possible letter combinations that the number could represent. Return the answer in <strong>any order</strong>.</p>
+<p>A mapping of digits to letters (just like on the telephone buttons) is given below. Note that 1 does not map to any letters.</p>
+<p><img src="https://assets.leetcode.com/uploads/2022/03/15/1200px-telephone-keypad2svg.png" alt="" /></p>
+<p><strong>Example 1:</strong></p>
+<p><strong>Input:</strong> <code>digits = "23"</code><br />
+<strong>Output:</strong> <code>["ad","ae","af","bd","be","bf","cd","ce","cf"]</code></p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> <code>digits = ""</code><br />
+<strong>Output:</strong> <code>[]</code></p>
+<p><strong>Example 3:</strong></p>
+<p><strong>Input:</strong> <code>digits = "2"</code><br />
+<strong>Output:</strong> <code>["a","b","c"]</code></p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>0 &lt;= digits.length &lt;= 4</code></li>
+<li><code>digits[i]</code> is a digit in the range <code>['2', '9']</code>.</li>
+</ul>
+<h2 id="思路-121"><a class="header" href="#思路-121">思路</a></h2>
+<p>不同集合，使用index，不需要使用startIndex去重。</p>
+<p>从示例上来说，输入"23"，最直接的想法就是两层for循环遍历了吧，正好把组合的情况都输出了。</p>
+<p>如果输入"233"呢，那么就三层for循环，如果"2333"呢，就四层for循环.......</p>
+<p>大家应该感觉出和<a href="https://programmercarl.com/0077.%E7%BB%84%E5%90%88.html">77.组合</a>遇到的一样的问题，就是这for循环的层数如何写出来，此时又是回溯法登场的时候了。</p>
+<p>理解本题后，要解决如下三个问题：</p>
+<ol>
+<li>数字和字母如何映射</li>
+<li>两个字母就两个for循环，三个字符我就三个for循环，以此类推，然后发现代码根本写不出来</li>
+<li>输入<code>1 * #按键等等异常情况</code></li>
+</ol>
+<h3 id="数字和字母如何映射"><a class="header" href="#数字和字母如何映射">数字和字母如何映射</a></h3>
+<p>可以使用map或者定义一个二维数组，例如：string letterMap[10]，来做映射，我这里定义一个二维数组，代码如下：</p>
+<pre><code class="language-cpp">const string letterMap[10] = {  
+    "", // 0  
+    "", // 1  
+    "abc", // 2  
+    "def", // 3  
+    "ghi", // 4  
+    "jkl", // 5  
+    "mno", // 6  
+    "pqrs", // 7  
+    "tuv", // 8  
+    "wxyz", // 9  
+};
+</code></pre>
+<h3 id="回溯法来解决n个for循环的问题"><a class="header" href="#回溯法来解决n个for循环的问题">回溯法来解决n个for循环的问题</a></h3>
+<p>对于回溯法还不了解的同学看这篇：<a href="https://programmercarl.com/%E5%9B%9E%E6%BA%AF%E7%AE%97%E6%B3%95%E7%90%86%E8%AE%BA%E5%9F%BA%E7%A1%80.html">关于回溯算法，你该了解这些！</a></p>
+<p>例如：输入："23"，抽象为树形结构，如图所示：</p>
+<p><img src="https://code-thinking-1253855093.file.myqcloud.com/pics/20201123200304469.png" alt="17. 电话号码的字母组合" /></p>
+<p>图中可以看出遍历的深度，就是输入"23"的长度，而叶子节点就是我们要收集的结果，输出["ad", "ae", "af", "bd", "be", "bf", "cd", "ce", "cf"]。</p>
+<p>回溯三部曲：</p>
+<ul>
+<li>确定回溯函数参数</li>
+</ul>
+<p>首先需要一个字符串s来收集叶子节点的结果，然后用一个字符串数组result保存起来，这两个变量我依然定义为全局。</p>
+<p>再来看参数，参数指定是有题目中给的string digits，然后还要有一个参数就是int型的index。</p>
+<p>注意这个index可不是 <a href="https://programmercarl.com/0077.%E7%BB%84%E5%90%88.html">77.组合</a>和<a href="https://programmercarl.com/0216.%E7%BB%84%E5%90%88%E6%80%BB%E5%92%8CIII.html">216.组合总和III</a>中的startIndex了。</p>
+<p>这个index是记录遍历第几个数字了，就是用来遍历digits的（题目中给出数字字符串），同时index也表示树的深度。</p>
+<p>代码如下：</p>
+<pre><code class="language-cpp">vector&lt;string&gt; result;  
+string s;  
+void backtracking(const string&amp; digits, int index)
+</code></pre>
+<ul>
+<li>确定终止条件</li>
+</ul>
+<p>例如输入用例"23"，两个数字，那么根节点往下递归两层就可以了，叶子节点就是要收集的结果集。</p>
+<p>那么终止条件就是如果index 等于 输入的数字个数（digits.size）了（本来index就是用来遍历digits的）。</p>
+<p>然后收集结果，结束本层递归。</p>
+<p>代码如下：</p>
+<pre><code class="language-cpp">if (index == digits.size()) {  
+    result.push_back(s);  
+    return;  
+}
+</code></pre>
+<ul>
+<li>确定单层遍历逻辑</li>
+</ul>
+<p>首先要取index指向的数字，并找到对应的字符集（手机键盘的字符集）。</p>
+<p>然后for循环来处理这个字符集，代码如下：</p>
+<pre><code class="language-cpp">int digit = digits[index] - '0';        // 将index指向的数字转为int  
+string letters = letterMap[digit];      // 取数字对应的字符集  
+for (int i = 0; i &lt; letters.size(); i++) {  
+    s.push_back(letters[i]);            // 处理  
+    backtracking(digits, index + 1);    // 递归，注意index+1，一下层要处理下一个数字了  
+    s.pop_back();                       // 回溯  
+}
+</code></pre>
+<p><strong>注意这里for循环，可不像是在<a href="https://programmercarl.com/0077.%E7%BB%84%E5%90%88.html">回溯算法：求组合问题！</a>和<a href="https://programmercarl.com/0216.%E7%BB%84%E5%90%88%E6%80%BB%E5%92%8CIII.html">回溯算法：求组合总和！</a>中从startIndex开始遍历的</strong>。</p>
+<p><strong>因为本题每一个数字代表的是不同集合，也就是求不同集合之间的组合，而<a href="https://programmercarl.com/0077.%E7%BB%84%E5%90%88.html">77. 组合</a>和<a href="https://programmercarl.com/0216.%E7%BB%84%E5%90%88%E6%80%BB%E5%92%8CIII.html">216.组合总和III</a>都是求同一个集合中的组合！</strong></p>
+<p>注意：输入<code>1 * #按键等等异常情况</code></p>
+<p>代码中最好考虑这些异常情况，但题目的测试数据中应该没有异常情况的数据，所以我就没有加了。</p>
+<p><strong>但是要知道会有这些异常，如果是现场面试中，一定要考虑到！</strong></p>
+<h2 id="c解法-103"><a class="header" href="#c解法-103">C++解法</a></h2>
+<pre><code class="language-cpp">// 版本一
+class Solution {
+private:
+    const string letterMap[10] = {
+        "", // 0
+        "", // 1
+        "abc", // 2
+        "def", // 3
+        "ghi", // 4
+        "jkl", // 5
+        "mno", // 6
+        "pqrs", // 7
+        "tuv", // 8
+        "wxyz", // 9
+    };
+public:
+    vector&lt;string&gt; result;
+    string s;
+    void backtracking(const string&amp; digits, int index) {
+        if (index == digits.size()) {  //写成if (digits.size() == path.size())也行
+            result.push_back(s);
+            return;
+        }
+        int digit = digits[index] - '0';        // 将index指向的数字转为int
+        string letters = letterMap[digit];      // 取数字对应的字符集
+        for (int i = 0; i &lt; letters.size(); i++) {
+            s.push_back(letters[i]);            // 处理
+            backtracking(digits, index + 1);    // 递归，注意index+1，一下层要处理下一个数字了
+            s.pop_back();                       // 回溯
+        }
+    }
+    vector&lt;string&gt; letterCombinations(string digits) {
+        s.clear();
+        result.clear();
+        if (digits.size() == 0) {
+            return result;
+        }
+        backtracking(digits, 0);
+        return result;
+    }
+};
+</code></pre>
+<ul>
+<li>时间复杂度: O(3^m * 4^n)，其中 m 是对应四个字母的数字个数，n 是对应三个字母的数字个数</li>
+<li>空间复杂度: O(3^m * 4^n)</li>
+</ul>
+<h1 id="39-combination-sum"><a class="header" href="#39-combination-sum"><a href="https://leetcode.com/problems/combination-sum/">39. Combination Sum</a></a></h1>
+<p>Given an array of <strong>distinct</strong> integers <code>candidates</code> and a target integer <code>target</code>, return <em>a list of all <strong>unique combinations</strong> of</em> <code>candidates</code> <em>where the chosen numbers sum to</em> <code>target</code><em>.</em> You may return the combinations in <strong>any order</strong>.</p>
+<p>The <strong>same</strong> number may be chosen from <code>candidates</code> an <strong>unlimited number of times</strong>. Two combinations are unique if the frequency of at least one of the chosen numbers is different.</p>
+<p>The test cases are generated such that the number of unique combinations that sum up to <code>target</code> is less than <code>150</code> combinations for the given input.</p>
+<p><strong>Example 1:</strong></p>
+<p><strong>Input:</strong> <code>candidates = [2,3,6,7], target = 7</code><br />
+<strong>Output:</strong> <code>[[2,2,3],[7]]</code><br />
+<strong>Explanation:</strong><br />
+2 and 3 are candidates, and 2 + 2 + 3 = 7. Note that 2 can be used multiple times.<br />
+7 is a candidate, and 7 = 7.<br />
+These are the only two combinations.</p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> <code>candidates = [2,3,5], target = 8</code><br />
+<strong>Output:</strong> <code>[[2,2,2,2],[2,3,3],[3,5]]</code></p>
+<p><strong>Example 3:</strong></p>
+<p><strong>Input:</strong> <code>candidates = [2], target = 1</code><br />
+<strong>Output:</strong> <code>[]</code></p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= candidates.length &lt;= 30</code></li>
+<li><code>2 &lt;= candidates[i] &lt;= 40</code></li>
+<li>All elements of <code>candidates</code> are <strong>distinct</strong>.</li>
+<li><code>1 &lt;= target &lt;= 40</code></li>
+</ul>
+<h2 id="思路-122"><a class="header" href="#思路-122">思路</a></h2>
+<p>题目中的<strong>无限制重复被选取，吓得我赶紧想想出现0可咋办</strong>，然后看到下面提示：1 &lt;= candidates[i] &lt;= 200，我就放心了。</p>
+<p>本题和<a href="https://programmercarl.com/0077.%E7%BB%84%E5%90%88.html">77.组合</a>，<a href="https://programmercarl.com/0216.%E7%BB%84%E5%90%88%E6%80%BB%E5%92%8CIII.html">216.组合总和III</a>的区别是：本题没有数量要求，可以无限重复，但是有总和的限制，所以间接的也是有个数的限制。</p>
+<p>本题搜索的过程抽象成树形结构如下：</p>
+<p><img src="https://code-thinking-1253855093.file.myqcloud.com/pics/20201223170730367.png" alt="39.组合总和" /> 注意图中叶子节点的返回条件，因为本题没有组合数量要求，仅仅是总和的限制，所以递归没有层数的限制，只要选取的元素总和超过target，就返回！</p>
+<p>而在<a href="https://programmercarl.com/0077.%E7%BB%84%E5%90%88.html">77.组合</a>和<a href="https://programmercarl.com/0216.%E7%BB%84%E5%90%88%E6%80%BB%E5%92%8CIII.html">216.组合总和III</a> 中都可以知道要递归K层，因为要取k个元素的组合。</p>
+<ul>
+<li>递归函数参数</li>
+</ul>
+<p>这里依然是定义两个全局变量，二维数组result存放结果集，数组path存放符合条件的结果。（这两个变量可以作为函数参数传入）</p>
+<p>首先是题目中给出的参数，集合candidates, 和目标值target。</p>
+<p>此外我还定义了int型的sum变量来统计单一结果path里的总和，其实这个sum也可以不用，用target做相应的减法就可以了，最后如何<code>target==0</code>就说明找到符合的结果了，但为了代码逻辑清晰，我依然用了sum。</p>
+<p><strong>本题还需要startIndex来控制for循环的起始位置，对于组合问题，什么时候需要startIndex呢？</strong></p>
+<p>我举过例子，如果是一个集合来求组合的话，就需要startIndex，例如：<a href="https://programmercarl.com/0077.%E7%BB%84%E5%90%88.html">77.组合</a>，<a href="https://programmercarl.com/0216.%E7%BB%84%E5%90%88%E6%80%BB%E5%92%8CIII.html">216.组合总和III</a>。</p>
+<p>如果是多个集合取组合，各个集合之间相互不影响，那么就不用startIndex，例如：<a href="https://programmercarl.com/0017.%E7%94%B5%E8%AF%9D%E5%8F%B7%E7%A0%81%E7%9A%84%E5%AD%97%E6%AF%8D%E7%BB%84%E5%90%88.html">17.电话号码的字母组合</a></p>
+<p><strong>注意以上我只是说求组合的情况，如果是排列问题，又是另一套分析的套路，后面我在讲解排列的时候会重点介绍</strong>。</p>
+<p>代码如下：</p>
+<pre><code class="language-cpp">vector&lt;vector&lt;int&gt;&gt; result;  
+vector&lt;int&gt; path;  
+void backtracking(vector&lt;int&gt;&amp; candidates, int target, int sum, int startIndex)
+</code></pre>
+<ul>
+<li>递归终止条件</li>
+</ul>
+<p>在如下树形结构中：</p>
+<p><img src="https://code-thinking-1253855093.file.myqcloud.com/pics/20201223170730367-20230310135337214.png" alt="39.组合总和" /></p>
+<p>从叶子节点可以清晰看到，终止只有两种情况，sum大于target和sum等于target。</p>
+<p>sum等于target的时候，需要收集结果，代码如下：</p>
+<pre><code class="language-cpp">if (sum &gt; target) {  
+    return;  
+}  
+if (sum == target) {  
+    result.push_back(path);  
+    return;  
+}
+</code></pre>
+<ul>
+<li>单层搜索的逻辑</li>
+</ul>
+<p>单层for循环依然是从startIndex开始，搜索candidates集合。</p>
+<p><strong>注意本题和<a href="https://programmercarl.com/0077.%E7%BB%84%E5%90%88.html">77.组合</a>、<a href="https://programmercarl.com/0216.%E7%BB%84%E5%90%88%E6%80%BB%E5%92%8CIII.html">216.组合总和III</a>的一个区别是：本题元素为可重复选取的</strong>。</p>
+<p>如何重复选取呢，看代码，注释部分：</p>
+<pre><code class="language-cpp">for (int i = startIndex; i &lt; candidates.size(); i++) {  
+    sum += candidates[i];  
+    path.push_back(candidates[i]);  
+    backtracking(candidates, target, sum, i); // 关键点:不用i+1了，表示可以重复读取当前的数  
+    sum -= candidates[i];   // 回溯  
+    path.pop_back();        // 回溯  
+}
+</code></pre>
+<h3 id="剪枝优化"><a class="header" href="#剪枝优化">剪枝优化</a></h3>
+<p>在这个树形结构中：</p>
+<p><img src="https://code-thinking-1253855093.file.myqcloud.com/pics/20201223170730367-20230310135342472.png" alt="39.组合总和" /></p>
+<p>以及上面的版本一的代码大家可以看到，对于sum已经大于target的情况，其实是依然进入了下一层递归，只是下一层递归结束判断的时候，会判断sum &gt; target的话就返回。</p>
+<p>其实如果已经知道下一层的sum会大于target，就没有必要进入下一层递归了。</p>
+<p>那么可以在for循环的搜索范围上做做文章了。</p>
+<p><strong>对总集合排序之后，如果下一层的sum（就是本层的 sum + candidates[i]）已经大于target，就可以结束本轮for循环的遍历</strong>。</p>
+<p>如图：</p>
+<p><img src="https://code-thinking-1253855093.file.myqcloud.com/pics/20201223170809182.png" alt="39.组合总和1" /></p>
+<p>for循环剪枝代码如下：</p>
+<pre><code class="language-cpp">for (int i = startIndex; i &lt; candidates.size() &amp;&amp; sum + candidates[i] &lt;= target; i++)
+</code></pre>
+<h2 id="c解法-104"><a class="header" href="#c解法-104">C++解法</a></h2>
+<pre><code class="language-cpp">// 版本一
+class Solution {
+private:
+    vector&lt;vector&lt;int&gt;&gt; result;
+    vector&lt;int&gt; path;
+    void backtracking(vector&lt;int&gt;&amp; candidates, int target, int sum, int startIndex) {
+        if (sum &gt; target) {
+            return;
+        }
+        if (sum == target) {
+            result.push_back(path);
+            return;
+        }
+
+        for (int i = startIndex; i &lt; candidates.size(); i++) {
+            sum += candidates[i];
+            path.push_back(candidates[i]);
+            backtracking(candidates, target, sum, i); // 不用i+1了，表示可以重复读取当前的数
+            sum -= candidates[i];
+            path.pop_back();
+        }
+    }
+public:
+    vector&lt;vector&lt;int&gt;&gt; combinationSum(vector&lt;int&gt;&amp; candidates, int target) {
+        result.clear();
+        path.clear();
+        backtracking(candidates, target, 0, 0);
+        return result;
+    }
+};
+</code></pre>
+<p>剪枝操作</p>
+<pre><code class="language-cpp">class Solution {
+private:
+    vector&lt;vector&lt;int&gt;&gt; result;
+    vector&lt;int&gt; path;
+    void backtracking(vector&lt;int&gt;&amp; candidates, int target, int sum, int startIndex) {
+        if (sum == target) {
+            result.push_back(path);
+            return;
+        }
+
+        // 如果 sum + candidates[i] &gt; target 就终止遍历
+        for (int i = startIndex; i &lt; candidates.size() &amp;&amp; sum + candidates[i] &lt;= target; i++) {
+            sum += candidates[i];
+            path.push_back(candidates[i]);
+            backtracking(candidates, target, sum, i);
+            sum -= candidates[i];
+            path.pop_back();
+
+        }
+    }
+public:
+    vector&lt;vector&lt;int&gt;&gt; combinationSum(vector&lt;int&gt;&amp; candidates, int target) {
+        result.clear();
+        path.clear();
+        sort(candidates.begin(), candidates.end()); // 需要排序
+        backtracking(candidates, target, 0, 0);
+        return result;
+    }
+};
+</code></pre>
+<ul>
+<li>时间复杂度: O(n * 2^n)，注意这只是复杂度的上界，因为剪枝的存在，真实的时间复杂度远小于此</li>
+<li>空间复杂度: O(target)</li>
+</ul>
+<h1 id="40-combination-sum-ii"><a class="header" href="#40-combination-sum-ii"><a href="https://leetcode.com/problems/combination-sum-ii/">40. Combination Sum II</a></a></h1>
+<p>Given a collection of candidate numbers (<code>candidates</code>) and a target number (<code>target</code>), find all unique combinations in <code>candidates</code> where the candidate numbers sum to <code>target</code>.</p>
+<p>Each number in <code>candidates</code> may only be used <strong>once</strong> in the combination.</p>
+<p><strong>Note:</strong> The solution set must not contain duplicate combinations.</p>
+<p><strong>Example 1:</strong></p>
+<p><strong>Input:</strong> <code>candidates = [10,1,2,7,6,1,5], target = 8</code><br />
+<strong>Output:</strong></p>
+<pre><code>[
+[1,1,6],
+[1,2,5],
+[1,7],
+[2,6]
+]
+</code></pre>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> <code>candidates = [2,5,2,1,2], target = 5</code><br />
+<strong>Output:</strong></p>
+<pre><code>[
+[1,2,2],
+[5]
+]
+</code></pre>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= candidates.length &lt;= 100</code></li>
+<li><code>1 &lt;= candidates[i] &lt;= 50</code></li>
+<li><code>1 &lt;= target &lt;= 30</code></li>
+</ul>
+<h2 id="思路-123"><a class="header" href="#思路-123">思路</a></h2>
+<p>这道题目和<a href="https://programmercarl.com/0039.%E7%BB%84%E5%90%88%E6%80%BB%E5%92%8C.html">39.组合总和</a>如下区别：</p>
+<ol>
+<li>本题candidates 中的每个数字在每个组合中只能使用一次。</li>
+<li>本题数组candidates的元素是有重复的，而<a href="https://programmercarl.com/0039.%E7%BB%84%E5%90%88%E6%80%BB%E5%92%8C.html">39.组合总和</a>是无重复元素的数组candidates</li>
+</ol>
+<p>最后本题和<a href="https://programmercarl.com/0039.%E7%BB%84%E5%90%88%E6%80%BB%E5%92%8C.html">39.组合总和</a>要求一样，解集不能包含重复的组合。</p>
+<p><strong>本题的难点在于区别2中：集合（数组candidates）有重复元素，但还不能有重复的组合</strong>。</p>
+<p>一些同学可能想了：我把所有组合求出来，再用set或者map去重，这么做很容易超时！</p>
+<p>所以要在搜索的过程中就去掉重复组合。</p>
+<p>很多同学在去重的问题上想不明白，其实很多题解也没有讲清楚，反正代码是能过的，感觉是那么回事，稀里糊涂的先把题目过了。</p>
+<p>这个去重为什么很难理解呢，<strong>所谓去重，其实就是使用过的元素不能重复选取。</strong> 这么一说好像很简单！</p>
+<p>都知道组合问题可以抽象为树形结构，那么“使用过”在这个树形结构上是有两个维度的，一个维度是同一树枝上使用过，一个维度是同一树层上使用过。<strong>没有理解这两个层面上的“使用过” 是造成大家没有彻底理解去重的根本原因。</strong></p>
+<p>那么问题来了，我们是要同一树层上使用过，还是同一树枝上使用过呢？</p>
+<p>回看一下题目，元素在同一个组合内是可以重复的，怎么重复都没事，但两个组合不能相同。</p>
+<p><strong>所以我们要去重的是同一树层上的“使用过”，同一树枝上的都是一个组合里的元素，不用去重</strong>。</p>
+<p>为了理解去重我们来举一个例子，candidates = [1, 1, 2], target = 3，（方便起见candidates已经排序了）</p>
+<p><strong>强调一下，树层去重的话，需要对数组排序！</strong></p>
+<p>选择过程树形结构如图所示：</p>
+<p><img src="https://code-thinking-1253855093.file.myqcloud.com/pics/20230310000918.png" alt="40.组合总和II" /></p>
+<p>可以看到图中，每个节点相对于 <a href="https://mp.weixin.qq.com/s/FLg8G6EjVcxBjwCbzpACPw">39.组合总和</a>我多加了used数组，这个used数组下面会重点介绍。</p>
+<ul>
+<li><strong>递归函数参数</strong></li>
+</ul>
+<p>与<a href="https://programmercarl.com/0039.%E7%BB%84%E5%90%88%E6%80%BB%E5%92%8C.html">39.组合总和</a>套路相同，此题还需要加一个bool型数组used，用来记录同一树枝上的元素是否使用过。</p>
+<p>这个集合去重的重任就是used来完成的。</p>
+<p>代码如下：</p>
+<pre><code class="language-cpp">vector&lt;vector&lt;int&gt;&gt; result; // 存放组合集合  
+vector&lt;int&gt; path;           // 符合条件的组合  
+void backtracking(vector&lt;int&gt;&amp; candidates, int target, int sum, int startIndex, vector&lt;bool&gt;&amp; used) {}
+</code></pre>
+<ul>
+<li><strong>递归终止条件</strong></li>
+</ul>
+<p>与<a href="https://programmercarl.com/0039.%E7%BB%84%E5%90%88%E6%80%BB%E5%92%8C.html">39.组合总和</a>相同，终止条件为 <code>sum &gt; target</code> 和 <code>sum == target</code>。</p>
+<p>代码如下：</p>
+<pre><code class="language-cpp">if (sum &gt; target) { // 这个条件其实可以省略  
+    return;  
+}  
+if (sum == target) {  
+    result.push_back(path);  
+    return;  
+}
+</code></pre>
+<p><code>sum &gt; target</code> 这个条件其实可以省略，因为在递归单层遍历的时候，会有剪枝的操作，下面会介绍到。</p>
+<ul>
+<li><strong>单层搜索的逻辑</strong></li>
+</ul>
+<p>这里与<a href="https://programmercarl.com/0039.%E7%BB%84%E5%90%88%E6%80%BB%E5%92%8C.html">39.组合总和</a>最大的不同就是要去重了。</p>
+<p>前面我们提到：要去重的是“同一树层上的使用过”，如何判断同一树层上元素（相同的元素）是否使用过了呢。</p>
+<p><strong>如果<code>candidates[i] == candidates[i - 1]</code> 并且 <code>used[i - 1] == false</code>，就说明：前一个树枝，使用了candidates[i - 1]，也就是说同一树层使用过candidates[i - 1]</strong>。</p>
+<p>此时for循环里就应该做continue的操作。</p>
+<p>这块比较抽象，如图：</p>
+<p><img src="https://code-thinking-1253855093.file.myqcloud.com/pics/20230310000954.png" alt="40.组合总和II1" /></p>
+<p>我在图中将used的变化用橘黄色标注上，可以看出在candidates[i] == candidates[i - 1]相同的情况下：</p>
+<ul>
+<li>used[i - 1] == true，说明同一树枝candidates[i - 1]使用过</li>
+<li>used[i - 1] == false，说明同一树层candidates[i - 1]使用过</li>
+</ul>
+<p>可能有的录友想，为什么 used[i - 1] == false 就是同一树层呢，因为同一树层，used[i - 1] == false 才能表示，当前取的 candidates[i] 是从 candidates[i - 1] 回溯而来的。</p>
+<p>而 used[i - 1] == true，说明是进入下一层递归，去下一个数，所以是树枝上，如图所示：</p>
+<p><img src="https://code-thinking-1253855093.file.myqcloud.com/pics/20221021163812.png" alt="" /></p>
+<p><strong>这块去重的逻辑很抽象，网上搜的题解基本没有能讲清楚的，如果大家之前思考过这个问题或者刷过这道题目，看到这里一定会感觉通透了很多！</strong></p>
+<p>那么单层搜索的逻辑代码如下：</p>
+<pre><code class="language-cpp">for (int i = startIndex; i &lt; candidates.size() &amp;&amp; sum + candidates[i] &lt;= target; i++) {  
+    // used[i - 1] == true，说明同一树枝candidates[i - 1]使用过  
+    // used[i - 1] == false，说明同一树层candidates[i - 1]使用过  
+    // 要对同一树层使用过的元素进行跳过  
+    if (i &gt; 0 &amp;&amp; candidates[i] == candidates[i - 1] &amp;&amp; used[i - 1] == false) {  
+        continue;  
+    }  
+    sum += candidates[i];  
+    path.push_back(candidates[i]);  
+    used[i] = true;  
+    backtracking(candidates, target, sum, i + 1, used); // 和39.组合总和的区别1：这里是i+1，每个数字在每个组合中只能使用一次  
+    used[i] = false;  
+    sum -= candidates[i];  
+    path.pop_back();  
+}
+</code></pre>
+<p><strong>注意sum + candidates[i] &lt;= target为剪枝操作，在<a href="https://mp.weixin.qq.com/s/FLg8G6EjVcxBjwCbzpACPw">39.组合总和</a>有讲解过！</strong></p>
+<h2 id="c解法-105"><a class="header" href="#c解法-105">C++解法</a></h2>
+<pre><code class="language-cpp">class Solution {
+private:
+    vector&lt;vector&lt;int&gt;&gt; result;
+    vector&lt;int&gt; path;
+    void backtracking(vector&lt;int&gt;&amp; candidates, int target, int sum, int startIndex, vector&lt;bool&gt;&amp; used) {
+        if (sum == target) {
+            result.push_back(path);
+            return;
+        }
+        for (int i = startIndex; i &lt; candidates.size() &amp;&amp; sum + candidates[i] &lt;= target; i++) {
+            // used[i - 1] == true，说明同一树枝candidates[i - 1]使用过
+            // used[i - 1] == false，说明同一树层candidates[i - 1]使用过
+            // 要对同一树层使用过的元素进行跳过
+            if (i &gt; 0 &amp;&amp; candidates[i] == candidates[i - 1] &amp;&amp; used[i - 1] == false) {
+                continue;
+            }
+            sum += candidates[i];
+            path.push_back(candidates[i]);
+            used[i] = true;
+            backtracking(candidates, target, sum, i + 1, used); // 和39.组合总和的区别1，这里是i+1，每个数字在每个组合中只能使用一次
+            used[i] = false;
+            sum -= candidates[i];
+            path.pop_back();
+        }
+    }
+
+public:
+    vector&lt;vector&lt;int&gt;&gt; combinationSum2(vector&lt;int&gt;&amp; candidates, int target) {
+        vector&lt;bool&gt; used(candidates.size(), false);
+        path.clear();
+        result.clear();
+        // 首先把给candidates排序，让其相同的元素都挨在一起。
+        sort(candidates.begin(), candidates.end());
+        backtracking(candidates, target, 0, 0, used);
+        return result;
+    }
+};
+</code></pre>
+<ul>
+<li>时间复杂度: O(n * 2^n)</li>
+<li>空间复杂度: O(n)</li>
+</ul>
+<p>这里直接用startIndex来去重也是可以的， 就不用used数组了。</p>
+<pre><code class="language-cpp">class Solution {  
+private:  
+    vector&lt;vector&lt;int&gt;&gt; result;  
+    vector&lt;int&gt; path;  
+    void backtracking(vector&lt;int&gt;&amp; candidates, int target, int sum, int startIndex) {  
+        if (sum == target) {  
+            result.push_back(path);  
+            return;  
+        }  
+        for (int i = startIndex; i &lt; candidates.size() &amp;&amp; sum + candidates[i] &lt;= target; i++) {  
+            // 要对同一树层使用过的元素进行跳过  
+            if (i &gt; startIndex &amp;&amp; candidates[i] == candidates[i - 1]) {  
+                continue;  
+            }  
+            sum += candidates[i];  
+            path.push_back(candidates[i]);  
+            backtracking(candidates, target, sum, i + 1); // 和39.组合总和的区别1，这里是i+1，每个数字在每个组合中只能使用一次  
+            sum -= candidates[i];  
+            path.pop_back();  
+        }  
+    }  
+​  
+public:  
+    vector&lt;vector&lt;int&gt;&gt; combinationSum2(vector&lt;int&gt;&amp; candidates, int target) {  
+        path.clear();  
+        result.clear();  
+        // 首先把给candidates排序，让其相同的元素都挨在一起。  
+        sort(candidates.begin(), candidates.end());  
+        backtracking(candidates, target, 0, 0);  
+        return result;  
+    }  
+};  
+</code></pre>
+<p>​</p>
+<div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
+<h1 id="分割"><a class="header" href="#分割">分割</a></h1>
+<ul>
+<li><a href="%E5%9B%9E%E6%BA%AF/%E5%88%86%E5%89%B2.html#131-palindrome-partitioning">131. Palindrome Partitioning</a>
+<ul>
+<li><a href="%E5%9B%9E%E6%BA%AF/%E5%88%86%E5%89%B2.html#%E6%80%9D%E8%B7%AF">思路</a>
+<ul>
+<li><a href="%E5%9B%9E%E6%BA%AF/%E5%88%86%E5%89%B2.html#%E5%88%A4%E6%96%AD%E5%9B%9E%E6%96%87%E5%AD%90%E4%B8%B2">判断回文子串</a></li>
+<li><a href="%E5%9B%9E%E6%BA%AF/%E5%88%86%E5%89%B2.html#%E4%BC%98%E5%8C%96">优化</a></li>
+<li><a href="%E5%9B%9E%E6%BA%AF/%E5%88%86%E5%89%B2.html#%E6%80%BB%E7%BB%93">总结</a></li>
+</ul>
+</li>
+<li><a href="%E5%9B%9E%E6%BA%AF/%E5%88%86%E5%89%B2.html#c%E8%A7%A3%E6%B3%95">C++解法</a></li>
+<li><a href="%E5%9B%9E%E6%BA%AF/%E5%88%86%E5%89%B2.html#java%E8%A7%A3%E6%B3%95">Java解法</a></li>
+</ul>
+</li>
+<li><a href="%E5%9B%9E%E6%BA%AF/%E5%88%86%E5%89%B2.html#93-restore-ip-addresses">93. Restore IP Addresses</a>
+<ul>
+<li><a href="%E5%9B%9E%E6%BA%AF/%E5%88%86%E5%89%B2.html#%E6%80%9D%E8%B7%AF-1">思路</a>
+<ul>
+<li><a href="%E5%9B%9E%E6%BA%AF/%E5%88%86%E5%89%B2.html#%E5%88%A4%E6%96%AD%E5%AD%90%E4%B8%B2%E6%98%AF%E5%90%A6%E5%90%88%E6%B3%95">判断子串是否合法</a></li>
+</ul>
+</li>
+<li><a href="%E5%9B%9E%E6%BA%AF/%E5%88%86%E5%89%B2.html#c%E8%A7%A3%E6%B3%95-1">C++解法</a></li>
+</ul>
+</li>
+</ul>
+<h1 id="131-palindrome-partitioning"><a class="header" href="#131-palindrome-partitioning"><a href="https://leetcode.com/problems/palindrome-partitioning/">131. Palindrome Partitioning</a></a></h1>
+<p>Given a string <code>s</code>, partition <code>s</code> such that every substring of the partition is a <strong>palindrome</strong>. Return <em>all possible palindrome partitioning of</em> <code>s</code>.</p>
+<p><strong>Example 1:</strong></p>
+<p><strong>Input:</strong> <code>s = "aab"</code><br />
+<strong>Output:</strong> <code>[["a","a","b"],["aa","b"]]</code></p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> <code>s = "a"</code><br />
+<strong>Output:</strong> <code>[["a"]]</code></p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= s.length &lt;= 16</code></li>
+<li><code>s</code> contains only lowercase English letters.</li>
+</ul>
+<h2 id="思路-124"><a class="header" href="#思路-124">思路</a></h2>
+<p>本题这涉及两个关键问题：</p>
+<ol>
+<li>切割问题，有不同的切割方式</li>
+<li>判断回文</li>
+</ol>
+<p>相信这里不同的切割方式可以搞懵很多同学了。</p>
+<p>这种题目，想用for循环暴力解法，可能都不那么容易写出来，所以要换一种暴力的方式，就是回溯。</p>
+<p>一些同学可能想不清楚 回溯究竟是如何切割字符串呢？</p>
+<p>我们来分析一下切割，<strong>其实切割问题类似组合问题</strong>。</p>
+<p>例如对于字符串abcdef：</p>
+<ul>
+<li>组合问题：选取一个a之后，在bcdef中再去选取第二个，选取b之后在cdef中再选取第三个.....。</li>
+<li>切割问题：切割一个a之后，在bcdef中再去切割第二段，切割b之后在cdef中再切割第三段.....。</li>
+</ul>
+<p>感受出来了不？</p>
+<p>所以切割问题，也可以抽象为一棵树形结构，如图：</p>
+<p><img src="https://code-thinking.cdn.bcebos.com/pics/131.%E5%88%86%E5%89%B2%E5%9B%9E%E6%96%87%E4%B8%B2.jpg" alt="131.分割回文串" /></p>
+<p>递归用来纵向遍历，for循环用来横向遍历，切割线（就是图中的红线）切割到字符串的结尾位置，说明找到了一个切割方法。</p>
+<p>此时可以发现，切割问题的回溯搜索的过程和组合问题的回溯搜索的过程是差不多的。</p>
+<ul>
+<li>递归函数参数</li>
+</ul>
+<p>全局变量数组path存放切割后回文的子串，二维数组result存放结果集。 （这两个参数可以放到函数参数里）</p>
+<p>本题递归函数参数还需要startIndex，因为切割过的地方，不能重复切割，和组合问题也是保持一致的。</p>
+<p>在<a href="https://programmercarl.com/0039.%E7%BB%84%E5%90%88%E6%80%BB%E5%92%8C.html">回溯算法：求组合总和（二）</a>中我们深入探讨了组合问题什么时候需要startIndex，什么时候不需要startIndex。</p>
+<p>代码如下：</p>
+<pre><code class="language-cpp">vector&lt;vector&lt;string&gt;&gt; result;  
+vector&lt;string&gt; path; // 放已经回文的子串  
+void backtracking (const string&amp; s, int startIndex) {}
+</code></pre>
+<ul>
+<li>递归函数终止条件</li>
+</ul>
+<p><img src="https://code-thinking.cdn.bcebos.com/pics/131.%E5%88%86%E5%89%B2%E5%9B%9E%E6%96%87%E4%B8%B2.jpg" alt="131.分割回文串" /></p>
+<p>从树形结构的图中可以看出：切割线切到了字符串最后面，说明找到了一种切割方法，此时就是本层递归的终止条件。</p>
+<p><strong>那么在代码里什么是切割线呢？</strong></p>
+<p>在处理组合问题的时候，递归参数需要传入startIndex，表示下一轮递归遍历的起始位置，这个startIndex就是切割线。</p>
+<p>所以终止条件代码如下：</p>
+<pre><code class="language-cpp">void backtracking (const string&amp; s, int startIndex) {  
+    // 如果起始位置已经大于s的大小，说明已经找到了一组分割方案了  
+    if (startIndex &gt;= s.size()) {  
+        result.push_back(path);  
+        return;  
+    }  
+}
+</code></pre>
+<ul>
+<li>单层搜索的逻辑</li>
+</ul>
+<p><strong>来看看在递归循环中如何截取子串呢？</strong></p>
+<p>在<code>for (int i = startIndex; i &lt; s.size(); i++)</code>循环中，我们 定义了起始位置startIndex，那么 [startIndex, i] 就是要截取的子串。</p>
+<p>首先判断这个子串是不是回文，如果是回文，就加入在<code>vector&lt;string&gt; path</code>中，path用来记录切割过的回文子串。</p>
+<p>代码如下：</p>
+<pre><code class="language-cpp">for (int i = startIndex; i &lt; s.size(); i++) {  
+    if (isPalindrome(s, startIndex, i)) { // 是回文子串  
+        // 获取[startIndex,i]在s中的子串  
+        string str = s.substr(startIndex, i - startIndex + 1);  
+        path.push_back(str);  
+    } else {                // 如果不是则直接跳过  
+        continue;  
+    }  
+    backtracking(s, i + 1); // 寻找i+1为起始位置的子串  
+    path.pop_back();        // 回溯过程，弹出本次已经添加的子串  
+}
+</code></pre>
+<p><strong>注意切割过的位置，不能重复切割，所以，backtracking(s, i + 1); 传入下一层的起始位置为i + 1</strong>。</p>
+<h3 id="判断回文子串"><a class="header" href="#判断回文子串">判断回文子串</a></h3>
+<p>最后我们看一下回文子串要如何判断了，判断一个字符串是否是回文。</p>
+<p>可以使用双指针法，一个指针从前向后，一个指针从后向前，如果前后指针所指向的元素是相等的，就是回文字符串了。</p>
+<p>那么判断回文的C++代码如下：</p>
+<pre><code class="language-cpp">bool isPalindrome(const string&amp; s, int start, int end) {  
+ for (int i = start, j = end; i &lt; j; i++, j--) {  
+	 if (s[i] != s[j]) {  
+		 return false;  
+	 }  
+ }  
+ return true;  
+}
+</code></pre>
+<p>如果大家对双指针法有生疏了，传送门：<a href="https://programmercarl.com/%E5%8F%8C%E6%8C%87%E9%92%88%E6%80%BB%E7%BB%93.html">双指针法：总结篇！</a></p>
+<h3 id="优化"><a class="header" href="#优化">优化</a></h3>
+<p>上面的代码还存在一定的优化空间, 在于如何更高效的计算一个子字符串是否是回文字串。上述代码<code>isPalindrome</code>函数运用双指针的方法来判定对于一个字符串<code>s</code>, 给定起始下标和终止下标, 截取出的子字符串是否是回文字串。但是其中有一定的重复计算存在:</p>
+<p>例如给定字符串<code>"abcde"</code>, 在已知<code>"bcd"</code>不是回文字串时, 不再需要去双指针操作<code>"abcde"</code>而可以直接判定它一定不是回文字串。</p>
+<p>具体来说, 给定一个字符串<code>s</code>, 长度为<code>n</code>, 它成为回文字串的充分必要条件是<code>s[0] == s[n-1]</code>且<code>s[1:n-1]</code>是回文字串。</p>
+<p>大家如果熟悉动态规划这种算法的话, 我们可以高效地事先一次性计算出, 针对一个字符串<code>s</code>, 它的任何子串是否是回文字串, 然后在我们的回溯函数中直接查询即可, 省去了双指针移动判定这一步骤。</p>
+<h3 id="总结-15"><a class="header" href="#总结-15">总结</a></h3>
+<p>这道题目在leetcode上是中等，但可以说是hard的题目了，但是代码其实就是按照模板的样子来的。</p>
+<p>那么难究竟难在什么地方呢？</p>
+<p><strong>我列出如下几个难点：</strong></p>
+<ul>
+<li>切割问题可以抽象为组合问题</li>
+<li>如何模拟那些切割线</li>
+<li>切割问题中递归如何终止</li>
+<li>在递归循环中如何截取子串</li>
+<li>如何判断回文</li>
+</ul>
+<p><strong>我们平时在做难题的时候，总结出来难究竟难在哪里也是一种需要锻炼的能力</strong>。</p>
+<p>一些同学可能遇到题目比较难，但是不知道题目难在哪里，反正就是很难。其实这样还是思维不够清晰，这种总结的能力需要多接触多锻炼。</p>
+<p><strong>本题我相信很多同学主要卡在了第一个难点上：就是不知道如何切割，甚至知道要用回溯法，也不知道如何用。也就是没有体会到按照求组合问题的套路就可以解决切割</strong>。</p>
+<p>如果意识到这一点，算是重大突破了。接下来就可以对着模板照葫芦画瓢。</p>
+<p><strong>但接下来如何模拟切割线，如何终止，如何截取子串，其实都不好想，最后判断回文算是最简单的了</strong>。</p>
+<p>关于模拟切割线，其实就是index是上一层已经确定了的分割线，i是这一层试图寻找的新分割线</p>
+<p>除了这些难点，<strong>本题还有细节，例如：切割过的地方不能重复切割所以递归函数需要传入i + 1</strong>。</p>
+<p>所以本题应该是一道hard题目了。</p>
+<p><strong>可能刷过这道题目的录友都没感受到自己原来克服了这么多难点，就把这道题目AC了</strong>，这应该叫做无招胜有招，人码合一。</p>
+<h2 id="c解法-106"><a class="header" href="#c解法-106">C++解法</a></h2>
+<p>回溯解法：</p>
+<pre><code class="language-cpp">class Solution {
+private:
+    vector&lt;vector&lt;string&gt;&gt; result;
+    vector&lt;string&gt; path; // 放已经回文的子串
+    void backtracking (const string&amp; s, int startIndex) {
+        // 如果起始位置已经大于s的大小，说明已经找到了一组分割方案了
+        if (startIndex &gt;= s.size()) {
+            result.push_back(path);
+            return;
+        }
+        for (int i = startIndex; i &lt; s.size(); i++) {
+            if (isPalindrome(s, startIndex, i)) {   // 是回文子串
+                // 获取[startIndex,i]在s中的子串
+                string str = s.substr(startIndex, i - startIndex + 1);
+                path.push_back(str);
+            } else {                                // 不是回文，跳过
+                continue;
+            }
+            backtracking(s, i + 1); // 寻找i+1为起始位置的子串
+            path.pop_back(); // 回溯过程，弹出本次已经添加的子串
+        }
+    }
+    bool isPalindrome(const string&amp; s, int start, int end) {
+        for (int i = start, j = end; i &lt; j; i++, j--) {
+            if (s[i] != s[j]) {
+                return false;
+            }
+        }
+        return true;
+    }
+public:
+    vector&lt;vector&lt;string&gt;&gt; partition(string s) {
+        result.clear();
+        path.clear();
+        backtracking(s, 0);
+        return result;
+    }
+};
+</code></pre>
+<ul>
+<li>时间复杂度: O(n * 2^n)</li>
+<li>空间复杂度: O(n^2)</li>
+</ul>
+<p>动态规划解法：</p>
+<pre><code class="language-cpp">具体参考代码如下:
+
+class Solution {  
+private:  
+    vector&lt;vector&lt;string&gt;&gt; result;  
+    vector&lt;string&gt; path; // 放已经回文的子串  
+    vector&lt;vector&lt;bool&gt;&gt; isPalindrome; // 放事先计算好的是否回文子串的结果  
+    void backtracking (const string&amp; s, int startIndex) {  
+        // 如果起始位置已经大于s的大小，说明已经找到了一组分割方案了  
+        if (startIndex &gt;= s.size()) {  
+            result.push_back(path);  
+            return;  
+        }  
+        for (int i = startIndex; i &lt; s.size(); i++) {  
+            if (isPalindrome[startIndex][i]) {   // 是回文子串  
+                // 获取[startIndex,i]在s中的子串  
+                string str = s.substr(startIndex, i - startIndex + 1);  
+                path.push_back(str);  
+            } else {                                // 不是回文，跳过  
+                continue;  
+            }  
+            backtracking(s, i + 1); // 寻找i+1为起始位置的子串  
+            path.pop_back(); // 回溯过程，弹出本次已经添加的子串  
+        }  
+    }  
+    void computePalindrome(const string&amp; s) {  
+        // isPalindrome[i][j] 代表 s[i:j](双边包括)是否是回文字串   
+        isPalindrome.resize(s.size(), vector&lt;bool&gt;(s.size(), false)); // 根据字符串s, 刷新布尔矩阵的大小  
+        for (int i = s.size() - 1; i &gt;= 0; i--) {   
+            // 需要倒序计算, 保证在i行时, i+1行已经计算好了  
+            for (int j = i; j &lt; s.size(); j++) {  
+                if (j == i) {isPalindrome[i][j] = true;}  
+                else if (j - i == 1) {isPalindrome[i][j] = (s[i] == s[j]);}  
+                else {isPalindrome[i][j] = (s[i] == s[j] &amp;&amp; isPalindrome[i+1][j-1]);}  
+            }  
+        }  
+    }  
+public:  
+    vector&lt;vector&lt;string&gt;&gt; partition(string s) {  
+        result.clear();  
+        path.clear();  
+        computePalindrome(s);  
+        backtracking(s, 0);  
+        return result;  
+    }  
+}; 
+</code></pre>
+<h2 id="java解法-78"><a class="header" href="#java解法-78">Java解法</a></h2>
+<pre><code class="language-java">class Solution {
+    //保持前几题一贯的格式， initialization
+    List&lt;List&lt;String&gt;&gt; res = new ArrayList&lt;&gt;();
+    List&lt;String&gt; cur = new ArrayList&lt;&gt;();
+    public List&lt;List&lt;String&gt;&gt; partition(String s) {
+        backtracking(s, 0, new StringBuilder());
+        return res;
+    }
+    private void backtracking(String s, int start, StringBuilder sb){
+        //因为是起始位置一个一个加的，所以结束时start一定等于s.length,因为进入backtracking时一定末尾也是回文，所以cur是满足条件的
+        if (start == s.length()){
+            //注意创建一个新的copy
+            res.add(new ArrayList&lt;&gt;(cur));
+            return;
+        }
+        //像前两题一样从前往后搜索，如果发现回文，进入backtracking,起始位置后移一位，循环结束照例移除cur的末位
+        for (int i = start; i &lt; s.length(); i++){
+            sb.append(s.charAt(i));
+            if (check(sb)){
+                cur.add(sb.toString());
+                backtracking(s, i + 1, new StringBuilder());
+                cur.remove(cur.size() -1 );
+            }
+        }
+    }
+
+    //helper method, 检查是否是回文
+    private boolean check(StringBuilder sb){
+        for (int i = 0; i &lt; sb.length()/ 2; i++){
+            if (sb.charAt(i) != sb.charAt(sb.length() - 1 - i)){return false;}
+        }
+        return true;
+    }
+}
+</code></pre>
+<h1 id="93-restore-ip-addresses"><a class="header" href="#93-restore-ip-addresses"><a href="https://leetcode.com/problems/restore-ip-addresses/">93. Restore IP Addresses</a></a></h1>
+<p>A <strong>valid IP address</strong> consists of exactly four integers separated by single dots. Each integer is between <code>0</code> and <code>255</code> (<strong>inclusive</strong>) and cannot have leading zeros.</p>
+<ul>
+<li>For example, <code>"0.1.2.201"</code> and <code>"192.168.1.1"</code> are <strong>valid</strong> IP addresses, but <code>"0.011.255.245"</code>, <code>"192.168.1.312"</code> and <code>"192.168@1.1"</code> are <strong>invalid</strong> IP addresses.</li>
+</ul>
+<p>Given a string <code>s</code> containing only digits, return <em>all possible valid IP addresses that can be formed by inserting dots into</em> <code>s</code>. You are <strong>not</strong> allowed to reorder or remove any digits in <code>s</code>. You may return the valid IP addresses in <strong>any</strong> order.</p>
+<p><strong>Example 1:</strong></p>
+<p><strong>Input:</strong> s = "25525511135"<br />
+<strong>Output:</strong> ["255.255.11.135","255.255.111.35"]</p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> s = "0000"<br />
+<strong>Output:</strong> ["0.0.0.0"]</p>
+<p><strong>Example 3:</strong></p>
+<p><strong>Input:</strong> s = "101023"<br />
+<strong>Output:</strong> ["1.0.10.23","1.0.102.3","10.1.0.23","10.10.2.3","101.0.2.3"]</p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= s.length &lt;= 20</code></li>
+<li><code>s</code> consists of digits only.</li>
+</ul>
+<h2 id="思路-125"><a class="header" href="#思路-125">思路</a></h2>
+<p>做这道题目之前，最好先把<a href="https://programmercarl.com/0131.%E5%88%86%E5%89%B2%E5%9B%9E%E6%96%87%E4%B8%B2.html">131.分割回文串</a>这个做了。</p>
+<p>这道题目相信大家刚看的时候，应该会一脸茫然。</p>
+<p>其实只要意识到这是切割问题，<strong>切割问题就可以使用回溯搜索法把所有可能性搜出来</strong>，和刚做过的<a href="https://programmercarl.com/0131.%E5%88%86%E5%89%B2%E5%9B%9E%E6%96%87%E4%B8%B2.html">131.分割回文串</a>就十分类似了。</p>
+<p>切割问题可以抽象为树型结构，如图：</p>
+<p><img src="https://code-thinking-1253855093.file.myqcloud.com/pics/20201123203735933.png" alt="93.复原IP地址" /></p>
+<ul>
+<li>递归参数</li>
+</ul>
+<p>在<a href="https://programmercarl.com/0131.%E5%88%86%E5%89%B2%E5%9B%9E%E6%96%87%E4%B8%B2.html">131.分割回文串</a>中我们就提到切割问题类似组合问题。</p>
+<p>startIndex一定是需要的，因为不能重复分割，记录下一层递归分割的起始位置。</p>
+<p>本题我们还需要一个变量pointNum，记录添加逗点的数量。</p>
+<p>所以代码如下：</p>
+<pre><code class="language-cpp">vector&lt;string&gt; result;// 记录结果  
+// startIndex: 搜索的起始位置，pointNum:添加逗点的数量  
+void backtracking(string&amp; s, int startIndex, int pointNum) {}
+</code></pre>
+<ul>
+<li>递归终止条件</li>
+</ul>
+<p>终止条件和<a href="https://programmercarl.com/0131.%E5%88%86%E5%89%B2%E5%9B%9E%E6%96%87%E4%B8%B2.html">131.分割回文串</a>情况就不同了，本题明确要求只会分成4段，所以不能用切割线切到最后作为终止条件，而是分割的段数作为终止条件。</p>
+<p>pointNum表示逗点数量，pointNum为3说明字符串分成了4段了。</p>
+<p>然后验证一下第四段是否合法，如果合法就加入到结果集里</p>
+<p>代码如下：</p>
+<pre><code class="language-cpp">if (pointNum == 3) { // 逗点数量为3时，分隔结束  
+    // 判断第四段子字符串是否合法，如果合法就放进result中  
+    if (isValid(s, startIndex, s.size() - 1)) {  
+        result.push_back(s);  
+    }  
+    return;  
+}
+</code></pre>
+<ul>
+<li>单层搜索的逻辑</li>
+</ul>
+<p>在<a href="https://programmercarl.com/0131.%E5%88%86%E5%89%B2%E5%9B%9E%E6%96%87%E4%B8%B2.html">131.分割回文串</a>中已经讲过在循环遍历中如何截取子串。</p>
+<p>在<code>for (int i = startIndex; i &lt; s.size(); i++)</code>循环中 [startIndex, i] 这个区间就是截取的子串，需要判断这个子串是否合法。</p>
+<p>如果合法就在字符串后面加上符号<code>.</code>表示已经分割。</p>
+<p>如果不合法就结束本层循环，如图中剪掉的分支：</p>
+<p><img src="https://code-thinking-1253855093.file.myqcloud.com/pics/20201123203735933-20230310132314109.png" alt="93.复原IP地址" /></p>
+<p>然后就是递归和回溯的过程：</p>
+<p>递归调用时，下一层递归的startIndex要从i+2开始（因为需要在字符串中加入了分隔符<code>.</code>），同时记录分割符的数量pointNum 要 +1。</p>
+<p>回溯的时候，就将刚刚加入的分隔符<code>.</code> 删掉就可以了，pointNum也要-1。</p>
+<p>代码如下：</p>
+<pre><code class="language-cpp">for (int i = startIndex; i &lt; s.size(); i++) {  
+    if (isValid(s, startIndex, i)) { // 判断 [startIndex,i] 这个区间的子串是否合法  
+        s.insert(s.begin() + i + 1 , '.');  // 在i的后面插入一个逗点  
+        pointNum++;  
+        backtracking(s, i + 2, pointNum);   // 插入逗点之后下一个子串的起始位置为i+2  
+        pointNum--;                         // 回溯  
+        s.erase(s.begin() + i + 1);         // 回溯删掉逗点  
+    } else break; // 不合法，直接结束本层循环  
+}
+</code></pre>
+<h3 id="判断子串是否合法"><a class="header" href="#判断子串是否合法">判断子串是否合法</a></h3>
+<p>最后就是在写一个判断段位是否是有效段位了。</p>
+<p>主要考虑到如下三点：</p>
+<ul>
+<li>段位以0为开头的数字不合法</li>
+<li>段位里有非正整数字符不合法</li>
+<li>段位如果大于255了不合法</li>
+</ul>
+<p>代码如下：</p>
+<pre><code class="language-cpp">// 判断字符串s在左闭又闭区间[start, end]所组成的数字是否合法  
+bool isValid(const string&amp; s, int start, int end) {  
+    if (start &gt; end) {  
+        return false;  
+    }  
+    if (s[start] == '0' &amp;&amp; start != end) { // 0开头的数字不合法  
+            return false;  
+    }  
+    int num = 0;  
+    for (int i = start; i &lt;= end; i++) {  
+        if (s[i] &gt; '9' || s[i] &lt; '0') { // 遇到非数字字符不合法  
+            return false;  
+        }  
+        num = num * 10 + (s[i] - '0');  
+        if (num &gt; 255) { // 如果大于255了不合法  
+            return false;  
+        }  
+    }  
+    return true;  
+}
+</code></pre>
+<h2 id="c解法-107"><a class="header" href="#c解法-107">C++解法</a></h2>
+<p>回溯解法：</p>
+<pre><code class="language-cpp">class Solution {
+private:
+    vector&lt;string&gt; result;// 记录结果
+    // startIndex: 搜索的起始位置，pointNum:添加逗点的数量
+    void backtracking(string&amp; s, int startIndex, int pointNum) {
+        if (pointNum == 3) { // 逗点数量为3时，分隔结束
+            // 判断第四段子字符串是否合法，如果合法就放进result中
+            if (isValid(s, startIndex, s.size() - 1)) {
+                result.push_back(s);
+            }
+            return;
+        }
+        for (int i = startIndex; i &lt; s.size(); i++) {
+            if (isValid(s, startIndex, i)) { // 判断 [startIndex,i] 这个区间的子串是否合法
+                s.insert(s.begin() + i + 1 , '.');  // 在i的后面插入一个逗点
+                pointNum++;
+                backtracking(s, i + 2, pointNum);   // 插入逗点之后下一个子串的起始位置为i+2
+                pointNum--;                         // 回溯
+                s.erase(s.begin() + i + 1);         // 回溯删掉逗点
+            } else break; // 不合法，直接结束本层循环
+        }
+    }
+    // 判断字符串s在左闭右闭区间[start, end]所组成的数字是否合法
+    bool isValid(const string&amp; s, int start, int end) {
+        if (start &gt; end) {
+            return false;
+        }
+        if (s[start] == '0' &amp;&amp; start != end) { // 0开头的数字不合法
+                return false;
+        }
+        int num = 0;
+        for (int i = start; i &lt;= end; i++) {
+            if (s[i] &gt; '9' || s[i] &lt; '0') { // 遇到非数字字符不合法
+                return false;
+            }
+            num = num * 10 + (s[i] - '0');
+            if (num &gt; 255) { // 如果大于255了不合法
+                return false;
+            }
+        }
+        return true;
+    }
+public:
+    vector&lt;string&gt; restoreIpAddresses(string s) {
+        result.clear();
+        if (s.size() &lt; 4 || s.size() &gt; 12) return result; // 算是剪枝了
+        backtracking(s, 0, 0);
+        return result;
+    }
+};
+</code></pre>
+<ul>
+<li>时间复杂度: O(3^4)，IP地址最多包含4个数字，每个数字最多有3种可能的分割方式，则搜索树的最大深度为4，每个节点最多有3个子节点。</li>
+<li>空间复杂度: O(n)</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
+<h1 id="子集"><a class="header" href="#子集">子集</a></h1>
+<ul>
+<li><a href="%E5%9B%9E%E6%BA%AF/%E5%AD%90%E9%9B%86.html#78-subsets">78. Subsets</a>
+<ul>
+<li><a href="%E5%9B%9E%E6%BA%AF/%E5%AD%90%E9%9B%86.html#%E6%80%9D%E8%B7%AF">思路</a></li>
+<li><a href="%E5%9B%9E%E6%BA%AF/%E5%AD%90%E9%9B%86.html#c%E8%A7%A3%E6%B3%95">C++解法</a></li>
+</ul>
+</li>
+<li><a href="%E5%9B%9E%E6%BA%AF/%E5%AD%90%E9%9B%86.html#90-subsets-ii">90. Subsets II</a>
+<ul>
+<li><a href="%E5%9B%9E%E6%BA%AF/%E5%AD%90%E9%9B%86.html#%E6%80%9D%E8%B7%AF-1">思路</a></li>
+<li><a href="%E5%9B%9E%E6%BA%AF/%E5%AD%90%E9%9B%86.html#c%E8%A7%A3%E6%B3%95-1">C++解法</a></li>
+</ul>
+</li>
+<li><a href="%E5%9B%9E%E6%BA%AF/%E5%AD%90%E9%9B%86.html#491-non-decreasing-subsequences">491. Non-decreasing Subsequences</a>
+<ul>
+<li><a href="%E5%9B%9E%E6%BA%AF/%E5%AD%90%E9%9B%86.html#%E6%80%9D%E8%B7%AF-2">思路</a>
+<ul>
+<li><a href="%E5%9B%9E%E6%BA%AF/%E5%AD%90%E9%9B%86.html#%E4%BC%98%E5%8C%96">优化</a></li>
+</ul>
+</li>
+<li><a href="%E5%9B%9E%E6%BA%AF/%E5%AD%90%E9%9B%86.html#c%E8%A7%A3%E6%B3%95-2">C++解法</a></li>
+</ul>
+</li>
+</ul>
+<h1 id="78-subsets"><a class="header" href="#78-subsets"><a href="https://leetcode.com/problems/subsets/">78. Subsets</a></a></h1>
+<p>Given an integer array <code>nums</code> of <strong>unique</strong> elements, return <em>all possible</em> <em>subsets</em> <em>(the power set)</em>.</p>
+<p>The solution set <strong>must not</strong> contain duplicate subsets. Return the solution in <strong>any order</strong>.</p>
+<p><strong>Example 1:</strong></p>
+<p><strong>Input:</strong> <code>nums = [1,2,3]</code><br />
+<strong>Output:</strong> <code>[[],[1],[2],[1,2],[3],[1,3],[2,3],[1,2,3]]</code></p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> <code>nums = [0]</code><br />
+<strong>Output:</strong> <code>[[],[0]]</code></p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= nums.length &lt;= 10</code></li>
+<li><code>-10 &lt;= nums[i] &lt;= 10</code></li>
+<li>All the numbers of <code>nums</code> are <strong>unique</strong>.</li>
+</ul>
+<h2 id="思路-126"><a class="header" href="#思路-126">思路</a></h2>
+<p>求子集问题和<a href="https://programmercarl.com/0077.%E7%BB%84%E5%90%88.html">77.组合</a>和<a href="https://programmercarl.com/0131.%E5%88%86%E5%89%B2%E5%9B%9E%E6%96%87%E4%B8%B2.html">131.分割回文串</a>又不一样了。</p>
+<p>如果把 子集问题、组合问题、分割问题都抽象为一棵树的话，<strong>那么组合问题和分割问题都是收集树的叶子节点，而子集问题是找树的所有节点！</strong></p>
+<p>其实子集也是一种组合问题，因为它的集合是无序的，子集{1,2} 和 子集{2,1}是一样的。</p>
+<p><strong>那么既然是无序，取过的元素不会重复取，写回溯算法的时候，for就要从startIndex开始，而不是从0开始！</strong></p>
+<p>有同学问了，什么时候for可以从0开始呢？</p>
+<p>求排列问题的时候，就要从0开始，因为集合是有序的，{1, 2} 和{2, 1}是两个集合，排列问题我们后续的文章就会讲到的。</p>
+<p>以示例中nums = [1,2,3]为例把求子集抽象为树型结构，如下：</p>
+<p><img src="https://code-thinking.cdn.bcebos.com/pics/78.%E5%AD%90%E9%9B%86.png" alt="78.子集" /></p>
+<p>从图中红线部分，可以看出<strong>遍历这个树的时候，把所有节点都记录下来，就是要求的子集集合</strong>。</p>
+<ul>
+<li>递归函数参数</li>
+</ul>
+<p>全局变量数组path为子集收集元素，二维数组result存放子集组合。（也可以放到递归函数参数里）</p>
+<p>递归函数参数在上面讲到了，需要startIndex。</p>
+<p>代码如下：</p>
+<pre><code class="language-cpp">vector&lt;vector&lt;int&gt;&gt; result;  
+vector&lt;int&gt; path;  
+void backtracking(vector&lt;int&gt;&amp; nums, int startIndex) {}
+</code></pre>
+<p>递归终止条件</p>
+<p>从图中可以看出：</p>
+<p><img src="https://code-thinking.cdn.bcebos.com/pics/78.%E5%AD%90%E9%9B%86.png" alt="78.子集" /></p>
+<p>剩余集合为空的时候，就是叶子节点。</p>
+<p>那么什么时候剩余集合为空呢？</p>
+<p>就是startIndex已经大于数组的长度了，就终止了，因为没有元素可取了，代码如下:</p>
+<pre><code class="language-cpp">if (startIndex &gt;= nums.size()) {  
+    return;  
+}
+</code></pre>
+<p><strong>其实可以不需要加终止条件，因为startIndex &gt;= nums.size()，本层for循环本来也结束了</strong>。</p>
+<ul>
+<li>单层搜索逻辑</li>
+</ul>
+<p><strong>求取子集问题，不需要任何剪枝！因为子集就是要遍历整棵树</strong>。</p>
+<p>那么单层递归逻辑代码如下：</p>
+<pre><code class="language-cpp">for (int i = startIndex; i &lt; nums.size(); i++) {  
+    path.push_back(nums[i]);    // 子集收集元素  
+    backtracking(nums, i + 1);  // 注意从i+1开始，元素不重复取  
+    path.pop_back();            // 回溯  
+}
+</code></pre>
+<h2 id="c解法-108"><a class="header" href="#c解法-108">C++解法</a></h2>
+<pre><code class="language-cpp">class Solution {
+private:
+    vector&lt;vector&lt;int&gt;&gt; result;
+    vector&lt;int&gt; path;
+    void backtracking(vector&lt;int&gt;&amp; nums, int startIndex) {
+        result.push_back(path); // 收集子集，要放在终止添加的上面，否则会漏掉自己
+        if (startIndex &gt;= nums.size()) { // 终止条件可以不加
+            return;
+        }
+        for (int i = startIndex; i &lt; nums.size(); i++) {
+            path.push_back(nums[i]);
+            backtracking(nums, i + 1);
+            path.pop_back();
+        }
+    }
+public:
+    vector&lt;vector&lt;int&gt;&gt; subsets(vector&lt;int&gt;&amp; nums) {
+        result.clear();
+        path.clear();
+        backtracking(nums, 0);
+        return result;
+    }
+};
+</code></pre>
+<ul>
+<li>时间复杂度: O(n * 2^n)</li>
+<li>空间复杂度: O(n)</li>
+</ul>
+<p>在注释中，可以发现可以不写终止条件，因为本来我们就要遍历整棵树。</p>
+<p>有的同学可能担心不写终止条件会不会无限递归？</p>
+<p>并不会，因为每次递归的下一层就是从i+1开始的。</p>
+<h1 id="90-subsets-ii"><a class="header" href="#90-subsets-ii"><a href="https://leetcode.com/problems/subsets-ii/">90. Subsets II</a></a></h1>
+<p>Given an integer array <code>nums</code> that may contain duplicates, return <em>all possible</em> <em>subsets</em> <em>(the power set)</em>.</p>
+<p>The solution set <strong>must not</strong> contain duplicate subsets. Return the solution in <strong>any order</strong>.</p>
+<p><strong>Example 1:</strong></p>
+<p><strong>Input:</strong> <code>nums = [1,2,2]</code><br />
+<strong>Output:</strong> <code>[[],[1],[1,2],[1,2,2],[2],[2,2]]</code></p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> <code>nums = [0]</code><br />
+<strong>Output:</strong> <code>[[],[0]]</code></p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= nums.length &lt;= 10</code></li>
+<li><code>-10 &lt;= nums[i] &lt;= 10</code></li>
+</ul>
+<h2 id="思路-127"><a class="header" href="#思路-127">思路</a></h2>
+<p>树层去重需要先排序</p>
+<p>做本题之前一定要先做<a href="https://programmercarl.com/0078.%E5%AD%90%E9%9B%86.html">78.子集</a>。</p>
+<p>这道题目和<a href="https://programmercarl.com/0078.%E5%AD%90%E9%9B%86.html">78.子集</a>区别就是集合里有重复元素了，而且求取的子集要去重。</p>
+<p>那么关于回溯算法中的去重问题，<strong>在<a href="https://programmercarl.com/0040.%E7%BB%84%E5%90%88%E6%80%BB%E5%92%8CII.html">40.组合总和II</a>中已经详细讲解过了，和本题是一个套路</strong>。</p>
+<p><strong>剧透一下，后期要讲解的排列问题里去重也是这个套路，所以理解“树层去重”和“树枝去重”非常重要</strong>。</p>
+<p>用示例中的[1, 2, 2] 来举例，如图所示： （<strong>注意去重需要先对集合排序</strong>）</p>
+<p><img src="https://code-thinking-1253855093.file.myqcloud.com/pics/20201124195411977.png" alt="90.子集II" /></p>
+<p>从图中可以看出，同一树层上重复取2 就要过滤掉，同一树枝上就可以重复取2，因为同一树枝上元素的集合才是唯一子集！</p>
+<h2 id="c解法-109"><a class="header" href="#c解法-109">C++解法</a></h2>
+<pre><code class="language-cpp">class Solution {
+private:
+    vector&lt;vector&lt;int&gt;&gt; result;
+    vector&lt;int&gt; path;
+    void backtracking(vector&lt;int&gt;&amp; nums, int startIndex, vector&lt;bool&gt;&amp; used) {
+        result.push_back(path);
+        for (int i = startIndex; i &lt; nums.size(); i++) {
+            // used[i - 1] == true，说明同一树枝nums[i - 1]使用过
+            // used[i - 1] == false，说明同一树层nums[i - 1]使用过
+            // 而我们要对同一树层使用过的元素进行跳过
+            if (i &gt; 0 &amp;&amp; nums[i] == nums[i - 1] &amp;&amp; used[i - 1] == false) {
+                continue;
+            }
+            path.push_back(nums[i]);
+            used[i] = true;
+            backtracking(nums, i + 1, used);
+            used[i] = false;
+            path.pop_back();
+        }
+    }
+
+public:
+    vector&lt;vector&lt;int&gt;&gt; subsetsWithDup(vector&lt;int&gt;&amp; nums) {
+        result.clear();
+        path.clear();
+        vector&lt;bool&gt; used(nums.size(), false);
+        sort(nums.begin(), nums.end()); // 去重需要排序
+        backtracking(nums, 0, used);
+        return result;
+    }
+};
+</code></pre>
+<ul>
+<li>时间复杂度: O(n * 2^n)</li>
+<li>空间复杂度: O(n)</li>
+</ul>
+<p>使用set去重的版本。</p>
+<pre><code class="language-cpp">class Solution {
+private:
+    vector&lt;vector&lt;int&gt;&gt; result;
+    vector&lt;int&gt; path;
+    void backtracking(vector&lt;int&gt;&amp; nums, int startIndex) {
+        result.push_back(path);
+        unordered_set&lt;int&gt; uset;
+        for (int i = startIndex; i &lt; nums.size(); i++) {
+            if (uset.find(nums[i]) != uset.end()) {
+                continue;
+            }
+            uset.insert(nums[i]);
+            path.push_back(nums[i]);
+            backtracking(nums, i + 1);
+            path.pop_back();
+        }
+    }
+
+public:
+    vector&lt;vector&lt;int&gt;&gt; subsetsWithDup(vector&lt;int&gt;&amp; nums) {
+        result.clear();
+        path.clear();
+        sort(nums.begin(), nums.end()); // 去重需要排序
+        backtracking(nums, 0);
+        return result;
+    }
+};
+</code></pre>
+<p>本题也可以不使用used数组来去重，因为递归的时候下一个startIndex是i+1而不是0。</p>
+<p>如果要是全排列的话，每次要从0开始遍历，为了跳过已入栈的元素，需要使用used。</p>
+<p>完整代码如下所示：</p>
+<pre><code class="language-cpp">class Solution {
+private:
+    vector&lt;vector&lt;int&gt;&gt; result;
+    vector&lt;int&gt; path;
+    void backtracking(vector&lt;int&gt;&amp; nums, int startIndex) {
+        result.push_back(path);
+        for (int i = startIndex; i &lt; nums.size(); i++) {
+            // 而我们要对同一树层使用过的元素进行跳过
+            if (i &gt; startIndex &amp;&amp; nums[i] == nums[i - 1] ) { // 注意这里使用i &gt; startIndex
+                continue;
+            }
+            path.push_back(nums[i]);
+            backtracking(nums, i + 1);
+            path.pop_back();
+        }
+    }
+
+public:
+    vector&lt;vector&lt;int&gt;&gt; subsetsWithDup(vector&lt;int&gt;&amp; nums) {
+        result.clear();
+        path.clear();
+        sort(nums.begin(), nums.end()); // 去重需要排序
+        backtracking(nums, 0);
+        return result;
+    }
+};
+</code></pre>
+<h1 id="491-non-decreasing-subsequences"><a class="header" href="#491-non-decreasing-subsequences"><a href="https://leetcode.com/problems/non-decreasing-subsequences/">491. Non-decreasing Subsequences</a></a></h1>
+<p>Given an integer array <code>nums</code>, return <em>all the different possible non-decreasing subsequences of the given array with at least two elements</em>. You may return the answer in <strong>any order</strong>.</p>
+<p><strong>Example 1:</strong></p>
+<p><strong>Input:</strong> <code>nums = [4,6,7,7]</code><br />
+<strong>Output:</strong> <code>[[4,6],[4,6,7],[4,6,7,7],[4,7],[4,7,7],[6,7],[6,7,7],[7,7]]</code></p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> <code>nums = [4,4,3,2,1]</code><br />
+<strong>Output:</strong> <code>[[4,4]]</code></p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= nums.length &lt;= 15</code></li>
+<li><code>-100 &lt;= nums[i] &lt;= 100</code></li>
+</ul>
+<h2 id="思路-128"><a class="header" href="#思路-128">思路</a></h2>
+<p>这个递增子序列比较像是取有序的子集。而且本题也要求不能有相同的递增子序列。</p>
+<p>这又是子集，又是去重，是不是不由自主的想起了刚刚讲过的<a href="https://programmercarl.com/0090.%E5%AD%90%E9%9B%86II.html">90.子集II</a>。</p>
+<p>就是因为太像了，更要注意差别所在，要不就掉坑里了！</p>
+<p>在<a href="https://programmercarl.com/0090.%E5%AD%90%E9%9B%86II.html">90.子集II</a>中我们是通过排序，再加一个标记数组来达到去重的目的。</p>
+<p>而本题求自增子序列，是不能对原数组进行排序的，排完序的数组都是自增子序列了。</p>
+<p><strong>所以不能使用之前的去重逻辑！</strong></p>
+<p>本题给出的示例，还是一个有序数组 [4, 6, 7, 7]，这更容易误导大家按照排序的思路去做了。</p>
+<p>为了有鲜明的对比，我用[4, 7, 6, 7]这个数组来举例，抽象为树形结构如图：</p>
+<p><img src="https://code-thinking-1253855093.file.myqcloud.com/pics/20201124200229824.png" alt="491. 递增子序列1" /></p>
+<ul>
+<li>递归函数参数</li>
+</ul>
+<p>本题求子序列，很明显一个元素不能重复使用，所以需要startIndex，调整下一层递归的起始位置。</p>
+<p>代码如下：</p>
+<pre><code class="language-cpp">vector&lt;vector&lt;int&gt;&gt; result;  
+vector&lt;int&gt; path;  
+void backtracking(vector&lt;int&gt;&amp; nums, int startIndex)
+</code></pre>
+<ul>
+<li>终止条件</li>
+</ul>
+<p>本题其实类似求子集问题，也是要遍历树形结构找每一个节点，所以和<a href="https://programmercarl.com/0078.%E5%AD%90%E9%9B%86.html">回溯算法：求子集问题！</a>一样，可以不加终止条件，startIndex每次都会加1，并不会无限递归。</p>
+<p>但本题收集结果有所不同，题目要求递增子序列大小至少为2，所以代码如下：</p>
+<pre><code class="language-cpp">if (path.size() &gt; 1) {  
+    result.push_back(path);  
+    // 注意这里不要加return，因为要取树上的所有节点  
+}
+</code></pre>
+<ul>
+<li>单层搜索逻辑</li>
+</ul>
+<p><img src="https://code-thinking-1253855093.file.myqcloud.com/pics/20201124200229824-20230310131640070.png" alt="491. 递增子序列1" /></p>
+<p>在图中可以看出，<strong>同一父节点下的同层上使用过的元素就不能再使用了</strong></p>
+<p>那么单层搜索代码如下：</p>
+<pre><code class="language-cpp">unordered_set&lt;int&gt; uset; // 使用set来对本层元素进行去重  
+for (int i = startIndex; i &lt; nums.size(); i++) {  
+    if ((!path.empty() &amp;&amp; nums[i] &lt; path.back())  
+            || uset.find(nums[i]) != uset.end()) {  
+            continue;  
+    }  
+    uset.insert(nums[i]); // 记录这个元素在本层用过了，本层后面不能再用了  
+    path.push_back(nums[i]);  
+    backtracking(nums, i + 1);  
+    path.pop_back();  
+}
+</code></pre>
+<p><strong>对于已经习惯写回溯的同学，看到递归函数上面的<code>uset.insert(nums[i]);</code>，下面却没有对应的pop之类的操作，应该很不习惯吧</strong></p>
+<p><strong>这也是需要注意的点，<code>unordered_set&lt;int&gt; uset;</code> 是记录本层元素是否重复使用，新的一层uset都会重新定义（清空），所以要知道uset只负责本层！</strong></p>
+<h3 id="优化-1"><a class="header" href="#优化-1">优化</a></h3>
+<p>以上代码用我用了<code>unordered_set&lt;int&gt;</code>来记录本层元素是否重复使用。</p>
+<p><strong>其实用数组来做哈希，效率就高了很多</strong>。</p>
+<p>注意题目中说了，数值范围[-100,100]，所以完全可以用数组来做哈希。</p>
+<p>程序运行的时候对unordered_set 频繁的insert，unordered_set需要做哈希映射（也就是把key通过hash function映射为唯一的哈希值）相对费时间，而且每次重新定义set，insert的时候其底层的符号表也要做相应的扩充，也是费事的。</p>
+<h2 id="c解法-110"><a class="header" href="#c解法-110">C++解法</a></h2>
+<p>使用<code>unordered_set</code></p>
+<pre><code class="language-cpp">// 版本一
+class Solution {
+private:
+    vector&lt;vector&lt;int&gt;&gt; result;
+    vector&lt;int&gt; path;
+    void backtracking(vector&lt;int&gt;&amp; nums, int startIndex) {
+        if (path.size() &gt; 1) {
+            result.push_back(path);
+            // 注意这里不要加return，要取树上的节点
+        }
+        unordered_set&lt;int&gt; uset; // 使用set对本层元素进行去重
+        for (int i = startIndex; i &lt; nums.size(); i++) {
+            if ((!path.empty() &amp;&amp; nums[i] &lt; path.back())
+                    || uset.find(nums[i]) != uset.end()) {
+                    continue;
+            }
+            uset.insert(nums[i]); // 记录这个元素在本层用过了，本层后面不能再用了
+            path.push_back(nums[i]);
+            backtracking(nums, i + 1);
+            path.pop_back();
+        }
+    }
+public:
+    vector&lt;vector&lt;int&gt;&gt; findSubsequences(vector&lt;int&gt;&amp; nums) {
+        result.clear();
+        path.clear();
+        backtracking(nums, 0);
+        return result;
+    }
+};
+</code></pre>
+<p>使用数组</p>
+<pre><code class="language-cpp">// 版本二
+class Solution {
+private:
+    vector&lt;vector&lt;int&gt;&gt; result;
+    vector&lt;int&gt; path;
+    void backtracking(vector&lt;int&gt;&amp; nums, int startIndex) {
+        if (path.size() &gt; 1) {
+            result.push_back(path);
+        }
+        int used[201] = {0}; // 这里使用数组来进行去重操作，题目说数值范围[-100, 100]
+        for (int i = startIndex; i &lt; nums.size(); i++) {
+            if ((!path.empty() &amp;&amp; nums[i] &lt; path.back())
+                    || used[nums[i] + 100] == 1) {
+                    continue;
+            }
+            used[nums[i] + 100] = 1; // 记录这个元素在本层用过了，本层后面不能再用了
+            path.push_back(nums[i]);
+            backtracking(nums, i + 1);
+            path.pop_back();
+        }
+    }
+public:
+    vector&lt;vector&lt;int&gt;&gt; findSubsequences(vector&lt;int&gt;&amp; nums) {
+        result.clear();
+        path.clear();
+        backtracking(nums, 0);
+        return result;
+    }
+};
+</code></pre>
+<p>这份代码在leetcode上提交，要比版本一耗时要好的多。</p>
+<p><strong>所以正如在<a href="https://programmercarl.com/%E5%93%88%E5%B8%8C%E8%A1%A8%E6%80%BB%E7%BB%93.html">哈希表：总结篇！（每逢总结必经典）</a>中说的那样，数组，set，map都可以做哈希表，而且数组干的活，map和set都能干，但如果数值范围小的话能用数组尽量用数组</strong>。</p>
+<div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
+<h1 id="排列"><a class="header" href="#排列">排列</a></h1>
+<ul>
+<li><a href="%E5%9B%9E%E6%BA%AF/%E6%8E%92%E5%88%97.html#46-permutations">46. Permutations</a>
+<ul>
+<li><a href="%E5%9B%9E%E6%BA%AF/%E6%8E%92%E5%88%97.html#%E6%80%9D%E8%B7%AF">思路</a></li>
+<li><a href="%E5%9B%9E%E6%BA%AF/%E6%8E%92%E5%88%97.html#c%E8%A7%A3%E6%B3%95">C++解法</a></li>
+</ul>
+</li>
+<li><a href="%E5%9B%9E%E6%BA%AF/%E6%8E%92%E5%88%97.html#47-permutations-ii">47. Permutations II</a>
+<ul>
+<li><a href="%E5%9B%9E%E6%BA%AF/%E6%8E%92%E5%88%97.html#%E6%80%9D%E8%B7%AF-1">思路</a></li>
+<li><a href="%E5%9B%9E%E6%BA%AF/%E6%8E%92%E5%88%97.html#c%E8%A7%A3%E6%B3%95-1">C++解法</a></li>
+</ul>
+</li>
+<li><a href="%E5%9B%9E%E6%BA%AF/%E6%8E%92%E5%88%97.html#784-letter-case-permutation">784. Letter Case Permutation</a>
+<ul>
+<li><a href="%E5%9B%9E%E6%BA%AF/%E6%8E%92%E5%88%97.html#%E6%80%9D%E8%B7%AF-2">思路</a></li>
+<li><a href="%E5%9B%9E%E6%BA%AF/%E6%8E%92%E5%88%97.html#c%E8%A7%A3%E6%B3%95-2">C++解法</a></li>
+</ul>
+</li>
+<li><a href="%E5%9B%9E%E6%BA%AF/%E6%8E%92%E5%88%97.html#31-next-permutation">31. Next Permutation</a>
+<ul>
+<li><a href="%E5%9B%9E%E6%BA%AF/%E6%8E%92%E5%88%97.html#%E6%80%9D%E8%B7%AF-3">思路</a></li>
+<li><a href="%E5%9B%9E%E6%BA%AF/%E6%8E%92%E5%88%97.html#c%E8%A7%A3%E6%B3%95-3">C++解法</a></li>
+<li><a href="%E5%9B%9E%E6%BA%AF/%E6%8E%92%E5%88%97.html#java%E8%A7%A3%E6%B3%95">Java解法</a></li>
+<li><a href="%E5%9B%9E%E6%BA%AF/%E6%8E%92%E5%88%97.html#python3%E8%A7%A3%E6%B3%95">Python3解法</a></li>
+<li><a href="%E5%9B%9E%E6%BA%AF/%E6%8E%92%E5%88%97.html#go%E8%A7%A3%E6%B3%95">Go解法</a></li>
+</ul>
+</li>
+</ul>
+<h1 id="46-permutations"><a class="header" href="#46-permutations"><a href="https://leetcode.com/problems/permutations/">46. Permutations</a></a></h1>
+<p>Given an array <code>nums</code> of distinct integers, return all the possible permutations. You can return the answer in <strong>any order</strong>.</p>
+<p><strong>Example 1:</strong></p>
+<p><strong>Input:</strong> <code>nums = [1,2,3]</code><br />
+<strong>Output:</strong> <code>[[1,2,3],[1,3,2],[2,1,3],[2,3,1],[3,1,2],[3,2,1]]</code></p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> <code>nums = [0,1]</code><br />
+<strong>Output:</strong> <code>[[0,1],[1,0]]</code></p>
+<p><strong>Example 3:</strong></p>
+<p><strong>Input:</strong> <code>nums = [1]</code><br />
+<strong>Output:</strong> <code>[[1]]</code></p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= nums.length &lt;= 6</code></li>
+<li><code>-10 &lt;= nums[i] &lt;= 10</code></li>
+<li>All the integers of <code>nums</code> are <strong>unique</strong>.</li>
+</ul>
+<h2 id="思路-129"><a class="header" href="#思路-129">思路</a></h2>
+<p>新增一个used数组记录数字是否被使用过，如果被使用过就重新进入循环。</p>
+<h2 id="c解法-111"><a class="header" href="#c解法-111">C++解法</a></h2>
+<pre><code class="language-cpp">class Solution {
+public:
+    vector&lt;vector&lt;int&gt;&gt; result;
+    vector&lt;int&gt; path;
+    void backtracking (vector&lt;int&gt;&amp; nums, vector&lt;bool&gt;&amp; used) {
+        // 此时说明找到了一组
+        if (path.size() == nums.size()) {
+            result.push_back(path);
+            return;
+        }
+        for (int i = 0; i &lt; nums.size(); i++) {
+            if (used[i] == true) continue; // path里已经收录的元素，直接跳过
+            used[i] = true;
+            path.push_back(nums[i]);
+            backtracking(nums, used);
+            path.pop_back();
+            used[i] = false;
+        }
+    }
+    vector&lt;vector&lt;int&gt;&gt; permute(vector&lt;int&gt;&amp; nums) {
+        result.clear();
+        path.clear();
+        vector&lt;bool&gt; used(nums.size(), false);
+        backtracking(nums, used);
+        return result;
+    }
+};
+</code></pre>
+<ul>
+<li>时间复杂度: O(n!)</li>
+<li>空间复杂度: O(n)</li>
+</ul>
+<h1 id="47-permutations-ii"><a class="header" href="#47-permutations-ii"><a href="https://leetcode.com/problems/permutations-ii/">47. Permutations II</a></a></h1>
+<p>Given a collection of numbers, <code>nums</code>, that might contain duplicates, return <em>all possible unique permutations <strong>in any order</strong>.</em></p>
+<p><strong>Example 1:</strong></p>
+<p><strong>Input:</strong> <code>nums = [1,1,2]</code><br />
+<strong>Output:</strong></p>
+<pre><code>[[1,1,2],
+ [1,2,1],
+ [2,1,1]]
+</code></pre>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> <code>nums = [1,2,3]</code><br />
+<strong>Output:</strong> <code>[[1,2,3],[1,3,2],[2,1,3],[2,3,1],[3,1,2],[3,2,1]]</code></p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= nums.length &lt;= 8</code></li>
+<li><code>-10 &lt;= nums[i] &lt;= 10</code></li>
+</ul>
+<h2 id="思路-130"><a class="header" href="#思路-130">思路</a></h2>
+<p>注意去重</p>
+<h2 id="c解法-112"><a class="header" href="#c解法-112">C++解法</a></h2>
+<pre><code class="language-cpp">class Solution {
+private:
+    vector&lt;vector&lt;int&gt;&gt; result;
+    vector&lt;int&gt; path;
+    void backtracking (vector&lt;int&gt;&amp; nums, vector&lt;bool&gt;&amp; used) {
+        // 此时说明找到了一组
+        if (path.size() == nums.size()) {
+            result.push_back(path);
+            return;
+        }
+        for (int i = 0; i &lt; nums.size(); i++) {
+            // used[i - 1] == true，说明同一树枝nums[i - 1]使用过
+            // used[i - 1] == false，说明同一树层nums[i - 1]使用过
+            // 如果同一树层nums[i - 1]使用过则直接跳过
+            if (i &gt; 0 &amp;&amp; nums[i] == nums[i - 1] &amp;&amp; used[i - 1] == false) {
+                continue;
+            }
+            if (used[i] == false) {
+                used[i] = true;
+                path.push_back(nums[i]);
+                backtracking(nums, used);
+                path.pop_back();
+                used[i] = false;
+            }
+        }
+    }
+public:
+    vector&lt;vector&lt;int&gt;&gt; permuteUnique(vector&lt;int&gt;&amp; nums) {
+        result.clear();
+        path.clear();
+        sort(nums.begin(), nums.end()); // 排序
+        vector&lt;bool&gt; used(nums.size(), false);
+        backtracking(nums, used);
+        return result;
+    }
+};
+
+// 时间复杂度: 最差情况所有元素都是唯一的。复杂度和全排列1都是 O(n! * n) 对于 n 个元素一共有 n! 中排列方案。而对于每一个答案，我们需要 O(n) 去复制最终放到 result 数组
+// 空间复杂度: O(n) 回溯树的深度取决于我们有多少个元素
+</code></pre>
+<h1 id="784-letter-case-permutation"><a class="header" href="#784-letter-case-permutation"><a href="https://leetcode.com/problems/letter-case-permutation/">784. Letter Case Permutation</a></a></h1>
+<p>Given a string <code>s</code>, you can transform every letter individually to be lowercase or uppercase to create another string.</p>
+<p>Return <em>a list of all possible strings we could create</em>. Return the output in <strong>any order</strong>.</p>
+<p><strong>Example 1:</strong></p>
+<p><strong>Input:</strong> <code>s = "a1b2"</code><br />
+<strong>Output:</strong> <code>["a1b2","a1B2","A1b2","A1B2"]</code></p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> <code>s = "3z4"</code><br />
+<strong>Output:</strong> <code>["3z4","3Z4"]</code></p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= s.length &lt;= 12</code></li>
+<li><code>s</code> consists of lowercase English letters, uppercase English letters, and digits.</li>
+</ul>
+<h2 id="思路-131"><a class="header" href="#思路-131">思路</a></h2>
+<p>Consider the below <strong>recursion tree</strong> for input string <strong>S="a1b2"</strong></p>
+<p>Initially <strong>OUTPUT = ""</strong>.</p>
+<p><img src="https://assets.leetcode.com/users/images/fc249302-67d8-40fb-8b3a-9c88b5ab213e_1613469296.795427.png" alt="image" /></p>
+<p>By observing the above recursion tree, we come to the below <em>conclusion</em>.</p>
+<p>There are two main <em>cases</em> which needs to be solved <strong>recursively</strong>:</p>
+<ul>
+<li>
+<p>The element at the given index is a <strong>digit</strong></p>
+<ul>
+<li>Append the digit to the end of <code>curr</code> and go to <em>next index(i+1)</em>.
+<pre><code class="language-cpp">curr.push_back(s[i]);
+solve(curr,s,i+1);
+</code></pre>
+</li>
+</ul>
+</li>
+<li>
+<p>The element at the given index is an <strong>alphabet</strong>, this case has two <em>sub cases</em>:</p>
+<ul>
+<li>
+<p>Append <code>tolower(s[i])</code> to <code>curr</code> and go to <em>next index (i+1)</em>.</p>
+<pre><code class="language-cpp">//sub case 1, considering lower case
+string c1=curr;
+c1.push_back(tolower(s[i]));
+solve(c1,s,i+1);
+</code></pre>
+</li>
+<li>
+<p>Append <code>toupper(s[i])</code> to <code>curr</code> and go to <em>next index (i+1)</em>.</p>
+<pre><code class="language-cpp">//sub case 2, considering upper case
+string c2=curr;
+c2.push_back(toupper(s[i]));
+solve(c2,s,i+1);
+</code></pre>
+</li>
+</ul>
+</li>
+</ul>
+<p>If at any function call, the <code>index = S.length()</code>, then <code>curr</code> string has one of our <strong>output</strong>, so save it in <code>ans</code> vector,</p>
+<pre><code class="language-cpp">// if end of the string is reached
+if(i==s.length()){
+	ans.push_back(curr); // push the current "curr" string to ans
+	return;
+}
+</code></pre>
+<p>At the end of the recursion return <code>ans</code>.</p>
+<h2 id="c解法-113"><a class="header" href="#c解法-113">C++解法</a></h2>
+<pre><code class="language-cpp">class Solution {
+private:
+    vector&lt;string&gt; result;
+    void backtracking(string s, string path, int index){
+        if(index == s.size()){
+            result.push_back(path);
+            return;
+        }
+        if(isdigit(s[index])){
+            path.push_back(s[index]);
+            backtracking(s, path, index + 1);
+        }else{
+            string lowerpath = path;
+            lowerpath.push_back(tolower(s[index]));
+            backtracking(s, lowerpath, index + 1);
+
+            string upperpath = path;
+            upperpath.push_back(toupper(s[index]));
+            backtracking(s, upperpath, index + 1);
+        }
+    }
+public:
+    vector&lt;string&gt; letterCasePermutation(string s) {
+        backtracking(s, "", 0);
+        return result;
+    }
+};
+</code></pre>
+<h1 id="31-next-permutation"><a class="header" href="#31-next-permutation"><a href="https://leetcode.com/problems/next-permutation/">31. Next Permutation</a></a></h1>
+<p>A <strong>permutation</strong> of an array of integers is an arrangement of its members into a sequence or linear order.</p>
+<p>For example, for <code>arr = [1,2,3]</code>, the following are all the permutations of <code>arr</code>: <code>[1,2,3], [1,3,2], [2, 1, 3], [2, 3, 1], [3,1,2], [3,2,1]</code>.</p>
+<p>The <strong>next permutation</strong> of an array of integers is the next lexicographically greater permutation of its integer. More formally, if all the permutations of the array are sorted in one container according to their lexicographical order, then the <strong>next permutation</strong> of that array is the permutation that follows it in the sorted container. If such arrangement is not possible, the array must be rearranged as the lowest possible order (i.e., sorted in ascending order).</p>
+<ul>
+<li>For example, the next permutation of <code>arr = [1,2,3]</code> is <code>[1,3,2]</code>.</li>
+<li>Similarly, the next permutation of <code>arr = [2,3,1]</code> is <code>[3,1,2]</code>.</li>
+<li>While the next permutation of <code>arr = [3,2,1]</code> is <code>[1,2,3]</code> because <code>[3,2,1]</code> does not have a lexicographical larger rearrangement.</li>
+</ul>
+<p>Given an array of integers <code>nums</code>, <em>find the next permutation of</em> <code>nums</code>.</p>
+<p>The replacement must be <strong><a href="http://en.wikipedia.org/wiki/In-place_algorithm">in place</a></strong> and use only constant extra memory.</p>
+<p><strong>Example 1:</strong></p>
+<p><strong>Input:</strong> <code>nums = [1,2,3]</code><br />
+<strong>Output:</strong> <code>[1,3,2]</code></p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> <code>nums = [3,2,1]</code><br />
+<strong>Output:</strong> <code>[1,2,3]</code></p>
+<p><strong>Example 3:</strong></p>
+<p><strong>Input:</strong> <code>nums = [1,1,5]</code><br />
+<strong>Output:</strong> <code>[1,5,1]</code></p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= nums.length &lt;= 100</code></li>
+<li><code>0 &lt;= nums[i] &lt;= 100</code></li>
+</ul>
+<h2 id="思路-132"><a class="header" href="#思路-132">思路</a></h2>
+<p>先找breakpoint（从右向左第一个小于右边相邻元素的数字），</p>
+<h2 id="c解法-114"><a class="header" href="#c解法-114">C++解法</a></h2>
+<pre><code class="language-cpp">class Solution {
+public:
+    void nextPermutation(vector&lt;int&gt;&amp; nums) {
+        int n = nums.size(), i = n - 2;
+        
+        // Step 1: Find the breakpoint
+        while (i &gt;= 0 &amp;&amp; nums[i] &gt;= nums[i + 1]) {
+            i--;
+        }
+        
+        if (i &gt;= 0) {
+            // Step 2: Find the smallest element larger than nums[i]
+            int j = n - 1;
+            while (nums[j] &lt;= nums[i]) {
+                j--;
+            }
+            swap(nums[i], nums[j]);
+        }
+        
+        // Step 3: Reverse the subarray to the right of i
+        reverse(nums.begin() + i + 1, nums.end());
+    }
+};
+</code></pre>
+<h2 id="java解法-79"><a class="header" href="#java解法-79">Java解法</a></h2>
+<pre><code class="language-java">class Solution {  
+    public void reverse(int[] nums, int i, int j) {  
+        while (i &lt; j) {  
+            int temp = nums[j];  
+            nums[j] = nums[i];  
+            nums[i] = temp;  
+            i++; // 更新 i  
+            j--; // 更新 j  
+        }  
+    }  
+
+    public void nextPermutation(int[] nums) {  
+        int length = nums.length;  
+        int i = length - 2;  
+
+        // 找到第一个下降的元素  
+        while (i &gt;= 0 &amp;&amp; nums[i] &gt;= nums[i + 1]) i--;  
+        if (i &gt;= 0) {  
+            int j = length - 1;  
+            // 找到比 nums[i] 大的最右边元素  
+            while (j &gt;= 0 &amp;&amp; nums[j] &lt;= nums[i]) j--;  
+            // 交换元素  
+            int temp = nums[j];  
+            nums[j] = nums[i];  
+            nums[i] = temp;  
+        }  
+        // 反转后面的元素  
+        reverse(nums, i + 1, length - 1);  
+    }  
+}
+</code></pre>
+<h2 id="python3解法-50"><a class="header" href="#python3解法-50">Python3解法</a></h2>
+<h2 id="go解法-52"><a class="header" href="#go解法-52">Go解法</a></h2>
+<div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
+<h1 id="棋盘"><a class="header" href="#棋盘">棋盘</a></h1>
+<ul>
+<li><a href="%E5%9B%9E%E6%BA%AF/%E6%A3%8B%E7%9B%98.html#51-n-queens">51. N-Queens</a>
+<ul>
+<li><a href="%E5%9B%9E%E6%BA%AF/%E6%A3%8B%E7%9B%98.html#%E6%80%9D%E8%B7%AF">思路</a></li>
+<li><a href="%E5%9B%9E%E6%BA%AF/%E6%A3%8B%E7%9B%98.html#c%E8%A7%A3%E6%B3%95">C++解法</a></li>
+</ul>
+</li>
+<li><a href="%E5%9B%9E%E6%BA%AF/%E6%A3%8B%E7%9B%98.html#52-n-queens-ii">52. N-Queens II</a>
+<ul>
+<li><a href="%E5%9B%9E%E6%BA%AF/%E6%A3%8B%E7%9B%98.html#%E6%80%9D%E8%B7%AF-1">思路</a></li>
+<li><a href="%E5%9B%9E%E6%BA%AF/%E6%A3%8B%E7%9B%98.html#c%E8%A7%A3%E6%B3%95-1">C++解法</a></li>
+</ul>
+</li>
+<li><a href="%E5%9B%9E%E6%BA%AF/%E6%A3%8B%E7%9B%98.html#37-sudoku-solver">37. Sudoku Solver</a>
+<ul>
+<li><a href="%E5%9B%9E%E6%BA%AF/%E6%A3%8B%E7%9B%98.html#%E6%80%9D%E8%B7%AF-2">思路</a></li>
+<li><a href="%E5%9B%9E%E6%BA%AF/%E6%A3%8B%E7%9B%98.html#c%E8%A7%A3%E6%B3%95-2">C++解法</a></li>
+</ul>
+</li>
+<li><a href="%E5%9B%9E%E6%BA%AF/%E6%A3%8B%E7%9B%98.html#36-valid-sudoku">36. Valid Sudoku</a>
+<ul>
+<li><a href="%E5%9B%9E%E6%BA%AF/%E6%A3%8B%E7%9B%98.html#%E6%80%9D%E8%B7%AF-3">思路</a></li>
+<li><a href="%E5%9B%9E%E6%BA%AF/%E6%A3%8B%E7%9B%98.html#c%E8%A7%A3%E6%B3%95-3">C++解法</a></li>
+</ul>
+</li>
+</ul>
+<h1 id="51-n-queens"><a class="header" href="#51-n-queens"><a href="https://leetcode.com/problems/n-queens/">51. N-Queens</a></a></h1>
+<p>The <strong>n-queens</strong> puzzle is the problem of placing <code>n</code> queens on an <code>n x n</code> chessboard such that no two queens attack each other.</p>
+<p>Given an integer <code>n</code>, return <em>all distinct solutions to the <strong>n-queens puzzle</strong></em>. You may return the answer in <strong>any order</strong>.</p>
+<p>Each solution contains a distinct board configuration of the n-queens' placement, where <code>'Q'</code> and <code>'.'</code> both indicate a queen and an empty space, respectively.</p>
+<p><strong>Example 1:</strong></p>
+<p><img src="https://assets.leetcode.com/uploads/2020/11/13/queens.jpg" alt="" /></p>
+<p><strong>Input:</strong> n = 4<br />
+<strong>Output:</strong> <code>[[".Q..","...Q","Q...","..Q."],["..Q.","Q...","...Q",".Q.."]]</code><br />
+<strong>Explanation:</strong> There exist two distinct solutions to the 4-queens puzzle as shown above</p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> n = 1<br />
+<strong>Output:</strong> <code>[["Q"]]</code></p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= n &lt;= 9</code></li>
+</ul>
+<h2 id="思路-133"><a class="header" href="#思路-133">思路</a></h2>
+<p>都知道n皇后问题是回溯算法解决的经典问题，但是用回溯解决多了组合、切割、子集、排列问题之后，遇到这种二维矩阵还会有点不知所措。</p>
+<p>首先来看一下皇后们的约束条件：</p>
+<ol>
+<li>不能同行</li>
+<li>不能同列</li>
+<li>不能同斜线</li>
+</ol>
+<p>确定完约束条件，来看看究竟要怎么去搜索皇后们的位置，其实搜索皇后的位置，可以抽象为一棵树。</p>
+<p>下面我用一个 3 * 3 的棋盘，将搜索过程抽象为一棵树，如图：</p>
+<p><img src="https://code-thinking-1253855093.file.myqcloud.com/pics/20210130182532303.jpg" alt="51.N皇后" /></p>
+<p>从图中，可以看出，二维矩阵中矩阵的高就是这棵树的高度，矩阵的宽就是树形结构中每一个节点的宽度。</p>
+<p>那么我们用皇后们的约束条件，来回溯搜索这棵树，<strong>只要搜索到了树的叶子节点，说明就找到了皇后们的合理位置了</strong>。</p>
+<p>按照我总结的如下回溯模板，我们来依次分析：</p>
+<pre><code class="language-cpp">void backtracking(参数) {  
+    if (终止条件) {  
+        存放结果;  
+        return;  
+    }  
+    for (选择：本层集合中元素（树中节点孩子的数量就是集合的大小）) {  
+        处理节点;  
+        backtracking(路径，选择列表); // 递归  
+        回溯，撤销处理结果  
+    }  
+}
+</code></pre>
+<ul>
+<li>递归函数参数</li>
+</ul>
+<p>我依然是定义全局变量二维数组result来记录最终结果。</p>
+<p>参数n是棋盘的大小，然后用row来记录当前遍历到棋盘的第几层了。</p>
+<p>代码如下：</p>
+<pre><code class="language-cpp">vector&lt;vector&lt;string&gt;&gt; result;  
+void backtracking(int n, int row, vector&lt;string&gt;&amp; chessboard) {}
+</code></pre>
+<ul>
+<li>递归终止条件</li>
+</ul>
+<p>在如下树形结构中：</p>
+<p><img src="https://code-thinking-1253855093.file.myqcloud.com/pics/20210130182532303-20230310122134167.jpg" alt="51.N皇后" /></p>
+<p>可以看出，当递归到棋盘最底层（也就是叶子节点）的时候，就可以收集结果并返回了。</p>
+<p>代码如下：</p>
+<pre><code class="language-cpp">if (row == n) {  
+    result.push_back(chessboard);  
+    return;  
+}
+</code></pre>
+<ul>
+<li>单层搜索的逻辑</li>
+</ul>
+<p>递归深度就是row控制棋盘的行，每一层里for循环的col控制棋盘的列，一行一列，确定了放置皇后的位置。</p>
+<p>每次都是要从新的一行的起始位置开始搜，所以都是从0开始。</p>
+<p>代码如下：</p>
+<pre><code class="language-cpp">for (int col = 0; col &lt; n; col++) {  
+    if (isValid(row, col, chessboard, n)) { // 验证合法就可以放  
+        chessboard[row][col] = 'Q'; // 放置皇后  
+        backtracking(n, row + 1, chessboard);  
+        chessboard[row][col] = '.'; // 回溯，撤销皇后  
+    }  
+}
+</code></pre>
+<ul>
+<li>验证棋盘是否合法</li>
+</ul>
+<p>按照如下标准去重：</p>
+<ol>
+<li>不能同行</li>
+<li>不能同列</li>
+<li>不能同斜线 （45度和135度角）</li>
+</ol>
+<p>代码如下：</p>
+<pre><code class="language-cpp">bool isValid(int row, int col, vector&lt;string&gt;&amp; chessboard, int n) {  
+    // 检查列  
+    for (int i = 0; i &lt; row; i++) { // 这是一个剪枝  
+        if (chessboard[i][col] == 'Q') {  
+            return false;  
+        }  
+    }  
+    // 检查 135 度角是否有皇后  
+    for (int i = row - 1, j = col - 1; i &gt;=0 &amp;&amp; j &gt;= 0; i--, j--) {  
+        if (chessboard[i][j] == 'Q') {  
+            return false;  
+        }  
+    }  
+    // 检查 45 度角是否有皇后  
+    for(int i = row - 1, j = col + 1; i &gt;= 0 &amp;&amp; j &lt; n; i--, j++) {  
+        if (chessboard[i][j] == 'Q') {  
+            return false;  
+        }  
+    }  
+    return true;  
+}
+</code></pre>
+<p>在这份代码中，细心的同学可以发现为什么没有在同行进行检查呢？</p>
+<p>因为在单层搜索的过程中，每一层递归，只会选for循环（也就是同一行）里的一个元素，所以不用去重了。</p>
+<p>如果从来没有接触过N皇后问题的同学看着这样的题会感觉无从下手，可能知道要用回溯法，但也不知道该怎么去搜。</p>
+<p><strong>这里我明确给出了棋盘的宽度就是for循环的长度，递归的深度就是棋盘的高度，这样就可以套进回溯法的模板里了</strong>。</p>
+<h2 id="c解法-115"><a class="header" href="#c解法-115">C++解法</a></h2>
+<pre><code class="language-cpp">class Solution {
+private:
+vector&lt;vector&lt;string&gt;&gt; result;
+// n 为输入的棋盘大小
+// row 是当前递归到棋盘的第几行了
+void backtracking(int n, int row, vector&lt;string&gt;&amp; chessboard) {
+    if (row == n) {
+        result.push_back(chessboard);
+        return;
+    }
+    for (int col = 0; col &lt; n; col++) {
+        if (isValid(row, col, chessboard, n)) { // 验证合法就可以放
+            chessboard[row][col] = 'Q'; // 放置皇后
+            backtracking(n, row + 1, chessboard);
+            chessboard[row][col] = '.'; // 回溯，撤销皇后
+        }
+    }
+}
+bool isValid(int row, int col, vector&lt;string&gt;&amp; chessboard, int n) {
+    // 检查列
+    for (int i = 0; i &lt; row; i++) { // 这是一个剪枝
+        if (chessboard[i][col] == 'Q') {
+            return false;
+        }
+    }
+    // 检查135度角是否有皇后
+    for (int i = row - 1, j = col - 1; i &gt;=0 &amp;&amp; j &gt;= 0; i--, j--) {
+        if (chessboard[i][j] == 'Q') {
+            return false;
+        }
+    }
+    // 检查45度角是否有皇后
+    for(int i = row - 1, j = col + 1; i &gt;= 0 &amp;&amp; j &lt; n; i--, j++) {
+        if (chessboard[i][j] == 'Q') {
+            return false;
+        }
+    }
+    return true;
+}
+public:
+    vector&lt;vector&lt;string&gt;&gt; solveNQueens(int n) {
+        result.clear();
+        std::vector&lt;std::string&gt; chessboard(n, std::string(n, '.'));
+        backtracking(n, 0, chessboard);
+        return result;
+    }
+};
+</code></pre>
+<ul>
+<li>时间复杂度: O(n!)</li>
+<li>空间复杂度: O(n)</li>
+</ul>
+<h1 id="52-n-queens-ii"><a class="header" href="#52-n-queens-ii"><a href="https://leetcode.com/problems/n-queens-ii/">52. N-Queens II</a></a></h1>
+<p>The <strong>n-queens</strong> puzzle is the problem of placing <code>n</code> queens on an <code>n x n</code> chessboard such that no two queens attack each other.</p>
+<p>Given an integer <code>n</code>, return <em>the number of distinct solutions to the <strong>n-queens puzzle</strong></em>.</p>
+<p><strong>Example 1:</strong></p>
+<p><img src="https://assets.leetcode.com/uploads/2020/11/13/queens.jpg" alt="" /></p>
+<p><strong>Input:</strong> n = 4<br />
+<strong>Output:</strong> 2<br />
+<strong>Explanation:</strong> There are two distinct solutions to the 4-queens puzzle as shown.</p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> n = 1<br />
+<strong>Output:</strong> 1</p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= n &lt;= 9</code></li>
+</ul>
+<h2 id="思路-134"><a class="header" href="#思路-134">思路</a></h2>
+<p>和上面一样，计算result中的元素个数作为最终结果即可。</p>
+<h2 id="c解法-116"><a class="header" href="#c解法-116">C++解法</a></h2>
+<pre><code class="language-cpp">class Solution {
+public:
+    vector&lt;vector&lt;string&gt;&gt; result;
+    void backtracking(vector&lt;string&gt;&amp; chessBoard, int n, int row){
+        if(row == n){
+            result.push_back(chessBoard);
+            return;
+        }
+        for(int i = 0; i &lt; chessBoard[row].size(); i++){
+            if(isValid(chessBoard, n, row, i) &amp;&amp; chessBoard[row][i] == '.'){
+                chessBoard[row][i] = 'Q';
+                backtracking(chessBoard, n, row + 1);
+                chessBoard[row][i] = '.';
+            }
+        }
+    }
+    bool isValid(vector&lt;string&gt;&amp; chessBoard, int n, int row, int col){
+        // 检查列
+        for (int i = 0; i &lt; row; i++) { // 这是一个剪枝
+            if (chessBoard[i][col] == 'Q') {
+                return false;
+            }
+        }
+        // 检查135度角是否有皇后
+        for (int i = row - 1, j = col - 1; i &gt;=0 &amp;&amp; j &gt;= 0; i--, j--) {
+            if (chessBoard[i][j] == 'Q') {
+                return false;
+            }
+        }
+        // 检查45度角是否有皇后
+        for(int i = row - 1, j = col + 1; i &gt;= 0 &amp;&amp; j &lt; n; i--, j++) {
+            if (chessBoard[i][j] == 'Q') {
+                return false;
+            }
+        }
+        return true;
+    }
+    int totalNQueens(int n) {
+        vector&lt;string&gt; chessBoard(n, string(n, '.'));
+        backtracking(chessBoard, n, 0);
+        return result.size();
+    }
+};
+</code></pre>
+<h1 id="37-sudoku-solver"><a class="header" href="#37-sudoku-solver"><a href="https://leetcode.com/problems/sudoku-solver/">37. Sudoku Solver</a></a></h1>
+<p>Write a program to solve a Sudoku puzzle by filling the empty cells.</p>
+<p>A sudoku solution must satisfy <strong>all of the following rules</strong>:</p>
+<ol>
+<li>Each of the digits <code>1-9</code> must occur exactly once in each row.</li>
+<li>Each of the digits <code>1-9</code> must occur exactly once in each column.</li>
+<li>Each of the digits <code>1-9</code> must occur exactly once in each of the 9 <code>3x3</code> sub-boxes of the grid.</li>
+</ol>
+<p>The <code>'.'</code> character indicates empty cells.</p>
+<p><strong>Example 1:</strong></p>
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/ff/Sudoku-by-L2G-20050714.svg/250px-Sudoku-by-L2G-20050714.svg.png" alt="" /></p>
+<p><strong>Input:</strong> <code>board = [["5","3",".",".","7",".",".",".","."],["6",".",".","1","9","5",".",".","."],[".","9","8",".",".",".",".","6","."],["8",".",".",".","6",".",".",".","3"],["4",".",".","8",".","3",".",".","1"],["7",".",".",".","2",".",".",".","6"],[".","6",".",".",".",".","2","8","."],[".",".",".","4","1","9",".",".","5"],[".",".",".",".","8",".",".","7","9"]]</code><br />
+<strong>Output:</strong> <code>[["5","3","4","6","7","8","9","1","2"],["6","7","2","1","9","5","3","4","8"],["1","9","8","3","4","2","5","6","7"],["8","5","9","7","6","1","4","2","3"],["4","2","6","8","5","3","7","9","1"],["7","1","3","9","2","4","8","5","6"],["9","6","1","5","3","7","2","8","4"],["2","8","7","4","1","9","6","3","5"],["3","4","5","2","8","6","1","7","9"]]</code><br />
+<strong>Explanation:</strong> The input board is shown above and the only valid solution is shown below:</p>
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/31/Sudoku-by-L2G-20050714_solution.svg/250px-Sudoku-by-L2G-20050714_solution.svg.png" alt="" /></p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>board.length == 9</code></li>
+<li><code>board[i].length == 9</code></li>
+<li><code>board[i][j]</code> is a digit or <code>'.'</code>.</li>
+<li>It is <strong>guaranteed</strong> that the input board has only one solution.</li>
+</ul>
+<h2 id="思路-135"><a class="header" href="#思路-135">思路</a></h2>
+<p>棋盘搜索问题可以使用回溯法暴力搜索，只不过这次我们要做的是<strong>二维递归</strong>。</p>
+<p>怎么做二维递归呢？</p>
+<p><a href="https://programmercarl.com/0051.N%E7%9A%87%E5%90%8E.html">N皇后问题</a>是因为每一行每一列只放一个皇后，只需要一层for循环遍历一行，递归来遍历列，然后一行一列确定皇后的唯一位置。</p>
+<p>本题就不一样了，<strong>本题中棋盘的每一个位置都要放一个数字（而N皇后是一行只放一个皇后），并检查数字是否合法，解数独的树形结构要比N皇后更宽更深</strong>。</p>
+<p>因为这个树形结构太大了，我抽取一部分，如图所示：</p>
+<p><img src="https://code-thinking-1253855093.file.myqcloud.com/pics/2020111720451790-20230310131816104.png" alt="37.解数独" /></p>
+<ul>
+<li>递归函数以及参数</li>
+</ul>
+<p><strong>递归函数的返回值需要是bool类型，为什么呢？</strong></p>
+<p>因为解数独找到一个符合的条件（就在树的叶子节点上）立刻就返回，相当于找从根节点到叶子节点一条唯一路径，所以需要使用bool返回值。</p>
+<p>代码如下：</p>
+<pre><code class="language-cpp">bool backtracking(vector&lt;vector&lt;char&gt;&gt;&amp; board)
+</code></pre>
+<ul>
+<li>递归终止条件</li>
+</ul>
+<p>本题递归不用终止条件，解数独是要遍历整个树形结构寻找可能的叶子节点就立刻返回。</p>
+<p><strong>不用终止条件会不会死循环？</strong></p>
+<p>递归的下一层的棋盘一定比上一层的棋盘多一个数，等数填满了棋盘自然就终止（填满当然好了，说明找到结果了），所以不需要终止条件！</p>
+<p><strong>那么有没有永远填不满的情况呢？</strong></p>
+<p>这个问题我在递归单层搜索逻辑里再来讲！</p>
+<ul>
+<li>递归单层搜索逻辑</li>
+</ul>
+<p><img src="https://code-thinking-1253855093.file.myqcloud.com/pics/2020111720451790-20230310131822254.png" alt="37.解数独" /></p>
+<p>在树形图中可以看出我们需要的是一个二维的递归 （一行一列）</p>
+<p><strong>一个for循环遍历棋盘的行，一个for循环遍历棋盘的列，一行一列确定下来之后，递归遍历这个位置放9个数字的可能性！</strong></p>
+<p>代码如下：（<strong>详细看注释</strong>）</p>
+<pre><code class="language-cpp">bool backtracking(vector&lt;vector&lt;char&gt;&gt;&amp; board) {  
+    for (int i = 0; i &lt; board.size(); i++) {        // 遍历行  
+        for (int j = 0; j &lt; board[0].size(); j++) { // 遍历列  
+            if (board[i][j] != '.') continue;  
+            for (char k = '1'; k &lt;= '9'; k++) {     // (i, j) 这个位置放k是否合适  
+                if (isValid(i, j, k, board)) {  
+                    board[i][j] = k;                // 放置k  
+                    if (backtracking(board)) return true; // 如果找到合适一组立刻返回  
+                    board[i][j] = '.';              // 回溯，撤销k  
+                }  
+            }  
+            return false;                           // 9个数都试完了，都不行，那么就返回false  
+        }  
+    }  
+    return true; // 遍历完没有返回false，说明找到了合适棋盘位置了  
+}
+</code></pre>
+<p><strong>注意这里return false的地方，这里放return false 是有讲究的</strong>。</p>
+<p>因为如果一行一列确定下来了，这里尝试了9个数都不行，说明这个棋盘找不到解决数独问题的解！</p>
+<p>那么会直接返回， <strong>这也就是为什么没有终止条件也不会永远填不满棋盘而无限递归下去！</strong></p>
+<p>判断棋盘是否合法有如下三个维度：</p>
+<ul>
+<li>同行是否重复</li>
+<li>同列是否重复</li>
+<li>9宫格里是否重复</li>
+</ul>
+<p>代码如下：</p>
+<pre><code class="language-cpp">bool isValid(int row, int col, char val, vector&lt;vector&lt;char&gt;&gt;&amp; board) {  
+    for (int i = 0; i &lt; 9; i++) { // 判断行里是否重复  
+        if (board[row][i] == val) {  
+            return false;  
+        }  
+    }  
+    for (int j = 0; j &lt; 9; j++) { // 判断列里是否重复  
+        if (board[j][col] == val) {  
+            return false;  
+        }  
+    }  
+    int startRow = (row / 3) * 3;  
+    int startCol = (col / 3) * 3;  
+    for (int i = startRow; i &lt; startRow + 3; i++) { // 判断9方格里是否重复  
+        for (int j = startCol; j &lt; startCol + 3; j++) {  
+            if (board[i][j] == val ) {  
+                return false;  
+            }  
+        }  
+    }  
+    return true;  
+}
+</code></pre>
+<h2 id="c解法-117"><a class="header" href="#c解法-117">C++解法</a></h2>
+<pre><code class="language-cpp">class Solution {
+private:
+bool backtracking(vector&lt;vector&lt;char&gt;&gt;&amp; board) {
+    for (int i = 0; i &lt; board.size(); i++) {        // 遍历行
+        for (int j = 0; j &lt; board[0].size(); j++) { // 遍历列
+            if (board[i][j] == '.') {
+                for (char k = '1'; k &lt;= '9'; k++) {     // (i, j) 这个位置放k是否合适
+                    if (isValid(i, j, k, board)) {
+                        board[i][j] = k;                // 放置k
+                        if (backtracking(board)) return true; // 如果找到合适一组立刻返回
+                        board[i][j] = '.';              // 回溯，撤销k
+                    }
+                }
+                return false;  // 9个数都试完了，都不行，那么就返回false
+            }
+        }
+    }
+    return true; // 遍历完没有返回false，说明找到了合适棋盘位置了
+}
+bool isValid(int row, int col, char val, vector&lt;vector&lt;char&gt;&gt;&amp; board) {
+    for (int i = 0; i &lt; 9; i++) { // 判断行里是否重复
+        if (board[row][i] == val) {
+            return false;
+        }
+    }
+    for (int j = 0; j &lt; 9; j++) { // 判断列里是否重复
+        if (board[j][col] == val) {
+            return false;
+        }
+    }
+    int startRow = (row / 3) * 3;
+    int startCol = (col / 3) * 3;
+    for (int i = startRow; i &lt; startRow + 3; i++) { // 判断9方格里是否重复
+        for (int j = startCol; j &lt; startCol + 3; j++) {
+            if (board[i][j] == val ) {
+                return false;
+            }
+        }
+    }
+    return true;
+}
+public:
+    void solveSudoku(vector&lt;vector&lt;char&gt;&gt;&amp; board) {
+        backtracking(board);
+    }
+};
+</code></pre>
+<h1 id="36-valid-sudoku"><a class="header" href="#36-valid-sudoku"><a href="https://leetcode.com/problems/valid-sudoku/">36. Valid Sudoku</a></a></h1>
+<p>Determine if a <code>9 x 9</code> Sudoku board is valid. Only the filled cells need to be validated <strong>according to the following rules</strong>:</p>
+<ol>
+<li>Each row must contain the digits <code>1-9</code> without repetition.</li>
+<li>Each column must contain the digits <code>1-9</code> without repetition.</li>
+<li>Each of the nine <code>3 x 3</code> sub-boxes of the grid must contain the digits <code>1-9</code> without repetition.</li>
+</ol>
+<p><strong>Note:</strong></p>
+<ul>
+<li>A Sudoku board (partially filled) could be valid but is not necessarily solvable.</li>
+<li>Only the filled cells need to be validated according to the mentioned rules.</li>
+</ul>
+<p><strong>Example 1:</strong></p>
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/ff/Sudoku-by-L2G-20050714.svg/250px-Sudoku-by-L2G-20050714.svg.png" alt="" /></p>
+<pre><code>**Input:** board = 
+[["5","3",".",".","7",".",".",".","."]
+,["6",".",".","1","9","5",".",".","."]
+,[".","9","8",".",".",".",".","6","."]
+,["8",".",".",".","6",".",".",".","3"]
+,["4",".",".","8",".","3",".",".","1"]
+,["7",".",".",".","2",".",".",".","6"]
+,[".","6",".",".",".",".","2","8","."]
+,[".",".",".","4","1","9",".",".","5"]
+,[".",".",".",".","8",".",".","7","9"]]
+</code></pre>
+<p><strong>Output:</strong> true</p>
+<p><strong>Example 2:</strong></p>
+<pre><code>**Input:** board = 
+[["8","3",".",".","7",".",".",".","."]
+,["6",".",".","1","9","5",".",".","."]
+,[".","9","8",".",".",".",".","6","."]
+,["8",".",".",".","6",".",".",".","3"]
+,["4",".",".","8",".","3",".",".","1"]
+,["7",".",".",".","2",".",".",".","6"]
+,[".","6",".",".",".",".","2","8","."]
+,[".",".",".","4","1","9",".",".","5"]
+,[".",".",".",".","8",".",".","7","9"]]
+</code></pre>
+<p><strong>Output:</strong> false<br />
+<strong>Explanation:</strong> Same as Example 1, except with the <strong>5</strong> in the top left corner being modified to <strong>8</strong>. Since there are two 8's in the top left 3x3 sub-box, it is invalid.</p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>board.length == 9</code></li>
+<li><code>board[i].length == 9</code></li>
+<li><code>board[i][j]</code> is a digit <code>1-9</code> or <code>'.'</code>.</li>
+</ul>
+<h2 id="思路-136"><a class="header" href="#思路-136">思路</a></h2>
+<p>遍历棋盘，分别处理每个不是<code>.</code>的位置，先保存，然后切换成<code>.</code>，最后尝试重新插入。如果不能重新插入，说明原来的棋盘不是合法的。</p>
+<h2 id="c解法-118"><a class="header" href="#c解法-118">C++解法</a></h2>
+<pre><code class="language-cpp">class Solution {
+public:
+    bool backtracking(vector&lt;vector&lt;char&gt;&gt;&amp; board){
+        for(int i = 0; i &lt; board.size(); i++){
+            for(int j = 0; j &lt; board[i].size(); j++){
+                if (board[i][j] != '.'){
+                    char val = board[i][j];
+                    board[i][j] = '.';
+                    if(!isValid(board, i, j, val)){
+                        return false;
+                    }
+                    board[i][j] = val;
+                }
+            }
+        }
+        return true;
+    }
+    bool isValid(vector&lt;vector&lt;char&gt;&gt;&amp; board, int row, int col, char val){
+         for (int i = 0; i &lt; 9; i++) { // 判断行里是否重复
+            if (board[row][i] == val) {
+                return false;
+            }
+        }
+        for (int j = 0; j &lt; 9; j++) { // 判断列里是否重复
+            if (board[j][col] == val) {
+                return false;
+            }
+        }
+        int startRow = (row / 3) * 3;
+        int startCol = (col / 3) * 3;
+        for (int i = startRow; i &lt; startRow + 3; i++) { // 判断9方格里是否重复
+            for (int j = startCol; j &lt; startCol + 3; j++) {
+                if (board[i][j] == val ) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+    bool isValidSudoku(vector&lt;vector&lt;char&gt;&gt;&amp; board) {
+        return backtracking(board);
+    }
+};
+</code></pre>
 <div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
 <h1 id="贪心"><a class="header" href="#贪心">贪心</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">

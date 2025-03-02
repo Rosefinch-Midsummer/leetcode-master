@@ -1,0 +1,705 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>棋盘 - 剑指Offer</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">剑指Offer</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
+<h1 id="棋盘"><a class="header" href="#棋盘">棋盘</a></h1>
+<ul>
+<li><a href="#51-n-queens">51. N-Queens</a>
+<ul>
+<li><a href="#%E6%80%9D%E8%B7%AF">思路</a></li>
+<li><a href="#c%E8%A7%A3%E6%B3%95">C++解法</a></li>
+</ul>
+</li>
+<li><a href="#52-n-queens-ii">52. N-Queens II</a>
+<ul>
+<li><a href="#%E6%80%9D%E8%B7%AF-1">思路</a></li>
+<li><a href="#c%E8%A7%A3%E6%B3%95-1">C++解法</a></li>
+</ul>
+</li>
+<li><a href="#37-sudoku-solver">37. Sudoku Solver</a>
+<ul>
+<li><a href="#%E6%80%9D%E8%B7%AF-2">思路</a></li>
+<li><a href="#c%E8%A7%A3%E6%B3%95-2">C++解法</a></li>
+</ul>
+</li>
+<li><a href="#36-valid-sudoku">36. Valid Sudoku</a>
+<ul>
+<li><a href="#%E6%80%9D%E8%B7%AF-3">思路</a></li>
+<li><a href="#c%E8%A7%A3%E6%B3%95-3">C++解法</a></li>
+</ul>
+</li>
+</ul>
+<h1 id="51-n-queens"><a class="header" href="#51-n-queens"><a href="https://leetcode.com/problems/n-queens/">51. N-Queens</a></a></h1>
+<p>The <strong>n-queens</strong> puzzle is the problem of placing <code>n</code> queens on an <code>n x n</code> chessboard such that no two queens attack each other.</p>
+<p>Given an integer <code>n</code>, return <em>all distinct solutions to the <strong>n-queens puzzle</strong></em>. You may return the answer in <strong>any order</strong>.</p>
+<p>Each solution contains a distinct board configuration of the n-queens' placement, where <code>'Q'</code> and <code>'.'</code> both indicate a queen and an empty space, respectively.</p>
+<p><strong>Example 1:</strong></p>
+<p><img src="https://assets.leetcode.com/uploads/2020/11/13/queens.jpg" alt="" /></p>
+<p><strong>Input:</strong> n = 4<br />
+<strong>Output:</strong> <code>[[".Q..","...Q","Q...","..Q."],["..Q.","Q...","...Q",".Q.."]]</code><br />
+<strong>Explanation:</strong> There exist two distinct solutions to the 4-queens puzzle as shown above</p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> n = 1<br />
+<strong>Output:</strong> <code>[["Q"]]</code></p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= n &lt;= 9</code></li>
+</ul>
+<h2 id="思路"><a class="header" href="#思路">思路</a></h2>
+<p>都知道n皇后问题是回溯算法解决的经典问题，但是用回溯解决多了组合、切割、子集、排列问题之后，遇到这种二维矩阵还会有点不知所措。</p>
+<p>首先来看一下皇后们的约束条件：</p>
+<ol>
+<li>不能同行</li>
+<li>不能同列</li>
+<li>不能同斜线</li>
+</ol>
+<p>确定完约束条件，来看看究竟要怎么去搜索皇后们的位置，其实搜索皇后的位置，可以抽象为一棵树。</p>
+<p>下面我用一个 3 * 3 的棋盘，将搜索过程抽象为一棵树，如图：</p>
+<p><img src="https://code-thinking-1253855093.file.myqcloud.com/pics/20210130182532303.jpg" alt="51.N皇后" /></p>
+<p>从图中，可以看出，二维矩阵中矩阵的高就是这棵树的高度，矩阵的宽就是树形结构中每一个节点的宽度。</p>
+<p>那么我们用皇后们的约束条件，来回溯搜索这棵树，<strong>只要搜索到了树的叶子节点，说明就找到了皇后们的合理位置了</strong>。</p>
+<p>按照我总结的如下回溯模板，我们来依次分析：</p>
+<pre><code class="language-cpp">void backtracking(参数) {  
+    if (终止条件) {  
+        存放结果;  
+        return;  
+    }  
+    for (选择：本层集合中元素（树中节点孩子的数量就是集合的大小）) {  
+        处理节点;  
+        backtracking(路径，选择列表); // 递归  
+        回溯，撤销处理结果  
+    }  
+}
+</code></pre>
+<ul>
+<li>递归函数参数</li>
+</ul>
+<p>我依然是定义全局变量二维数组result来记录最终结果。</p>
+<p>参数n是棋盘的大小，然后用row来记录当前遍历到棋盘的第几层了。</p>
+<p>代码如下：</p>
+<pre><code class="language-cpp">vector&lt;vector&lt;string&gt;&gt; result;  
+void backtracking(int n, int row, vector&lt;string&gt;&amp; chessboard) {}
+</code></pre>
+<ul>
+<li>递归终止条件</li>
+</ul>
+<p>在如下树形结构中：</p>
+<p><img src="https://code-thinking-1253855093.file.myqcloud.com/pics/20210130182532303-20230310122134167.jpg" alt="51.N皇后" /></p>
+<p>可以看出，当递归到棋盘最底层（也就是叶子节点）的时候，就可以收集结果并返回了。</p>
+<p>代码如下：</p>
+<pre><code class="language-cpp">if (row == n) {  
+    result.push_back(chessboard);  
+    return;  
+}
+</code></pre>
+<ul>
+<li>单层搜索的逻辑</li>
+</ul>
+<p>递归深度就是row控制棋盘的行，每一层里for循环的col控制棋盘的列，一行一列，确定了放置皇后的位置。</p>
+<p>每次都是要从新的一行的起始位置开始搜，所以都是从0开始。</p>
+<p>代码如下：</p>
+<pre><code class="language-cpp">for (int col = 0; col &lt; n; col++) {  
+    if (isValid(row, col, chessboard, n)) { // 验证合法就可以放  
+        chessboard[row][col] = 'Q'; // 放置皇后  
+        backtracking(n, row + 1, chessboard);  
+        chessboard[row][col] = '.'; // 回溯，撤销皇后  
+    }  
+}
+</code></pre>
+<ul>
+<li>验证棋盘是否合法</li>
+</ul>
+<p>按照如下标准去重：</p>
+<ol>
+<li>不能同行</li>
+<li>不能同列</li>
+<li>不能同斜线 （45度和135度角）</li>
+</ol>
+<p>代码如下：</p>
+<pre><code class="language-cpp">bool isValid(int row, int col, vector&lt;string&gt;&amp; chessboard, int n) {  
+    // 检查列  
+    for (int i = 0; i &lt; row; i++) { // 这是一个剪枝  
+        if (chessboard[i][col] == 'Q') {  
+            return false;  
+        }  
+    }  
+    // 检查 135 度角是否有皇后  
+    for (int i = row - 1, j = col - 1; i &gt;=0 &amp;&amp; j &gt;= 0; i--, j--) {  
+        if (chessboard[i][j] == 'Q') {  
+            return false;  
+        }  
+    }  
+    // 检查 45 度角是否有皇后  
+    for(int i = row - 1, j = col + 1; i &gt;= 0 &amp;&amp; j &lt; n; i--, j++) {  
+        if (chessboard[i][j] == 'Q') {  
+            return false;  
+        }  
+    }  
+    return true;  
+}
+</code></pre>
+<p>在这份代码中，细心的同学可以发现为什么没有在同行进行检查呢？</p>
+<p>因为在单层搜索的过程中，每一层递归，只会选for循环（也就是同一行）里的一个元素，所以不用去重了。</p>
+<p>如果从来没有接触过N皇后问题的同学看着这样的题会感觉无从下手，可能知道要用回溯法，但也不知道该怎么去搜。</p>
+<p><strong>这里我明确给出了棋盘的宽度就是for循环的长度，递归的深度就是棋盘的高度，这样就可以套进回溯法的模板里了</strong>。</p>
+<h2 id="c解法"><a class="header" href="#c解法">C++解法</a></h2>
+<pre><code class="language-cpp">class Solution {
+private:
+vector&lt;vector&lt;string&gt;&gt; result;
+// n 为输入的棋盘大小
+// row 是当前递归到棋盘的第几行了
+void backtracking(int n, int row, vector&lt;string&gt;&amp; chessboard) {
+    if (row == n) {
+        result.push_back(chessboard);
+        return;
+    }
+    for (int col = 0; col &lt; n; col++) {
+        if (isValid(row, col, chessboard, n)) { // 验证合法就可以放
+            chessboard[row][col] = 'Q'; // 放置皇后
+            backtracking(n, row + 1, chessboard);
+            chessboard[row][col] = '.'; // 回溯，撤销皇后
+        }
+    }
+}
+bool isValid(int row, int col, vector&lt;string&gt;&amp; chessboard, int n) {
+    // 检查列
+    for (int i = 0; i &lt; row; i++) { // 这是一个剪枝
+        if (chessboard[i][col] == 'Q') {
+            return false;
+        }
+    }
+    // 检查135度角是否有皇后
+    for (int i = row - 1, j = col - 1; i &gt;=0 &amp;&amp; j &gt;= 0; i--, j--) {
+        if (chessboard[i][j] == 'Q') {
+            return false;
+        }
+    }
+    // 检查45度角是否有皇后
+    for(int i = row - 1, j = col + 1; i &gt;= 0 &amp;&amp; j &lt; n; i--, j++) {
+        if (chessboard[i][j] == 'Q') {
+            return false;
+        }
+    }
+    return true;
+}
+public:
+    vector&lt;vector&lt;string&gt;&gt; solveNQueens(int n) {
+        result.clear();
+        std::vector&lt;std::string&gt; chessboard(n, std::string(n, '.'));
+        backtracking(n, 0, chessboard);
+        return result;
+    }
+};
+</code></pre>
+<ul>
+<li>时间复杂度: O(n!)</li>
+<li>空间复杂度: O(n)</li>
+</ul>
+<h1 id="52-n-queens-ii"><a class="header" href="#52-n-queens-ii"><a href="https://leetcode.com/problems/n-queens-ii/">52. N-Queens II</a></a></h1>
+<p>The <strong>n-queens</strong> puzzle is the problem of placing <code>n</code> queens on an <code>n x n</code> chessboard such that no two queens attack each other.</p>
+<p>Given an integer <code>n</code>, return <em>the number of distinct solutions to the <strong>n-queens puzzle</strong></em>.</p>
+<p><strong>Example 1:</strong></p>
+<p><img src="https://assets.leetcode.com/uploads/2020/11/13/queens.jpg" alt="" /></p>
+<p><strong>Input:</strong> n = 4<br />
+<strong>Output:</strong> 2<br />
+<strong>Explanation:</strong> There are two distinct solutions to the 4-queens puzzle as shown.</p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> n = 1<br />
+<strong>Output:</strong> 1</p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= n &lt;= 9</code></li>
+</ul>
+<h2 id="思路-1"><a class="header" href="#思路-1">思路</a></h2>
+<p>和上面一样，计算result中的元素个数作为最终结果即可。</p>
+<h2 id="c解法-1"><a class="header" href="#c解法-1">C++解法</a></h2>
+<pre><code class="language-cpp">class Solution {
+public:
+    vector&lt;vector&lt;string&gt;&gt; result;
+    void backtracking(vector&lt;string&gt;&amp; chessBoard, int n, int row){
+        if(row == n){
+            result.push_back(chessBoard);
+            return;
+        }
+        for(int i = 0; i &lt; chessBoard[row].size(); i++){
+            if(isValid(chessBoard, n, row, i) &amp;&amp; chessBoard[row][i] == '.'){
+                chessBoard[row][i] = 'Q';
+                backtracking(chessBoard, n, row + 1);
+                chessBoard[row][i] = '.';
+            }
+        }
+    }
+    bool isValid(vector&lt;string&gt;&amp; chessBoard, int n, int row, int col){
+        // 检查列
+        for (int i = 0; i &lt; row; i++) { // 这是一个剪枝
+            if (chessBoard[i][col] == 'Q') {
+                return false;
+            }
+        }
+        // 检查135度角是否有皇后
+        for (int i = row - 1, j = col - 1; i &gt;=0 &amp;&amp; j &gt;= 0; i--, j--) {
+            if (chessBoard[i][j] == 'Q') {
+                return false;
+            }
+        }
+        // 检查45度角是否有皇后
+        for(int i = row - 1, j = col + 1; i &gt;= 0 &amp;&amp; j &lt; n; i--, j++) {
+            if (chessBoard[i][j] == 'Q') {
+                return false;
+            }
+        }
+        return true;
+    }
+    int totalNQueens(int n) {
+        vector&lt;string&gt; chessBoard(n, string(n, '.'));
+        backtracking(chessBoard, n, 0);
+        return result.size();
+    }
+};
+</code></pre>
+<h1 id="37-sudoku-solver"><a class="header" href="#37-sudoku-solver"><a href="https://leetcode.com/problems/sudoku-solver/">37. Sudoku Solver</a></a></h1>
+<p>Write a program to solve a Sudoku puzzle by filling the empty cells.</p>
+<p>A sudoku solution must satisfy <strong>all of the following rules</strong>:</p>
+<ol>
+<li>Each of the digits <code>1-9</code> must occur exactly once in each row.</li>
+<li>Each of the digits <code>1-9</code> must occur exactly once in each column.</li>
+<li>Each of the digits <code>1-9</code> must occur exactly once in each of the 9 <code>3x3</code> sub-boxes of the grid.</li>
+</ol>
+<p>The <code>'.'</code> character indicates empty cells.</p>
+<p><strong>Example 1:</strong></p>
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/ff/Sudoku-by-L2G-20050714.svg/250px-Sudoku-by-L2G-20050714.svg.png" alt="" /></p>
+<p><strong>Input:</strong> <code>board = [["5","3",".",".","7",".",".",".","."],["6",".",".","1","9","5",".",".","."],[".","9","8",".",".",".",".","6","."],["8",".",".",".","6",".",".",".","3"],["4",".",".","8",".","3",".",".","1"],["7",".",".",".","2",".",".",".","6"],[".","6",".",".",".",".","2","8","."],[".",".",".","4","1","9",".",".","5"],[".",".",".",".","8",".",".","7","9"]]</code><br />
+<strong>Output:</strong> <code>[["5","3","4","6","7","8","9","1","2"],["6","7","2","1","9","5","3","4","8"],["1","9","8","3","4","2","5","6","7"],["8","5","9","7","6","1","4","2","3"],["4","2","6","8","5","3","7","9","1"],["7","1","3","9","2","4","8","5","6"],["9","6","1","5","3","7","2","8","4"],["2","8","7","4","1","9","6","3","5"],["3","4","5","2","8","6","1","7","9"]]</code><br />
+<strong>Explanation:</strong> The input board is shown above and the only valid solution is shown below:</p>
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/31/Sudoku-by-L2G-20050714_solution.svg/250px-Sudoku-by-L2G-20050714_solution.svg.png" alt="" /></p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>board.length == 9</code></li>
+<li><code>board[i].length == 9</code></li>
+<li><code>board[i][j]</code> is a digit or <code>'.'</code>.</li>
+<li>It is <strong>guaranteed</strong> that the input board has only one solution.</li>
+</ul>
+<h2 id="思路-2"><a class="header" href="#思路-2">思路</a></h2>
+<p>棋盘搜索问题可以使用回溯法暴力搜索，只不过这次我们要做的是<strong>二维递归</strong>。</p>
+<p>怎么做二维递归呢？</p>
+<p><a href="https://programmercarl.com/0051.N%E7%9A%87%E5%90%8E.html">N皇后问题</a>是因为每一行每一列只放一个皇后，只需要一层for循环遍历一行，递归来遍历列，然后一行一列确定皇后的唯一位置。</p>
+<p>本题就不一样了，<strong>本题中棋盘的每一个位置都要放一个数字（而N皇后是一行只放一个皇后），并检查数字是否合法，解数独的树形结构要比N皇后更宽更深</strong>。</p>
+<p>因为这个树形结构太大了，我抽取一部分，如图所示：</p>
+<p><img src="https://code-thinking-1253855093.file.myqcloud.com/pics/2020111720451790-20230310131816104.png" alt="37.解数独" /></p>
+<ul>
+<li>递归函数以及参数</li>
+</ul>
+<p><strong>递归函数的返回值需要是bool类型，为什么呢？</strong></p>
+<p>因为解数独找到一个符合的条件（就在树的叶子节点上）立刻就返回，相当于找从根节点到叶子节点一条唯一路径，所以需要使用bool返回值。</p>
+<p>代码如下：</p>
+<pre><code class="language-cpp">bool backtracking(vector&lt;vector&lt;char&gt;&gt;&amp; board)
+</code></pre>
+<ul>
+<li>递归终止条件</li>
+</ul>
+<p>本题递归不用终止条件，解数独是要遍历整个树形结构寻找可能的叶子节点就立刻返回。</p>
+<p><strong>不用终止条件会不会死循环？</strong></p>
+<p>递归的下一层的棋盘一定比上一层的棋盘多一个数，等数填满了棋盘自然就终止（填满当然好了，说明找到结果了），所以不需要终止条件！</p>
+<p><strong>那么有没有永远填不满的情况呢？</strong></p>
+<p>这个问题我在递归单层搜索逻辑里再来讲！</p>
+<ul>
+<li>递归单层搜索逻辑</li>
+</ul>
+<p><img src="https://code-thinking-1253855093.file.myqcloud.com/pics/2020111720451790-20230310131822254.png" alt="37.解数独" /></p>
+<p>在树形图中可以看出我们需要的是一个二维的递归 （一行一列）</p>
+<p><strong>一个for循环遍历棋盘的行，一个for循环遍历棋盘的列，一行一列确定下来之后，递归遍历这个位置放9个数字的可能性！</strong></p>
+<p>代码如下：（<strong>详细看注释</strong>）</p>
+<pre><code class="language-cpp">bool backtracking(vector&lt;vector&lt;char&gt;&gt;&amp; board) {  
+    for (int i = 0; i &lt; board.size(); i++) {        // 遍历行  
+        for (int j = 0; j &lt; board[0].size(); j++) { // 遍历列  
+            if (board[i][j] != '.') continue;  
+            for (char k = '1'; k &lt;= '9'; k++) {     // (i, j) 这个位置放k是否合适  
+                if (isValid(i, j, k, board)) {  
+                    board[i][j] = k;                // 放置k  
+                    if (backtracking(board)) return true; // 如果找到合适一组立刻返回  
+                    board[i][j] = '.';              // 回溯，撤销k  
+                }  
+            }  
+            return false;                           // 9个数都试完了，都不行，那么就返回false  
+        }  
+    }  
+    return true; // 遍历完没有返回false，说明找到了合适棋盘位置了  
+}
+</code></pre>
+<p><strong>注意这里return false的地方，这里放return false 是有讲究的</strong>。</p>
+<p>因为如果一行一列确定下来了，这里尝试了9个数都不行，说明这个棋盘找不到解决数独问题的解！</p>
+<p>那么会直接返回， <strong>这也就是为什么没有终止条件也不会永远填不满棋盘而无限递归下去！</strong></p>
+<p>判断棋盘是否合法有如下三个维度：</p>
+<ul>
+<li>同行是否重复</li>
+<li>同列是否重复</li>
+<li>9宫格里是否重复</li>
+</ul>
+<p>代码如下：</p>
+<pre><code class="language-cpp">bool isValid(int row, int col, char val, vector&lt;vector&lt;char&gt;&gt;&amp; board) {  
+    for (int i = 0; i &lt; 9; i++) { // 判断行里是否重复  
+        if (board[row][i] == val) {  
+            return false;  
+        }  
+    }  
+    for (int j = 0; j &lt; 9; j++) { // 判断列里是否重复  
+        if (board[j][col] == val) {  
+            return false;  
+        }  
+    }  
+    int startRow = (row / 3) * 3;  
+    int startCol = (col / 3) * 3;  
+    for (int i = startRow; i &lt; startRow + 3; i++) { // 判断9方格里是否重复  
+        for (int j = startCol; j &lt; startCol + 3; j++) {  
+            if (board[i][j] == val ) {  
+                return false;  
+            }  
+        }  
+    }  
+    return true;  
+}
+</code></pre>
+<h2 id="c解法-2"><a class="header" href="#c解法-2">C++解法</a></h2>
+<pre><code class="language-cpp">class Solution {
+private:
+bool backtracking(vector&lt;vector&lt;char&gt;&gt;&amp; board) {
+    for (int i = 0; i &lt; board.size(); i++) {        // 遍历行
+        for (int j = 0; j &lt; board[0].size(); j++) { // 遍历列
+            if (board[i][j] == '.') {
+                for (char k = '1'; k &lt;= '9'; k++) {     // (i, j) 这个位置放k是否合适
+                    if (isValid(i, j, k, board)) {
+                        board[i][j] = k;                // 放置k
+                        if (backtracking(board)) return true; // 如果找到合适一组立刻返回
+                        board[i][j] = '.';              // 回溯，撤销k
+                    }
+                }
+                return false;  // 9个数都试完了，都不行，那么就返回false
+            }
+        }
+    }
+    return true; // 遍历完没有返回false，说明找到了合适棋盘位置了
+}
+bool isValid(int row, int col, char val, vector&lt;vector&lt;char&gt;&gt;&amp; board) {
+    for (int i = 0; i &lt; 9; i++) { // 判断行里是否重复
+        if (board[row][i] == val) {
+            return false;
+        }
+    }
+    for (int j = 0; j &lt; 9; j++) { // 判断列里是否重复
+        if (board[j][col] == val) {
+            return false;
+        }
+    }
+    int startRow = (row / 3) * 3;
+    int startCol = (col / 3) * 3;
+    for (int i = startRow; i &lt; startRow + 3; i++) { // 判断9方格里是否重复
+        for (int j = startCol; j &lt; startCol + 3; j++) {
+            if (board[i][j] == val ) {
+                return false;
+            }
+        }
+    }
+    return true;
+}
+public:
+    void solveSudoku(vector&lt;vector&lt;char&gt;&gt;&amp; board) {
+        backtracking(board);
+    }
+};
+</code></pre>
+<h1 id="36-valid-sudoku"><a class="header" href="#36-valid-sudoku"><a href="https://leetcode.com/problems/valid-sudoku/">36. Valid Sudoku</a></a></h1>
+<p>Determine if a <code>9 x 9</code> Sudoku board is valid. Only the filled cells need to be validated <strong>according to the following rules</strong>:</p>
+<ol>
+<li>Each row must contain the digits <code>1-9</code> without repetition.</li>
+<li>Each column must contain the digits <code>1-9</code> without repetition.</li>
+<li>Each of the nine <code>3 x 3</code> sub-boxes of the grid must contain the digits <code>1-9</code> without repetition.</li>
+</ol>
+<p><strong>Note:</strong></p>
+<ul>
+<li>A Sudoku board (partially filled) could be valid but is not necessarily solvable.</li>
+<li>Only the filled cells need to be validated according to the mentioned rules.</li>
+</ul>
+<p><strong>Example 1:</strong></p>
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/ff/Sudoku-by-L2G-20050714.svg/250px-Sudoku-by-L2G-20050714.svg.png" alt="" /></p>
+<pre><code>**Input:** board = 
+[["5","3",".",".","7",".",".",".","."]
+,["6",".",".","1","9","5",".",".","."]
+,[".","9","8",".",".",".",".","6","."]
+,["8",".",".",".","6",".",".",".","3"]
+,["4",".",".","8",".","3",".",".","1"]
+,["7",".",".",".","2",".",".",".","6"]
+,[".","6",".",".",".",".","2","8","."]
+,[".",".",".","4","1","9",".",".","5"]
+,[".",".",".",".","8",".",".","7","9"]]
+</code></pre>
+<p><strong>Output:</strong> true</p>
+<p><strong>Example 2:</strong></p>
+<pre><code>**Input:** board = 
+[["8","3",".",".","7",".",".",".","."]
+,["6",".",".","1","9","5",".",".","."]
+,[".","9","8",".",".",".",".","6","."]
+,["8",".",".",".","6",".",".",".","3"]
+,["4",".",".","8",".","3",".",".","1"]
+,["7",".",".",".","2",".",".",".","6"]
+,[".","6",".",".",".",".","2","8","."]
+,[".",".",".","4","1","9",".",".","5"]
+,[".",".",".",".","8",".",".","7","9"]]
+</code></pre>
+<p><strong>Output:</strong> false<br />
+<strong>Explanation:</strong> Same as Example 1, except with the <strong>5</strong> in the top left corner being modified to <strong>8</strong>. Since there are two 8's in the top left 3x3 sub-box, it is invalid.</p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>board.length == 9</code></li>
+<li><code>board[i].length == 9</code></li>
+<li><code>board[i][j]</code> is a digit <code>1-9</code> or <code>'.'</code>.</li>
+</ul>
+<h2 id="思路-3"><a class="header" href="#思路-3">思路</a></h2>
+<p>遍历棋盘，分别处理每个不是<code>.</code>的位置，先保存，然后切换成<code>.</code>，最后尝试重新插入。如果不能重新插入，说明原来的棋盘不是合法的。</p>
+<h2 id="c解法-3"><a class="header" href="#c解法-3">C++解法</a></h2>
+<pre><code class="language-cpp">class Solution {
+public:
+    bool backtracking(vector&lt;vector&lt;char&gt;&gt;&amp; board){
+        for(int i = 0; i &lt; board.size(); i++){
+            for(int j = 0; j &lt; board[i].size(); j++){
+                if (board[i][j] != '.'){
+                    char val = board[i][j];
+                    board[i][j] = '.';
+                    if(!isValid(board, i, j, val)){
+                        return false;
+                    }
+                    board[i][j] = val;
+                }
+            }
+        }
+        return true;
+    }
+    bool isValid(vector&lt;vector&lt;char&gt;&gt;&amp; board, int row, int col, char val){
+         for (int i = 0; i &lt; 9; i++) { // 判断行里是否重复
+            if (board[row][i] == val) {
+                return false;
+            }
+        }
+        for (int j = 0; j &lt; 9; j++) { // 判断列里是否重复
+            if (board[j][col] == val) {
+                return false;
+            }
+        }
+        int startRow = (row / 3) * 3;
+        int startCol = (col / 3) * 3;
+        for (int i = startRow; i &lt; startRow + 3; i++) { // 判断9方格里是否重复
+            for (int j = startCol; j &lt; startCol + 3; j++) {
+                if (board[i][j] == val ) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+    bool isValidSudoku(vector&lt;vector&lt;char&gt;&gt;&amp; board) {
+        return backtracking(board);
+    }
+};
+</code></pre>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../回溯/排列.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../贪心/贪心.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../回溯/排列.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../贪心/贪心.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

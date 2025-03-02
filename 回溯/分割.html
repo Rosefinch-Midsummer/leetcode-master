@@ -1,0 +1,642 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>分割 - 剑指Offer</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">剑指Offer</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
+<h1 id="分割"><a class="header" href="#分割">分割</a></h1>
+<ul>
+<li><a href="#131-palindrome-partitioning">131. Palindrome Partitioning</a>
+<ul>
+<li><a href="#%E6%80%9D%E8%B7%AF">思路</a>
+<ul>
+<li><a href="#%E5%88%A4%E6%96%AD%E5%9B%9E%E6%96%87%E5%AD%90%E4%B8%B2">判断回文子串</a></li>
+<li><a href="#%E4%BC%98%E5%8C%96">优化</a></li>
+<li><a href="#%E6%80%BB%E7%BB%93">总结</a></li>
+</ul>
+</li>
+<li><a href="#c%E8%A7%A3%E6%B3%95">C++解法</a></li>
+<li><a href="#java%E8%A7%A3%E6%B3%95">Java解法</a></li>
+</ul>
+</li>
+<li><a href="#93-restore-ip-addresses">93. Restore IP Addresses</a>
+<ul>
+<li><a href="#%E6%80%9D%E8%B7%AF-1">思路</a>
+<ul>
+<li><a href="#%E5%88%A4%E6%96%AD%E5%AD%90%E4%B8%B2%E6%98%AF%E5%90%A6%E5%90%88%E6%B3%95">判断子串是否合法</a></li>
+</ul>
+</li>
+<li><a href="#c%E8%A7%A3%E6%B3%95-1">C++解法</a></li>
+</ul>
+</li>
+</ul>
+<h1 id="131-palindrome-partitioning"><a class="header" href="#131-palindrome-partitioning"><a href="https://leetcode.com/problems/palindrome-partitioning/">131. Palindrome Partitioning</a></a></h1>
+<p>Given a string <code>s</code>, partition <code>s</code> such that every substring of the partition is a <strong>palindrome</strong>. Return <em>all possible palindrome partitioning of</em> <code>s</code>.</p>
+<p><strong>Example 1:</strong></p>
+<p><strong>Input:</strong> <code>s = "aab"</code><br />
+<strong>Output:</strong> <code>[["a","a","b"],["aa","b"]]</code></p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> <code>s = "a"</code><br />
+<strong>Output:</strong> <code>[["a"]]</code></p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= s.length &lt;= 16</code></li>
+<li><code>s</code> contains only lowercase English letters.</li>
+</ul>
+<h2 id="思路"><a class="header" href="#思路">思路</a></h2>
+<p>本题这涉及两个关键问题：</p>
+<ol>
+<li>切割问题，有不同的切割方式</li>
+<li>判断回文</li>
+</ol>
+<p>相信这里不同的切割方式可以搞懵很多同学了。</p>
+<p>这种题目，想用for循环暴力解法，可能都不那么容易写出来，所以要换一种暴力的方式，就是回溯。</p>
+<p>一些同学可能想不清楚 回溯究竟是如何切割字符串呢？</p>
+<p>我们来分析一下切割，<strong>其实切割问题类似组合问题</strong>。</p>
+<p>例如对于字符串abcdef：</p>
+<ul>
+<li>组合问题：选取一个a之后，在bcdef中再去选取第二个，选取b之后在cdef中再选取第三个.....。</li>
+<li>切割问题：切割一个a之后，在bcdef中再去切割第二段，切割b之后在cdef中再切割第三段.....。</li>
+</ul>
+<p>感受出来了不？</p>
+<p>所以切割问题，也可以抽象为一棵树形结构，如图：</p>
+<p><img src="https://code-thinking.cdn.bcebos.com/pics/131.%E5%88%86%E5%89%B2%E5%9B%9E%E6%96%87%E4%B8%B2.jpg" alt="131.分割回文串" /></p>
+<p>递归用来纵向遍历，for循环用来横向遍历，切割线（就是图中的红线）切割到字符串的结尾位置，说明找到了一个切割方法。</p>
+<p>此时可以发现，切割问题的回溯搜索的过程和组合问题的回溯搜索的过程是差不多的。</p>
+<ul>
+<li>递归函数参数</li>
+</ul>
+<p>全局变量数组path存放切割后回文的子串，二维数组result存放结果集。 （这两个参数可以放到函数参数里）</p>
+<p>本题递归函数参数还需要startIndex，因为切割过的地方，不能重复切割，和组合问题也是保持一致的。</p>
+<p>在<a href="https://programmercarl.com/0039.%E7%BB%84%E5%90%88%E6%80%BB%E5%92%8C.html">回溯算法：求组合总和（二）</a>中我们深入探讨了组合问题什么时候需要startIndex，什么时候不需要startIndex。</p>
+<p>代码如下：</p>
+<pre><code class="language-cpp">vector&lt;vector&lt;string&gt;&gt; result;  
+vector&lt;string&gt; path; // 放已经回文的子串  
+void backtracking (const string&amp; s, int startIndex) {}
+</code></pre>
+<ul>
+<li>递归函数终止条件</li>
+</ul>
+<p><img src="https://code-thinking.cdn.bcebos.com/pics/131.%E5%88%86%E5%89%B2%E5%9B%9E%E6%96%87%E4%B8%B2.jpg" alt="131.分割回文串" /></p>
+<p>从树形结构的图中可以看出：切割线切到了字符串最后面，说明找到了一种切割方法，此时就是本层递归的终止条件。</p>
+<p><strong>那么在代码里什么是切割线呢？</strong></p>
+<p>在处理组合问题的时候，递归参数需要传入startIndex，表示下一轮递归遍历的起始位置，这个startIndex就是切割线。</p>
+<p>所以终止条件代码如下：</p>
+<pre><code class="language-cpp">void backtracking (const string&amp; s, int startIndex) {  
+    // 如果起始位置已经大于s的大小，说明已经找到了一组分割方案了  
+    if (startIndex &gt;= s.size()) {  
+        result.push_back(path);  
+        return;  
+    }  
+}
+</code></pre>
+<ul>
+<li>单层搜索的逻辑</li>
+</ul>
+<p><strong>来看看在递归循环中如何截取子串呢？</strong></p>
+<p>在<code>for (int i = startIndex; i &lt; s.size(); i++)</code>循环中，我们 定义了起始位置startIndex，那么 [startIndex, i] 就是要截取的子串。</p>
+<p>首先判断这个子串是不是回文，如果是回文，就加入在<code>vector&lt;string&gt; path</code>中，path用来记录切割过的回文子串。</p>
+<p>代码如下：</p>
+<pre><code class="language-cpp">for (int i = startIndex; i &lt; s.size(); i++) {  
+    if (isPalindrome(s, startIndex, i)) { // 是回文子串  
+        // 获取[startIndex,i]在s中的子串  
+        string str = s.substr(startIndex, i - startIndex + 1);  
+        path.push_back(str);  
+    } else {                // 如果不是则直接跳过  
+        continue;  
+    }  
+    backtracking(s, i + 1); // 寻找i+1为起始位置的子串  
+    path.pop_back();        // 回溯过程，弹出本次已经添加的子串  
+}
+</code></pre>
+<p><strong>注意切割过的位置，不能重复切割，所以，backtracking(s, i + 1); 传入下一层的起始位置为i + 1</strong>。</p>
+<h3 id="判断回文子串"><a class="header" href="#判断回文子串">判断回文子串</a></h3>
+<p>最后我们看一下回文子串要如何判断了，判断一个字符串是否是回文。</p>
+<p>可以使用双指针法，一个指针从前向后，一个指针从后向前，如果前后指针所指向的元素是相等的，就是回文字符串了。</p>
+<p>那么判断回文的C++代码如下：</p>
+<pre><code class="language-cpp">bool isPalindrome(const string&amp; s, int start, int end) {  
+ for (int i = start, j = end; i &lt; j; i++, j--) {  
+	 if (s[i] != s[j]) {  
+		 return false;  
+	 }  
+ }  
+ return true;  
+}
+</code></pre>
+<p>如果大家对双指针法有生疏了，传送门：<a href="https://programmercarl.com/%E5%8F%8C%E6%8C%87%E9%92%88%E6%80%BB%E7%BB%93.html">双指针法：总结篇！</a></p>
+<h3 id="优化"><a class="header" href="#优化">优化</a></h3>
+<p>上面的代码还存在一定的优化空间, 在于如何更高效的计算一个子字符串是否是回文字串。上述代码<code>isPalindrome</code>函数运用双指针的方法来判定对于一个字符串<code>s</code>, 给定起始下标和终止下标, 截取出的子字符串是否是回文字串。但是其中有一定的重复计算存在:</p>
+<p>例如给定字符串<code>"abcde"</code>, 在已知<code>"bcd"</code>不是回文字串时, 不再需要去双指针操作<code>"abcde"</code>而可以直接判定它一定不是回文字串。</p>
+<p>具体来说, 给定一个字符串<code>s</code>, 长度为<code>n</code>, 它成为回文字串的充分必要条件是<code>s[0] == s[n-1]</code>且<code>s[1:n-1]</code>是回文字串。</p>
+<p>大家如果熟悉动态规划这种算法的话, 我们可以高效地事先一次性计算出, 针对一个字符串<code>s</code>, 它的任何子串是否是回文字串, 然后在我们的回溯函数中直接查询即可, 省去了双指针移动判定这一步骤。</p>
+<h3 id="总结"><a class="header" href="#总结">总结</a></h3>
+<p>这道题目在leetcode上是中等，但可以说是hard的题目了，但是代码其实就是按照模板的样子来的。</p>
+<p>那么难究竟难在什么地方呢？</p>
+<p><strong>我列出如下几个难点：</strong></p>
+<ul>
+<li>切割问题可以抽象为组合问题</li>
+<li>如何模拟那些切割线</li>
+<li>切割问题中递归如何终止</li>
+<li>在递归循环中如何截取子串</li>
+<li>如何判断回文</li>
+</ul>
+<p><strong>我们平时在做难题的时候，总结出来难究竟难在哪里也是一种需要锻炼的能力</strong>。</p>
+<p>一些同学可能遇到题目比较难，但是不知道题目难在哪里，反正就是很难。其实这样还是思维不够清晰，这种总结的能力需要多接触多锻炼。</p>
+<p><strong>本题我相信很多同学主要卡在了第一个难点上：就是不知道如何切割，甚至知道要用回溯法，也不知道如何用。也就是没有体会到按照求组合问题的套路就可以解决切割</strong>。</p>
+<p>如果意识到这一点，算是重大突破了。接下来就可以对着模板照葫芦画瓢。</p>
+<p><strong>但接下来如何模拟切割线，如何终止，如何截取子串，其实都不好想，最后判断回文算是最简单的了</strong>。</p>
+<p>关于模拟切割线，其实就是index是上一层已经确定了的分割线，i是这一层试图寻找的新分割线</p>
+<p>除了这些难点，<strong>本题还有细节，例如：切割过的地方不能重复切割所以递归函数需要传入i + 1</strong>。</p>
+<p>所以本题应该是一道hard题目了。</p>
+<p><strong>可能刷过这道题目的录友都没感受到自己原来克服了这么多难点，就把这道题目AC了</strong>，这应该叫做无招胜有招，人码合一。</p>
+<h2 id="c解法"><a class="header" href="#c解法">C++解法</a></h2>
+<p>回溯解法：</p>
+<pre><code class="language-cpp">class Solution {
+private:
+    vector&lt;vector&lt;string&gt;&gt; result;
+    vector&lt;string&gt; path; // 放已经回文的子串
+    void backtracking (const string&amp; s, int startIndex) {
+        // 如果起始位置已经大于s的大小，说明已经找到了一组分割方案了
+        if (startIndex &gt;= s.size()) {
+            result.push_back(path);
+            return;
+        }
+        for (int i = startIndex; i &lt; s.size(); i++) {
+            if (isPalindrome(s, startIndex, i)) {   // 是回文子串
+                // 获取[startIndex,i]在s中的子串
+                string str = s.substr(startIndex, i - startIndex + 1);
+                path.push_back(str);
+            } else {                                // 不是回文，跳过
+                continue;
+            }
+            backtracking(s, i + 1); // 寻找i+1为起始位置的子串
+            path.pop_back(); // 回溯过程，弹出本次已经添加的子串
+        }
+    }
+    bool isPalindrome(const string&amp; s, int start, int end) {
+        for (int i = start, j = end; i &lt; j; i++, j--) {
+            if (s[i] != s[j]) {
+                return false;
+            }
+        }
+        return true;
+    }
+public:
+    vector&lt;vector&lt;string&gt;&gt; partition(string s) {
+        result.clear();
+        path.clear();
+        backtracking(s, 0);
+        return result;
+    }
+};
+</code></pre>
+<ul>
+<li>时间复杂度: O(n * 2^n)</li>
+<li>空间复杂度: O(n^2)</li>
+</ul>
+<p>动态规划解法：</p>
+<pre><code class="language-cpp">具体参考代码如下:
+
+class Solution {  
+private:  
+    vector&lt;vector&lt;string&gt;&gt; result;  
+    vector&lt;string&gt; path; // 放已经回文的子串  
+    vector&lt;vector&lt;bool&gt;&gt; isPalindrome; // 放事先计算好的是否回文子串的结果  
+    void backtracking (const string&amp; s, int startIndex) {  
+        // 如果起始位置已经大于s的大小，说明已经找到了一组分割方案了  
+        if (startIndex &gt;= s.size()) {  
+            result.push_back(path);  
+            return;  
+        }  
+        for (int i = startIndex; i &lt; s.size(); i++) {  
+            if (isPalindrome[startIndex][i]) {   // 是回文子串  
+                // 获取[startIndex,i]在s中的子串  
+                string str = s.substr(startIndex, i - startIndex + 1);  
+                path.push_back(str);  
+            } else {                                // 不是回文，跳过  
+                continue;  
+            }  
+            backtracking(s, i + 1); // 寻找i+1为起始位置的子串  
+            path.pop_back(); // 回溯过程，弹出本次已经添加的子串  
+        }  
+    }  
+    void computePalindrome(const string&amp; s) {  
+        // isPalindrome[i][j] 代表 s[i:j](双边包括)是否是回文字串   
+        isPalindrome.resize(s.size(), vector&lt;bool&gt;(s.size(), false)); // 根据字符串s, 刷新布尔矩阵的大小  
+        for (int i = s.size() - 1; i &gt;= 0; i--) {   
+            // 需要倒序计算, 保证在i行时, i+1行已经计算好了  
+            for (int j = i; j &lt; s.size(); j++) {  
+                if (j == i) {isPalindrome[i][j] = true;}  
+                else if (j - i == 1) {isPalindrome[i][j] = (s[i] == s[j]);}  
+                else {isPalindrome[i][j] = (s[i] == s[j] &amp;&amp; isPalindrome[i+1][j-1]);}  
+            }  
+        }  
+    }  
+public:  
+    vector&lt;vector&lt;string&gt;&gt; partition(string s) {  
+        result.clear();  
+        path.clear();  
+        computePalindrome(s);  
+        backtracking(s, 0);  
+        return result;  
+    }  
+}; 
+</code></pre>
+<h2 id="java解法"><a class="header" href="#java解法">Java解法</a></h2>
+<pre><code class="language-java">class Solution {
+    //保持前几题一贯的格式， initialization
+    List&lt;List&lt;String&gt;&gt; res = new ArrayList&lt;&gt;();
+    List&lt;String&gt; cur = new ArrayList&lt;&gt;();
+    public List&lt;List&lt;String&gt;&gt; partition(String s) {
+        backtracking(s, 0, new StringBuilder());
+        return res;
+    }
+    private void backtracking(String s, int start, StringBuilder sb){
+        //因为是起始位置一个一个加的，所以结束时start一定等于s.length,因为进入backtracking时一定末尾也是回文，所以cur是满足条件的
+        if (start == s.length()){
+            //注意创建一个新的copy
+            res.add(new ArrayList&lt;&gt;(cur));
+            return;
+        }
+        //像前两题一样从前往后搜索，如果发现回文，进入backtracking,起始位置后移一位，循环结束照例移除cur的末位
+        for (int i = start; i &lt; s.length(); i++){
+            sb.append(s.charAt(i));
+            if (check(sb)){
+                cur.add(sb.toString());
+                backtracking(s, i + 1, new StringBuilder());
+                cur.remove(cur.size() -1 );
+            }
+        }
+    }
+
+    //helper method, 检查是否是回文
+    private boolean check(StringBuilder sb){
+        for (int i = 0; i &lt; sb.length()/ 2; i++){
+            if (sb.charAt(i) != sb.charAt(sb.length() - 1 - i)){return false;}
+        }
+        return true;
+    }
+}
+</code></pre>
+<h1 id="93-restore-ip-addresses"><a class="header" href="#93-restore-ip-addresses"><a href="https://leetcode.com/problems/restore-ip-addresses/">93. Restore IP Addresses</a></a></h1>
+<p>A <strong>valid IP address</strong> consists of exactly four integers separated by single dots. Each integer is between <code>0</code> and <code>255</code> (<strong>inclusive</strong>) and cannot have leading zeros.</p>
+<ul>
+<li>For example, <code>"0.1.2.201"</code> and <code>"192.168.1.1"</code> are <strong>valid</strong> IP addresses, but <code>"0.011.255.245"</code>, <code>"192.168.1.312"</code> and <code>"192.168@1.1"</code> are <strong>invalid</strong> IP addresses.</li>
+</ul>
+<p>Given a string <code>s</code> containing only digits, return <em>all possible valid IP addresses that can be formed by inserting dots into</em> <code>s</code>. You are <strong>not</strong> allowed to reorder or remove any digits in <code>s</code>. You may return the valid IP addresses in <strong>any</strong> order.</p>
+<p><strong>Example 1:</strong></p>
+<p><strong>Input:</strong> s = "25525511135"<br />
+<strong>Output:</strong> ["255.255.11.135","255.255.111.35"]</p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> s = "0000"<br />
+<strong>Output:</strong> ["0.0.0.0"]</p>
+<p><strong>Example 3:</strong></p>
+<p><strong>Input:</strong> s = "101023"<br />
+<strong>Output:</strong> ["1.0.10.23","1.0.102.3","10.1.0.23","10.10.2.3","101.0.2.3"]</p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= s.length &lt;= 20</code></li>
+<li><code>s</code> consists of digits only.</li>
+</ul>
+<h2 id="思路-1"><a class="header" href="#思路-1">思路</a></h2>
+<p>做这道题目之前，最好先把<a href="https://programmercarl.com/0131.%E5%88%86%E5%89%B2%E5%9B%9E%E6%96%87%E4%B8%B2.html">131.分割回文串</a>这个做了。</p>
+<p>这道题目相信大家刚看的时候，应该会一脸茫然。</p>
+<p>其实只要意识到这是切割问题，<strong>切割问题就可以使用回溯搜索法把所有可能性搜出来</strong>，和刚做过的<a href="https://programmercarl.com/0131.%E5%88%86%E5%89%B2%E5%9B%9E%E6%96%87%E4%B8%B2.html">131.分割回文串</a>就十分类似了。</p>
+<p>切割问题可以抽象为树型结构，如图：</p>
+<p><img src="https://code-thinking-1253855093.file.myqcloud.com/pics/20201123203735933.png" alt="93.复原IP地址" /></p>
+<ul>
+<li>递归参数</li>
+</ul>
+<p>在<a href="https://programmercarl.com/0131.%E5%88%86%E5%89%B2%E5%9B%9E%E6%96%87%E4%B8%B2.html">131.分割回文串</a>中我们就提到切割问题类似组合问题。</p>
+<p>startIndex一定是需要的，因为不能重复分割，记录下一层递归分割的起始位置。</p>
+<p>本题我们还需要一个变量pointNum，记录添加逗点的数量。</p>
+<p>所以代码如下：</p>
+<pre><code class="language-cpp">vector&lt;string&gt; result;// 记录结果  
+// startIndex: 搜索的起始位置，pointNum:添加逗点的数量  
+void backtracking(string&amp; s, int startIndex, int pointNum) {}
+</code></pre>
+<ul>
+<li>递归终止条件</li>
+</ul>
+<p>终止条件和<a href="https://programmercarl.com/0131.%E5%88%86%E5%89%B2%E5%9B%9E%E6%96%87%E4%B8%B2.html">131.分割回文串</a>情况就不同了，本题明确要求只会分成4段，所以不能用切割线切到最后作为终止条件，而是分割的段数作为终止条件。</p>
+<p>pointNum表示逗点数量，pointNum为3说明字符串分成了4段了。</p>
+<p>然后验证一下第四段是否合法，如果合法就加入到结果集里</p>
+<p>代码如下：</p>
+<pre><code class="language-cpp">if (pointNum == 3) { // 逗点数量为3时，分隔结束  
+    // 判断第四段子字符串是否合法，如果合法就放进result中  
+    if (isValid(s, startIndex, s.size() - 1)) {  
+        result.push_back(s);  
+    }  
+    return;  
+}
+</code></pre>
+<ul>
+<li>单层搜索的逻辑</li>
+</ul>
+<p>在<a href="https://programmercarl.com/0131.%E5%88%86%E5%89%B2%E5%9B%9E%E6%96%87%E4%B8%B2.html">131.分割回文串</a>中已经讲过在循环遍历中如何截取子串。</p>
+<p>在<code>for (int i = startIndex; i &lt; s.size(); i++)</code>循环中 [startIndex, i] 这个区间就是截取的子串，需要判断这个子串是否合法。</p>
+<p>如果合法就在字符串后面加上符号<code>.</code>表示已经分割。</p>
+<p>如果不合法就结束本层循环，如图中剪掉的分支：</p>
+<p><img src="https://code-thinking-1253855093.file.myqcloud.com/pics/20201123203735933-20230310132314109.png" alt="93.复原IP地址" /></p>
+<p>然后就是递归和回溯的过程：</p>
+<p>递归调用时，下一层递归的startIndex要从i+2开始（因为需要在字符串中加入了分隔符<code>.</code>），同时记录分割符的数量pointNum 要 +1。</p>
+<p>回溯的时候，就将刚刚加入的分隔符<code>.</code> 删掉就可以了，pointNum也要-1。</p>
+<p>代码如下：</p>
+<pre><code class="language-cpp">for (int i = startIndex; i &lt; s.size(); i++) {  
+    if (isValid(s, startIndex, i)) { // 判断 [startIndex,i] 这个区间的子串是否合法  
+        s.insert(s.begin() + i + 1 , '.');  // 在i的后面插入一个逗点  
+        pointNum++;  
+        backtracking(s, i + 2, pointNum);   // 插入逗点之后下一个子串的起始位置为i+2  
+        pointNum--;                         // 回溯  
+        s.erase(s.begin() + i + 1);         // 回溯删掉逗点  
+    } else break; // 不合法，直接结束本层循环  
+}
+</code></pre>
+<h3 id="判断子串是否合法"><a class="header" href="#判断子串是否合法">判断子串是否合法</a></h3>
+<p>最后就是在写一个判断段位是否是有效段位了。</p>
+<p>主要考虑到如下三点：</p>
+<ul>
+<li>段位以0为开头的数字不合法</li>
+<li>段位里有非正整数字符不合法</li>
+<li>段位如果大于255了不合法</li>
+</ul>
+<p>代码如下：</p>
+<pre><code class="language-cpp">// 判断字符串s在左闭又闭区间[start, end]所组成的数字是否合法  
+bool isValid(const string&amp; s, int start, int end) {  
+    if (start &gt; end) {  
+        return false;  
+    }  
+    if (s[start] == '0' &amp;&amp; start != end) { // 0开头的数字不合法  
+            return false;  
+    }  
+    int num = 0;  
+    for (int i = start; i &lt;= end; i++) {  
+        if (s[i] &gt; '9' || s[i] &lt; '0') { // 遇到非数字字符不合法  
+            return false;  
+        }  
+        num = num * 10 + (s[i] - '0');  
+        if (num &gt; 255) { // 如果大于255了不合法  
+            return false;  
+        }  
+    }  
+    return true;  
+}
+</code></pre>
+<h2 id="c解法-1"><a class="header" href="#c解法-1">C++解法</a></h2>
+<p>回溯解法：</p>
+<pre><code class="language-cpp">class Solution {
+private:
+    vector&lt;string&gt; result;// 记录结果
+    // startIndex: 搜索的起始位置，pointNum:添加逗点的数量
+    void backtracking(string&amp; s, int startIndex, int pointNum) {
+        if (pointNum == 3) { // 逗点数量为3时，分隔结束
+            // 判断第四段子字符串是否合法，如果合法就放进result中
+            if (isValid(s, startIndex, s.size() - 1)) {
+                result.push_back(s);
+            }
+            return;
+        }
+        for (int i = startIndex; i &lt; s.size(); i++) {
+            if (isValid(s, startIndex, i)) { // 判断 [startIndex,i] 这个区间的子串是否合法
+                s.insert(s.begin() + i + 1 , '.');  // 在i的后面插入一个逗点
+                pointNum++;
+                backtracking(s, i + 2, pointNum);   // 插入逗点之后下一个子串的起始位置为i+2
+                pointNum--;                         // 回溯
+                s.erase(s.begin() + i + 1);         // 回溯删掉逗点
+            } else break; // 不合法，直接结束本层循环
+        }
+    }
+    // 判断字符串s在左闭右闭区间[start, end]所组成的数字是否合法
+    bool isValid(const string&amp; s, int start, int end) {
+        if (start &gt; end) {
+            return false;
+        }
+        if (s[start] == '0' &amp;&amp; start != end) { // 0开头的数字不合法
+                return false;
+        }
+        int num = 0;
+        for (int i = start; i &lt;= end; i++) {
+            if (s[i] &gt; '9' || s[i] &lt; '0') { // 遇到非数字字符不合法
+                return false;
+            }
+            num = num * 10 + (s[i] - '0');
+            if (num &gt; 255) { // 如果大于255了不合法
+                return false;
+            }
+        }
+        return true;
+    }
+public:
+    vector&lt;string&gt; restoreIpAddresses(string s) {
+        result.clear();
+        if (s.size() &lt; 4 || s.size() &gt; 12) return result; // 算是剪枝了
+        backtracking(s, 0, 0);
+        return result;
+    }
+};
+</code></pre>
+<ul>
+<li>时间复杂度: O(3^4)，IP地址最多包含4个数字，每个数字最多有3种可能的分割方式，则搜索树的最大深度为4，每个节点最多有3个子节点。</li>
+<li>空间复杂度: O(n)</li>
+</ul>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../回溯/组合.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../回溯/子集.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../回溯/组合.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../回溯/子集.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

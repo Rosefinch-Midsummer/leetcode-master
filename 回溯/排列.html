@@ -1,0 +1,525 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>排列 - 剑指Offer</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">剑指Offer</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
+<h1 id="排列"><a class="header" href="#排列">排列</a></h1>
+<ul>
+<li><a href="#46-permutations">46. Permutations</a>
+<ul>
+<li><a href="#%E6%80%9D%E8%B7%AF">思路</a></li>
+<li><a href="#c%E8%A7%A3%E6%B3%95">C++解法</a></li>
+</ul>
+</li>
+<li><a href="#47-permutations-ii">47. Permutations II</a>
+<ul>
+<li><a href="#%E6%80%9D%E8%B7%AF-1">思路</a></li>
+<li><a href="#c%E8%A7%A3%E6%B3%95-1">C++解法</a></li>
+</ul>
+</li>
+<li><a href="#784-letter-case-permutation">784. Letter Case Permutation</a>
+<ul>
+<li><a href="#%E6%80%9D%E8%B7%AF-2">思路</a></li>
+<li><a href="#c%E8%A7%A3%E6%B3%95-2">C++解法</a></li>
+</ul>
+</li>
+<li><a href="#31-next-permutation">31. Next Permutation</a>
+<ul>
+<li><a href="#%E6%80%9D%E8%B7%AF-3">思路</a></li>
+<li><a href="#c%E8%A7%A3%E6%B3%95-3">C++解法</a></li>
+<li><a href="#java%E8%A7%A3%E6%B3%95">Java解法</a></li>
+<li><a href="#python3%E8%A7%A3%E6%B3%95">Python3解法</a></li>
+<li><a href="#go%E8%A7%A3%E6%B3%95">Go解法</a></li>
+</ul>
+</li>
+</ul>
+<h1 id="46-permutations"><a class="header" href="#46-permutations"><a href="https://leetcode.com/problems/permutations/">46. Permutations</a></a></h1>
+<p>Given an array <code>nums</code> of distinct integers, return all the possible permutations. You can return the answer in <strong>any order</strong>.</p>
+<p><strong>Example 1:</strong></p>
+<p><strong>Input:</strong> <code>nums = [1,2,3]</code><br />
+<strong>Output:</strong> <code>[[1,2,3],[1,3,2],[2,1,3],[2,3,1],[3,1,2],[3,2,1]]</code></p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> <code>nums = [0,1]</code><br />
+<strong>Output:</strong> <code>[[0,1],[1,0]]</code></p>
+<p><strong>Example 3:</strong></p>
+<p><strong>Input:</strong> <code>nums = [1]</code><br />
+<strong>Output:</strong> <code>[[1]]</code></p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= nums.length &lt;= 6</code></li>
+<li><code>-10 &lt;= nums[i] &lt;= 10</code></li>
+<li>All the integers of <code>nums</code> are <strong>unique</strong>.</li>
+</ul>
+<h2 id="思路"><a class="header" href="#思路">思路</a></h2>
+<p>新增一个used数组记录数字是否被使用过，如果被使用过就重新进入循环。</p>
+<h2 id="c解法"><a class="header" href="#c解法">C++解法</a></h2>
+<pre><code class="language-cpp">class Solution {
+public:
+    vector&lt;vector&lt;int&gt;&gt; result;
+    vector&lt;int&gt; path;
+    void backtracking (vector&lt;int&gt;&amp; nums, vector&lt;bool&gt;&amp; used) {
+        // 此时说明找到了一组
+        if (path.size() == nums.size()) {
+            result.push_back(path);
+            return;
+        }
+        for (int i = 0; i &lt; nums.size(); i++) {
+            if (used[i] == true) continue; // path里已经收录的元素，直接跳过
+            used[i] = true;
+            path.push_back(nums[i]);
+            backtracking(nums, used);
+            path.pop_back();
+            used[i] = false;
+        }
+    }
+    vector&lt;vector&lt;int&gt;&gt; permute(vector&lt;int&gt;&amp; nums) {
+        result.clear();
+        path.clear();
+        vector&lt;bool&gt; used(nums.size(), false);
+        backtracking(nums, used);
+        return result;
+    }
+};
+</code></pre>
+<ul>
+<li>时间复杂度: O(n!)</li>
+<li>空间复杂度: O(n)</li>
+</ul>
+<h1 id="47-permutations-ii"><a class="header" href="#47-permutations-ii"><a href="https://leetcode.com/problems/permutations-ii/">47. Permutations II</a></a></h1>
+<p>Given a collection of numbers, <code>nums</code>, that might contain duplicates, return <em>all possible unique permutations <strong>in any order</strong>.</em></p>
+<p><strong>Example 1:</strong></p>
+<p><strong>Input:</strong> <code>nums = [1,1,2]</code><br />
+<strong>Output:</strong></p>
+<pre><code>[[1,1,2],
+ [1,2,1],
+ [2,1,1]]
+</code></pre>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> <code>nums = [1,2,3]</code><br />
+<strong>Output:</strong> <code>[[1,2,3],[1,3,2],[2,1,3],[2,3,1],[3,1,2],[3,2,1]]</code></p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= nums.length &lt;= 8</code></li>
+<li><code>-10 &lt;= nums[i] &lt;= 10</code></li>
+</ul>
+<h2 id="思路-1"><a class="header" href="#思路-1">思路</a></h2>
+<p>注意去重</p>
+<h2 id="c解法-1"><a class="header" href="#c解法-1">C++解法</a></h2>
+<pre><code class="language-cpp">class Solution {
+private:
+    vector&lt;vector&lt;int&gt;&gt; result;
+    vector&lt;int&gt; path;
+    void backtracking (vector&lt;int&gt;&amp; nums, vector&lt;bool&gt;&amp; used) {
+        // 此时说明找到了一组
+        if (path.size() == nums.size()) {
+            result.push_back(path);
+            return;
+        }
+        for (int i = 0; i &lt; nums.size(); i++) {
+            // used[i - 1] == true，说明同一树枝nums[i - 1]使用过
+            // used[i - 1] == false，说明同一树层nums[i - 1]使用过
+            // 如果同一树层nums[i - 1]使用过则直接跳过
+            if (i &gt; 0 &amp;&amp; nums[i] == nums[i - 1] &amp;&amp; used[i - 1] == false) {
+                continue;
+            }
+            if (used[i] == false) {
+                used[i] = true;
+                path.push_back(nums[i]);
+                backtracking(nums, used);
+                path.pop_back();
+                used[i] = false;
+            }
+        }
+    }
+public:
+    vector&lt;vector&lt;int&gt;&gt; permuteUnique(vector&lt;int&gt;&amp; nums) {
+        result.clear();
+        path.clear();
+        sort(nums.begin(), nums.end()); // 排序
+        vector&lt;bool&gt; used(nums.size(), false);
+        backtracking(nums, used);
+        return result;
+    }
+};
+
+// 时间复杂度: 最差情况所有元素都是唯一的。复杂度和全排列1都是 O(n! * n) 对于 n 个元素一共有 n! 中排列方案。而对于每一个答案，我们需要 O(n) 去复制最终放到 result 数组
+// 空间复杂度: O(n) 回溯树的深度取决于我们有多少个元素
+</code></pre>
+<h1 id="784-letter-case-permutation"><a class="header" href="#784-letter-case-permutation"><a href="https://leetcode.com/problems/letter-case-permutation/">784. Letter Case Permutation</a></a></h1>
+<p>Given a string <code>s</code>, you can transform every letter individually to be lowercase or uppercase to create another string.</p>
+<p>Return <em>a list of all possible strings we could create</em>. Return the output in <strong>any order</strong>.</p>
+<p><strong>Example 1:</strong></p>
+<p><strong>Input:</strong> <code>s = "a1b2"</code><br />
+<strong>Output:</strong> <code>["a1b2","a1B2","A1b2","A1B2"]</code></p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> <code>s = "3z4"</code><br />
+<strong>Output:</strong> <code>["3z4","3Z4"]</code></p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= s.length &lt;= 12</code></li>
+<li><code>s</code> consists of lowercase English letters, uppercase English letters, and digits.</li>
+</ul>
+<h2 id="思路-2"><a class="header" href="#思路-2">思路</a></h2>
+<p>Consider the below <strong>recursion tree</strong> for input string <strong>S="a1b2"</strong></p>
+<p>Initially <strong>OUTPUT = ""</strong>.</p>
+<p><img src="https://assets.leetcode.com/users/images/fc249302-67d8-40fb-8b3a-9c88b5ab213e_1613469296.795427.png" alt="image" /></p>
+<p>By observing the above recursion tree, we come to the below <em>conclusion</em>.</p>
+<p>There are two main <em>cases</em> which needs to be solved <strong>recursively</strong>:</p>
+<ul>
+<li>
+<p>The element at the given index is a <strong>digit</strong></p>
+<ul>
+<li>Append the digit to the end of <code>curr</code> and go to <em>next index(i+1)</em>.
+<pre><code class="language-cpp">curr.push_back(s[i]);
+solve(curr,s,i+1);
+</code></pre>
+</li>
+</ul>
+</li>
+<li>
+<p>The element at the given index is an <strong>alphabet</strong>, this case has two <em>sub cases</em>:</p>
+<ul>
+<li>
+<p>Append <code>tolower(s[i])</code> to <code>curr</code> and go to <em>next index (i+1)</em>.</p>
+<pre><code class="language-cpp">//sub case 1, considering lower case
+string c1=curr;
+c1.push_back(tolower(s[i]));
+solve(c1,s,i+1);
+</code></pre>
+</li>
+<li>
+<p>Append <code>toupper(s[i])</code> to <code>curr</code> and go to <em>next index (i+1)</em>.</p>
+<pre><code class="language-cpp">//sub case 2, considering upper case
+string c2=curr;
+c2.push_back(toupper(s[i]));
+solve(c2,s,i+1);
+</code></pre>
+</li>
+</ul>
+</li>
+</ul>
+<p>If at any function call, the <code>index = S.length()</code>, then <code>curr</code> string has one of our <strong>output</strong>, so save it in <code>ans</code> vector,</p>
+<pre><code class="language-cpp">// if end of the string is reached
+if(i==s.length()){
+	ans.push_back(curr); // push the current "curr" string to ans
+	return;
+}
+</code></pre>
+<p>At the end of the recursion return <code>ans</code>.</p>
+<h2 id="c解法-2"><a class="header" href="#c解法-2">C++解法</a></h2>
+<pre><code class="language-cpp">class Solution {
+private:
+    vector&lt;string&gt; result;
+    void backtracking(string s, string path, int index){
+        if(index == s.size()){
+            result.push_back(path);
+            return;
+        }
+        if(isdigit(s[index])){
+            path.push_back(s[index]);
+            backtracking(s, path, index + 1);
+        }else{
+            string lowerpath = path;
+            lowerpath.push_back(tolower(s[index]));
+            backtracking(s, lowerpath, index + 1);
+
+            string upperpath = path;
+            upperpath.push_back(toupper(s[index]));
+            backtracking(s, upperpath, index + 1);
+        }
+    }
+public:
+    vector&lt;string&gt; letterCasePermutation(string s) {
+        backtracking(s, "", 0);
+        return result;
+    }
+};
+</code></pre>
+<h1 id="31-next-permutation"><a class="header" href="#31-next-permutation"><a href="https://leetcode.com/problems/next-permutation/">31. Next Permutation</a></a></h1>
+<p>A <strong>permutation</strong> of an array of integers is an arrangement of its members into a sequence or linear order.</p>
+<p>For example, for <code>arr = [1,2,3]</code>, the following are all the permutations of <code>arr</code>: <code>[1,2,3], [1,3,2], [2, 1, 3], [2, 3, 1], [3,1,2], [3,2,1]</code>.</p>
+<p>The <strong>next permutation</strong> of an array of integers is the next lexicographically greater permutation of its integer. More formally, if all the permutations of the array are sorted in one container according to their lexicographical order, then the <strong>next permutation</strong> of that array is the permutation that follows it in the sorted container. If such arrangement is not possible, the array must be rearranged as the lowest possible order (i.e., sorted in ascending order).</p>
+<ul>
+<li>For example, the next permutation of <code>arr = [1,2,3]</code> is <code>[1,3,2]</code>.</li>
+<li>Similarly, the next permutation of <code>arr = [2,3,1]</code> is <code>[3,1,2]</code>.</li>
+<li>While the next permutation of <code>arr = [3,2,1]</code> is <code>[1,2,3]</code> because <code>[3,2,1]</code> does not have a lexicographical larger rearrangement.</li>
+</ul>
+<p>Given an array of integers <code>nums</code>, <em>find the next permutation of</em> <code>nums</code>.</p>
+<p>The replacement must be <strong><a href="http://en.wikipedia.org/wiki/In-place_algorithm">in place</a></strong> and use only constant extra memory.</p>
+<p><strong>Example 1:</strong></p>
+<p><strong>Input:</strong> <code>nums = [1,2,3]</code><br />
+<strong>Output:</strong> <code>[1,3,2]</code></p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> <code>nums = [3,2,1]</code><br />
+<strong>Output:</strong> <code>[1,2,3]</code></p>
+<p><strong>Example 3:</strong></p>
+<p><strong>Input:</strong> <code>nums = [1,1,5]</code><br />
+<strong>Output:</strong> <code>[1,5,1]</code></p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= nums.length &lt;= 100</code></li>
+<li><code>0 &lt;= nums[i] &lt;= 100</code></li>
+</ul>
+<h2 id="思路-3"><a class="header" href="#思路-3">思路</a></h2>
+<p>先找breakpoint（从右向左第一个小于右边相邻元素的数字），</p>
+<h2 id="c解法-3"><a class="header" href="#c解法-3">C++解法</a></h2>
+<pre><code class="language-cpp">class Solution {
+public:
+    void nextPermutation(vector&lt;int&gt;&amp; nums) {
+        int n = nums.size(), i = n - 2;
+        
+        // Step 1: Find the breakpoint
+        while (i &gt;= 0 &amp;&amp; nums[i] &gt;= nums[i + 1]) {
+            i--;
+        }
+        
+        if (i &gt;= 0) {
+            // Step 2: Find the smallest element larger than nums[i]
+            int j = n - 1;
+            while (nums[j] &lt;= nums[i]) {
+                j--;
+            }
+            swap(nums[i], nums[j]);
+        }
+        
+        // Step 3: Reverse the subarray to the right of i
+        reverse(nums.begin() + i + 1, nums.end());
+    }
+};
+</code></pre>
+<h2 id="java解法"><a class="header" href="#java解法">Java解法</a></h2>
+<pre><code class="language-java">class Solution {  
+    public void reverse(int[] nums, int i, int j) {  
+        while (i &lt; j) {  
+            int temp = nums[j];  
+            nums[j] = nums[i];  
+            nums[i] = temp;  
+            i++; // 更新 i  
+            j--; // 更新 j  
+        }  
+    }  
+
+    public void nextPermutation(int[] nums) {  
+        int length = nums.length;  
+        int i = length - 2;  
+
+        // 找到第一个下降的元素  
+        while (i &gt;= 0 &amp;&amp; nums[i] &gt;= nums[i + 1]) i--;  
+        if (i &gt;= 0) {  
+            int j = length - 1;  
+            // 找到比 nums[i] 大的最右边元素  
+            while (j &gt;= 0 &amp;&amp; nums[j] &lt;= nums[i]) j--;  
+            // 交换元素  
+            int temp = nums[j];  
+            nums[j] = nums[i];  
+            nums[i] = temp;  
+        }  
+        // 反转后面的元素  
+        reverse(nums, i + 1, length - 1);  
+    }  
+}
+</code></pre>
+<h2 id="python3解法"><a class="header" href="#python3解法">Python3解法</a></h2>
+<h2 id="go解法"><a class="header" href="#go解法">Go解法</a></h2>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../回溯/子集.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../回溯/棋盘.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../回溯/子集.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../回溯/棋盘.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>
