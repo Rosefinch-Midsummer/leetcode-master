@@ -1,0 +1,558 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>字符串和贪心算法 - 剑指Offer</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">剑指Offer</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
+<h1 id="字符串和贪心算法"><a class="header" href="#字符串和贪心算法">字符串和贪心算法</a></h1>
+<ul>
+<li><a href="#763-partition-labels">763. Partition Labels</a>
+<ul>
+<li><a href="#%E6%80%9D%E8%B7%AF">思路</a></li>
+<li><a href="#c%E8%A7%A3%E6%B3%95">C++解法</a></li>
+<li><a href="#java%E8%A7%A3%E6%B3%95">Java解法</a></li>
+</ul>
+</li>
+<li><a href="#316-remove-duplicate-letters">316. Remove Duplicate Letters</a>
+<ul>
+<li><a href="#%E6%80%9D%E8%B7%AF-1">思路</a>
+<ul>
+<li><a href="#approach-stack-and-greedy">Approach: Stack and Greedy</a></li>
+</ul>
+</li>
+<li><a href="#c%E8%A7%A3%E6%B3%95-1">C++解法</a></li>
+<li><a href="#java%E8%A7%A3%E6%B3%95-1">Java解法</a></li>
+</ul>
+</li>
+<li><a href="#1081-smallest-subsequence-of-distinct-characters%E5%90%8C%E4%B8%8A">1081. Smallest Subsequence of Distinct Characters(同上)</a></li>
+<li><a href="#738-monotone-increasing-digits">738. Monotone Increasing Digits</a>
+<ul>
+<li><a href="#%E6%80%9D%E8%80%83">思考</a>
+<ul>
+<li><a href="#%E6%9A%B4%E5%8A%9B%E8%A7%A3%E6%B3%95">暴力解法</a></li>
+<li><a href="#%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95">贪心算法</a></li>
+</ul>
+</li>
+<li><a href="#c%E8%A7%A3%E6%B3%95-2">C++解法</a></li>
+<li><a href="#java%E8%A7%A3%E6%B3%95-2">Java解法</a></li>
+</ul>
+</li>
+</ul>
+<h1 id="763-partition-labels"><a class="header" href="#763-partition-labels"><a href="https://leetcode.com/problems/partition-labels/">763. Partition Labels</a></a></h1>
+<p>You are given a string <code>s</code>. We want to partition the string into as many parts as possible so that each letter appears in at most one part. For example, the string <code>"ababcc"</code> can be partitioned into <code>["abab", "cc"]</code>, but partitions such as <code>["aba", "bcc"]</code> or <code>["ab", "ab", "cc"]</code> are invalid.</p>
+<p>Note that the partition is done so that after concatenating all the parts in order, the resultant string should be <code>s</code>.</p>
+<p>Return <em>a list of integers representing the size of these parts</em>.</p>
+<p><strong>Example 1:</strong></p>
+<p><strong>Input:</strong> s = "ababcbacadefegdehijhklij"<br />
+<strong>Output:</strong> [9,7,8]<br />
+<strong>Explanation:</strong>
+The partition is "ababcbaca", "defegde", "hijhklij".
+This is a partition so that each letter appears in at most one part.
+A partition like "ababcbacadefegde", "hijhklij" is incorrect, because it splits s into less parts.</p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> s = "eccbbbbdec"<br />
+<strong>Output:</strong> [10]</p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= s.length &lt;= 500</code></li>
+<li><code>s</code> consists of lowercase English letters.</li>
+</ul>
+<h2 id="思路"><a class="header" href="#思路">思路</a></h2>
+<p>Try to greedily choose the smallest partition that includes the first letter. If you have something like "abaccbdeffed", then you might need to add b. You can use an map like "last['b'] = 5" to help you expand the width of your partition.</p>
+<p>一想到分割字符串就想到了回溯，但本题其实不用回溯去暴力搜索。</p>
+<p>题目要求同一字母最多出现在一个片段中，那么如何把同一个字母的都圈在同一个区间里呢？</p>
+<p>如果没有接触过这种题目的话，还挺有难度的。</p>
+<p>在遍历的过程中相当于是要找每一个字母的边界，<strong>如果找到之前遍历过的所有字母的最远边界，说明这个边界就是分割点了</strong>。此时前面出现过所有字母，最远也就到这个边界了。</p>
+<p>可以分为如下两步：</p>
+<ul>
+<li>统计每一个字符最后出现的位置</li>
+<li>从头遍历字符，并更新字符的最远出现下标，如果找到字符最远出现位置下标和当前下标相等了，则找到了分割点</li>
+</ul>
+<p>如图：</p>
+<p><img src="https://code-thinking-1253855093.file.myqcloud.com/pics/20201222191924417.png" alt="763.划分字母区间" /></p>
+<h2 id="c解法"><a class="header" href="#c解法">C++解法</a></h2>
+<p>明白原理之后，代码并不复杂，如下：</p>
+<pre><code class="language-cpp">class Solution {  
+public:  
+    vector&lt;int&gt; partitionLabels(string S) {  
+        int hash[27] = {0}; // i为字符，hash[i]为字符出现的最后位置  
+        for (int i = 0; i &lt; S.size(); i++) { // 统计每一个字符最后出现的位置  
+            hash[S[i] - 'a'] = i;  
+        }  
+        vector&lt;int&gt; result;  
+        int left = 0;  
+        int right = 0;  
+        for (int i = 0; i &lt; S.size(); i++) {  
+            right = max(right, hash[S[i] - 'a']); // 找到字符出现的最远边界  
+            if (i == right) {  
+                result.push_back(right - left + 1);  
+                left = i + 1;  
+            }  
+        }  
+        return result;  
+    }  
+};
+</code></pre>
+<ul>
+<li>时间复杂度：O(n)</li>
+<li>空间复杂度：O(1)，使用的hash数组是固定大小</li>
+</ul>
+<h2 id="java解法"><a class="header" href="#java解法">Java解法</a></h2>
+<pre><code class="language-java">class Solution {
+    public List&lt;Integer&gt; partitionLabels(String S) {
+        List&lt;Integer&gt; list = new LinkedList&lt;&gt;();
+        int[] edge = new int[26];
+        char[] chars = S.toCharArray();
+        for (int i = 0; i &lt; chars.length; i++) {
+            edge[chars[i] - 'a'] = i;
+        }
+        int idx = 0;
+        int last = -1;
+        for (int i = 0; i &lt; chars.length; i++) {
+            idx = Math.max(idx,edge[chars[i] - 'a']);
+            if (i == idx) {
+                list.add(i - last);
+                last = i;
+            }
+        }
+        return list;
+    }
+}
+</code></pre>
+<h1 id="316-remove-duplicate-letters"><a class="header" href="#316-remove-duplicate-letters"><a href="https://leetcode.com/problems/remove-duplicate-letters/">316. Remove Duplicate Letters</a></a></h1>
+<p>Given a string <code>s</code>, remove duplicate letters so that every letter appears once and only once. You must make sure your result is <strong>the smallest in lexicographical order</strong> among all possible results.</p>
+<p><strong>Example 1:</strong></p>
+<p><strong>Input:</strong> s = "bcabc"<br />
+<strong>Output:</strong> "abc"</p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> s = "cbacdcbc"<br />
+<strong>Output:</strong> "acdb"</p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= s.length &lt;= 10^4</code></li>
+<li><code>s</code> consists of lowercase English letters.</li>
+</ul>
+<p><strong>Note:</strong> This question is the same as 1081: <a href="https://leetcode.com/problems/smallest-subsequence-of-distinct-characters/">https://leetcode.com/problems/smallest-subsequence-of-distinct-characters/</a></p>
+<h2 id="思路-1"><a class="header" href="#思路-1">思路</a></h2>
+<p>Greedily try to add one missing character. How to check if adding some character will not cause problems ? Use bit-masks to check whether you will be able to complete the sub-sequence if you add the character at some index i.</p>
+<h3 id="approach-stack-and-greedy"><a class="header" href="#approach-stack-and-greedy">Approach: Stack and Greedy</a></h3>
+<p>To address the "Remove Duplicate Letters" problem using a stack and greedy algorithm, we lean on the properties of the stack to maintain lexicographical order:</p>
+<p>Key Data Structures:</p>
+<ul>
+<li><strong>stack</strong>: A dynamic data structure to hold characters in the desired order.</li>
+<li><strong>seen</strong>: A set to track characters already in the stack.</li>
+<li><strong>last_occurrence</strong>: A dictionary to track the last occurrence of each character in the string.</li>
+</ul>
+<p>Enhanced Breakdown:</p>
+<ol>
+<li><strong>Initialization</strong>: Initialize the stack, seen set, and last_occurrence dictionary.</li>
+<li><strong>Iterate through the string</strong>:
+<ul>
+<li>For each character, if it's in the seen set, skip it.</li>
+<li>If it's not in the seen set, add it to the stack. While adding, compare it with the top character of the stack. If the current character is smaller and the top character appears later in the string, pop the top character.</li>
+</ul>
+</li>
+<li><strong>Output</strong>: Convert the stack to a string and return.</li>
+</ol>
+<p><strong>Time Complexity:</strong></p>
+<ul>
+<li>The solution iterates over each character in the string once, leading to a time complexity of O(n), where <code>n</code> is the length of the string <code>s</code>.</li>
+</ul>
+<p><strong>Space Complexity:</strong></p>
+<ul>
+<li>The space complexity is O(n) due to the stack, seen set, and last_occurrence dictionary.</li>
+</ul>
+<h2 id="c解法-1"><a class="header" href="#c解法-1">C++解法</a></h2>
+<pre><code class="language-cpp">class Solution {
+public:
+    string removeDuplicateLetters(string s) {
+        vector&lt;int&gt; lastIndex(26, 0);
+        for (int i = 0; i &lt; s.length(); i++){
+            lastIndex[s[i] - 'a'] = i; // track the lastIndex of character presence
+        }
+        
+        vector&lt;bool&gt; seen(26, false); // keep track seen
+        stack&lt;char&gt; st;
+        
+        for (int i = 0; i &lt; s.size(); i++) {
+            int curr = s[i] - 'a';
+            if (seen[curr]) continue; // if seen continue as we need to pick one char only
+            while(st.size() &gt; 0 &amp;&amp; st.top() &gt; s[i] &amp;&amp; i &lt; lastIndex[st.top() - 'a']){
+                seen[st.top() - 'a'] = false; // pop out and mark unseen
+                st.pop();
+            }
+            st.push(s[i]); // add into stack
+            seen[curr] = true; // mark seen
+        }
+        
+        string ans = "";
+        while (st.size() &gt; 0){
+            ans += st.top();
+            st.pop();
+        }
+        reverse(ans.begin(), ans.end());
+        return ans;
+    }
+};
+</code></pre>
+<h2 id="java解法-1"><a class="header" href="#java解法-1">Java解法</a></h2>
+<pre><code class="language-java">class Solution {
+    public String removeDuplicateLetters(String s) {
+        int[] lastIndex = new int[26];
+        for (int i = 0; i &lt; s.length(); i++){
+            lastIndex[s.charAt(i) - 'a'] = i; // track the lastIndex of character presence
+        }
+        
+        boolean[] seen = new boolean[26]; // keep track seen
+        Stack&lt;Integer&gt; st = new Stack();
+        
+        for (int i = 0; i &lt; s.length(); i++) {
+            int curr = s.charAt(i) - 'a';
+            if (seen[curr]) continue; // if seen continue as we need to pick one char only
+            while (!st.isEmpty() &amp;&amp; st.peek() &gt; curr &amp;&amp; i &lt; lastIndex[st.peek()]){
+                seen[st.pop()] = false; // pop out and mark unseen
+            }
+            st.push(curr); // add into stack
+            seen[curr] = true; // mark seen
+        }
+
+        StringBuilder sb = new StringBuilder();
+        while (!st.isEmpty())
+            sb.append((char) (st.pop() + 'a'));
+        return sb.reverse().toString();
+    }
+}
+</code></pre>
+<h1 id="1081-smallest-subsequence-of-distinct-characters同上"><a class="header" href="#1081-smallest-subsequence-of-distinct-characters同上"><a href="https://leetcode.com/problems/smallest-subsequence-of-distinct-characters/">1081. Smallest Subsequence of Distinct Characters</a>(同上)</a></h1>
+<h1 id="738-monotone-increasing-digits"><a class="header" href="#738-monotone-increasing-digits"><a href="https://leetcode.com/problems/monotone-increasing-digits/">738. Monotone Increasing Digits</a></a></h1>
+<p>An integer has <strong>monotone increasing digits</strong> if and only if each pair of adjacent digits <code>x</code> and <code>y</code> satisfy <code>x &lt;= y</code>.</p>
+<p>Given an integer <code>n</code>, return <em>the largest number that is less than or equal to</em> <code>n</code> <em>with <strong>monotone increasing digits</strong></em>.</p>
+<p><strong>Example 1:</strong></p>
+<p><strong>Input:</strong> n = 10<br />
+<strong>Output:</strong> 9</p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> n = 1234<br />
+<strong>Output:</strong> 1234</p>
+<p><strong>Example 3:</strong></p>
+<p><strong>Input:</strong> n = 332<br />
+<strong>Output:</strong> 299</p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>0 &lt;= n &lt;= 10^9</code></li>
+</ul>
+<h2 id="思考"><a class="header" href="#思考">思考</a></h2>
+<p>Build the answer digit by digit, adding the largest possible one that would make the number still less than or equal to N.</p>
+<h3 id="暴力解法"><a class="header" href="#暴力解法">暴力解法</a></h3>
+<p>题意很简单，那么首先想的就是暴力解法了，来我替大家暴力一波，结果自然是超时！</p>
+<p>代码如下：</p>
+<pre><code class="language-cpp">class Solution {  
+private:  
+    // 判断一个数字的各位上是否是递增  
+    bool checkNum(int num) {  
+        int max = 10;  
+        while (num) {  
+            int t = num % 10;  
+            if (max &gt;= t) max = t;  
+            else return false;  
+            num = num / 10;  
+        }  
+        return true;  
+    }  
+public:  
+    int monotoneIncreasingDigits(int N) {  
+        for (int i = N; i &gt; 0; i--) { // 从大到小遍历  
+            if (checkNum(i)) return i;  
+        }  
+        return 0;  
+    }  
+};
+</code></pre>
+<ul>
+<li>时间复杂度：O(n × m) m为n的数字长度</li>
+<li>空间复杂度：O(1)</li>
+</ul>
+<h3 id="贪心算法"><a class="header" href="#贪心算法">贪心算法</a></h3>
+<p>题目要求小于等于N的最大单调递增的整数，那么拿一个两位的数字来举例。</p>
+<p>例如：98，一旦出现<code>strNum[i - 1] &gt; strNum[i]</code>的情况（非单调递增），首先想让<code>strNum[i - 1]--</code>，然后<code>strNum[i]</code>变为9，这样这个整数就是89，即小于98的最大的单调递增整数。</p>
+<p>这一点如果想清楚了，这道题就好办了。</p>
+<p>此时是从前向后遍历还是从后向前遍历呢？</p>
+<p>从前向后遍历的话，遇到<code>strNum[i - 1] &gt; strNum[i]</code>的情况，让<code>strNum[i - 1]</code>减一，但此时如果<code>strNum[i - 1]</code>减一了，可能又小于<code>strNum[i - 2]</code>。</p>
+<p>这么说有点抽象，举个例子，数字：332，从前向后遍历的话，那么就把变成了329，此时2又小于了第一位的3了，真正的结果应该是299。</p>
+<p>那么从后向前遍历，就可以重复利用上次比较得出的结果了，从后向前遍历332的数值变化为：332 -&gt; 329 -&gt; 299</p>
+<p>确定了遍历顺序之后，那么此时局部最优就可以推出全局，找不出反例，试试贪心。</p>
+<h2 id="c解法-2"><a class="header" href="#c解法-2">C++解法</a></h2>
+<p>本题只要想清楚个例，例如98，一旦出现<code>strNum[i - 1] &gt; strNum[i]</code>的情况（非单调递增），首先想让<code>strNum[i - 1]</code>减一，<code>strNum[i]</code>赋值9，这样这个整数就是89。就可以很自然想到对应的贪心解法了。</p>
+<p>想到了贪心，还要考虑遍历顺序，只有从后向前遍历才能重复利用上次比较的结果。</p>
+<p>最后代码实现的时候，也需要一些技巧，例如用一个flag来标记从哪里开始赋值9。</p>
+<p>C++代码如下：</p>
+<pre><code class="language-cpp">class Solution {  
+public:  
+    int monotoneIncreasingDigits(int N) {  
+        string strNum = to_string(N);  
+        // flag用来标记赋值9从哪里开始  
+        // 设置为这个默认值，为了防止第二个for循环在flag没有被赋值的情况下执行  
+        int flag = strNum.size();  
+        for (int i = strNum.size() - 1; i &gt; 0; i--) {  
+            if (strNum[i - 1] &gt; strNum[i] ) {  
+                flag = i;  
+                strNum[i - 1]--;  
+            }  
+        }  
+        for (int i = flag; i &lt; strNum.size(); i++) {  
+            strNum[i] = '9';  
+        }  
+        return stoi(strNum);  
+    }  
+};  
+</code></pre>
+<p>​</p>
+<ul>
+<li>时间复杂度：O(n)，n 为数字长度</li>
+<li>空间复杂度：O(n)，需要一个字符串，转化为字符串操作更方便</li>
+</ul>
+<h2 id="java解法-2"><a class="header" href="#java解法-2">Java解法</a></h2>
+<pre><code class="language-java">class Solution {
+    public int monotoneIncreasingDigits(int n) {
+        String s = Integer.toString(n); // 将整数转换为字符串
+        char[] arr = s.toCharArray(); // 将字符串转换为字符数组，方便修改
+        int flag = arr.length;
+        for(int i = arr.length - 1; i &gt; 0; i--){
+            if(arr[i] &lt; arr[i - 1]){
+                arr[i - 1]--; // 字符自减
+                flag = i;
+            }
+        }
+        for(int i = flag; i &lt; arr.length; i++){
+            arr[i] = '9'; // 将后面的所有字符设置为 '9'
+        }
+        return Integer.parseInt(new String(arr)); // 将字符数组转换回字符串，再转换为整数
+    }
+}
+</code></pre>
+<p><strong>主要修改说明：</strong></p>
+<ol>
+<li><strong>类型转换：</strong>
+<ul>
+<li><code>Integer.toString(n)</code>: 将整数 <code>n</code> 转换为字符串，因为 Java 中没有直接名为 <code>toString</code> 的全局函数来转换整数。</li>
+<li><code>s.toCharArray()</code>: 将字符串 <code>s</code> 转换为字符数组。这样可以方便地修改字符串中的字符。</li>
+<li><code>Integer.parseInt(new String(arr))</code>: 将修改后的字符数组转换回字符串，然后再将字符串解析为整数，作为结果返回。</li>
+</ul>
+</li>
+<li><strong>字符自减：</strong>
+<ul>
+<li><code>arr[i - 1]--</code>:  字符数组中的元素是 <code>char</code> 类型，可以直接进行自减操作。</li>
+</ul>
+</li>
+<li><strong>使用字符数组：</strong>
+<ul>
+<li>使用 <code>char[] arr</code> 代替 <code>string s</code>，因为 Java 的 String 类型是不可变的。为了能够修改字符串中的字符，我们需要将其转换为字符数组。</li>
+</ul>
+</li>
+<li><strong>valueOf() 方法：</strong>
+<ul>
+<li><code>String</code> 类没有 <code>valueOf()</code> 实例方法。应该使用 <code>new String(arr)</code> 从字符数组创建一个新的字符串。</li>
+</ul>
+</li>
+</ol>
+<p>这段代码的思路是找到从右到左第一个降序的位置，将该位置的数字减 1，然后将该位置之后的所有数字都置为 9，以保证结果是单调递增的。</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../贪心/区间和贪心算法.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../贪心/二叉树和贪心算法.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../贪心/区间和贪心算法.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../贪心/二叉树和贪心算法.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

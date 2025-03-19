@@ -1,0 +1,423 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>子序列与贪心算法 - 剑指Offer</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">剑指Offer</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
+<h1 id="子序列与贪心算法"><a class="header" href="#子序列与贪心算法">子序列与贪心算法</a></h1>
+<ul>
+<li><a href="#376-wiggle-subsequence">376. Wiggle Subsequence</a>
+<ul>
+<li><a href="#%E6%80%9D%E8%B7%AF">思路</a>
+<ul>
+<li><a href="#%E6%80%9D%E8%B7%AF-1%E8%B4%AA%E5%BF%83%E8%A7%A3%E6%B3%95">思路 1（贪心解法）</a>
+<ul>
+<li><a href="#%E6%83%85%E5%86%B5%E4%B8%80%E4%B8%8A%E4%B8%8B%E5%9D%A1%E4%B8%AD%E6%9C%89%E5%B9%B3%E5%9D%A1">情况一：上下坡中有平坡</a></li>
+<li><a href="#%E6%83%85%E5%86%B5%E4%BA%8C%E6%95%B0%E7%BB%84%E9%A6%96%E5%B0%BE%E4%B8%A4%E7%AB%AF">情况二：数组首尾两端</a></li>
+<li><a href="#%E6%83%85%E5%86%B5%E4%B8%89%E5%8D%95%E8%B0%83%E5%9D%A1%E5%BA%A6%E6%9C%89%E5%B9%B3%E5%9D%A1">情况三：单调坡度有平坡</a></li>
+</ul>
+</li>
+<li><a href="#%E6%80%9D%E8%B7%AF-2%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92">思路 2（动态规划）</a></li>
+</ul>
+</li>
+<li><a href="#c%E8%A7%A3%E6%B3%95">C++解法</a></li>
+</ul>
+</li>
+</ul>
+<h1 id="376-wiggle-subsequence"><a class="header" href="#376-wiggle-subsequence"><a href="https://leetcode.com/problems/wiggle-subsequence/">376. Wiggle Subsequence</a></a></h1>
+<p>A <strong>wiggle sequence</strong> is a sequence where the differences between successive numbers strictly alternate between positive and negative. The first difference (if one exists) may be either positive or negative. A sequence with one element and a sequence with two non-equal elements are trivially wiggle sequences.</p>
+<ul>
+<li>For example, <code>[1, 7, 4, 9, 2, 5]</code> is a <strong>wiggle sequence</strong> because the differences <code>(6, -3, 5, -7, 3)</code> alternate between positive and negative.</li>
+<li>In contrast, <code>[1, 4, 7, 2, 5]</code> and <code>[1, 7, 4, 5, 5]</code> are not wiggle sequences. The first is not because its first two differences are positive, and the second is not because its last difference is zero.</li>
+</ul>
+<p>A <strong>subsequence</strong> is obtained by deleting some elements (possibly zero) from the original sequence, leaving the remaining elements in their original order.</p>
+<p>Given an integer array <code>nums</code>, return <em>the length of the longest <strong>wiggle subsequence</strong> of</em> <code>nums</code>.</p>
+<p><strong>Example 1:</strong></p>
+<p><strong>Input:</strong> nums = [1,7,4,9,2,5]<br />
+<strong>Output:</strong> 6<br />
+<strong>Explanation:</strong> The entire sequence is a wiggle sequence with differences (6, -3, 5, -7, 3).</p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> nums = [1,17,5,10,13,15,10,5,16,8]<br />
+<strong>Output:</strong> 7<br />
+<strong>Explanation:</strong> There are several subsequences that achieve this length.
+One is [1, 17, 10, 13, 10, 16, 8] with differences (16, -7, 3, -3, 6, -8).</p>
+<p><strong>Example 3:</strong></p>
+<p><strong>Input:</strong> nums = [1,2,3,4,5,6,7,8,9]<br />
+<strong>Output:</strong> 2</p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= nums.length &lt;= 1000</code></li>
+<li><code>0 &lt;= nums[i] &lt;= 1000</code></li>
+</ul>
+<p><strong>Follow up:</strong> Could you solve this in <code>O(n)</code> time?</p>
+<h2 id="思路"><a class="header" href="#思路">思路</a></h2>
+<h3 id="思路-1贪心解法"><a class="header" href="#思路-1贪心解法">思路 1（贪心解法）</a></h3>
+<p>本题要求通过从原始序列中删除一些（也可以不删除）元素来获得子序列，剩下的元素保持其原始顺序。</p>
+<p>相信这么一说吓退不少同学，这要求最大摆动序列又可以修改数组，这得如何修改呢？</p>
+<p>来分析一下，要求删除元素使其达到最大摆动序列，应该删除什么元素呢？</p>
+<p>用示例二来举例，如图所示：</p>
+<p><img src="https://code-thinking-1253855093.file.myqcloud.com/pics/20201124174327597.png" alt="376.摆动序列" /></p>
+<p><strong>局部最优：删除单调坡度上的节点（不包括单调坡度两端的节点），那么这个坡度就可以有两个局部峰值</strong>。</p>
+<p><strong>整体最优：整个序列有最多的局部峰值，从而达到最长摆动序列</strong>。</p>
+<p>局部最优推出全局最优，并举不出反例，那么试试贪心！</p>
+<p>（为方便表述，以下说的峰值都是指局部峰值）</p>
+<p><strong>实际操作上，其实连删除的操作都不用做，因为题目要求的是最长摆动子序列的长度，所以只需要统计数组的峰值数量就可以了（相当于是删除单一坡度上的节点，然后统计长度）</strong></p>
+<p><strong>这就是贪心所贪的地方，让峰值尽可能的保持峰值，然后删除单一坡度上的节点</strong></p>
+<p>在计算是否有峰值的时候，大家知道遍历的下标 i ，计算 <code>prediff（nums[i] - nums[i-1]）</code> 和 <code>curdiff（nums[i+1] - nums[i]</code>，如果<code>prediff &lt; 0 &amp;&amp; curdiff &gt; 0</code> 或者 <code>prediff &gt; 0 &amp;&amp; curdiff &lt; 0</code> 此时就有波动就需要统计。</p>
+<p>这是我们思考本题的一个大体思路，但本题要考虑三种情况：</p>
+<ol>
+<li>情况一：上下坡中有平坡</li>
+<li>情况二：数组首尾两端</li>
+<li>情况三：单调坡中有平坡</li>
+</ol>
+<h4 id="情况一上下坡中有平坡"><a class="header" href="#情况一上下坡中有平坡">情况一：上下坡中有平坡</a></h4>
+<p>例如 [1,2,2,2,1]这样的数组，如图：</p>
+<p><img src="https://code-thinking-1253855093.file.myqcloud.com/pics/20230106170449.png" alt="" /></p>
+<p>它的摇摆序列长度是多少呢？ <strong>其实是长度是 3</strong>，也就是我们在删除的时候 要不删除左面的三个 2，要不就删除右边的三个 2。</p>
+<p>如图，可以统一规则，删除左边的三个 2：</p>
+<p><img src="https://code-thinking-1253855093.file.myqcloud.com/pics/20230106172613.png" alt="" /></p>
+<p>在图中，当 i 指向第一个 2 的时候，<code>prediff &gt; 0 &amp;&amp; curdiff = 0</code> ，当 i 指向最后一个 2 的时候 <code>prediff = 0 &amp;&amp; curdiff &lt; 0</code>。</p>
+<p>如果我们采用，删左面三个 2 的规则，那么 当 <code>prediff = 0 &amp;&amp; curdiff &lt; 0</code> 也要记录一个峰值，因为他是把之前相同的元素都删掉留下的峰值。</p>
+<p>所以我们记录峰值的条件应该是： <code>(preDiff &lt;= 0 &amp;&amp; curDiff &gt; 0) || (preDiff &gt;= 0 &amp;&amp; curDiff &lt; 0)</code>，为什么这里允许 prediff == 0 ，就是为了 上面我说的这种情况。</p>
+<h4 id="情况二数组首尾两端"><a class="header" href="#情况二数组首尾两端">情况二：数组首尾两端</a></h4>
+<p>所以本题统计峰值的时候，数组最左面和最右面如何统计呢？</p>
+<p>题目中说了，如果只有两个不同的元素，那摆动序列也是 2。</p>
+<p>例如序列[2,5]，如果靠统计差值来计算峰值个数就需要考虑数组最左面和最右面的特殊情况。</p>
+<p>因为我们在计算 <code>prediff（nums[i] - nums[i-1]）</code> 和 <code>curdiff（nums[i+1] - nums[i]）</code>的时候，至少需要三个数字才能计算，而数组只有两个数字。</p>
+<p>这里我们可以写死，就是 如果只有两个元素，且元素不同，那么结果为 2。</p>
+<p>不写死的话，如何和我们的判断规则结合在一起呢？</p>
+<p>可以假设，数组最前面还有一个数字，那这个数字应该是什么呢？</p>
+<p>之前我们在 讨论 情况一：相同数字连续 的时候， prediff = 0 ，curdiff &lt; 0 或者 &gt;0 也记为波谷。</p>
+<p>那么为了规则统一，针对序列[2,5]，可以假设为[2,2,5]，这样它就有坡度了即 preDiff = 0，如图：</p>
+<p><img src="https://code-thinking-1253855093.file.myqcloud.com/pics/20201124174357612.png" alt="376.摆动序列1" /></p>
+<p>针对以上情形，result 初始为 1（默认最右面有一个峰值），此时 curDiff &gt; 0 &amp;&amp; preDiff &lt;= 0，那么 result++（计算了左面的峰值），最后得到的 result 就是 2（峰值个数为 2 即摆动序列长度为 2）</p>
+<p>经过以上分析后，我们可以写出如下代码：</p>
+<pre><code class="language-cpp">// 版本一  
+class Solution {  
+public:  
+    int wiggleMaxLength(vector&lt;int&gt;&amp; nums) {  
+        if (nums.size() &lt;= 1) return nums.size();  
+        int curDiff = 0; // 当前一对差值  
+        int preDiff = 0; // 前一对差值  
+        int result = 1;  // 记录峰值个数，序列默认序列最右边有一个峰值  
+        for (int i = 0; i &lt; nums.size() - 1; i++) {  
+            curDiff = nums[i + 1] - nums[i];  
+            // 出现峰值  
+            if ((preDiff &lt;= 0 &amp;&amp; curDiff &gt; 0) || (preDiff &gt;= 0 &amp;&amp; curDiff &lt; 0)) {  
+                result++;  
+            }  
+            preDiff = curDiff;  
+        }  
+        return result;  
+    }  
+};
+</code></pre>
+<ul>
+<li>时间复杂度：O(n)</li>
+<li>空间复杂度：O(1)</li>
+</ul>
+<p>此时大家是不是发现 以上代码提交也不能通过本题？</p>
+<p>所以此时我们要讨论情况三！</p>
+<h4 id="情况三单调坡度有平坡"><a class="header" href="#情况三单调坡度有平坡">情况三：单调坡度有平坡</a></h4>
+<p>在版本一中，我们忽略了一种情况，即 如果在一个单调坡度上有平坡，例如[1,2,2,2,3,4]，如图：</p>
+<p><img src="https://code-thinking-1253855093.file.myqcloud.com/pics/20230108171505.png" alt="" /></p>
+<p>图中，我们可以看出，版本一的代码在三个地方记录峰值，但其实结果因为是 2，因为 单调中的平坡 不能算峰值（即摆动）。</p>
+<p>之所以版本一会出问题，是因为我们实时更新了 prediff。</p>
+<p>那么我们应该什么时候更新 prediff 呢？</p>
+<p>我们只需要在 这个坡度 摆动变化的时候，更新 prediff 就行，这样 prediff 在 单调区间有平坡的时候 就不会发生变化，造成我们的误判。</p>
+<p>所以本题的最终代码为：
+​</p>
+<pre><code class="language-cpp">// 版本二  
+class Solution {  
+public:  
+    int wiggleMaxLength(vector&lt;int&gt;&amp; nums) {  
+        if (nums.size() &lt;= 1) return nums.size();  
+        int curDiff = 0; // 当前一对差值  
+        int preDiff = 0; // 前一对差值  
+        int result = 1;  // 记录峰值个数，序列默认序列最右边有一个峰值  
+        for (int i = 0; i &lt; nums.size() - 1; i++) {  
+            curDiff = nums[i + 1] - nums[i];  
+            // 出现峰值  
+            if ((preDiff &lt;= 0 &amp;&amp; curDiff &gt; 0) || (preDiff &gt;= 0 &amp;&amp; curDiff &lt; 0)) {  
+                result++;  
+                preDiff = curDiff; // 注意这里，只在摆动变化的时候更新prediff  
+            }  
+        }  
+        return result;  
+    }  
+};
+</code></pre>
+<p>其实本题看起来好像简单，但需要考虑的情况还是很复杂的，而且很难一次性想到位。</p>
+<p><strong>本题异常情况的本质，就是要考虑平坡</strong>， 平坡分两种，一个是 上下中间有平坡，一个是单调有平坡，如图：</p>
+<p><img src="https://code-thinking-1253855093.file.myqcloud.com/pics/20230108174452.png" alt="" /></p>
+<h3 id="思路-2动态规划"><a class="header" href="#思路-2动态规划">思路 2（动态规划）</a></h3>
+<p>考虑用动态规划的思想来解决这个问题。</p>
+<p>很容易可以发现，对于我们当前考虑的这个数，要么是作为山峰（即 nums[i] &gt; nums[i-1]），要么是作为山谷（即 nums[i] &lt; nums[i - 1]）。</p>
+<ul>
+<li>设 dp 状态<code>dp[i][0]</code>，表示考虑前 i 个数，第 i 个数作为山峰的摆动子序列的最长长度</li>
+<li>设 dp 状态<code>dp[i][1]</code>，表示考虑前 i 个数，第 i 个数作为山谷的摆动子序列的最长长度</li>
+</ul>
+<p>则转移方程为：</p>
+<ul>
+<li><code>dp[i][0] = max(dp[i][0], dp[j][1] + 1)</code>，其中<code>0 &lt; j &lt; i</code>且<code>nums[j] &lt; nums[i]</code>，表示将 nums[i]接到前面某个山谷后面，作为山峰。</li>
+<li><code>dp[i][1] = max(dp[i][1], dp[j][0] + 1)</code>，其中<code>0 &lt; j &lt; i</code>且<code>nums[j] &gt; nums[i]</code>，表示将 nums[i]接到前面某个山峰后面，作为山谷。</li>
+</ul>
+<p>初始状态：</p>
+<p>由于一个数可以接到前面的某个数后面，也可以以自身为子序列的起点，所以初始状态为：<code>dp[0][0] = dp[0][1] = 1</code>。</p>
+<p>C++代码如下：</p>
+<pre><code class="language-cpp">class Solution {  
+public:  
+    int dp[1005][2];  
+    int wiggleMaxLength(vector&lt;int&gt;&amp; nums) {  
+        memset(dp, 0, sizeof dp);  
+        dp[0][0] = dp[0][1] = 1;  
+        for (int i = 1; i &lt; nums.size(); ++i) {  
+            dp[i][0] = dp[i][1] = 1;  
+            for (int j = 0; j &lt; i; ++j) {  
+                if (nums[j] &gt; nums[i]) dp[i][1] = max(dp[i][1], dp[j][0] + 1);  
+            }  
+            for (int j = 0; j &lt; i; ++j) {  
+                if (nums[j] &lt; nums[i]) dp[i][0] = max(dp[i][0], dp[j][1] + 1);  
+            }  
+        }  
+        return max(dp[nums.size() - 1][0], dp[nums.size() - 1][1]);  
+    }  
+};
+</code></pre>
+<ul>
+<li>时间复杂度：O(n^2)</li>
+<li>空间复杂度：O(n)</li>
+</ul>
+<p><strong>进阶</strong></p>
+<p>可以用两棵线段树来维护区间的最大值</p>
+<ul>
+<li>每次更新<code>dp[i][0]</code>，则在<code>tree1</code>的<code>nums[i]</code>位置值更新为<code>dp[i][0]</code></li>
+<li>每次更新<code>dp[i][1]</code>，则在<code>tree2</code>的<code>nums[i]</code>位置值更新为<code>dp[i][1]</code></li>
+<li>则 dp 转移方程中就没有必要 j 从 0 遍历到 i-1，可以直接在线段树中查询指定区间的值即可。</li>
+</ul>
+<p>时间复杂度：O(nlog n)</p>
+<p>空间复杂度：O(n)</p>
+<h2 id="c解法"><a class="header" href="#c解法">C++解法</a></h2>
+<p>本题使用贪心算法的最终代码为：
+​</p>
+<pre><code class="language-cpp">// 版本二  
+class Solution {  
+public:  
+    int wiggleMaxLength(vector&lt;int&gt;&amp; nums) {  
+        if (nums.size() &lt;= 1) return nums.size();  
+        int curDiff = 0; // 当前一对差值  
+        int preDiff = 0; // 前一对差值  
+        int result = 1;  // 记录峰值个数，序列默认序列最右边有一个峰值  
+        for (int i = 0; i &lt; nums.size() - 1; i++) {  
+            curDiff = nums[i + 1] - nums[i];  
+            // 出现峰值  
+            if ((preDiff &lt;= 0 &amp;&amp; curDiff &gt; 0) || (preDiff &gt;= 0 &amp;&amp; curDiff &lt; 0)) {  
+                result++;  
+                preDiff = curDiff; // 注意这里，只在摆动变化的时候更新prediff  
+            }  
+        }  
+        return result;  
+    }  
+};
+</code></pre>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../贪心/子数组与贪心算法.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../贪心/数字与贪心.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../贪心/子数组与贪心算法.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../贪心/数字与贪心.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

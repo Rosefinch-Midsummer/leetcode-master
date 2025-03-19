@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>环形链表 - 剑指Offer</title>
+        <title>子数组与贪心算法 - 剑指Offer</title>
 
 
         <!-- Custom HTML head -->
@@ -153,179 +153,173 @@
                 <div id="content" class="content">
                     <main>
                         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
-<h1 id="环形链表"><a class="header" href="#环形链表">环形链表</a></h1>
+<h1 id="子数组与贪心算法"><a class="header" href="#子数组与贪心算法">子数组与贪心算法</a></h1>
 <ul>
-<li><a href="#141-linked-list-cycle">141. Linked List Cycle</a>
+<li><a href="#53-maximum-subarray">53. Maximum Subarray</a>
 <ul>
-<li><a href="#%E6%80%9D%E8%B7%AF">思路</a></li>
+<li><a href="#%E6%80%9D%E8%B7%AF">思路</a>
+<ul>
+<li><a href="#%E8%B4%AA%E5%BF%83">贪心</a></li>
+<li><a href="#%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92">动态规划</a></li>
+</ul>
+</li>
 <li><a href="#c%E8%A7%A3%E6%B3%95">C++解法</a></li>
-</ul>
-</li>
-<li><a href="#142-linked-list-cycle-ii">142. Linked List Cycle II</a>
-<ul>
-<li><a href="#%E6%80%9D%E8%B7%AF-1">思路</a></li>
-<li><a href="#c%E8%A7%A3%E6%B3%95-1">C++解法</a></li>
 <li><a href="#java%E8%A7%A3%E6%B3%95">Java解法</a></li>
-<li><a href="#python%E8%A7%A3%E6%B3%95">Python解法</a></li>
 </ul>
 </li>
 </ul>
-<h1 id="141-linked-list-cycle"><a class="header" href="#141-linked-list-cycle"><a href="https://leetcode.com/problems/linked-list-cycle/">141. Linked List Cycle</a></a></h1>
-<p>Given <code>head</code>, the head of a linked list, determine if the linked list has a cycle in it.</p>
-<p>There is a cycle in a linked list if there is some node in the list that can be reached again by continuously following the <code>next</code> pointer. Internally, <code>pos</code> is used to denote the index of the node that tail's <code>next</code> pointer is connected to. <strong>Note that <code>pos</code> is not passed as a parameter</strong>.</p>
-<p>Return <code>true</code> <em>if there is a cycle in the linked list</em>. Otherwise, return <code>false</code>.</p>
+<h1 id="53-maximum-subarray"><a class="header" href="#53-maximum-subarray"><a href="https://leetcode.com/problems/maximum-subarray/">53. Maximum Subarray</a></a></h1>
+<p>Given an integer array <code>nums</code>, find the subarray with the largest sum, and return <em>its sum</em>.</p>
 <p><strong>Example 1:</strong></p>
-<p><img src="https://assets.leetcode.com/uploads/2018/12/07/circularlinkedlist.png" alt="" /></p>
-<p><strong>Input:</strong> <code>head = [3,2,0,-4], pos = 1</code><br />
-<strong>Output:</strong> <code>true</code><br />
-<strong>Explanation:</strong> There is a cycle in the linked list, where the tail connects to the 1st node (0-indexed).</p>
+<p><strong>Input:</strong> nums = [-2,1,-3,4,-1,2,1,-5,4]<br />
+<strong>Output:</strong> 6<br />
+<strong>Explanation:</strong> The subarray [4,-1,2,1] has the largest sum 6.</p>
 <p><strong>Example 2:</strong></p>
-<p><img src="https://assets.leetcode.com/uploads/2018/12/07/circularlinkedlist_test2.png" alt="" /></p>
-<p><strong>Input:</strong> <code>head = [1,2], pos = 0</code><br />
-<strong>Output:</strong> <code>true</code><br />
-<strong>Explanation:</strong> There is a cycle in the linked list, where the tail connects to the 0th node.</p>
+<p><strong>Input:</strong> nums = [1]<br />
+<strong>Output:</strong> 1<br />
+<strong>Explanation:</strong> The subarray [1] has the largest sum 1.</p>
 <p><strong>Example 3:</strong></p>
-<p><img src="https://assets.leetcode.com/uploads/2018/12/07/circularlinkedlist_test3.png" alt="" /></p>
-<p><strong>Input:</strong> <code>head = [1], pos = -1</code><br />
-<strong>Output:</strong> <code>false</code><br />
-<strong>Explanation:</strong> There is no cycle in the linked list.</p>
+<p><strong>Input:</strong> nums = [5,4,-1,7,8]<br />
+<strong>Output:</strong> 23<br />
+<strong>Explanation:</strong> The subarray [5,4,-1,7,8] has the largest sum 23.</p>
 <p><strong>Constraints:</strong></p>
 <ul>
-<li>The number of the nodes in the list is in the range <code>[0, 104]</code>.</li>
-<li><code>-10^5 &lt;= Node.val &lt;= 10^5</code></li>
-<li><code>pos</code> is <code>-1</code> or a <strong>valid index</strong> in the linked-list.</li>
+<li><code>1 &lt;= nums.length &lt;= 10^5</code></li>
+<li><code>-10^4 &lt;= nums[i] &lt;= 10^4</code></li>
 </ul>
-<p><strong>Follow up:</strong> Can you solve it using <code>O(1)</code> (i.e. constant) memory?</p>
+<p><strong>Follow up:</strong> If you have figured out the <code>O(n)</code> solution, try coding another solution using the <strong>divide and conquer</strong> approach, which is more subtle.</p>
 <h2 id="思路"><a class="header" href="#思路">思路</a></h2>
-<p>双指针，快指针比慢指针速度快一倍，有环则两者相遇，无环则自动跳出循环</p>
-<h2 id="c解法"><a class="header" href="#c解法">C++解法</a></h2>
-<pre><code class="language-cpp">/**
- * Definition for singly-linked list.
- * struct ListNode {
- *     int val;
- *     ListNode *next;
- *     ListNode(int x) : val(x), next(NULL) {}
- * };
- */
-class Solution {
-public:
-    bool hasCycle(ListNode *head) {
-        if(head == NULL || head-&gt;next == NULL)
-            return false;
-        ListNode* slow = head;
-        ListNode* fast = head;
-        while(fast &amp;&amp; fast-&gt;next){
-            slow = slow-&gt;next;
-            fast = fast-&gt;next-&gt;next;
-            if(slow == fast)
-                return true;
-        }
-        return false;
-    }
-};
+<h3 id="贪心"><a class="header" href="#贪心">贪心</a></h3>
+<p><strong>贪心贪的是哪里呢？</strong></p>
+<p>如果 -2 1 在一起，计算起点的时候，一定是从 1 开始计算，因为负数只会拉低总和，这就是贪心贪的地方！</p>
+<p>局部最优：当前“连续和”为负数的时候立刻放弃，从下一个元素重新计算“连续和”，因为负数加上下一个元素 “连续和”只会越来越小。</p>
+<p>全局最优：选取最大“连续和”</p>
+<p><strong>局部最优的情况下，并记录最大的“连续和”，可以推出全局最优</strong>。</p>
+<p>从代码角度上来讲：遍历 nums，从头开始用 count 累积，如果 count 一旦加上 nums[i]变为负数，那么就应该从 nums[i+1]开始从 0 累积 count 了，因为已经变为负数的 count，只会拖累总和。</p>
+<p><strong>这相当于是暴力解法中的不断调整最大子序和区间的起始位置</strong>。</p>
+<p><strong>那有同学问了，区间终止位置不用调整么？ 如何才能得到最大“连续和”呢？</strong></p>
+<p>区间的终止位置，其实就是如果 count 取到最大值了，及时记录下来了。例如如下代码：</p>
+<pre><code class="language-cpp">if (count &gt; result) result = count;
 </code></pre>
-<h1 id="142-linked-list-cycle-ii"><a class="header" href="#142-linked-list-cycle-ii"><a href="https://leetcode.com/problems/linked-list-cycle-ii/">142. Linked List Cycle II</a></a></h1>
-<p>Given the <code>head</code> of a linked list, return <em>the node where the cycle begins. If there is no cycle, return</em> <code>null</code>.</p>
-<p>There is a cycle in a linked list if there is some node in the list that can be reached again by continuously following the <code>next</code> pointer. Internally, <code>pos</code> is used to denote the index of the node that tail's <code>next</code> pointer is connected to (<strong>0-indexed</strong>). It is <code>-1</code> if there is no cycle. <strong>Note that</strong> <code>pos</code> <strong>is not passed as a parameter</strong>.</p>
-<p><strong>Do not modify</strong> the linked list.</p>
-<p><strong>Example 1:</strong></p>
-<p><img src="https://assets.leetcode.com/uploads/2018/12/07/circularlinkedlist.png" alt="" /></p>
-<p><strong>Input:</strong> <code>head = [3,2,0,-4], pos = 1</code><br />
-<strong>Output:</strong> <code>tail connects to node index 1</code><br />
-<strong>Explanation:</strong> There is a cycle in the linked list, where tail connects to the second node.</p>
-<p><strong>Example 2:</strong></p>
-<p><img src="https://assets.leetcode.com/uploads/2018/12/07/circularlinkedlist_test2.png" alt="" /></p>
-<p><strong>Input:</strong> <code>head = [1,2], pos = 0</code><br />
-<strong>Output:</strong> <code>tail connects to node index 0</code><br />
-<strong>Explanation:</strong> There is a cycle in the linked list, where tail connects to the first node.</p>
-<p><strong>Example 3:</strong></p>
-<p><img src="https://assets.leetcode.com/uploads/2018/12/07/circularlinkedlist_test3.png" alt="" /></p>
-<p><strong>Input:</strong> <code>head = [1], pos = -1</code><br />
-<strong>Output:</strong> no cycle
-<strong>Explanation:</strong> There is no cycle in the linked list.</p>
-<p><strong>Constraints:</strong></p>
+<p><strong>这样相当于是用 result 记录最大子序和区间和（变相的算是调整了终止位置）</strong>。</p>
+<p>如动画所示：</p>
+<p><img src="https://code-thinking.cdn.bcebos.com/gifs/53.%E6%9C%80%E5%A4%A7%E5%AD%90%E5%BA%8F%E5%92%8C.gif" alt="53.最大子序和" /></p>
+<p>红色的起始位置就是贪心每次取 count 为正数的时候，开始一个区间的统计。</p>
+<p>当然题目没有说如果数组为空，应该返回什么，所以数组为空的话返回啥都可以了。</p>
+<p>常见误区一：</p>
+<p>不少同学认为 如果输入用例都是-1，或者都是负数，这个贪心算法跑出来的结果是 0， 这是<strong>又一次证明脑洞模拟不靠谱的经典案例</strong>，建议大家把代码运行一下试一试，就知道了，也会理解为什么 result 要初始化为最小负数了。</p>
+<p>常见误区二：</p>
+<p>大家在使用贪心算法求解本题，经常陷入的误区，就是分不清，是遇到 负数就选择起始位置，还是连续和为负选择起始位置。</p>
+<p>在动画演示用，大家可以发现， 4，遇到 -1 的时候，我们依然累加了，为什么呢？</p>
+<p>因为和为 3，只要连续和还是正数就会 对后面的元素 起到增大总和的作用。 所以只要连续和为正数我们就保留。</p>
+<p>这里也会有录友疑惑，那 4 + -1 之后 不就变小了吗？ 会不会错过 4 成为最大连续和的可能性？</p>
+<p>其实并不会，因为还有一个变量 result 一直在更新最大的连续和，只要有更大的连续和出现，result 就更新了，那么 result 已经把 4 更新了，后面连续和变成 3，也不会对最后结果有影响。</p>
+<h3 id="动态规划"><a class="header" href="#动态规划">动态规划</a></h3>
+<p>这次我们用动态规划的思路再来分析一次。</p>
+<p>动规五部曲如下：</p>
+<ol>
+<li>确定dp数组（dp table）以及下标的含义</li>
+</ol>
+<p><strong>dp[i]：包括下标i（以nums[i]为结尾）的最大连续子序列和为dp[i]</strong>。</p>
+<ol start="2">
+<li>确定递推公式</li>
+</ol>
+<p>dp[i]只有两个方向可以推出来：</p>
 <ul>
-<li>The number of the nodes in the list is in the range <code>[0, 10^4]</code>.</li>
-<li><code>-10^5 &lt;= Node.val &lt;= 10^5</code></li>
-<li><code>pos</code> is <code>-1</code> or a <strong>valid index</strong> in the linked-list.</li>
+<li>dp[i - 1] + nums[i]，即：nums[i]加入当前连续子序列和</li>
+<li>nums[i]，即：从头开始计算当前连续子序列和</li>
 </ul>
-<p><strong>Follow up:</strong> Can you solve it using <code>O(1)</code> (i.e. constant) memory?</p>
-<h2 id="思路-1"><a class="header" href="#思路-1">思路</a></h2>
-<p>快慢指针相遇，相遇后新增一个指针<code>ptr</code>，由于距离关系，slow指针到环入口的距离与头指针相等，<code>ptr</code>和<code>slow</code>相遇处即为环入口。</p>
-<p>Time Complexity: O(N)</p>
-<p>Space Complexity: O(1)</p>
-<h2 id="c解法-1"><a class="header" href="#c解法-1">C++解法</a></h2>
-<pre><code class="language-cpp">/**
- * Definition for singly-linked list.
- * struct ListNode {
- *     int val;
- *     ListNode *next;
- *     ListNode(int x) : val(x), next(NULL) {}
- * };
- */
-class Solution {
-public:
-    ListNode *detectCycle(ListNode *head) {
-        if(head == NULL || head-&gt;next == NULL)
-            return NULL;
-        ListNode* slow = head;
-        ListNode* fast = head;
-        while(fast &amp;&amp; fast-&gt;next){
-            slow = slow-&gt;next;
-            fast = fast-&gt;next-&gt;next;
-            if(slow == fast){
-                ListNode* ptr = head;
-                while(ptr != slow){
-                    ptr = ptr-&gt;next;
-                    slow = slow-&gt;next;
-                }
-                return ptr;
-            }
-        }
-        return NULL;
-    }
+<p>一定是取最大的，所以dp[i] = max(dp[i - 1] + nums[i], nums[i]);</p>
+<ol start="3">
+<li>dp数组如何初始化</li>
+</ol>
+<p>从递推公式可以看出来dp[i]是依赖于dp[i - 1]的状态，dp[0]就是递推公式的基础。</p>
+<p>dp[0]应该是多少呢?</p>
+<p>根据dp[i]的定义，很明显dp[0]应为nums[0]即dp[0] = nums[0]。</p>
+<ol start="4">
+<li>确定遍历顺序</li>
+</ol>
+<p>递推公式中dp[i]依赖于dp[i - 1]的状态，需要从前向后遍历。</p>
+<ol start="5">
+<li>举例推导dp数组</li>
+</ol>
+<p>以示例一为例，输入：nums = [-2,1,-3,4,-1,2,1,-5,4]，对应的dp状态如下：</p>
+<p><img src="https://code-thinking-1253855093.file.myqcloud.com/pics/20210303104129101.png" alt="53.最大子序和（动态规划）" /></p>
+<p><strong>注意最后的结果可不是<code>dp[nums.size() - 1]</code>！</strong> ，而是<code>dp[6]</code>。</p>
+<p>在回顾一下<code>dp[i]</code>的定义：包括下标i之前的最大连续子序列和为<code>dp[i]</code>。</p>
+<p>那么我们要找最大的连续子序列，就应该找每一个i为终点的连续最大子序列。</p>
+<p>所以在递推公式的时候，可以直接选出最大的<code>dp[i]</code>。</p>
+<h2 id="c解法"><a class="header" href="#c解法">C++解法</a></h2>
+<p>贪心解法：</p>
+<pre><code class="language-cpp">class Solution {  
+public:  
+    int maxSubArray(vector&lt;int&gt;&amp; nums) {  
+        int result = INT32_MIN;  
+        int count = 0;  
+        for (int i = 0; i &lt; nums.size(); i++) {  
+            count += nums[i];  
+            if (count &gt; result) { // 取区间累计的最大值（相当于不断确定最大子序终止位置）  
+                result = count;  
+            }  
+            if (count &lt;= 0) count = 0; // 相当于重置最大子序起始位置，因为遇到负数一定是拉低总和  
+        }  
+        return result;  
+    }  
 };
 </code></pre>
-<h2 id="java解法"><a class="header" href="#java解法">Java解法</a></h2>
-<pre><code class="language-java">public class Solution {
-    public ListNode detectCycle(ListNode head) {
-        ListNode slow = head, fast = head;
-        while (fast != null &amp;&amp; fast.next != null) {
-            slow = slow.next;
-            fast = fast.next.next;
-            if (slow == fast) break;
-        }
-        if (fast == null || fast.next == null) return null;
-        while (head != slow) {
-            head = head.next;
-            slow = slow.next;
-        }
-        return head;
-    }
-}
+<ul>
+<li>时间复杂度：O(n)</li>
+<li>空间复杂度：O(1)</li>
+</ul>
+<p>动态规划解法：</p>
+<pre><code class="language-cpp">class Solution {  
+public:  
+    int maxSubArray(vector&lt;int&gt;&amp; nums) {  
+        if (nums.size() == 0) return 0;  
+        vector&lt;int&gt; dp(nums.size());  
+        dp[0] = nums[0];  
+        int result = dp[0];  
+        for (int i = 1; i &lt; nums.size(); i++) {  
+            dp[i] = max(dp[i - 1] + nums[i], nums[i]); // 状态转移公式  
+            if (dp[i] &gt; result) result = dp[i]; // result 保存dp[i]的最大值  
+        }  
+        return result;  
+    }  
+};
 </code></pre>
-<h2 id="python解法"><a class="header" href="#python解法">Python解法</a></h2>
-<pre><code class="language-python">class Solution(object):
-    def detectCycle(self, head):
-        slow = fast = head
-        while fast and fast.next:
-            slow, fast = slow.next, fast.next.next
-            if slow == fast: break
-        else: return None  # if not (fast and fast.next): return None
-        while head != slow:
-            head, slow = head.next, slow.next
-        return head
+<ul>
+<li>时间复杂度：O(n)</li>
+<li>空间复杂度：O(n)</li>
+</ul>
+<h2 id="java解法"><a class="header" href="#java解法">Java解法</a></h2>
+<p>贪心算法：</p>
+<pre><code class="language-java">class Solution {  
+    public int maxSubArray(int[] nums) {  
+        int currSum = 0;  
+        int maxSum = Integer.MIN_VALUE; // 修正这里的MIN_VALUE  
+        for (int i = 0; i &lt; nums.length; i++) {  
+            currSum += nums[i];  
+            if (currSum &gt; maxSum) {  
+                maxSum = currSum;  
+            }  
+            if (currSum &lt; 0) {  
+                currSum = 0;  
+            }  
+        }  
+        return maxSum;  
+    }  
+}  
 </code></pre>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../链表/反转链表.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../贪心/数组与贪心.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="../链表/交换节点.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../贪心/子序列与贪心算法.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -335,11 +329,11 @@ public:
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../链表/反转链表.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../贪心/数组与贪心.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="../链表/交换节点.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../贪心/子序列与贪心算法.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

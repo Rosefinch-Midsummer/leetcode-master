@@ -25,9 +25,9 @@
         <link rel="stylesheet" href="fonts/fonts.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" href="highlight.css">
-        <link rel="stylesheet" href="tomorrow-night.css">
-        <link rel="stylesheet" href="ayu-highlight.css">
+        <link rel="stylesheet" id="highlight-css" href="highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
 
@@ -154,6 +154,212 @@
                 <div id="content" class="content">
                     <main>
                         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
+<h1 id="前言"><a class="header" href="#前言">前言</a></h1>
+<ul>
+<li><a href="%E5%89%8D%E8%A8%80.html#leetcode%E5%88%B7%E9%A2%98%E6%8C%87%E5%8D%97">LeetCode刷题指南</a>
+<ul>
+<li><a href="%E5%89%8D%E8%A8%80.html#%E9%A2%98%E7%9B%AE%E5%88%86%E7%B1%BB%E5%8F%8A%E5%88%B7%E9%A2%98%E9%A1%BA%E5%BA%8F%E6%8E%A8%E8%8D%90">题目分类及刷题顺序推荐</a>
+<ul>
+<li><a href="%E5%89%8D%E8%A8%80.html#%E4%B8%80%E6%95%B0%E7%BB%84">一、数组</a></li>
+<li><a href="%E5%89%8D%E8%A8%80.html#%E4%BA%8C%E5%AD%97%E7%AC%A6%E4%B8%B2">二、字符串</a></li>
+<li><a href="%E5%89%8D%E8%A8%80.html#%E4%B8%89%E6%95%B0%E4%B8%8E%E4%BD%8D">三、数与位</a></li>
+<li><a href="%E5%89%8D%E8%A8%80.html#%E5%9B%9B%E6%A0%88%E4%B8%8E%E9%80%92%E5%BD%92">四、栈与递归</a></li>
+<li><a href="%E5%89%8D%E8%A8%80.html#%E4%BA%94%E9%93%BE%E8%A1%A8">五、链表</a></li>
+<li><a href="%E5%89%8D%E8%A8%80.html#%E5%85%AD%E5%93%88%E5%B8%8C%E8%A1%A8">六、哈希表</a></li>
+<li><a href="%E5%89%8D%E8%A8%80.html#%E4%B8%83%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95">七、贪心算法</a></li>
+<li><a href="%E5%89%8D%E8%A8%80.html#%E5%85%AB%E5%8F%8C%E6%8C%87%E9%92%88%E6%B3%95">八、双指针法</a></li>
+<li><a href="%E5%89%8D%E8%A8%80.html#%E4%B9%9D%E6%A0%91">九、树</a></li>
+<li><a href="%E5%89%8D%E8%A8%80.html#%E5%8D%81%E5%9B%BE%E4%B8%8E%E6%90%9C%E7%B4%A2">十、图与搜索</a></li>
+<li><a href="%E5%89%8D%E8%A8%80.html#%E5%8D%81%E4%B8%80%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE">十一、二分查找</a></li>
+<li><a href="%E5%89%8D%E8%A8%80.html#%E5%8D%81%E4%BA%8C%E4%BA%8C%E8%BF%9B%E5%88%B6%E8%BF%90%E7%AE%97%E7%9A%84%E5%BA%94%E7%94%A8">十二、二进制运算的应用</a></li>
+<li><a href="%E5%89%8D%E8%A8%80.html#%E5%8D%81%E4%B8%89%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92">十三、动态规划</a></li>
+<li><a href="%E5%89%8D%E8%A8%80.html#%E5%8D%81%E5%9B%9B%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84">十四、数据结构</a></li>
+<li><a href="%E5%89%8D%E8%A8%80.html#%E5%8D%81%E4%BA%94%E9%87%87%E6%A0%B7">十五、采样</a></li>
+<li><a href="%E5%89%8D%E8%A8%80.html#%E5%8D%81%E5%85%AD%E8%AE%A1%E7%AE%97%E5%87%A0%E4%BD%95">十六、计算几何</a></li>
+<li><a href="%E5%89%8D%E8%A8%80.html#%E5%8D%81%E4%B8%83%E5%B8%B8%E7%94%A8%E6%8A%80%E5%B7%A7%E4%B8%8E%E7%AE%97%E6%B3%95">十七、常用技巧与算法</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="leetcode刷题指南"><a class="header" href="#leetcode刷题指南">LeetCode刷题指南</a></h1>
+<p><a href="https://leetcode.cn/circle/discuss/48kq9d/">有没有人一起从零开始刷力扣——来源</a></p>
+<h2 id="题目分类及刷题顺序推荐"><a class="header" href="#题目分类及刷题顺序推荐">题目分类及刷题顺序推荐</a></h2>
+<h3 id="一数组"><a class="header" href="#一数组">一、数组</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>题目分类</th><th>题目编号</th></tr></thead><tbody>
+<tr><td>数组的遍历</td><td>485、495、414、628</td></tr>
+<tr><td>统计数组中的元素</td><td>645、697、448、442、41、274</td></tr>
+<tr><td>数组的改变、移动</td><td>453、665、283</td></tr>
+<tr><td>二维数组及滚动数组</td><td>118、119、661、598、419</td></tr>
+<tr><td>数组的旋转</td><td>189、396</td></tr>
+<tr><td>特定顺序遍历二维数组</td><td>54、59、498</td></tr>
+<tr><td>二维数组变换</td><td>566、48、73、289</td></tr>
+<tr><td>前缀和数组</td><td>303、304、238</td></tr>
+</tbody></table>
+</div>
+<h3 id="二字符串"><a class="header" href="#二字符串">二、字符串</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>题目分类</th><th>题目编号</th></tr></thead><tbody>
+<tr><td>字符</td><td>520</td></tr>
+<tr><td>回文串的定义</td><td>125</td></tr>
+<tr><td>公共前缀</td><td>14</td></tr>
+<tr><td>单词</td><td>434、58</td></tr>
+<tr><td>字符串的反转</td><td>344、541、557、151</td></tr>
+<tr><td>字符的统计</td><td>387、389、383、242、49、451、423、657、551、696、467、535</td></tr>
+<tr><td>数字与字符串间转换</td><td>299、412、506、539、553、537、592、640、38、443、8、13、12、273、165、481</td></tr>
+<tr><td>子序列</td><td>392、524、521、522</td></tr>
+<tr><td>高精度运算</td><td>66、67、415、43、306</td></tr>
+<tr><td>字符串变换</td><td>482、6、68</td></tr>
+<tr><td>字符串匹配</td><td>28、686、459、214</td></tr>
+<tr><td>中心拓展法</td><td>5、647</td></tr>
+</tbody></table>
+</div>
+<h3 id="三数与位"><a class="header" href="#三数与位">三、数与位</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>题目分类</th><th>题目编号</th></tr></thead><tbody>
+<tr><td>数字的位操作</td><td>7、9、479、564、231、342、326、504、263、190、191、476、461、477、693、393、172、458、258、319、405、171、168、670、233、357、400</td></tr>
+<tr><td>简单数学题</td><td>492、29、507</td></tr>
+<tr><td>快速幂</td><td>50、372</td></tr>
+</tbody></table>
+</div>
+<h3 id="四栈与递归"><a class="header" href="#四栈与递归">四、栈与递归</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>题目分类</th><th>题目编号</th></tr></thead><tbody>
+<tr><td>用栈访问最后若干元素</td><td>682、71、388</td></tr>
+<tr><td>栈与计算器</td><td>150、227、224</td></tr>
+<tr><td>栈与括号匹配</td><td>20、636、591、32</td></tr>
+<tr><td>递归</td><td>385、341、394</td></tr>
+</tbody></table>
+</div>
+<h3 id="五链表"><a class="header" href="#五链表">五、链表</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>题目分类</th><th>题目编号</th></tr></thead><tbody>
+<tr><td>链表的删除</td><td>203、237、19</td></tr>
+<tr><td>链表的遍历</td><td>430</td></tr>
+<tr><td>链表的旋转与反转</td><td>61、24、206、92、25</td></tr>
+<tr><td>链表高精度加法</td><td>2、445</td></tr>
+<tr><td>链表的合并</td><td>21、23</td></tr>
+</tbody></table>
+</div>
+<h3 id="六哈希表"><a class="header" href="#六哈希表">六、哈希表</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>题目分类</th><th>题目编号</th></tr></thead><tbody>
+<tr><td>哈希表的查找、插入及删除</td><td>217、633、349、128、202、500、290、532、205、166、466、138</td></tr>
+<tr><td>哈希表与索引</td><td>1、167、599、219、220</td></tr>
+<tr><td>哈希表与统计</td><td>594、350、554、609、454、18</td></tr>
+<tr><td>哈希表与前缀和</td><td>560、523、525</td></tr>
+</tbody></table>
+</div>
+<h3 id="七贪心算法"><a class="header" href="#七贪心算法">七、贪心算法</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>题目分类</th><th>题目编号</th></tr></thead><tbody>
+<tr><td>数组与贪心算法</td><td>605、121、122、561、455、575、135、409、621、179、56、57、228、452、435、646、406、48、169、215、75、324、517、649、678、420</td></tr>
+<tr><td>子数组与贪心算法</td><td>53、134、581、152</td></tr>
+<tr><td>子序列与贪心算法</td><td>334、376、659</td></tr>
+<tr><td>数字与贪心</td><td>343</td></tr>
+<tr><td>单调栈法</td><td>496、503、456、316、402、321、84、85</td></tr>
+</tbody></table>
+</div>
+<h3 id="八双指针法"><a class="header" href="#八双指针法">八、双指针法</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>题目分类</th><th>题目编号</th></tr></thead><tbody>
+<tr><td>头尾指针</td><td>345、680、167、15、16、18、11、42</td></tr>
+<tr><td>同向双指针、滑动窗口</td><td>27、26、80、83、82、611、187、643、674、209、3、438、567、424、76、30</td></tr>
+<tr><td>分段双指针</td><td>86、328、160、88、475</td></tr>
+<tr><td>快慢指针</td><td>141、142、143、234、457、287</td></tr>
+</tbody></table>
+</div>
+<h3 id="九树"><a class="header" href="#九树">九、树</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>题目分类</th><th>题目编号</th></tr></thead><tbody>
+<tr><td>树与递归</td><td>100、222、101、226、437、563、617、508、572、543、654、687、87</td></tr>
+<tr><td>树的层次遍历</td><td>102、429、690、559、662、671、513、515、637、103、107、257、623、653、104、111、112、113、129、404、199、655、116、117</td></tr>
+<tr><td>树的前序遍历</td><td>144、589</td></tr>
+<tr><td>树的前序序列化</td><td>606、331、652、297、449</td></tr>
+<tr><td>树的后序遍历</td><td>145、590</td></tr>
+<tr><td>树的中序遍历与二叉搜索树</td><td>94、700、530、538、230、98、173、669、450、110、95、108、109</td></tr>
+<tr><td>重构二叉树</td><td>105、106</td></tr>
+<tr><td>二叉树的展开</td><td>114</td></tr>
+<tr><td>最近公共祖先</td><td>235、236</td></tr>
+<tr><td>Morris中序遍历</td><td>501、99</td></tr>
+<tr><td>四叉树</td><td>558、427</td></tr>
+</tbody></table>
+</div>
+<h3 id="十图与搜索"><a class="header" href="#十图与搜索">十、图与搜索</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>题目分类</th><th>题目编号</th></tr></thead><tbody>
+<tr><td>图的建立与应用</td><td>565</td></tr>
+<tr><td>深度优先搜索</td><td>17、397</td></tr>
+<tr><td>回溯法</td><td>526、401、36、37、51、52、77、39、216、40、46、47、31、556、60、491、78、90、79、93、332</td></tr>
+<tr><td>回溯法与表达式</td><td>241、282、679</td></tr>
+<tr><td>回溯法与括号</td><td>22、301</td></tr>
+<tr><td>回溯法与贪心</td><td>488</td></tr>
+<tr><td>广度优先搜索</td><td>133、200、695、463、542、130、417、529、127、126、433、675</td></tr>
+<tr><td>并查集</td><td>547、684、685</td></tr>
+<tr><td>拓扑排序</td><td>399、207、210</td></tr>
+<tr><td>有限状态自动机</td><td>65、468</td></tr>
+</tbody></table>
+</div>
+<h3 id="十一二分查找"><a class="header" href="#十一二分查找">十一、二分查找</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>题目分类</th><th>题目编号</th></tr></thead><tbody>
+<tr><td>二分查找应用(简单)</td><td>374、35、278、367、69、441</td></tr>
+<tr><td>二分查找应用(中等)</td><td>34、540、275、436、300、354、658、162、4</td></tr>
+<tr><td>二分查找与旋转数组</td><td>153、154、33、81</td></tr>
+<tr><td>二分查找与矩阵</td><td>74、240</td></tr>
+<tr><td>二分答案法</td><td>378、668、410、483</td></tr>
+</tbody></table>
+</div>
+<h3 id="十二二进制运算的应用"><a class="header" href="#十二二进制运算的应用">十二、二进制运算的应用</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>题目分类</th><th>题目编号</th></tr></thead><tbody>
+<tr><td>异或的应用</td><td>89、136、137、260、268</td></tr>
+<tr><td>与或非的应用</td><td>371、318、201</td></tr>
+</tbody></table>
+</div>
+<h3 id="十三动态规划"><a class="header" href="#十三动态规划">十三、动态规划</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>题目分类</th><th>题目编号</th></tr></thead><tbody>
+<tr><td>数组中的动态规划</td><td>509、70、338、45、55、198、213、650、91、639、552、123、188、309、32、264、313、403</td></tr>
+<tr><td>子数组、子序列中的动态规划</td><td>689、413、446、368、416、279</td></tr>
+<tr><td>背包问题</td><td>322、518、474、494、377</td></tr>
+<tr><td>矩阵中的动态规划</td><td>62、63、64、120、576、688、221、629、174、96、329</td></tr>
+<tr><td>动态规划与字符串匹配</td><td>583、72、97、115、516、132、131、139、140、514、10、44</td></tr>
+<tr><td>状态压缩动态规划</td><td>464、691、698、638、473</td></tr>
+<tr><td>区间中的动态规划</td><td>486、664、375、312、546</td></tr>
+<tr><td>树形dp</td><td>337、124</td></tr>
+<tr><td>数位dp</td><td>233、600</td></tr>
+</tbody></table>
+</div>
+<h3 id="十四数据结构"><a class="header" href="#十四数据结构">十四、数据结构</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>题目分类</th><th>题目编号</th></tr></thead><tbody>
+<tr><td>数据结构设计——栈与队列</td><td>225、232、284、622、641、155</td></tr>
+<tr><td>数据结构设计——哈希表</td><td>676、355、380、381</td></tr>
+<tr><td>数据结构设计——哈希与双向链表</td><td>432、146、460</td></tr>
+<tr><td>前缀树</td><td>208、211、648、386、677、472、421、212、336、440</td></tr>
+<tr><td>堆</td><td>23、373、378、632、347、692、502、630、407、295、480</td></tr>
+<tr><td>树状数组</td><td>307、315、493、327、673</td></tr>
+<tr><td>线段树</td><td>699</td></tr>
+<tr><td>平衡树(set/map)</td><td>352、218、363</td></tr>
+</tbody></table>
+</div>
+<h3 id="十五采样"><a class="header" href="#十五采样">十五、采样</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>题目分类</th><th>题目编号</th></tr></thead><tbody>
+<tr><td>按权值采样</td><td>528、497</td></tr>
+<tr><td>蓄水池抽样</td><td>382、398</td></tr>
+<tr><td>拒绝采样</td><td>470、478、519</td></tr>
+</tbody></table>
+</div>
+<h3 id="十六计算几何"><a class="header" href="#十六计算几何">十六、计算几何</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>题目分类</th><th>题目编号</th></tr></thead><tbody>
+<tr><td>计算几何基础</td><td>593、447、223、149</td></tr>
+<tr><td>分类讨论法</td><td>335</td></tr>
+<tr><td>凸包</td><td>587</td></tr>
+<tr><td>覆盖问题</td><td>391</td></tr>
+</tbody></table>
+</div>
+<h3 id="十七常用技巧与算法"><a class="header" href="#十七常用技巧与算法">十七、常用技巧与算法</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>题目分类</th><th>题目编号</th></tr></thead><tbody>
+<tr><td>博弈论</td><td>292</td></tr>
+<tr><td>分块</td><td>239、164</td></tr>
+<tr><td>倍增法</td><td>330</td></tr>
+<tr><td>拓展欧几里得算法</td><td>365</td></tr>
+<tr><td>洗牌算法</td><td>384</td></tr>
+<tr><td>找规律</td><td>390、672</td></tr>
+<tr><td>分治法</td><td>395、667</td></tr>
+<tr><td>排序算法</td><td>147、148</td></tr>
+<tr><td>线性筛</td><td>204</td></tr>
+<tr><td>摩尔投票法</td><td>229</td></tr>
+</tbody></table>
+</div><div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
 <h1 id="数组"><a class="header" href="#数组">数组</a></h1>
 <ul>
 <li><a href="%E6%95%B0%E7%BB%84/%E6%95%B0%E7%BB%84.html#%E6%95%B0%E7%BB%84%E7%90%86%E8%AE%BA%E5%9F%BA%E7%A1%80">数组理论基础</a></li>
@@ -21497,9 +21703,1605 @@ public:
 };
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
-<h1 id="贪心"><a class="header" href="#贪心">贪心</a></h1>
+<h1 id="贪心算法"><a class="header" href="#贪心算法">贪心算法</a></h1>
+<p>局部最优推出全局最优</p>
+<div class="table-wrapper"><table><thead><tr><th>题目分类</th><th>题目编号</th></tr></thead><tbody>
+<tr><td>数组与贪心算法</td><td>605、121、122、561、455、575、135、409、621、179、56、57、228、452、435、646、406、48、169、215、75、324、517、649、678、420</td></tr>
+<tr><td>子数组与贪心算法</td><td>53、134、581、152</td></tr>
+<tr><td>子序列与贪心算法</td><td>334、376、659</td></tr>
+<tr><td>数字与贪心</td><td>343</td></tr>
+<tr><td>单调栈法</td><td>496、503、456、316、402、321、84、85</td></tr>
+</tbody></table>
+</div><div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
+<h1 id="数组与贪心"><a class="header" href="#数组与贪心">数组与贪心</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
-<h1 id="动态规划"><a class="header" href="#动态规划">动态规划</a></h1>
+<h1 id="子数组与贪心算法"><a class="header" href="#子数组与贪心算法">子数组与贪心算法</a></h1>
+<ul>
+<li><a href="%E8%B4%AA%E5%BF%83/%E5%AD%90%E6%95%B0%E7%BB%84%E4%B8%8E%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95.html#53-maximum-subarray">53. Maximum Subarray</a>
+<ul>
+<li><a href="%E8%B4%AA%E5%BF%83/%E5%AD%90%E6%95%B0%E7%BB%84%E4%B8%8E%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95.html#%E6%80%9D%E8%B7%AF">思路</a>
+<ul>
+<li><a href="%E8%B4%AA%E5%BF%83/%E5%AD%90%E6%95%B0%E7%BB%84%E4%B8%8E%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95.html#%E8%B4%AA%E5%BF%83">贪心</a></li>
+<li><a href="%E8%B4%AA%E5%BF%83/%E5%AD%90%E6%95%B0%E7%BB%84%E4%B8%8E%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95.html#%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92">动态规划</a></li>
+</ul>
+</li>
+<li><a href="%E8%B4%AA%E5%BF%83/%E5%AD%90%E6%95%B0%E7%BB%84%E4%B8%8E%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95.html#c%E8%A7%A3%E6%B3%95">C++解法</a></li>
+<li><a href="%E8%B4%AA%E5%BF%83/%E5%AD%90%E6%95%B0%E7%BB%84%E4%B8%8E%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95.html#java%E8%A7%A3%E6%B3%95">Java解法</a></li>
+</ul>
+</li>
+</ul>
+<h1 id="53-maximum-subarray"><a class="header" href="#53-maximum-subarray"><a href="https://leetcode.com/problems/maximum-subarray/">53. Maximum Subarray</a></a></h1>
+<p>Given an integer array <code>nums</code>, find the subarray with the largest sum, and return <em>its sum</em>.</p>
+<p><strong>Example 1:</strong></p>
+<p><strong>Input:</strong> nums = [-2,1,-3,4,-1,2,1,-5,4]<br />
+<strong>Output:</strong> 6<br />
+<strong>Explanation:</strong> The subarray [4,-1,2,1] has the largest sum 6.</p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> nums = [1]<br />
+<strong>Output:</strong> 1<br />
+<strong>Explanation:</strong> The subarray [1] has the largest sum 1.</p>
+<p><strong>Example 3:</strong></p>
+<p><strong>Input:</strong> nums = [5,4,-1,7,8]<br />
+<strong>Output:</strong> 23<br />
+<strong>Explanation:</strong> The subarray [5,4,-1,7,8] has the largest sum 23.</p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= nums.length &lt;= 10^5</code></li>
+<li><code>-10^4 &lt;= nums[i] &lt;= 10^4</code></li>
+</ul>
+<p><strong>Follow up:</strong> If you have figured out the <code>O(n)</code> solution, try coding another solution using the <strong>divide and conquer</strong> approach, which is more subtle.</p>
+<h2 id="思路-137"><a class="header" href="#思路-137">思路</a></h2>
+<h3 id="贪心"><a class="header" href="#贪心">贪心</a></h3>
+<p><strong>贪心贪的是哪里呢？</strong></p>
+<p>如果 -2 1 在一起，计算起点的时候，一定是从 1 开始计算，因为负数只会拉低总和，这就是贪心贪的地方！</p>
+<p>局部最优：当前“连续和”为负数的时候立刻放弃，从下一个元素重新计算“连续和”，因为负数加上下一个元素 “连续和”只会越来越小。</p>
+<p>全局最优：选取最大“连续和”</p>
+<p><strong>局部最优的情况下，并记录最大的“连续和”，可以推出全局最优</strong>。</p>
+<p>从代码角度上来讲：遍历 nums，从头开始用 count 累积，如果 count 一旦加上 nums[i]变为负数，那么就应该从 nums[i+1]开始从 0 累积 count 了，因为已经变为负数的 count，只会拖累总和。</p>
+<p><strong>这相当于是暴力解法中的不断调整最大子序和区间的起始位置</strong>。</p>
+<p><strong>那有同学问了，区间终止位置不用调整么？ 如何才能得到最大“连续和”呢？</strong></p>
+<p>区间的终止位置，其实就是如果 count 取到最大值了，及时记录下来了。例如如下代码：</p>
+<pre><code class="language-cpp">if (count &gt; result) result = count;
+</code></pre>
+<p><strong>这样相当于是用 result 记录最大子序和区间和（变相的算是调整了终止位置）</strong>。</p>
+<p>如动画所示：</p>
+<p><img src="https://code-thinking.cdn.bcebos.com/gifs/53.%E6%9C%80%E5%A4%A7%E5%AD%90%E5%BA%8F%E5%92%8C.gif" alt="53.最大子序和" /></p>
+<p>红色的起始位置就是贪心每次取 count 为正数的时候，开始一个区间的统计。</p>
+<p>当然题目没有说如果数组为空，应该返回什么，所以数组为空的话返回啥都可以了。</p>
+<p>常见误区一：</p>
+<p>不少同学认为 如果输入用例都是-1，或者都是负数，这个贪心算法跑出来的结果是 0， 这是<strong>又一次证明脑洞模拟不靠谱的经典案例</strong>，建议大家把代码运行一下试一试，就知道了，也会理解为什么 result 要初始化为最小负数了。</p>
+<p>常见误区二：</p>
+<p>大家在使用贪心算法求解本题，经常陷入的误区，就是分不清，是遇到 负数就选择起始位置，还是连续和为负选择起始位置。</p>
+<p>在动画演示用，大家可以发现， 4，遇到 -1 的时候，我们依然累加了，为什么呢？</p>
+<p>因为和为 3，只要连续和还是正数就会 对后面的元素 起到增大总和的作用。 所以只要连续和为正数我们就保留。</p>
+<p>这里也会有录友疑惑，那 4 + -1 之后 不就变小了吗？ 会不会错过 4 成为最大连续和的可能性？</p>
+<p>其实并不会，因为还有一个变量 result 一直在更新最大的连续和，只要有更大的连续和出现，result 就更新了，那么 result 已经把 4 更新了，后面连续和变成 3，也不会对最后结果有影响。</p>
+<h3 id="动态规划"><a class="header" href="#动态规划">动态规划</a></h3>
+<p>这次我们用动态规划的思路再来分析一次。</p>
+<p>动规五部曲如下：</p>
+<ol>
+<li>确定dp数组（dp table）以及下标的含义</li>
+</ol>
+<p><strong>dp[i]：包括下标i（以nums[i]为结尾）的最大连续子序列和为dp[i]</strong>。</p>
+<ol start="2">
+<li>确定递推公式</li>
+</ol>
+<p>dp[i]只有两个方向可以推出来：</p>
+<ul>
+<li>dp[i - 1] + nums[i]，即：nums[i]加入当前连续子序列和</li>
+<li>nums[i]，即：从头开始计算当前连续子序列和</li>
+</ul>
+<p>一定是取最大的，所以dp[i] = max(dp[i - 1] + nums[i], nums[i]);</p>
+<ol start="3">
+<li>dp数组如何初始化</li>
+</ol>
+<p>从递推公式可以看出来dp[i]是依赖于dp[i - 1]的状态，dp[0]就是递推公式的基础。</p>
+<p>dp[0]应该是多少呢?</p>
+<p>根据dp[i]的定义，很明显dp[0]应为nums[0]即dp[0] = nums[0]。</p>
+<ol start="4">
+<li>确定遍历顺序</li>
+</ol>
+<p>递推公式中dp[i]依赖于dp[i - 1]的状态，需要从前向后遍历。</p>
+<ol start="5">
+<li>举例推导dp数组</li>
+</ol>
+<p>以示例一为例，输入：nums = [-2,1,-3,4,-1,2,1,-5,4]，对应的dp状态如下：</p>
+<p><img src="https://code-thinking-1253855093.file.myqcloud.com/pics/20210303104129101.png" alt="53.最大子序和（动态规划）" /></p>
+<p><strong>注意最后的结果可不是<code>dp[nums.size() - 1]</code>！</strong> ，而是<code>dp[6]</code>。</p>
+<p>在回顾一下<code>dp[i]</code>的定义：包括下标i之前的最大连续子序列和为<code>dp[i]</code>。</p>
+<p>那么我们要找最大的连续子序列，就应该找每一个i为终点的连续最大子序列。</p>
+<p>所以在递推公式的时候，可以直接选出最大的<code>dp[i]</code>。</p>
+<h2 id="c解法-119"><a class="header" href="#c解法-119">C++解法</a></h2>
+<p>贪心解法：</p>
+<pre><code class="language-cpp">class Solution {  
+public:  
+    int maxSubArray(vector&lt;int&gt;&amp; nums) {  
+        int result = INT32_MIN;  
+        int count = 0;  
+        for (int i = 0; i &lt; nums.size(); i++) {  
+            count += nums[i];  
+            if (count &gt; result) { // 取区间累计的最大值（相当于不断确定最大子序终止位置）  
+                result = count;  
+            }  
+            if (count &lt;= 0) count = 0; // 相当于重置最大子序起始位置，因为遇到负数一定是拉低总和  
+        }  
+        return result;  
+    }  
+};
+</code></pre>
+<ul>
+<li>时间复杂度：O(n)</li>
+<li>空间复杂度：O(1)</li>
+</ul>
+<p>动态规划解法：</p>
+<pre><code class="language-cpp">class Solution {  
+public:  
+    int maxSubArray(vector&lt;int&gt;&amp; nums) {  
+        if (nums.size() == 0) return 0;  
+        vector&lt;int&gt; dp(nums.size());  
+        dp[0] = nums[0];  
+        int result = dp[0];  
+        for (int i = 1; i &lt; nums.size(); i++) {  
+            dp[i] = max(dp[i - 1] + nums[i], nums[i]); // 状态转移公式  
+            if (dp[i] &gt; result) result = dp[i]; // result 保存dp[i]的最大值  
+        }  
+        return result;  
+    }  
+};
+</code></pre>
+<ul>
+<li>时间复杂度：O(n)</li>
+<li>空间复杂度：O(n)</li>
+</ul>
+<h2 id="java解法-80"><a class="header" href="#java解法-80">Java解法</a></h2>
+<p>贪心算法：</p>
+<pre><code class="language-java">class Solution {  
+    public int maxSubArray(int[] nums) {  
+        int currSum = 0;  
+        int maxSum = Integer.MIN_VALUE; // 修正这里的MIN_VALUE  
+        for (int i = 0; i &lt; nums.length; i++) {  
+            currSum += nums[i];  
+            if (currSum &gt; maxSum) {  
+                maxSum = currSum;  
+            }  
+            if (currSum &lt; 0) {  
+                currSum = 0;  
+            }  
+        }  
+        return maxSum;  
+    }  
+}  
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
+<h1 id="子序列与贪心算法"><a class="header" href="#子序列与贪心算法">子序列与贪心算法</a></h1>
+<ul>
+<li><a href="%E8%B4%AA%E5%BF%83/%E5%AD%90%E5%BA%8F%E5%88%97%E4%B8%8E%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95.html#376-wiggle-subsequence">376. Wiggle Subsequence</a>
+<ul>
+<li><a href="%E8%B4%AA%E5%BF%83/%E5%AD%90%E5%BA%8F%E5%88%97%E4%B8%8E%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95.html#%E6%80%9D%E8%B7%AF">思路</a>
+<ul>
+<li><a href="%E8%B4%AA%E5%BF%83/%E5%AD%90%E5%BA%8F%E5%88%97%E4%B8%8E%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95.html#%E6%80%9D%E8%B7%AF-1%E8%B4%AA%E5%BF%83%E8%A7%A3%E6%B3%95">思路 1（贪心解法）</a>
+<ul>
+<li><a href="%E8%B4%AA%E5%BF%83/%E5%AD%90%E5%BA%8F%E5%88%97%E4%B8%8E%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95.html#%E6%83%85%E5%86%B5%E4%B8%80%E4%B8%8A%E4%B8%8B%E5%9D%A1%E4%B8%AD%E6%9C%89%E5%B9%B3%E5%9D%A1">情况一：上下坡中有平坡</a></li>
+<li><a href="%E8%B4%AA%E5%BF%83/%E5%AD%90%E5%BA%8F%E5%88%97%E4%B8%8E%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95.html#%E6%83%85%E5%86%B5%E4%BA%8C%E6%95%B0%E7%BB%84%E9%A6%96%E5%B0%BE%E4%B8%A4%E7%AB%AF">情况二：数组首尾两端</a></li>
+<li><a href="%E8%B4%AA%E5%BF%83/%E5%AD%90%E5%BA%8F%E5%88%97%E4%B8%8E%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95.html#%E6%83%85%E5%86%B5%E4%B8%89%E5%8D%95%E8%B0%83%E5%9D%A1%E5%BA%A6%E6%9C%89%E5%B9%B3%E5%9D%A1">情况三：单调坡度有平坡</a></li>
+</ul>
+</li>
+<li><a href="%E8%B4%AA%E5%BF%83/%E5%AD%90%E5%BA%8F%E5%88%97%E4%B8%8E%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95.html#%E6%80%9D%E8%B7%AF-2%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92">思路 2（动态规划）</a></li>
+</ul>
+</li>
+<li><a href="%E8%B4%AA%E5%BF%83/%E5%AD%90%E5%BA%8F%E5%88%97%E4%B8%8E%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95.html#c%E8%A7%A3%E6%B3%95">C++解法</a></li>
+</ul>
+</li>
+</ul>
+<h1 id="376-wiggle-subsequence"><a class="header" href="#376-wiggle-subsequence"><a href="https://leetcode.com/problems/wiggle-subsequence/">376. Wiggle Subsequence</a></a></h1>
+<p>A <strong>wiggle sequence</strong> is a sequence where the differences between successive numbers strictly alternate between positive and negative. The first difference (if one exists) may be either positive or negative. A sequence with one element and a sequence with two non-equal elements are trivially wiggle sequences.</p>
+<ul>
+<li>For example, <code>[1, 7, 4, 9, 2, 5]</code> is a <strong>wiggle sequence</strong> because the differences <code>(6, -3, 5, -7, 3)</code> alternate between positive and negative.</li>
+<li>In contrast, <code>[1, 4, 7, 2, 5]</code> and <code>[1, 7, 4, 5, 5]</code> are not wiggle sequences. The first is not because its first two differences are positive, and the second is not because its last difference is zero.</li>
+</ul>
+<p>A <strong>subsequence</strong> is obtained by deleting some elements (possibly zero) from the original sequence, leaving the remaining elements in their original order.</p>
+<p>Given an integer array <code>nums</code>, return <em>the length of the longest <strong>wiggle subsequence</strong> of</em> <code>nums</code>.</p>
+<p><strong>Example 1:</strong></p>
+<p><strong>Input:</strong> nums = [1,7,4,9,2,5]<br />
+<strong>Output:</strong> 6<br />
+<strong>Explanation:</strong> The entire sequence is a wiggle sequence with differences (6, -3, 5, -7, 3).</p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> nums = [1,17,5,10,13,15,10,5,16,8]<br />
+<strong>Output:</strong> 7<br />
+<strong>Explanation:</strong> There are several subsequences that achieve this length.
+One is [1, 17, 10, 13, 10, 16, 8] with differences (16, -7, 3, -3, 6, -8).</p>
+<p><strong>Example 3:</strong></p>
+<p><strong>Input:</strong> nums = [1,2,3,4,5,6,7,8,9]<br />
+<strong>Output:</strong> 2</p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= nums.length &lt;= 1000</code></li>
+<li><code>0 &lt;= nums[i] &lt;= 1000</code></li>
+</ul>
+<p><strong>Follow up:</strong> Could you solve this in <code>O(n)</code> time?</p>
+<h2 id="思路-138"><a class="header" href="#思路-138">思路</a></h2>
+<h3 id="思路-1贪心解法"><a class="header" href="#思路-1贪心解法">思路 1（贪心解法）</a></h3>
+<p>本题要求通过从原始序列中删除一些（也可以不删除）元素来获得子序列，剩下的元素保持其原始顺序。</p>
+<p>相信这么一说吓退不少同学，这要求最大摆动序列又可以修改数组，这得如何修改呢？</p>
+<p>来分析一下，要求删除元素使其达到最大摆动序列，应该删除什么元素呢？</p>
+<p>用示例二来举例，如图所示：</p>
+<p><img src="https://code-thinking-1253855093.file.myqcloud.com/pics/20201124174327597.png" alt="376.摆动序列" /></p>
+<p><strong>局部最优：删除单调坡度上的节点（不包括单调坡度两端的节点），那么这个坡度就可以有两个局部峰值</strong>。</p>
+<p><strong>整体最优：整个序列有最多的局部峰值，从而达到最长摆动序列</strong>。</p>
+<p>局部最优推出全局最优，并举不出反例，那么试试贪心！</p>
+<p>（为方便表述，以下说的峰值都是指局部峰值）</p>
+<p><strong>实际操作上，其实连删除的操作都不用做，因为题目要求的是最长摆动子序列的长度，所以只需要统计数组的峰值数量就可以了（相当于是删除单一坡度上的节点，然后统计长度）</strong></p>
+<p><strong>这就是贪心所贪的地方，让峰值尽可能的保持峰值，然后删除单一坡度上的节点</strong></p>
+<p>在计算是否有峰值的时候，大家知道遍历的下标 i ，计算 <code>prediff（nums[i] - nums[i-1]）</code> 和 <code>curdiff（nums[i+1] - nums[i]</code>，如果<code>prediff &lt; 0 &amp;&amp; curdiff &gt; 0</code> 或者 <code>prediff &gt; 0 &amp;&amp; curdiff &lt; 0</code> 此时就有波动就需要统计。</p>
+<p>这是我们思考本题的一个大体思路，但本题要考虑三种情况：</p>
+<ol>
+<li>情况一：上下坡中有平坡</li>
+<li>情况二：数组首尾两端</li>
+<li>情况三：单调坡中有平坡</li>
+</ol>
+<h4 id="情况一上下坡中有平坡"><a class="header" href="#情况一上下坡中有平坡">情况一：上下坡中有平坡</a></h4>
+<p>例如 [1,2,2,2,1]这样的数组，如图：</p>
+<p><img src="https://code-thinking-1253855093.file.myqcloud.com/pics/20230106170449.png" alt="" /></p>
+<p>它的摇摆序列长度是多少呢？ <strong>其实是长度是 3</strong>，也就是我们在删除的时候 要不删除左面的三个 2，要不就删除右边的三个 2。</p>
+<p>如图，可以统一规则，删除左边的三个 2：</p>
+<p><img src="https://code-thinking-1253855093.file.myqcloud.com/pics/20230106172613.png" alt="" /></p>
+<p>在图中，当 i 指向第一个 2 的时候，<code>prediff &gt; 0 &amp;&amp; curdiff = 0</code> ，当 i 指向最后一个 2 的时候 <code>prediff = 0 &amp;&amp; curdiff &lt; 0</code>。</p>
+<p>如果我们采用，删左面三个 2 的规则，那么 当 <code>prediff = 0 &amp;&amp; curdiff &lt; 0</code> 也要记录一个峰值，因为他是把之前相同的元素都删掉留下的峰值。</p>
+<p>所以我们记录峰值的条件应该是： <code>(preDiff &lt;= 0 &amp;&amp; curDiff &gt; 0) || (preDiff &gt;= 0 &amp;&amp; curDiff &lt; 0)</code>，为什么这里允许 prediff == 0 ，就是为了 上面我说的这种情况。</p>
+<h4 id="情况二数组首尾两端"><a class="header" href="#情况二数组首尾两端">情况二：数组首尾两端</a></h4>
+<p>所以本题统计峰值的时候，数组最左面和最右面如何统计呢？</p>
+<p>题目中说了，如果只有两个不同的元素，那摆动序列也是 2。</p>
+<p>例如序列[2,5]，如果靠统计差值来计算峰值个数就需要考虑数组最左面和最右面的特殊情况。</p>
+<p>因为我们在计算 <code>prediff（nums[i] - nums[i-1]）</code> 和 <code>curdiff（nums[i+1] - nums[i]）</code>的时候，至少需要三个数字才能计算，而数组只有两个数字。</p>
+<p>这里我们可以写死，就是 如果只有两个元素，且元素不同，那么结果为 2。</p>
+<p>不写死的话，如何和我们的判断规则结合在一起呢？</p>
+<p>可以假设，数组最前面还有一个数字，那这个数字应该是什么呢？</p>
+<p>之前我们在 讨论 情况一：相同数字连续 的时候， prediff = 0 ，curdiff &lt; 0 或者 &gt;0 也记为波谷。</p>
+<p>那么为了规则统一，针对序列[2,5]，可以假设为[2,2,5]，这样它就有坡度了即 preDiff = 0，如图：</p>
+<p><img src="https://code-thinking-1253855093.file.myqcloud.com/pics/20201124174357612.png" alt="376.摆动序列1" /></p>
+<p>针对以上情形，result 初始为 1（默认最右面有一个峰值），此时 curDiff &gt; 0 &amp;&amp; preDiff &lt;= 0，那么 result++（计算了左面的峰值），最后得到的 result 就是 2（峰值个数为 2 即摆动序列长度为 2）</p>
+<p>经过以上分析后，我们可以写出如下代码：</p>
+<pre><code class="language-cpp">// 版本一  
+class Solution {  
+public:  
+    int wiggleMaxLength(vector&lt;int&gt;&amp; nums) {  
+        if (nums.size() &lt;= 1) return nums.size();  
+        int curDiff = 0; // 当前一对差值  
+        int preDiff = 0; // 前一对差值  
+        int result = 1;  // 记录峰值个数，序列默认序列最右边有一个峰值  
+        for (int i = 0; i &lt; nums.size() - 1; i++) {  
+            curDiff = nums[i + 1] - nums[i];  
+            // 出现峰值  
+            if ((preDiff &lt;= 0 &amp;&amp; curDiff &gt; 0) || (preDiff &gt;= 0 &amp;&amp; curDiff &lt; 0)) {  
+                result++;  
+            }  
+            preDiff = curDiff;  
+        }  
+        return result;  
+    }  
+};
+</code></pre>
+<ul>
+<li>时间复杂度：O(n)</li>
+<li>空间复杂度：O(1)</li>
+</ul>
+<p>此时大家是不是发现 以上代码提交也不能通过本题？</p>
+<p>所以此时我们要讨论情况三！</p>
+<h4 id="情况三单调坡度有平坡"><a class="header" href="#情况三单调坡度有平坡">情况三：单调坡度有平坡</a></h4>
+<p>在版本一中，我们忽略了一种情况，即 如果在一个单调坡度上有平坡，例如[1,2,2,2,3,4]，如图：</p>
+<p><img src="https://code-thinking-1253855093.file.myqcloud.com/pics/20230108171505.png" alt="" /></p>
+<p>图中，我们可以看出，版本一的代码在三个地方记录峰值，但其实结果因为是 2，因为 单调中的平坡 不能算峰值（即摆动）。</p>
+<p>之所以版本一会出问题，是因为我们实时更新了 prediff。</p>
+<p>那么我们应该什么时候更新 prediff 呢？</p>
+<p>我们只需要在 这个坡度 摆动变化的时候，更新 prediff 就行，这样 prediff 在 单调区间有平坡的时候 就不会发生变化，造成我们的误判。</p>
+<p>所以本题的最终代码为：
+​</p>
+<pre><code class="language-cpp">// 版本二  
+class Solution {  
+public:  
+    int wiggleMaxLength(vector&lt;int&gt;&amp; nums) {  
+        if (nums.size() &lt;= 1) return nums.size();  
+        int curDiff = 0; // 当前一对差值  
+        int preDiff = 0; // 前一对差值  
+        int result = 1;  // 记录峰值个数，序列默认序列最右边有一个峰值  
+        for (int i = 0; i &lt; nums.size() - 1; i++) {  
+            curDiff = nums[i + 1] - nums[i];  
+            // 出现峰值  
+            if ((preDiff &lt;= 0 &amp;&amp; curDiff &gt; 0) || (preDiff &gt;= 0 &amp;&amp; curDiff &lt; 0)) {  
+                result++;  
+                preDiff = curDiff; // 注意这里，只在摆动变化的时候更新prediff  
+            }  
+        }  
+        return result;  
+    }  
+};
+</code></pre>
+<p>其实本题看起来好像简单，但需要考虑的情况还是很复杂的，而且很难一次性想到位。</p>
+<p><strong>本题异常情况的本质，就是要考虑平坡</strong>， 平坡分两种，一个是 上下中间有平坡，一个是单调有平坡，如图：</p>
+<p><img src="https://code-thinking-1253855093.file.myqcloud.com/pics/20230108174452.png" alt="" /></p>
+<h3 id="思路-2动态规划"><a class="header" href="#思路-2动态规划">思路 2（动态规划）</a></h3>
+<p>考虑用动态规划的思想来解决这个问题。</p>
+<p>很容易可以发现，对于我们当前考虑的这个数，要么是作为山峰（即 nums[i] &gt; nums[i-1]），要么是作为山谷（即 nums[i] &lt; nums[i - 1]）。</p>
+<ul>
+<li>设 dp 状态<code>dp[i][0]</code>，表示考虑前 i 个数，第 i 个数作为山峰的摆动子序列的最长长度</li>
+<li>设 dp 状态<code>dp[i][1]</code>，表示考虑前 i 个数，第 i 个数作为山谷的摆动子序列的最长长度</li>
+</ul>
+<p>则转移方程为：</p>
+<ul>
+<li><code>dp[i][0] = max(dp[i][0], dp[j][1] + 1)</code>，其中<code>0 &lt; j &lt; i</code>且<code>nums[j] &lt; nums[i]</code>，表示将 nums[i]接到前面某个山谷后面，作为山峰。</li>
+<li><code>dp[i][1] = max(dp[i][1], dp[j][0] + 1)</code>，其中<code>0 &lt; j &lt; i</code>且<code>nums[j] &gt; nums[i]</code>，表示将 nums[i]接到前面某个山峰后面，作为山谷。</li>
+</ul>
+<p>初始状态：</p>
+<p>由于一个数可以接到前面的某个数后面，也可以以自身为子序列的起点，所以初始状态为：<code>dp[0][0] = dp[0][1] = 1</code>。</p>
+<p>C++代码如下：</p>
+<pre><code class="language-cpp">class Solution {  
+public:  
+    int dp[1005][2];  
+    int wiggleMaxLength(vector&lt;int&gt;&amp; nums) {  
+        memset(dp, 0, sizeof dp);  
+        dp[0][0] = dp[0][1] = 1;  
+        for (int i = 1; i &lt; nums.size(); ++i) {  
+            dp[i][0] = dp[i][1] = 1;  
+            for (int j = 0; j &lt; i; ++j) {  
+                if (nums[j] &gt; nums[i]) dp[i][1] = max(dp[i][1], dp[j][0] + 1);  
+            }  
+            for (int j = 0; j &lt; i; ++j) {  
+                if (nums[j] &lt; nums[i]) dp[i][0] = max(dp[i][0], dp[j][1] + 1);  
+            }  
+        }  
+        return max(dp[nums.size() - 1][0], dp[nums.size() - 1][1]);  
+    }  
+};
+</code></pre>
+<ul>
+<li>时间复杂度：O(n^2)</li>
+<li>空间复杂度：O(n)</li>
+</ul>
+<p><strong>进阶</strong></p>
+<p>可以用两棵线段树来维护区间的最大值</p>
+<ul>
+<li>每次更新<code>dp[i][0]</code>，则在<code>tree1</code>的<code>nums[i]</code>位置值更新为<code>dp[i][0]</code></li>
+<li>每次更新<code>dp[i][1]</code>，则在<code>tree2</code>的<code>nums[i]</code>位置值更新为<code>dp[i][1]</code></li>
+<li>则 dp 转移方程中就没有必要 j 从 0 遍历到 i-1，可以直接在线段树中查询指定区间的值即可。</li>
+</ul>
+<p>时间复杂度：O(nlog n)</p>
+<p>空间复杂度：O(n)</p>
+<h2 id="c解法-120"><a class="header" href="#c解法-120">C++解法</a></h2>
+<p>本题使用贪心算法的最终代码为：
+​</p>
+<pre><code class="language-cpp">// 版本二  
+class Solution {  
+public:  
+    int wiggleMaxLength(vector&lt;int&gt;&amp; nums) {  
+        if (nums.size() &lt;= 1) return nums.size();  
+        int curDiff = 0; // 当前一对差值  
+        int preDiff = 0; // 前一对差值  
+        int result = 1;  // 记录峰值个数，序列默认序列最右边有一个峰值  
+        for (int i = 0; i &lt; nums.size() - 1; i++) {  
+            curDiff = nums[i + 1] - nums[i];  
+            // 出现峰值  
+            if ((preDiff &lt;= 0 &amp;&amp; curDiff &gt; 0) || (preDiff &gt;= 0 &amp;&amp; curDiff &lt; 0)) {  
+                result++;  
+                preDiff = curDiff; // 注意这里，只在摆动变化的时候更新prediff  
+            }  
+        }  
+        return result;  
+    }  
+};
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
+<h1 id="数字与贪心"><a class="header" href="#数字与贪心">数字与贪心</a></h1>
+<ul>
+<li><a href="%E8%B4%AA%E5%BF%83/%E6%95%B0%E5%AD%97%E4%B8%8E%E8%B4%AA%E5%BF%83.html#860-lemonade-change">860. Lemonade Change</a>
+<ul>
+<li><a href="%E8%B4%AA%E5%BF%83/%E6%95%B0%E5%AD%97%E4%B8%8E%E8%B4%AA%E5%BF%83.html#%E6%80%9D%E8%B7%AF">思路</a></li>
+<li><a href="%E8%B4%AA%E5%BF%83/%E6%95%B0%E5%AD%97%E4%B8%8E%E8%B4%AA%E5%BF%83.html#c%E8%A7%A3%E6%B3%95">C++解法</a></li>
+</ul>
+</li>
+</ul>
+<h1 id="860-lemonade-change"><a class="header" href="#860-lemonade-change"><a href="https://leetcode.com/problems/lemonade-change/">860. Lemonade Change</a></a></h1>
+<p>At a lemonade stand, each lemonade costs <code>$5</code>. Customers are standing in a queue to buy from you and order one at a time (in the order specified by bills). Each customer will only buy one lemonade and pay with either a <code>$5</code>, <code>$10</code>, or <code>$20</code> bill. You must provide the correct change to each customer so that the net transaction is that the customer pays <code>$5</code>.</p>
+<p>Note that you do not have any change in hand at first.</p>
+<p>Given an integer array <code>bills</code> where <code>bills[i]</code> is the bill the <code>ith</code> customer pays, return <code>true</code> <em>if you can provide every customer with the correct change, or</em> <code>false</code> <em>otherwise</em>.</p>
+<p><strong>Example 1:</strong></p>
+<p><strong>Input:</strong> bills = [5,5,5,10,20]<br />
+<strong>Output:</strong> true<br />
+<strong>Explanation:</strong>
+From the first 3 customers, we collect three <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mord">5</span><span class="mord mathnormal">bi</span><span class="mord mathnormal" style="margin-right:0.01968em;">ll</span><span class="mord mathnormal">s</span><span class="mord mathnormal">in</span><span class="mord mathnormal" style="margin-right:0.02778em;">or</span><span class="mord mathnormal">d</span><span class="mord mathnormal" style="margin-right:0.02778em;">er</span><span class="mord">.</span><span class="mord mathnormal" style="margin-right:0.13889em;">F</span><span class="mord mathnormal">ro</span><span class="mord mathnormal">m</span><span class="mord mathnormal">t</span><span class="mord mathnormal">h</span><span class="mord mathnormal">e</span><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class="mord mathnormal">o</span><span class="mord mathnormal">u</span><span class="mord mathnormal" style="margin-right:0.02778em;">r</span><span class="mord mathnormal">t</span><span class="mord mathnormal">h</span><span class="mord mathnormal">c</span><span class="mord mathnormal">u</span><span class="mord mathnormal">s</span><span class="mord mathnormal">t</span><span class="mord mathnormal">o</span><span class="mord mathnormal">m</span><span class="mord mathnormal" style="margin-right:0.02778em;">er</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.02691em;">w</span><span class="mord mathnormal">eco</span><span class="mord mathnormal" style="margin-right:0.01968em;">ll</span><span class="mord mathnormal">ec</span><span class="mord mathnormal">t</span><span class="mord mathnormal">a</span></span></span></span>10 bill and give back a <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mord">5.</span><span class="mord mathnormal" style="margin-right:0.13889em;">F</span><span class="mord mathnormal">ro</span><span class="mord mathnormal">m</span><span class="mord mathnormal">t</span><span class="mord mathnormal">h</span><span class="mord mathnormal">e</span><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class="mord mathnormal">i</span><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class="mord mathnormal">t</span><span class="mord mathnormal">h</span><span class="mord mathnormal">c</span><span class="mord mathnormal">u</span><span class="mord mathnormal">s</span><span class="mord mathnormal">t</span><span class="mord mathnormal">o</span><span class="mord mathnormal">m</span><span class="mord mathnormal" style="margin-right:0.02778em;">er</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.02691em;">w</span><span class="mord mathnormal">e</span><span class="mord mathnormal" style="margin-right:0.03588em;">g</span><span class="mord mathnormal">i</span><span class="mord mathnormal" style="margin-right:0.03588em;">v</span><span class="mord mathnormal">e</span><span class="mord mathnormal">a</span></span></span></span>10 bill and a <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mord">5</span><span class="mord mathnormal">bi</span><span class="mord mathnormal" style="margin-right:0.01968em;">ll</span><span class="mord">.</span><span class="mord mathnormal" style="margin-right:0.05764em;">S</span><span class="mord mathnormal">in</span><span class="mord mathnormal">ce</span><span class="mord mathnormal">a</span><span class="mord mathnormal" style="margin-right:0.01968em;">ll</span><span class="mord mathnormal">c</span><span class="mord mathnormal">u</span><span class="mord mathnormal">s</span><span class="mord mathnormal">t</span><span class="mord mathnormal">o</span><span class="mord mathnormal">m</span><span class="mord mathnormal">ers</span><span class="mord mathnormal" style="margin-right:0.03588em;">g</span><span class="mord mathnormal">o</span><span class="mord mathnormal">t</span><span class="mord mathnormal">correc</span><span class="mord mathnormal">t</span><span class="mord mathnormal">c</span><span class="mord mathnormal">han</span><span class="mord mathnormal" style="margin-right:0.03588em;">g</span><span class="mord mathnormal">e</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.02691em;">w</span><span class="mord mathnormal">eo</span><span class="mord mathnormal">u</span><span class="mord mathnormal">tp</span><span class="mord mathnormal">u</span><span class="mord mathnormal">tt</span><span class="mord mathnormal" style="margin-right:0.02778em;">r</span><span class="mord mathnormal">u</span><span class="mord mathnormal">e</span><span class="mord">.</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mord">∗</span><span class="mord mathnormal" style="margin-right:0.05764em;">E</span><span class="mord mathnormal">x</span><span class="mord mathnormal">am</span><span class="mord mathnormal" style="margin-right:0.01968em;">pl</span><span class="mord mathnormal">e</span><span class="mord">2</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">:</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.4653em;"></span><span class="mord">∗</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.4653em;"></span><span class="mord">∗</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.8778em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">I</span><span class="mord mathnormal">n</span><span class="mord mathnormal">p</span><span class="mord mathnormal">u</span><span class="mord mathnormal">t</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">:</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.4653em;"></span><span class="mord">∗</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal">bi</span><span class="mord mathnormal" style="margin-right:0.01968em;">ll</span><span class="mord mathnormal">s</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord">5</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">5</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">10</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">10</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">20</span><span class="mclose">]</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.8778em;vertical-align:-0.1944em;"></span><span class="mord">∗</span><span class="mord mathnormal" style="margin-right:0.02778em;">O</span><span class="mord mathnormal">u</span><span class="mord mathnormal">tp</span><span class="mord mathnormal">u</span><span class="mord mathnormal">t</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">:</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.4653em;"></span><span class="mord">∗</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class="mord mathnormal">a</span><span class="mord mathnormal" style="margin-right:0.01968em;">l</span><span class="mord mathnormal">se</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mord">∗</span><span class="mord mathnormal" style="margin-right:0.05764em;">E</span><span class="mord mathnormal">x</span><span class="mord mathnormal" style="margin-right:0.01968em;">pl</span><span class="mord mathnormal">ana</span><span class="mord mathnormal">t</span><span class="mord mathnormal">i</span><span class="mord mathnormal">o</span><span class="mord mathnormal">n</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">:</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.4653em;"></span><span class="mord">∗</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">F</span><span class="mord mathnormal">ro</span><span class="mord mathnormal">m</span><span class="mord mathnormal">t</span><span class="mord mathnormal">h</span><span class="mord mathnormal">e</span><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class="mord mathnormal">i</span><span class="mord mathnormal">rs</span><span class="mord mathnormal" style="margin-right:0.02691em;">ttw</span><span class="mord mathnormal">oc</span><span class="mord mathnormal">u</span><span class="mord mathnormal">s</span><span class="mord mathnormal">t</span><span class="mord mathnormal">o</span><span class="mord mathnormal">m</span><span class="mord mathnormal">ers</span><span class="mord mathnormal">in</span><span class="mord mathnormal" style="margin-right:0.02778em;">or</span><span class="mord mathnormal">d</span><span class="mord mathnormal" style="margin-right:0.02778em;">er</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.02691em;">w</span><span class="mord mathnormal">eco</span><span class="mord mathnormal" style="margin-right:0.01968em;">ll</span><span class="mord mathnormal">ec</span><span class="mord mathnormal" style="margin-right:0.02691em;">ttw</span><span class="mord mathnormal">o</span></span></span></span>5 bills.
+For the next two customers in order, we collect a <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mord">10</span><span class="mord mathnormal">bi</span><span class="mord mathnormal" style="margin-right:0.01968em;">ll</span><span class="mord mathnormal">an</span><span class="mord mathnormal">d</span><span class="mord mathnormal" style="margin-right:0.03588em;">g</span><span class="mord mathnormal">i</span><span class="mord mathnormal" style="margin-right:0.03588em;">v</span><span class="mord mathnormal">e</span><span class="mord mathnormal">ba</span><span class="mord mathnormal">c</span><span class="mord mathnormal">ka</span></span></span></span>5 bill.
+For the last customer, we can not give the change of <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mord">15</span><span class="mord mathnormal">ba</span><span class="mord mathnormal">c</span><span class="mord mathnormal">kb</span><span class="mord mathnormal">ec</span><span class="mord mathnormal">a</span><span class="mord mathnormal">u</span><span class="mord mathnormal">se</span><span class="mord mathnormal" style="margin-right:0.02691em;">w</span><span class="mord mathnormal">eo</span><span class="mord mathnormal">n</span><span class="mord mathnormal" style="margin-right:0.01968em;">l</span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="mord mathnormal">ha</span><span class="mord mathnormal" style="margin-right:0.03588em;">v</span><span class="mord mathnormal">e</span><span class="mord mathnormal" style="margin-right:0.02691em;">tw</span><span class="mord mathnormal">o</span></span></span></span>10 bills.
+Since not every customer received the correct change, the answer is false.</p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= bills.length &lt;= 10^5</code></li>
+<li><code>bills[i]</code> is either <code>5</code>, <code>10</code>, or <code>20</code>.</li>
+</ul>
+<h2 id="思路-139"><a class="header" href="#思路-139">思路</a></h2>
+<p>这道题目刚一看，可能会有点懵，这要怎么找零才能保证完成全部账单的找零呢？</p>
+<p><strong>但仔细一琢磨就会发现，可供我们做判断的空间非常少！</strong></p>
+<p>只需要维护三种金额的数量，5，10和20。</p>
+<p>有如下三种情况：</p>
+<ul>
+<li>情况一：账单是5，直接收下。</li>
+<li>情况二：账单是10，消耗一个5，增加一个10</li>
+<li>情况三：账单是20，优先消耗一个10和一个5，如果不够，再消耗三个5</li>
+</ul>
+<p>此时大家就发现 情况一，情况二，都是固定策略，都不用我们来做分析了，而唯一不确定的其实在情况三。</p>
+<p>而情况三逻辑也不复杂甚至感觉纯模拟就可以了，其实情况三这里是有贪心的。</p>
+<p>账单是20的情况，为什么要优先消耗一个10和一个5呢？</p>
+<p><strong>因为美元10只能给账单20找零，而美元5可以给账单10和账单20找零，美元5更万能！</strong></p>
+<p>所以局部最优：遇到账单20，优先消耗美元10，完成本次找零。全局最优：完成全部账单的找零。</p>
+<p>局部最优可以推出全局最优，并找不出反例，那么就试试贪心算法！</p>
+<h2 id="c解法-121"><a class="header" href="#c解法-121">C++解法</a></h2>
+<p>C++代码如下：</p>
+<pre><code class="language-cpp">class Solution {  
+public:  
+    bool lemonadeChange(vector&lt;int&gt;&amp; bills) {  
+        int five = 0, ten = 0, twenty = 0;  
+        for (int bill : bills) {  
+            // 情况一  
+            if (bill == 5) five++;  
+            // 情况二  
+            if (bill == 10) {  
+                if (five &lt;= 0) return false;  
+                ten++;  
+                five--;  
+            }  
+            // 情况三  
+            if (bill == 20) {  
+                // 优先消耗10美元，因为5美元的找零用处更大，能多留着就多留着  
+                if (five &gt; 0 &amp;&amp; ten &gt; 0) {  
+                    five--;  
+                    ten--;  
+                    twenty++; // 其实这行代码可以删了，因为记录20已经没有意义了，不会用20来找零  
+                } else if (five &gt;= 3) {  
+                    five -= 3;  
+                    twenty++; // 同理，这行代码也可以删了  
+                } else return false;  
+            }  
+        }  
+        return true;  
+    }  
+};
+</code></pre>
+<ul>
+<li>时间复杂度: O(n)</li>
+<li>空间复杂度: O(1)</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
+<h1 id="跳跃游戏"><a class="header" href="#跳跃游戏">跳跃游戏</a></h1>
+<ul>
+<li><a href="%E8%B4%AA%E5%BF%83/%E8%B7%B3%E8%B7%83%E6%B8%B8%E6%88%8F.html#55-jump-game">55. Jump Game</a>
+<ul>
+<li><a href="%E8%B4%AA%E5%BF%83/%E8%B7%B3%E8%B7%83%E6%B8%B8%E6%88%8F.html#%E6%80%9D%E8%B7%AF">思路</a></li>
+<li><a href="%E8%B4%AA%E5%BF%83/%E8%B7%B3%E8%B7%83%E6%B8%B8%E6%88%8F.html#c%E8%A7%A3%E6%B3%95">C++解法</a></li>
+<li><a href="%E8%B4%AA%E5%BF%83/%E8%B7%B3%E8%B7%83%E6%B8%B8%E6%88%8F.html#java%E8%A7%A3%E6%B3%95">Java解法</a></li>
+</ul>
+</li>
+<li><a href="%E8%B4%AA%E5%BF%83/%E8%B7%B3%E8%B7%83%E6%B8%B8%E6%88%8F.html#45-jump-game-ii">45. Jump Game II</a>
+<ul>
+<li><a href="%E8%B4%AA%E5%BF%83/%E8%B7%B3%E8%B7%83%E6%B8%B8%E6%88%8F.html#%E6%80%9D%E8%B7%AF-1">思路</a></li>
+<li><a href="%E8%B4%AA%E5%BF%83/%E8%B7%B3%E8%B7%83%E6%B8%B8%E6%88%8F.html#c%E8%A7%A3%E6%B3%95-1">C++解法</a>
+<ul>
+<li><a href="%E8%B4%AA%E5%BF%83/%E8%B7%B3%E8%B7%83%E6%B8%B8%E6%88%8F.html#%E6%96%B9%E6%B3%95%E4%B8%80">方法一</a></li>
+<li><a href="%E8%B4%AA%E5%BF%83/%E8%B7%B3%E8%B7%83%E6%B8%B8%E6%88%8F.html#%E6%96%B9%E6%B3%95%E4%BA%8C">方法二</a></li>
+</ul>
+</li>
+<li><a href="%E8%B4%AA%E5%BF%83/%E8%B7%B3%E8%B7%83%E6%B8%B8%E6%88%8F.html#java%E8%A7%A3%E6%B3%95-1">Java解法</a></li>
+</ul>
+</li>
+</ul>
+<h1 id="55-jump-game"><a class="header" href="#55-jump-game"><a href="https://leetcode.com/problems/jump-game/">55. Jump Game</a></a></h1>
+<p>You are given an integer array <code>nums</code>. You are initially positioned at the array's <strong>first index</strong>, and each element in the array represents your maximum jump length at that position.</p>
+<p>Return <code>true</code> <em>if you can reach the last index, or</em> <code>false</code> <em>otherwise</em>.</p>
+<p><strong>Example 1:</strong></p>
+<p><strong>Input:</strong> nums = [2,3,1,1,4]<br />
+<strong>Output:</strong> true<br />
+<strong>Explanation:</strong> Jump 1 step from index 0 to 1, then 3 steps to the last index.</p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> nums = [3,2,1,0,4]<br />
+<strong>Output:</strong> false<br />
+<strong>Explanation:</strong> You will always arrive at index 3 no matter what. Its maximum jump length is 0, which makes it impossible to reach the last index.</p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= nums.length &lt;= 10^4</code></li>
+<li><code>0 &lt;= nums[i] &lt;= 10^5</code></li>
+</ul>
+<h2 id="思路-140"><a class="header" href="#思路-140">思路</a></h2>
+<p>刚看到本题一开始可能想：当前位置元素如果是 3，我究竟是跳一步呢，还是两步呢，还是三步呢，究竟跳几步才是最优呢？</p>
+<p>其实跳几步无所谓，关键在于可跳的覆盖范围！</p>
+<p>不一定非要明确一次究竟跳几步，每次取最大的跳跃步数，这个就是可以跳跃的覆盖范围。</p>
+<p>这个范围内，别管是怎么跳的，反正一定可以跳过来。</p>
+<p><strong>那么这个问题就转化为跳跃覆盖范围究竟可不可以覆盖到终点！</strong></p>
+<p>每次移动取最大跳跃步数（得到最大的覆盖范围），每移动一个单位，就更新最大覆盖范围。</p>
+<p><strong>贪心算法局部最优解：每次取最大跳跃步数（取最大覆盖范围），整体最优解：最后得到整体最大覆盖范围，看是否能到终点</strong>。</p>
+<p>局部最优推出全局最优，找不出反例，试试贪心！</p>
+<p>如图：</p>
+<p><img src="https://code-thinking-1253855093.file.myqcloud.com/pics/20230203105634.png" alt="" /></p>
+<p>i 每次移动只能在 cover 的范围内移动，每移动一个元素，cover 得到该元素数值（新的覆盖范围）的补充，让 i 继续移动下去。</p>
+<p>而 cover 每次只取 max(该元素数值补充后的范围, cover 本身范围)。</p>
+<p>如果 cover 大于等于了终点下标，直接 return true 就可以了。</p>
+<p>这道题目关键点在于：不用拘泥于每次究竟跳几步，而是看覆盖范围，覆盖范围内一定是可以跳过来的，不用管是怎么跳的。</p>
+<h2 id="c解法-122"><a class="header" href="#c解法-122">C++解法</a></h2>
+<p>C++代码如下：</p>
+<pre><code class="language-cpp">class Solution {  
+public:  
+    bool canJump(vector&lt;int&gt;&amp; nums) {  
+        int cover = 0;  
+        if (nums.size() == 1) return true; // 只有一个元素，就是能达到  
+        for (int i = 0; i &lt;= cover; i++) { // 注意这里是小于等于cover  
+            cover = max(i + nums[i], cover);  
+            if (cover &gt;= nums.size() - 1) return true; // 说明可以覆盖到终点了  
+        }  
+        return false;  
+    }  
+};
+</code></pre>
+<ul>
+<li>时间复杂度: O(n)</li>
+<li>空间复杂度: O(1)</li>
+</ul>
+<h2 id="java解法-81"><a class="header" href="#java解法-81">Java解法</a></h2>
+<h1 id="45-jump-game-ii"><a class="header" href="#45-jump-game-ii"><a href="https://leetcode.com/problems/jump-game-ii/">45. Jump Game II</a></a></h1>
+<p>You are given a <strong>0-indexed</strong> array of integers <code>nums</code> of length <code>n</code>. You are initially positioned at <code>nums[0]</code>.</p>
+<p>Each element <code>nums[i]</code> represents the maximum length of a forward jump from index <code>i</code>. In other words, if you are at <code>nums[i]</code>, you can jump to any <code>nums[i + j]</code> where:</p>
+<ul>
+<li><code>0 &lt;= j &lt;= nums[i]</code> and</li>
+<li><code>i + j &lt; n</code></li>
+</ul>
+<p>Return <em>the minimum number of jumps to reach</em> <code>nums[n - 1]</code>. The test cases are generated such that you can reach <code>nums[n - 1]</code>.</p>
+<p><strong>Example 1:</strong></p>
+<p><strong>Input:</strong> nums = [2,3,1,1,4]<br />
+<strong>Output:</strong> 2<br />
+<strong>Explanation:</strong> The minimum number of jumps to reach the last index is 2. Jump 1 step from index 0 to 1, then 3 steps to the last index.</p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> nums = [2,3,0,1,4]<br />
+<strong>Output:</strong> 2</p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= nums.length &lt;= 10^4</code></li>
+<li><code>0 &lt;= nums[i] &lt;= 1000</code></li>
+<li>It's guaranteed that you can reach <code>nums[n - 1]</code>.</li>
+</ul>
+<h2 id="思路-141"><a class="header" href="#思路-141">思路</a></h2>
+<p>本题要看最大覆盖范围。</p>
+<p>本题要计算最少步数，那么就要想清楚什么时候步数才一定要加一呢？</p>
+<p>贪心的思路，局部最优：当前可移动距离尽可能多走，如果还没到终点，步数再加一。整体最优：一步尽可能多走，从而达到最少步数。</p>
+<p>思路虽然是这样，但在写代码的时候还不能真的能跳多远就跳多远，那样就不知道下一步最远能跳到哪里了。</p>
+<p><strong>所以真正解题的时候，要从覆盖范围出发，不管怎么跳，覆盖范围内一定是可以跳到的，以最小的步数增加覆盖范围，覆盖范围一旦覆盖了终点，得到的就是最少步数！</strong></p>
+<p><strong>这里需要统计两个覆盖范围，当前这一步的最大覆盖和下一步最大覆盖</strong>。</p>
+<p>如果移动下标达到了当前这一步的最大覆盖最远距离了，还没有到终点的话，那么就必须再走一步来增加覆盖范围，直到覆盖范围覆盖了终点。</p>
+<p>如图：</p>
+<p><img src="https://code-thinking-1253855093.file.myqcloud.com/pics/20201201232309103.png" alt="45.跳跃游戏II" /></p>
+<p><strong>图中覆盖范围的意义在于，只要红色的区域，最多两步一定可以到！（不用管具体怎么跳，反正一定可以跳到）</strong></p>
+<p>理解本题的关键在于：<strong>以最小的步数增加最大的覆盖范围，直到覆盖范围覆盖了终点</strong>，这个范围内最少步数一定可以跳到，不用管具体是怎么跳的，不纠结于一步究竟跳一个单位还是两个单位。</p>
+<h2 id="c解法-123"><a class="header" href="#c解法-123">C++解法</a></h2>
+<h3 id="方法一"><a class="header" href="#方法一">方法一</a></h3>
+<p>从图中可以看出来，就是移动下标达到了当前覆盖的最远距离下标时，步数就要加一，来增加覆盖距离。最后的步数就是最少步数。</p>
+<p>这里还是有个特殊情况需要考虑，当移动下标达到了当前覆盖的最远距离下标时：</p>
+<ul>
+<li>如果当前覆盖最远距离下标不是集合终点，步数就加一，还需要继续走。</li>
+<li>如果当前覆盖最远距离下标就是集合终点，步数不用加一，因为不能再往后走了。</li>
+</ul>
+<p>C++代码如下：（详细注释）</p>
+<pre><code class="language-cpp">// 版本一  
+class Solution {  
+public:  
+    int jump(vector&lt;int&gt;&amp; nums) {  
+        if (nums.size() == 1) return 0;  
+        int curDistance = 0;    // 当前覆盖最远距离下标  
+        int ans = 0;            // 记录走的最大步数  
+        int nextDistance = 0;   // 下一步覆盖最远距离下标  
+        for (int i = 0; i &lt; nums.size(); i++) {  
+            nextDistance = max(nums[i] + i, nextDistance);  // 更新下一步覆盖最远距离下标  
+            if (i == curDistance) {                         // 遇到当前覆盖最远距离下标  
+                ans++;                                  // 需要走下一步  
+                curDistance = nextDistance;             // 更新当前覆盖最远距离下标（相当于加油了）  
+                if (nextDistance &gt;= nums.size() - 1) break;  // 当前覆盖最远距到达集合终点，不用做ans++操作了，直接结束  
+            }  
+        }  
+        return ans;  
+    }  
+};
+</code></pre>
+<ul>
+<li>时间复杂度: O(n)</li>
+<li>空间复杂度: O(1)</li>
+</ul>
+<h3 id="方法二"><a class="header" href="#方法二">方法二</a></h3>
+<p>依然是贪心，思路和方法一差不多，代码可以简洁一些。</p>
+<p><strong>针对于方法一的特殊情况，可以统一处理</strong>，即：移动下标只要遇到当前覆盖最远距离的下标，直接步数加一，不考虑是不是终点的情况。</p>
+<p>想要达到这样的效果，只要让移动下标，最大只能移动到 nums.size - 2 的地方就可以了。</p>
+<p>因为当移动下标指向 nums.size - 2 时：</p>
+<ul>
+<li>
+<p>如果移动下标等于当前覆盖最大距离下标， 需要再走一步（即 ans++），因为最后一步一定是可以到的终点。（题目假设总是可以到达数组的最后一个位置），如图： <img src="https://code-thinking-1253855093.file.myqcloud.com/pics/20201201232445286.png" alt="45.跳跃游戏II2" /></p>
+</li>
+<li>
+<p>如果移动下标不等于当前覆盖最大距离下标，说明当前覆盖最远距离就可以直接达到终点了，不需要再走一步。如图：</p>
+</li>
+</ul>
+<p><img src="https://code-thinking-1253855093.file.myqcloud.com/pics/20201201232338693.png" alt="45.跳跃游戏II1" /></p>
+<p>代码如下：</p>
+<pre><code class="language-cpp">// 版本二  
+class Solution {  
+public:  
+    int jump(vector&lt;int&gt;&amp; nums) {  
+        int curDistance = 0;    // 当前覆盖的最远距离下标  
+        int ans = 0;            // 记录走的最大步数  
+        int nextDistance = 0;   // 下一步覆盖的最远距离下标  
+        for (int i = 0; i &lt; nums.size() - 1; i++) { // 注意这里是小于nums.size() - 1，这是关键所在  
+            nextDistance = max(nums[i] + i, nextDistance); // 更新下一步覆盖的最远距离下标  
+            if (i == curDistance) {                 // 遇到当前覆盖的最远距离下标  
+                curDistance = nextDistance;         // 更新当前覆盖的最远距离下标  
+                ans++;  
+            }  
+        }  
+        return ans;  
+    }  
+};
+</code></pre>
+<ul>
+<li>时间复杂度: O(n)</li>
+<li>空间复杂度: O(1)</li>
+</ul>
+<p>可以看出版本二的代码相对于版本一简化了不少！</p>
+<p><strong>其精髓在于控制移动下标 i 只移动到 nums.size() - 2 的位置</strong>，所以移动下标只要遇到当前覆盖最远距离的下标，直接步数加一，不用考虑别的了。</p>
+<h2 id="java解法-82"><a class="header" href="#java解法-82">Java解法</a></h2>
+<div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
+<h1 id="区间和贪心算法"><a class="header" href="#区间和贪心算法">区间和贪心算法</a></h1>
+<ul>
+<li><a href="%E8%B4%AA%E5%BF%83/%E5%8C%BA%E9%97%B4%E5%92%8C%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95.html#452-minimum-number-of-arrows-to-burst-balloons">452. Minimum Number of Arrows to Burst Balloons</a>
+<ul>
+<li><a href="%E8%B4%AA%E5%BF%83/%E5%8C%BA%E9%97%B4%E5%92%8C%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95.html#%E6%80%9D%E8%B7%AF">思路</a></li>
+<li><a href="%E8%B4%AA%E5%BF%83/%E5%8C%BA%E9%97%B4%E5%92%8C%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95.html#c%E8%A7%A3%E6%B3%95">C++解法</a></li>
+<li><a href="%E8%B4%AA%E5%BF%83/%E5%8C%BA%E9%97%B4%E5%92%8C%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95.html#java%E8%A7%A3%E6%B3%95">Java解法</a></li>
+</ul>
+</li>
+<li><a href="%E8%B4%AA%E5%BF%83/%E5%8C%BA%E9%97%B4%E5%92%8C%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95.html#435-non-overlapping-intervals">435. Non-overlapping Intervals</a>
+<ul>
+<li><a href="%E8%B4%AA%E5%BF%83/%E5%8C%BA%E9%97%B4%E5%92%8C%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95.html#%E6%80%9D%E8%B7%AF-1">思路</a></li>
+<li><a href="%E8%B4%AA%E5%BF%83/%E5%8C%BA%E9%97%B4%E5%92%8C%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95.html#c%E8%A7%A3%E6%B3%95-1">C++解法</a></li>
+<li><a href="%E8%B4%AA%E5%BF%83/%E5%8C%BA%E9%97%B4%E5%92%8C%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95.html#java%E8%A7%A3%E6%B3%95-1">Java解法</a></li>
+</ul>
+</li>
+<li><a href="%E8%B4%AA%E5%BF%83/%E5%8C%BA%E9%97%B4%E5%92%8C%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95.html#56-merge-intervals">56. Merge Intervals</a>
+<ul>
+<li><a href="%E8%B4%AA%E5%BF%83/%E5%8C%BA%E9%97%B4%E5%92%8C%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95.html#%E6%80%9D%E8%B7%AF-2">思路</a></li>
+<li><a href="%E8%B4%AA%E5%BF%83/%E5%8C%BA%E9%97%B4%E5%92%8C%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95.html#c%E8%A7%A3%E6%B3%95-2">C++解法</a></li>
+<li><a href="%E8%B4%AA%E5%BF%83/%E5%8C%BA%E9%97%B4%E5%92%8C%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95.html#java%E8%A7%A3%E6%B3%95-2">Java解法</a></li>
+</ul>
+</li>
+</ul>
+<h1 id="452-minimum-number-of-arrows-to-burst-balloons"><a class="header" href="#452-minimum-number-of-arrows-to-burst-balloons"><a href="https://leetcode.com/problems/minimum-number-of-arrows-to-burst-balloons/">452. Minimum Number of Arrows to Burst Balloons</a></a></h1>
+<p>There are some spherical balloons taped onto a flat wall that represents the XY-plane. The balloons are represented as a 2D integer array <code>points</code> where <code>points[i] = [xstart, xend]</code> denotes a balloon whose <strong>horizontal diameter</strong> stretches between <code>xstart</code> and <code>xend</code>. You do not know the exact y-coordinates of the balloons.</p>
+<p>Arrows can be shot up <strong>directly vertically</strong> (in the positive y-direction) from different points along the x-axis. A balloon with <code>xstart</code> and <code>xend</code> is <strong>burst</strong> by an arrow shot at <code>x</code> if <code>xstart &lt;= x &lt;= xend</code>. There is <strong>no limit</strong> to the number of arrows that can be shot. A shot arrow keeps traveling up infinitely, bursting any balloons in its path.</p>
+<p>Given the array <code>points</code>, return <em>the <strong>minimum</strong> number of arrows that must be shot to burst all balloons</em>.</p>
+<p><strong>Example 1:</strong></p>
+<p><strong>Input:</strong> <code>points = [[10,16],[2,8],[1,6],[7,12]]</code><br />
+<strong>Output:</strong> 2<br />
+<strong>Explanation:</strong> The balloons can be burst by 2 arrows:</p>
+<ul>
+<li>Shoot an arrow at x = 6, bursting the balloons [2,8] and [1,6].</li>
+<li>Shoot an arrow at x = 11, bursting the balloons [10,16] and [7,12].</li>
+</ul>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> <code>points = [[1,2],[3,4],[5,6],[7,8]]</code><br />
+<strong>Output:</strong> 4<br />
+<strong>Explanation:</strong> One arrow needs to be shot for each balloon for a total of 4 arrows.</p>
+<p><strong>Example 3:</strong></p>
+<p><strong>Input:</strong> <code>points = [[1,2],[2,3],[3,4],[4,5]]</code><br />
+<strong>Output:</strong> 2
+<strong>Explanation:</strong> The balloons can be burst by 2 arrows:</p>
+<ul>
+<li>Shoot an arrow at x = 2, bursting the balloons [1,2] and [2,3].</li>
+<li>Shoot an arrow at x = 4, bursting the balloons [3,4] and [4,5].</li>
+</ul>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= points.length &lt;= 10^5</code></li>
+<li><code>points[i].length == 2</code></li>
+<li><code>-2^31 &lt;= xstart &lt; xend &lt;= 2^31 - 1</code></li>
+</ul>
+<h2 id="思路-142"><a class="header" href="#思路-142">思路</a></h2>
+<p>如何使用最少的弓箭呢？</p>
+<p>直觉上来看，貌似只射重叠最多的气球，用的弓箭一定最少，那么有没有当前重叠了三个气球，我射两个，留下一个和后面的一起射这样弓箭用的更少的情况呢？</p>
+<p>尝试一下举反例，发现没有这种情况。</p>
+<p>那么就试一试贪心吧！局部最优：当气球出现重叠，一起射，所用弓箭最少。全局最优：把所有气球射爆所用弓箭最少。</p>
+<p><strong>算法确定下来了，那么如何模拟气球射爆的过程呢？是在数组中移除元素还是做标记呢？</strong></p>
+<p>如果真实的模拟射气球的过程，应该射一个，气球数组就remove一个元素，这样最直观，毕竟气球被射了。</p>
+<p>但仔细思考一下就发现：如果把气球排序之后，从前到后遍历气球，被射过的气球仅仅跳过就行了，没有必要让气球数组remove气球，只要记录一下箭的数量就可以了。</p>
+<p>以上为思考过程，已经确定下来使用贪心了，那么开始解题。</p>
+<p><strong>为了让气球尽可能的重叠，需要对数组进行排序</strong>。</p>
+<p>那么按照气球起始位置排序，还是按照气球终止位置排序呢？</p>
+<p>其实都可以！只不过对应的遍历顺序不同，我就按照气球的起始位置排序了。</p>
+<p>既然按照起始位置排序，那么就从前向后遍历气球数组，靠左尽可能让气球重复。</p>
+<p>从前向后遍历遇到重叠的气球了怎么办？</p>
+<p><strong>如果气球重叠了，重叠气球中右边边界的最小值 之前的区间一定需要一个弓箭</strong>。</p>
+<p>以题目示例： <code>[[10,16],[2,8],[1,6],[7,12]]</code>为例，如图：（方便起见，已经排序）</p>
+<p><img src="https://code-thinking-1253855093.file.myqcloud.com/pics/20201123101929791.png" alt="452.用最少数量的箭引爆气球" /></p>
+<p>可以看出首先第一组重叠气球，一定是需要一个箭，气球3的左边界大于了第一组重叠气球的最小右边界，所以再需要一支箭来射气球3了。</p>
+<p><strong>注意事项</strong></p>
+<p>注意题目中说的是：满足 xstart ≤ x ≤ xend，则该气球会被引爆。那么说明两个气球挨在一起不重叠也可以一起射爆，</p>
+<p>所以代码中 <code>if (points[i][0] &gt; points[i - 1][1])</code> 不能是&gt;=</p>
+<p><strong>总结</strong></p>
+<p>这道题目贪心的思路很简单也很直接，就是重复的一起射了，但本题我认为是有难度的。</p>
+<p>就算思路都想好了，模拟射气球的过程，很多同学真的要去模拟了，实时把气球从数组中移走，这么写的话就复杂了。</p>
+<p>而且寻找重复的气球，寻找重叠气球最小右边界，其实都有代码技巧。</p>
+<p>贪心题目有时候就是这样，看起来很简单，思路很直接，但是一写代码就感觉贼复杂无从下手。</p>
+<p>这里其实是需要代码功底的，那代码功底怎么练？</p>
+<p><strong>多看多写多总结！</strong></p>
+<h2 id="c解法-124"><a class="header" href="#c解法-124">C++解法</a></h2>
+<p>C++代码如下：</p>
+<pre><code class="language-cpp">class Solution {  
+private:  
+    static bool cmp(const vector&lt;int&gt;&amp; a, const vector&lt;int&gt;&amp; b) {  
+        return a[0] &lt; b[0];  
+    }  
+public:  
+    int findMinArrowShots(vector&lt;vector&lt;int&gt;&gt;&amp; points) {  
+        if (points.size() == 0) return 0;  
+        sort(points.begin(), points.end(), cmp);  
+​  
+        int result = 1; // points 不为空至少需要一支箭  
+        for (int i = 1; i &lt; points.size(); i++) {  
+            if (points[i][0] &gt; points[i - 1][1]) {  // 气球i和气球i-1不挨着，注意这里不是&gt;=  
+                result++; // 需要一支箭  
+            }  
+            else {  // 气球i和气球i-1挨着  
+                points[i][1] = min(points[i - 1][1], points[i][1]); // 更新重叠气球最小右边界  
+            }  
+        }  
+        return result;  
+    }  
+};
+</code></pre>
+<ul>
+<li>时间复杂度：<span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathnormal">n</span><span class="mord mathnormal" style="margin-right:0.01968em;">l</span><span class="mord mathnormal">o</span><span class="mord mathnormal" style="margin-right:0.03588em;">g</span><span class="mord mathnormal">n</span><span class="mclose">)</span></span></span></span>，因为有一个快排</li>
+<li>空间复杂度：<span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord">1</span><span class="mclose">)</span></span></span></span>，有一个快排，最差情况(倒序)时，需要n次递归调用。因此确实需要O(n)的栈空间</li>
+</ul>
+<h2 id="java解法-83"><a class="header" href="#java解法-83">Java解法</a></h2>
+<pre><code class="language-java">import java.util.Arrays;
+import java.util.Comparator;
+
+class Solution {
+    public int findMinArrowShots(int[][] points) {
+        if (points == null || points.length == 0) {
+            return 0;
+        }
+
+        // 使用Comparator接口实现自定义排序，按照气球的右边界升序排列
+        Arrays.sort(points, Comparator.comparingInt(a -&gt; a[1]));
+
+        int num = 1; // 至少需要一支箭
+        int end = points[0][1]; // 第一支箭射击的位置，初始化为第一个气球的右边界
+
+        for (int i = 1; i &lt; points.length; i++) {
+            // 如果当前气球的左边界大于之前的最小右边界，则需要一支新的箭
+            if (points[i][0] &gt; end) {
+                num++; // 增加箭的数量
+                end = points[i][1]; // 更新箭的射击位置为当前气球的右边界
+            }
+        }
+        return num;
+    }
+}
+</code></pre>
+<p><strong>代码逻辑：</strong></p>
+<ol>
+<li>对气球按照右边界进行升序排序。</li>
+<li>初始化箭的数量为1，第一支箭射击的位置为第一个气球的右边界。</li>
+<li>遍历剩余的气球，如果当前气球的左边界大于当前箭可以射爆的最远右边界，则需要一支新的箭，并更新箭的射击位置为当前气球的右边界。</li>
+<li>返回箭的数量。</li>
+</ol>
+<h1 id="435-non-overlapping-intervals"><a class="header" href="#435-non-overlapping-intervals"><a href="https://leetcode.com/problems/non-overlapping-intervals/">435. Non-overlapping Intervals</a></a></h1>
+<p>Given an array of intervals <code>intervals</code> where <code>intervals[i] = [starti, endi]</code>, return <em>the minimum number of intervals you need to remove to make the rest of the intervals non-overlapping</em>.</p>
+<p><strong>Note</strong> that intervals which only touch at a point are <strong>non-overlapping</strong>. For example, <code>[1, 2]</code> and <code>[2, 3]</code> are non-overlapping.</p>
+<p><strong>Example 1:</strong></p>
+<p><strong>Input:</strong> <code>intervals = [[1,2],[2,3],[3,4],[1,3]]</code><br />
+<strong>Output:</strong> 1<br />
+<strong>Explanation:</strong> [1,3] can be removed and the rest of the intervals are non-overlapping.</p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> <code>intervals = [[1,2],[1,2],[1,2]]</code><br />
+<strong>Output:</strong> 2<br />
+<strong>Explanation:</strong> You need to remove two [1,2] to make the rest of the intervals non-overlapping.</p>
+<p><strong>Example 3:</strong></p>
+<p><strong>Input:</strong> <code>intervals = [[1,2],[2,3]]</code><br />
+<strong>Output:</strong> 0<br />
+<strong>Explanation:</strong> You don't need to remove any of the intervals since they're already non-overlapping.</p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= intervals.length &lt;= 10^5</code></li>
+<li><code>intervals[i].length == 2</code></li>
+<li><code>-5 * 10^4 &lt;= starti &lt; endi &lt;= 5 * 10^4</code></li>
+</ul>
+<h2 id="思路-143"><a class="header" href="#思路-143">思路</a></h2>
+<p><strong>相信很多同学看到这道题目都冥冥之中感觉要排序，但是究竟是按照右边界排序，还是按照左边界排序呢？</strong></p>
+<p>其实都可以。主要就是为了让区间尽可能的重叠。</p>
+<p><strong>我来按照右边界排序，从左向右记录非交叉区间的个数。最后用区间总数减去非交叉区间的个数就是需要移除的区间个数了</strong>。</p>
+<p>此时问题就是要求非交叉区间的最大个数。</p>
+<p>这里记录非交叉区间的个数还是有技巧的，如图：</p>
+<p><img src="https://code-thinking-1253855093.file.myqcloud.com/pics/20230201164134.png" alt="" /></p>
+<p>区间，1，2，3，4，5，6都按照右边界排好序。</p>
+<p>当确定区间 1 和 区间2 重叠后，如何确定是否与 区间3 也重贴呢？</p>
+<p>就是取 区间1 和 区间2 右边界的最小值，因为这个最小值之前的部分一定是 区间1 和区间2 的重合部分，如果这个最小值也触达到区间3，那么说明 区间 1，2，3都是重合的。</p>
+<p>接下来就是找大于区间1结束位置的区间，是从区间4开始。<strong>那有同学问了为什么不从区间5开始？别忘了已经是按照右边界排序的了</strong>。</p>
+<p>区间4结束之后，再找到区间6，所以一共记录非交叉区间的个数是三个。</p>
+<p>总共区间个数为6，减去非交叉区间的个数3。移除区间的最小数量就是3。</p>
+<h2 id="c解法-125"><a class="header" href="#c解法-125">C++解法</a></h2>
+<p>C++代码如下：</p>
+<pre><code class="language-cpp">class Solution {  
+public:  
+    // 按照区间右边界排序  
+    static bool cmp (const vector&lt;int&gt;&amp; a, const vector&lt;int&gt;&amp; b) {  
+        return a[1] &lt; b[1];  
+    }  
+    int eraseOverlapIntervals(vector&lt;vector&lt;int&gt;&gt;&amp; intervals) {  
+        if (intervals.size() == 0) return 0;  
+        sort(intervals.begin(), intervals.end(), cmp);  
+        int count = 1; // 记录非交叉区间的个数  
+        int end = intervals[0][1]; // 记录区间分割点  
+        for (int i = 1; i &lt; intervals.size(); i++) {  
+            if (end &lt;= intervals[i][0]) {  
+                end = intervals[i][1];  
+                count++;  
+            }  
+        }  
+        return intervals.size() - count;  
+    }  
+};
+</code></pre>
+<ul>
+<li>时间复杂度：<span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathnormal">n</span><span class="mord mathnormal" style="margin-right:0.01968em;">l</span><span class="mord mathnormal">o</span><span class="mord mathnormal" style="margin-right:0.03588em;">g</span><span class="mord mathnormal">n</span><span class="mclose">)</span></span></span></span> ，有一个快排</li>
+<li>空间复杂度：<span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathnormal">n</span><span class="mclose">)</span></span></span></span>，有一个快排，最差情况(倒序)时，需要n次递归调用。因此确实需要$O(n)的栈空间</li>
+</ul>
+<h2 id="java解法-84"><a class="header" href="#java解法-84">Java解法</a></h2>
+<p><strong>修改后的代码：</strong></p>
+<pre><code class="language-java">import java.util.Arrays;
+import java.util.Comparator;
+
+class Solution {
+    public int eraseOverlapIntervals(int[][] intervals) {
+        if (intervals == null || intervals.length == 0) {
+            return 0;
+        }
+
+        // 按照区间的结束时间升序排序
+        Arrays.sort(intervals, Comparator.comparingInt(a -&gt; a[1]));
+
+        int num = 0; // 需要移除的区间数量
+        int end = intervals[0][1]; // 初始化为第一个区间的结束时间
+
+        for (int i = 1; i &lt; intervals.length; i++) {
+            if (intervals[i][0] &lt; end) {
+                // 发现重叠区间，需要移除一个
+                num++;
+            } else {
+                // 没有重叠，更新 end 为当前区间的结束时间
+                end = intervals[i][1];
+            }
+        }
+
+        return num;
+    }
+}
+</code></pre>
+<p><strong>代码解释：</strong></p>
+<ol>
+<li>
+<p><strong>排序：</strong> 首先，我们按照每个区间的结束时间对所有区间进行排序。这样做是为了确保我们总是优先选择结束时间最早的区间，这样可以尽可能多地保留不重叠的区间。</p>
+</li>
+<li>
+<p><strong>贪心选择：</strong></p>
+<ul>
+<li>我们初始化 <code>num</code> 为0，表示需要移除的区间数量。</li>
+<li><code>end</code> 变量用来记录当前已选择的、不重叠的区间的结束时间。初始值设置为第一个区间的结束时间。</li>
+<li>然后，我们遍历排序后的区间。对于每个区间，我们检查它是否与当前已选择的区间重叠（即，当前区间的开始时间是否小于 <code>end</code>）。</li>
+<li>如果重叠，则 <code>num</code> 加1，表示需要移除当前区间。</li>
+<li>如果不重叠，则更新 <code>end</code> 为当前区间的结束时间。</li>
+</ul>
+</li>
+<li>
+<p><strong>返回结果：</strong>  最后，返回需要移除的区间数量 <code>num</code>。</p>
+</li>
+</ol>
+<h1 id="56-merge-intervals"><a class="header" href="#56-merge-intervals"><a href="https://leetcode.com/problems/merge-intervals/">56. Merge Intervals</a></a></h1>
+<p>Given an array of <code>intervals</code> where <code>intervals[i] = [starti, endi]</code>, merge all overlapping intervals, and return <em>an array of the non-overlapping intervals that cover all the intervals in the input</em>.</p>
+<p><strong>Example 1:</strong></p>
+<p><strong>Input:</strong> <code>intervals = [[1,3],[2,6],[8,10],[15,18]]</code><br />
+<strong>Output:</strong> <code>[[1,6],[8,10],[15,18]]</code><br />
+<strong>Explanation:</strong> Since intervals [1,3] and [2,6] overlap, merge them into [1,6].</p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> <code>intervals = [[1,4],[4,5]]</code><br />
+<strong>Output:</strong> <code>[[1,5]]</code>
+<strong>Explanation:</strong> Intervals [1,4] and [4,5] are considered overlapping.</p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= intervals.length &lt;= 10^4</code></li>
+<li><code>intervals[i].length == 2</code></li>
+<li><code>0 &lt;= starti &lt;= endi &lt;= 10^4</code></li>
+</ul>
+<h2 id="思路-144"><a class="header" href="#思路-144">思路</a></h2>
+<p>本题的本质其实还是判断重叠区间问题。</p>
+<p>大家如果认真做题的话，话发现和我们刚刚讲过的<a href="https://programmercarl.com/0452.%E7%94%A8%E6%9C%80%E5%B0%91%E6%95%B0%E9%87%8F%E7%9A%84%E7%AE%AD%E5%BC%95%E7%88%86%E6%B0%94%E7%90%83.html">452. 用最少数量的箭引爆气球</a> 和 <a href="https://programmercarl.com/0435.%E6%97%A0%E9%87%8D%E5%8F%A0%E5%8C%BA%E9%97%B4.html">435. 无重叠区间</a> 都是一个套路。</p>
+<p>这几道题都是判断区间重叠，区别就是判断区间重叠后的逻辑，本题是判断区间重贴后要进行区间合并。</p>
+<p>所以一样的套路，先排序，让所有的相邻区间尽可能的重叠在一起，按左边界，或者右边界排序都可以，处理逻辑稍有不同。</p>
+<p>按照左边界从小到大排序之后，如果 <code>intervals[i][0] &lt;= intervals[i - 1][1]</code> 即<code>intervals[i]</code>的左边界 &lt;= <code>intervals[i - 1]</code>的右边界，则一定有重叠。（本题相邻区间也算重贴，所以是&lt;=）</p>
+<p>这么说有点抽象，看图：（<strong>注意图中区间都是按照左边界排序之后了</strong>）</p>
+<p><img src="https://code-thinking-1253855093.file.myqcloud.com/pics/20201223200632791.png" alt="56.合并区间" /></p>
+<p>知道如何判断重复之后，剩下的就是合并了，如何去模拟合并区间呢？</p>
+<p>其实就是用合并区间后左边界和右边界，作为一个新的区间，加入到result数组里就可以了。如果没有合并就把原区间加入到result数组。</p>
+<h2 id="c解法-126"><a class="header" href="#c解法-126">C++解法</a></h2>
+<p>C++代码如下：</p>
+<pre><code class="language-cpp">class Solution {  
+public:  
+    vector&lt;vector&lt;int&gt;&gt; merge(vector&lt;vector&lt;int&gt;&gt;&amp; intervals) {  
+        vector&lt;vector&lt;int&gt;&gt; result;  
+        if (intervals.size() == 0) return result; // 区间集合为空直接返回  
+        // 排序的参数使用了lambda表达式  
+        sort(intervals.begin(), intervals.end(), [](const vector&lt;int&gt;&amp; a, const vector&lt;int&gt;&amp; b){return a[0] &lt; b[0];});  
+​  
+        // 第一个区间就可以放进结果集里，后面如果重叠，在result上直接合并  
+        result.push_back(intervals[0]);   
+​  
+        for (int i = 1; i &lt; intervals.size(); i++) {  
+            if (result.back()[1] &gt;= intervals[i][0]) { // 发现重叠区间  
+                // 合并区间，只更新右边界就好，因为result.back()的左边界一定是最小值，因为我们按照左边界排序的  
+                result.back()[1] = max(result.back()[1], intervals[i][1]);   
+            } else {  
+                result.push_back(intervals[i]); // 区间不重叠   
+            }  
+        }  
+        return result;  
+    }  
+};
+</code></pre>
+<ul>
+<li>时间复杂度: O(nlogn)</li>
+<li>空间复杂度: O(logn)，排序需要的空间开销</li>
+</ul>
+<h2 id="java解法-85"><a class="header" href="#java解法-85">Java解法</a></h2>
+<p>下面是修改后的代码：</p>
+<pre><code class="language-java">import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.List;
+
+class Solution {
+    public int[][] merge(int[][] intervals) {
+        if (intervals == null || intervals.length &lt;= 1) {
+            return intervals; // 如果为空或只有一个区间，则直接返回
+        }
+
+        // 按照区间的起始位置排序
+        Arrays.sort(intervals, Comparator.comparingInt(a -&gt; a[0]));
+
+        List&lt;int[]&gt; result = new ArrayList&lt;&gt;();
+        int start = intervals[0][0];
+        int end = intervals[0][1];
+
+        for (int i = 1; i &lt; intervals.length; i++) {
+            if (intervals[i][0] &lt;= end) {
+                // 如果当前区间的起始位置小于等于end，则合并区间
+                end = Math.max(end, intervals[i][1]); //end取最大值，考虑[1,5][2,3]这种情况
+            } else {
+                // 否则，将当前区间添加到结果列表中
+                result.add(new int[]{start, end});
+                start = intervals[i][0];
+                end = intervals[i][1];
+            }
+        }
+
+        // 添加最后一个区间
+        result.add(new int[]{start, end});
+
+        // 将List&lt;int[]&gt;转换为int[][]
+        return result.toArray(new int[result.size()][]);
+    }
+}
+</code></pre>
+<p><strong>代码解释和改进:</strong></p>
+<ol>
+<li><strong>空值和单区间检查:</strong> 添加了对 <code>intervals</code> 为空或只有一个区间的检查，直接返回原数组，避免了后续的空指针异常和不必要的处理。</li>
+<li><strong>使用 <code>ArrayList</code></strong>: 使用 <code>ArrayList&lt;int[]&gt;</code> 来动态存储合并后的区间。</li>
+<li><strong>正确的添加方式</strong>: 使用 <code>result.add(new int[]{start, end})</code> 来添加新的区间到 <code>ArrayList</code> 中。</li>
+<li><strong>处理最后一个区间</strong>: 在循环结束后，将最后一个合并的区间添加到 <code>result</code> 中。</li>
+<li><strong>转换为 <code>int[][]</code></strong>: 使用 <code>result.toArray(new int[result.size()][])</code> 将 <code>ArrayList&lt;int[]&gt;</code> 转换为 <code>int[][]</code> 并返回。</li>
+<li><strong>合并区间时的 <code>end</code> 更新</strong>: 使用 <code>end = Math.max(end, intervals[i][1]);</code> 确保 <code>end</code> 总是包含到目前为止的最远位置。 考虑类似 <code>[1,5]</code> 和 <code>[2,3]</code> 这样的例子，合并后应该是 <code>[1,5]</code>。</li>
+<li><strong>注释</strong>:  添加了更详细的注释，方便理解代码的逻辑。</li>
+</ol>
+<div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
+<h1 id="字符串和贪心算法"><a class="header" href="#字符串和贪心算法">字符串和贪心算法</a></h1>
+<ul>
+<li><a href="%E8%B4%AA%E5%BF%83/%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%92%8C%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95.html#763-partition-labels">763. Partition Labels</a>
+<ul>
+<li><a href="%E8%B4%AA%E5%BF%83/%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%92%8C%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95.html#%E6%80%9D%E8%B7%AF">思路</a></li>
+<li><a href="%E8%B4%AA%E5%BF%83/%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%92%8C%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95.html#c%E8%A7%A3%E6%B3%95">C++解法</a></li>
+<li><a href="%E8%B4%AA%E5%BF%83/%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%92%8C%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95.html#java%E8%A7%A3%E6%B3%95">Java解法</a></li>
+</ul>
+</li>
+<li><a href="%E8%B4%AA%E5%BF%83/%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%92%8C%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95.html#316-remove-duplicate-letters">316. Remove Duplicate Letters</a>
+<ul>
+<li><a href="%E8%B4%AA%E5%BF%83/%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%92%8C%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95.html#%E6%80%9D%E8%B7%AF-1">思路</a>
+<ul>
+<li><a href="%E8%B4%AA%E5%BF%83/%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%92%8C%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95.html#approach-stack-and-greedy">Approach: Stack and Greedy</a></li>
+</ul>
+</li>
+<li><a href="%E8%B4%AA%E5%BF%83/%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%92%8C%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95.html#c%E8%A7%A3%E6%B3%95-1">C++解法</a></li>
+<li><a href="%E8%B4%AA%E5%BF%83/%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%92%8C%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95.html#java%E8%A7%A3%E6%B3%95-1">Java解法</a></li>
+</ul>
+</li>
+<li><a href="%E8%B4%AA%E5%BF%83/%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%92%8C%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95.html#1081-smallest-subsequence-of-distinct-characters%E5%90%8C%E4%B8%8A">1081. Smallest Subsequence of Distinct Characters(同上)</a></li>
+<li><a href="%E8%B4%AA%E5%BF%83/%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%92%8C%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95.html#738-monotone-increasing-digits">738. Monotone Increasing Digits</a>
+<ul>
+<li><a href="%E8%B4%AA%E5%BF%83/%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%92%8C%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95.html#%E6%80%9D%E8%80%83">思考</a>
+<ul>
+<li><a href="%E8%B4%AA%E5%BF%83/%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%92%8C%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95.html#%E6%9A%B4%E5%8A%9B%E8%A7%A3%E6%B3%95">暴力解法</a></li>
+<li><a href="%E8%B4%AA%E5%BF%83/%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%92%8C%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95.html#%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95">贪心算法</a></li>
+</ul>
+</li>
+<li><a href="%E8%B4%AA%E5%BF%83/%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%92%8C%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95.html#c%E8%A7%A3%E6%B3%95-2">C++解法</a></li>
+<li><a href="%E8%B4%AA%E5%BF%83/%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%92%8C%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95.html#java%E8%A7%A3%E6%B3%95-2">Java解法</a></li>
+</ul>
+</li>
+</ul>
+<h1 id="763-partition-labels"><a class="header" href="#763-partition-labels"><a href="https://leetcode.com/problems/partition-labels/">763. Partition Labels</a></a></h1>
+<p>You are given a string <code>s</code>. We want to partition the string into as many parts as possible so that each letter appears in at most one part. For example, the string <code>"ababcc"</code> can be partitioned into <code>["abab", "cc"]</code>, but partitions such as <code>["aba", "bcc"]</code> or <code>["ab", "ab", "cc"]</code> are invalid.</p>
+<p>Note that the partition is done so that after concatenating all the parts in order, the resultant string should be <code>s</code>.</p>
+<p>Return <em>a list of integers representing the size of these parts</em>.</p>
+<p><strong>Example 1:</strong></p>
+<p><strong>Input:</strong> s = "ababcbacadefegdehijhklij"<br />
+<strong>Output:</strong> [9,7,8]<br />
+<strong>Explanation:</strong>
+The partition is "ababcbaca", "defegde", "hijhklij".
+This is a partition so that each letter appears in at most one part.
+A partition like "ababcbacadefegde", "hijhklij" is incorrect, because it splits s into less parts.</p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> s = "eccbbbbdec"<br />
+<strong>Output:</strong> [10]</p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= s.length &lt;= 500</code></li>
+<li><code>s</code> consists of lowercase English letters.</li>
+</ul>
+<h2 id="思路-145"><a class="header" href="#思路-145">思路</a></h2>
+<p>Try to greedily choose the smallest partition that includes the first letter. If you have something like "abaccbdeffed", then you might need to add b. You can use an map like "last['b'] = 5" to help you expand the width of your partition.</p>
+<p>一想到分割字符串就想到了回溯，但本题其实不用回溯去暴力搜索。</p>
+<p>题目要求同一字母最多出现在一个片段中，那么如何把同一个字母的都圈在同一个区间里呢？</p>
+<p>如果没有接触过这种题目的话，还挺有难度的。</p>
+<p>在遍历的过程中相当于是要找每一个字母的边界，<strong>如果找到之前遍历过的所有字母的最远边界，说明这个边界就是分割点了</strong>。此时前面出现过所有字母，最远也就到这个边界了。</p>
+<p>可以分为如下两步：</p>
+<ul>
+<li>统计每一个字符最后出现的位置</li>
+<li>从头遍历字符，并更新字符的最远出现下标，如果找到字符最远出现位置下标和当前下标相等了，则找到了分割点</li>
+</ul>
+<p>如图：</p>
+<p><img src="https://code-thinking-1253855093.file.myqcloud.com/pics/20201222191924417.png" alt="763.划分字母区间" /></p>
+<h2 id="c解法-127"><a class="header" href="#c解法-127">C++解法</a></h2>
+<p>明白原理之后，代码并不复杂，如下：</p>
+<pre><code class="language-cpp">class Solution {  
+public:  
+    vector&lt;int&gt; partitionLabels(string S) {  
+        int hash[27] = {0}; // i为字符，hash[i]为字符出现的最后位置  
+        for (int i = 0; i &lt; S.size(); i++) { // 统计每一个字符最后出现的位置  
+            hash[S[i] - 'a'] = i;  
+        }  
+        vector&lt;int&gt; result;  
+        int left = 0;  
+        int right = 0;  
+        for (int i = 0; i &lt; S.size(); i++) {  
+            right = max(right, hash[S[i] - 'a']); // 找到字符出现的最远边界  
+            if (i == right) {  
+                result.push_back(right - left + 1);  
+                left = i + 1;  
+            }  
+        }  
+        return result;  
+    }  
+};
+</code></pre>
+<ul>
+<li>时间复杂度：O(n)</li>
+<li>空间复杂度：O(1)，使用的hash数组是固定大小</li>
+</ul>
+<h2 id="java解法-86"><a class="header" href="#java解法-86">Java解法</a></h2>
+<pre><code class="language-java">class Solution {
+    public List&lt;Integer&gt; partitionLabels(String S) {
+        List&lt;Integer&gt; list = new LinkedList&lt;&gt;();
+        int[] edge = new int[26];
+        char[] chars = S.toCharArray();
+        for (int i = 0; i &lt; chars.length; i++) {
+            edge[chars[i] - 'a'] = i;
+        }
+        int idx = 0;
+        int last = -1;
+        for (int i = 0; i &lt; chars.length; i++) {
+            idx = Math.max(idx,edge[chars[i] - 'a']);
+            if (i == idx) {
+                list.add(i - last);
+                last = i;
+            }
+        }
+        return list;
+    }
+}
+</code></pre>
+<h1 id="316-remove-duplicate-letters"><a class="header" href="#316-remove-duplicate-letters"><a href="https://leetcode.com/problems/remove-duplicate-letters/">316. Remove Duplicate Letters</a></a></h1>
+<p>Given a string <code>s</code>, remove duplicate letters so that every letter appears once and only once. You must make sure your result is <strong>the smallest in lexicographical order</strong> among all possible results.</p>
+<p><strong>Example 1:</strong></p>
+<p><strong>Input:</strong> s = "bcabc"<br />
+<strong>Output:</strong> "abc"</p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> s = "cbacdcbc"<br />
+<strong>Output:</strong> "acdb"</p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= s.length &lt;= 10^4</code></li>
+<li><code>s</code> consists of lowercase English letters.</li>
+</ul>
+<p><strong>Note:</strong> This question is the same as 1081: <a href="https://leetcode.com/problems/smallest-subsequence-of-distinct-characters/">https://leetcode.com/problems/smallest-subsequence-of-distinct-characters/</a></p>
+<h2 id="思路-146"><a class="header" href="#思路-146">思路</a></h2>
+<p>Greedily try to add one missing character. How to check if adding some character will not cause problems ? Use bit-masks to check whether you will be able to complete the sub-sequence if you add the character at some index i.</p>
+<h3 id="approach-stack-and-greedy"><a class="header" href="#approach-stack-and-greedy">Approach: Stack and Greedy</a></h3>
+<p>To address the "Remove Duplicate Letters" problem using a stack and greedy algorithm, we lean on the properties of the stack to maintain lexicographical order:</p>
+<p>Key Data Structures:</p>
+<ul>
+<li><strong>stack</strong>: A dynamic data structure to hold characters in the desired order.</li>
+<li><strong>seen</strong>: A set to track characters already in the stack.</li>
+<li><strong>last_occurrence</strong>: A dictionary to track the last occurrence of each character in the string.</li>
+</ul>
+<p>Enhanced Breakdown:</p>
+<ol>
+<li><strong>Initialization</strong>: Initialize the stack, seen set, and last_occurrence dictionary.</li>
+<li><strong>Iterate through the string</strong>:
+<ul>
+<li>For each character, if it's in the seen set, skip it.</li>
+<li>If it's not in the seen set, add it to the stack. While adding, compare it with the top character of the stack. If the current character is smaller and the top character appears later in the string, pop the top character.</li>
+</ul>
+</li>
+<li><strong>Output</strong>: Convert the stack to a string and return.</li>
+</ol>
+<p><strong>Time Complexity:</strong></p>
+<ul>
+<li>The solution iterates over each character in the string once, leading to a time complexity of O(n), where <code>n</code> is the length of the string <code>s</code>.</li>
+</ul>
+<p><strong>Space Complexity:</strong></p>
+<ul>
+<li>The space complexity is O(n) due to the stack, seen set, and last_occurrence dictionary.</li>
+</ul>
+<h2 id="c解法-128"><a class="header" href="#c解法-128">C++解法</a></h2>
+<pre><code class="language-cpp">class Solution {
+public:
+    string removeDuplicateLetters(string s) {
+        vector&lt;int&gt; lastIndex(26, 0);
+        for (int i = 0; i &lt; s.length(); i++){
+            lastIndex[s[i] - 'a'] = i; // track the lastIndex of character presence
+        }
+        
+        vector&lt;bool&gt; seen(26, false); // keep track seen
+        stack&lt;char&gt; st;
+        
+        for (int i = 0; i &lt; s.size(); i++) {
+            int curr = s[i] - 'a';
+            if (seen[curr]) continue; // if seen continue as we need to pick one char only
+            while(st.size() &gt; 0 &amp;&amp; st.top() &gt; s[i] &amp;&amp; i &lt; lastIndex[st.top() - 'a']){
+                seen[st.top() - 'a'] = false; // pop out and mark unseen
+                st.pop();
+            }
+            st.push(s[i]); // add into stack
+            seen[curr] = true; // mark seen
+        }
+        
+        string ans = "";
+        while (st.size() &gt; 0){
+            ans += st.top();
+            st.pop();
+        }
+        reverse(ans.begin(), ans.end());
+        return ans;
+    }
+};
+</code></pre>
+<h2 id="java解法-87"><a class="header" href="#java解法-87">Java解法</a></h2>
+<pre><code class="language-java">class Solution {
+    public String removeDuplicateLetters(String s) {
+        int[] lastIndex = new int[26];
+        for (int i = 0; i &lt; s.length(); i++){
+            lastIndex[s.charAt(i) - 'a'] = i; // track the lastIndex of character presence
+        }
+        
+        boolean[] seen = new boolean[26]; // keep track seen
+        Stack&lt;Integer&gt; st = new Stack();
+        
+        for (int i = 0; i &lt; s.length(); i++) {
+            int curr = s.charAt(i) - 'a';
+            if (seen[curr]) continue; // if seen continue as we need to pick one char only
+            while (!st.isEmpty() &amp;&amp; st.peek() &gt; curr &amp;&amp; i &lt; lastIndex[st.peek()]){
+                seen[st.pop()] = false; // pop out and mark unseen
+            }
+            st.push(curr); // add into stack
+            seen[curr] = true; // mark seen
+        }
+
+        StringBuilder sb = new StringBuilder();
+        while (!st.isEmpty())
+            sb.append((char) (st.pop() + 'a'));
+        return sb.reverse().toString();
+    }
+}
+</code></pre>
+<h1 id="1081-smallest-subsequence-of-distinct-characters同上"><a class="header" href="#1081-smallest-subsequence-of-distinct-characters同上"><a href="https://leetcode.com/problems/smallest-subsequence-of-distinct-characters/">1081. Smallest Subsequence of Distinct Characters</a>(同上)</a></h1>
+<h1 id="738-monotone-increasing-digits"><a class="header" href="#738-monotone-increasing-digits"><a href="https://leetcode.com/problems/monotone-increasing-digits/">738. Monotone Increasing Digits</a></a></h1>
+<p>An integer has <strong>monotone increasing digits</strong> if and only if each pair of adjacent digits <code>x</code> and <code>y</code> satisfy <code>x &lt;= y</code>.</p>
+<p>Given an integer <code>n</code>, return <em>the largest number that is less than or equal to</em> <code>n</code> <em>with <strong>monotone increasing digits</strong></em>.</p>
+<p><strong>Example 1:</strong></p>
+<p><strong>Input:</strong> n = 10<br />
+<strong>Output:</strong> 9</p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> n = 1234<br />
+<strong>Output:</strong> 1234</p>
+<p><strong>Example 3:</strong></p>
+<p><strong>Input:</strong> n = 332<br />
+<strong>Output:</strong> 299</p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>0 &lt;= n &lt;= 10^9</code></li>
+</ul>
+<h2 id="思考"><a class="header" href="#思考">思考</a></h2>
+<p>Build the answer digit by digit, adding the largest possible one that would make the number still less than or equal to N.</p>
+<h3 id="暴力解法"><a class="header" href="#暴力解法">暴力解法</a></h3>
+<p>题意很简单，那么首先想的就是暴力解法了，来我替大家暴力一波，结果自然是超时！</p>
+<p>代码如下：</p>
+<pre><code class="language-cpp">class Solution {  
+private:  
+    // 判断一个数字的各位上是否是递增  
+    bool checkNum(int num) {  
+        int max = 10;  
+        while (num) {  
+            int t = num % 10;  
+            if (max &gt;= t) max = t;  
+            else return false;  
+            num = num / 10;  
+        }  
+        return true;  
+    }  
+public:  
+    int monotoneIncreasingDigits(int N) {  
+        for (int i = N; i &gt; 0; i--) { // 从大到小遍历  
+            if (checkNum(i)) return i;  
+        }  
+        return 0;  
+    }  
+};
+</code></pre>
+<ul>
+<li>时间复杂度：O(n × m) m为n的数字长度</li>
+<li>空间复杂度：O(1)</li>
+</ul>
+<h3 id="贪心算法-1"><a class="header" href="#贪心算法-1">贪心算法</a></h3>
+<p>题目要求小于等于N的最大单调递增的整数，那么拿一个两位的数字来举例。</p>
+<p>例如：98，一旦出现<code>strNum[i - 1] &gt; strNum[i]</code>的情况（非单调递增），首先想让<code>strNum[i - 1]--</code>，然后<code>strNum[i]</code>变为9，这样这个整数就是89，即小于98的最大的单调递增整数。</p>
+<p>这一点如果想清楚了，这道题就好办了。</p>
+<p>此时是从前向后遍历还是从后向前遍历呢？</p>
+<p>从前向后遍历的话，遇到<code>strNum[i - 1] &gt; strNum[i]</code>的情况，让<code>strNum[i - 1]</code>减一，但此时如果<code>strNum[i - 1]</code>减一了，可能又小于<code>strNum[i - 2]</code>。</p>
+<p>这么说有点抽象，举个例子，数字：332，从前向后遍历的话，那么就把变成了329，此时2又小于了第一位的3了，真正的结果应该是299。</p>
+<p>那么从后向前遍历，就可以重复利用上次比较得出的结果了，从后向前遍历332的数值变化为：332 -&gt; 329 -&gt; 299</p>
+<p>确定了遍历顺序之后，那么此时局部最优就可以推出全局，找不出反例，试试贪心。</p>
+<h2 id="c解法-129"><a class="header" href="#c解法-129">C++解法</a></h2>
+<p>本题只要想清楚个例，例如98，一旦出现<code>strNum[i - 1] &gt; strNum[i]</code>的情况（非单调递增），首先想让<code>strNum[i - 1]</code>减一，<code>strNum[i]</code>赋值9，这样这个整数就是89。就可以很自然想到对应的贪心解法了。</p>
+<p>想到了贪心，还要考虑遍历顺序，只有从后向前遍历才能重复利用上次比较的结果。</p>
+<p>最后代码实现的时候，也需要一些技巧，例如用一个flag来标记从哪里开始赋值9。</p>
+<p>C++代码如下：</p>
+<pre><code class="language-cpp">class Solution {  
+public:  
+    int monotoneIncreasingDigits(int N) {  
+        string strNum = to_string(N);  
+        // flag用来标记赋值9从哪里开始  
+        // 设置为这个默认值，为了防止第二个for循环在flag没有被赋值的情况下执行  
+        int flag = strNum.size();  
+        for (int i = strNum.size() - 1; i &gt; 0; i--) {  
+            if (strNum[i - 1] &gt; strNum[i] ) {  
+                flag = i;  
+                strNum[i - 1]--;  
+            }  
+        }  
+        for (int i = flag; i &lt; strNum.size(); i++) {  
+            strNum[i] = '9';  
+        }  
+        return stoi(strNum);  
+    }  
+};  
+</code></pre>
+<p>​</p>
+<ul>
+<li>时间复杂度：O(n)，n 为数字长度</li>
+<li>空间复杂度：O(n)，需要一个字符串，转化为字符串操作更方便</li>
+</ul>
+<h2 id="java解法-88"><a class="header" href="#java解法-88">Java解法</a></h2>
+<pre><code class="language-java">class Solution {
+    public int monotoneIncreasingDigits(int n) {
+        String s = Integer.toString(n); // 将整数转换为字符串
+        char[] arr = s.toCharArray(); // 将字符串转换为字符数组，方便修改
+        int flag = arr.length;
+        for(int i = arr.length - 1; i &gt; 0; i--){
+            if(arr[i] &lt; arr[i - 1]){
+                arr[i - 1]--; // 字符自减
+                flag = i;
+            }
+        }
+        for(int i = flag; i &lt; arr.length; i++){
+            arr[i] = '9'; // 将后面的所有字符设置为 '9'
+        }
+        return Integer.parseInt(new String(arr)); // 将字符数组转换回字符串，再转换为整数
+    }
+}
+</code></pre>
+<p><strong>主要修改说明：</strong></p>
+<ol>
+<li><strong>类型转换：</strong>
+<ul>
+<li><code>Integer.toString(n)</code>: 将整数 <code>n</code> 转换为字符串，因为 Java 中没有直接名为 <code>toString</code> 的全局函数来转换整数。</li>
+<li><code>s.toCharArray()</code>: 将字符串 <code>s</code> 转换为字符数组。这样可以方便地修改字符串中的字符。</li>
+<li><code>Integer.parseInt(new String(arr))</code>: 将修改后的字符数组转换回字符串，然后再将字符串解析为整数，作为结果返回。</li>
+</ul>
+</li>
+<li><strong>字符自减：</strong>
+<ul>
+<li><code>arr[i - 1]--</code>:  字符数组中的元素是 <code>char</code> 类型，可以直接进行自减操作。</li>
+</ul>
+</li>
+<li><strong>使用字符数组：</strong>
+<ul>
+<li>使用 <code>char[] arr</code> 代替 <code>string s</code>，因为 Java 的 String 类型是不可变的。为了能够修改字符串中的字符，我们需要将其转换为字符数组。</li>
+</ul>
+</li>
+<li><strong>valueOf() 方法：</strong>
+<ul>
+<li><code>String</code> 类没有 <code>valueOf()</code> 实例方法。应该使用 <code>new String(arr)</code> 从字符数组创建一个新的字符串。</li>
+</ul>
+</li>
+</ol>
+<p>这段代码的思路是找到从右到左第一个降序的位置，将该位置的数字减 1，然后将该位置之后的所有数字都置为 9，以保证结果是单调递增的。</p>
+<div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
+<h1 id="二叉树和贪心算法"><a class="header" href="#二叉树和贪心算法">二叉树和贪心算法</a></h1>
+<ul>
+<li><a href="%E8%B4%AA%E5%BF%83/%E4%BA%8C%E5%8F%89%E6%A0%91%E5%92%8C%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95.html#968-binary-tree-cameras">968. Binary Tree Cameras</a>
+<ul>
+<li><a href="%E8%B4%AA%E5%BF%83/%E4%BA%8C%E5%8F%89%E6%A0%91%E5%92%8C%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95.html#%E6%80%9D%E8%B7%AF">思路</a>
+<ul>
+<li><a href="%E8%B4%AA%E5%BF%83/%E4%BA%8C%E5%8F%89%E6%A0%91%E5%92%8C%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95.html#%E7%A1%AE%E5%AE%9A%E9%81%8D%E5%8E%86%E9%A1%BA%E5%BA%8F">确定遍历顺序</a></li>
+<li><a href="%E8%B4%AA%E5%BF%83/%E4%BA%8C%E5%8F%89%E6%A0%91%E5%92%8C%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95.html#%E5%A6%82%E4%BD%95%E9%9A%94%E4%B8%A4%E4%B8%AA%E8%8A%82%E7%82%B9%E6%94%BE%E4%B8%80%E4%B8%AA%E6%91%84%E5%83%8F%E5%A4%B4">如何隔两个节点放一个摄像头</a></li>
+</ul>
+</li>
+<li><a href="%E8%B4%AA%E5%BF%83/%E4%BA%8C%E5%8F%89%E6%A0%91%E5%92%8C%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95.html#c%E8%A7%A3%E6%B3%95">C++解法</a></li>
+</ul>
+</li>
+</ul>
+<h1 id="968-binary-tree-cameras"><a class="header" href="#968-binary-tree-cameras"><a href="https://leetcode.com/problems/binary-tree-cameras/">968. Binary Tree Cameras</a></a></h1>
+<p>You are given the <code>root</code> of a binary tree. We install cameras on the tree nodes where each camera at a node can monitor its parent, itself, and its immediate children.</p>
+<p>Return <em>the minimum number of cameras needed to monitor all nodes of the tree</em>.</p>
+<p><strong>Example 1:</strong></p>
+<p><img src="https://assets.leetcode.com/uploads/2018/12/29/bst_cameras_01.png" alt="" /></p>
+<p><strong>Input:</strong> root = [0,0,null,0,0]<br />
+<strong>Output:</strong> 1<br />
+<strong>Explanation:</strong> One camera is enough to monitor all nodes if placed as shown.</p>
+<p><strong>Example 2:</strong></p>
+<p><img src="https://assets.leetcode.com/uploads/2018/12/29/bst_cameras_02.png" alt="" /></p>
+<p><strong>Input:</strong> root = [0,0,null,0,null,0,null,null,0]<br />
+<strong>Output:</strong> 2<br />
+<strong>Explanation:</strong> At least two cameras are needed to monitor all nodes of the tree. The above image shows one of the valid configurations of camera placement.</p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li>The number of nodes in the tree is in the range <code>[1, 1000]</code>.</li>
+<li><code>Node.val == 0</code></li>
+</ul>
+<h2 id="思路-147"><a class="header" href="#思路-147">思路</a></h2>
+<p>这道题目首先要想，如何放置，才能让摄像头最小的呢？</p>
+<p>从题目中示例，其实可以得到启发，<strong>我们发现题目示例中的摄像头都没有放在叶子节点上！</strong></p>
+<p>这是很重要的一个线索，摄像头可以覆盖上中下三层，如果把摄像头放在叶子节点上，就浪费的一层的覆盖。</p>
+<p>所以把摄像头放在叶子节点的父节点位置，才能充分利用摄像头的覆盖面积。</p>
+<p>那么有同学可能问了，为什么不从头结点开始看起呢，为啥要从叶子节点看呢？</p>
+<p>因为头结点放不放摄像头也就省下一个摄像头， 叶子节点放不放摄像头省下了的摄像头数量是指数阶别的。</p>
+<p><strong>所以我们要从下往上看，局部最优：让叶子节点的父节点安摄像头，所用摄像头最少，整体最优：全部摄像头数量所用最少！</strong></p>
+<p>局部最优推出全局最优，找不出反例，那么就按照贪心来！</p>
+<p>此时，大体思路就是从低到上，先给叶子节点父节点放个摄像头，然后隔两个节点放一个摄像头，直至到二叉树头结点。</p>
+<p>此时这道题目还有两个难点：</p>
+<ol>
+<li>二叉树的遍历</li>
+<li>如何隔两个节点放一个摄像头</li>
+</ol>
+<h3 id="确定遍历顺序"><a class="header" href="#确定遍历顺序">确定遍历顺序</a></h3>
+<p>在二叉树中如何从低向上推导呢？</p>
+<p>可以使用后序遍历也就是左右中的顺序，这样就可以在回溯的过程中从下到上进行推导了。</p>
+<p>后序遍历代码如下：</p>
+<pre><code class="language-cpp">int traversal(TreeNode* cur) {  
+​  
+    // 空节点，该节点有覆盖  
+    if (终止条件) return ;  
+​  
+    int left = traversal(cur-&gt;left);    // 左  
+    int right = traversal(cur-&gt;right);  // 右  
+​  
+    逻辑处理                            // 中  
+    return ;  
+}
+</code></pre>
+<p><strong>注意在以上代码中我们取了左孩子的返回值，右孩子的返回值，即left 和 right， 以后推导中间节点的状态</strong></p>
+<h3 id="如何隔两个节点放一个摄像头"><a class="header" href="#如何隔两个节点放一个摄像头">如何隔两个节点放一个摄像头</a></h3>
+<p>此时需要状态转移的公式，大家不要和动态的状态转移公式混到一起，本题状态转移没有择优的过程，就是单纯的状态转移！</p>
+<p>来看看这个状态应该如何转移，先来看看每个节点可能有几种状态：</p>
+<p>有如下三种：</p>
+<ul>
+<li>该节点无覆盖</li>
+<li>本节点有摄像头</li>
+<li>本节点有覆盖</li>
+</ul>
+<p>我们分别有三个数字来表示：</p>
+<ul>
+<li>0：该节点无覆盖</li>
+<li>1：本节点有摄像头</li>
+<li>2：本节点有覆盖</li>
+</ul>
+<p>大家应该找不出第四个节点的状态了。</p>
+<p><strong>一些同学可能会想有没有第四种状态：本节点无摄像头，其实无摄像头就是 无覆盖 或者 有覆盖的状态，所以一共还是三个状态。</strong></p>
+<p><strong>因为在遍历树的过程中，就会遇到空节点，那么问题来了，空节点究竟是哪一种状态呢？ 空节点表示无覆盖？ 表示有摄像头？还是有覆盖呢？</strong></p>
+<p>回归本质，为了让摄像头数量最少，我们要尽量让叶子节点的父节点安装摄像头，这样才能摄像头的数量最少。</p>
+<p>那么空节点不能是无覆盖的状态，这样叶子节点就要放摄像头了，空节点也不能是有摄像头的状态，这样叶子节点的父节点就没有必要放摄像头了，而是可以把摄像头放在叶子节点的爷爷节点上。</p>
+<p><strong>所以空节点的状态只能是有覆盖，这样就可以在叶子节点的父节点放摄像头了</strong></p>
+<p>接下来就是递推关系。</p>
+<p>那么递归的终止条件应该是遇到了空节点，此时应该返回2（有覆盖），原因上面已经解释过了。</p>
+<p>代码如下：</p>
+<pre><code class="language-cpp">// 空节点，该节点有覆盖  
+if (cur == NULL) return 2;
+</code></pre>
+<p>递归的函数，以及终止条件已经确定了，再来看单层逻辑处理。</p>
+<p>主要有如下四类情况：</p>
+<ul>
+<li>情况1：左右节点都有覆盖</li>
+</ul>
+<p>左孩子有覆盖，右孩子有覆盖，那么此时中间节点应该就是无覆盖的状态了。</p>
+<p>如图：</p>
+<p><img src="https://code-thinking-1253855093.file.myqcloud.com/pics/20201229203710729.png" alt="968.监控二叉树2" /></p>
+<p>代码如下：</p>
+<pre><code class="language-cpp">// 左右节点都有覆盖  
+if (left == 2 &amp;&amp; right == 2) return 0;
+</code></pre>
+<ul>
+<li>情况2：左右节点至少有一个无覆盖的情况</li>
+</ul>
+<p>如果是以下情况，则中间节点（父节点）应该放摄像头：</p>
+<ul>
+<li>left == 0 &amp;&amp; right == 0 左右节点无覆盖</li>
+<li>left == 1 &amp;&amp; right == 0 左节点有摄像头，右节点无覆盖</li>
+<li>left == 0 &amp;&amp; right == 1 左节点有无覆盖，右节点摄像头</li>
+<li>left == 0 &amp;&amp; right == 2 左节点无覆盖，右节点覆盖</li>
+<li>left == 2 &amp;&amp; right == 0 左节点覆盖，右节点无覆盖</li>
+</ul>
+<p>这个不难理解，毕竟有一个孩子没有覆盖，父节点就应该放摄像头。</p>
+<p>此时摄像头的数量要加一，并且return 1，代表中间节点放摄像头。</p>
+<p>代码如下：</p>
+<pre><code class="language-cpp">if (left == 0 || right == 0) {  
+    result++;  
+    return 1;  
+}
+</code></pre>
+<ul>
+<li>情况3：左右节点至少有一个有摄像头</li>
+</ul>
+<p>如果是以下情况，其实就是 左右孩子节点有一个有摄像头了，那么其父节点就应该是2（覆盖的状态）</p>
+<ul>
+<li>left == 1 &amp;&amp; right == 2 左节点有摄像头，右节点有覆盖</li>
+<li>left == 2 &amp;&amp; right == 1 左节点有覆盖，右节点有摄像头</li>
+<li>left == 1 &amp;&amp; right == 1 左右节点都有摄像头</li>
+</ul>
+<p>代码如下：</p>
+<pre><code class="language-cpp">if (left == 1 || right == 1) return 2;
+</code></pre>
+<p><strong>从这个代码中，可以看出，如果left == 1, right == 0 怎么办？其实这种条件在情况2中已经判断过了</strong>，如图：</p>
+<p><img src="https://code-thinking-1253855093.file.myqcloud.com/pics/2020122920362355.png" alt="968.监控二叉树1" /></p>
+<p>这种情况也是大多数同学容易迷惑的情况。</p>
+<ol>
+<li>情况4：头结点没有覆盖</li>
+</ol>
+<p>以上都处理完了，递归结束之后，可能头结点 还有一个无覆盖的情况，如图：</p>
+<p><img src="https://code-thinking-1253855093.file.myqcloud.com/pics/20201229203742446.png" alt="968.监控二叉树3" /></p>
+<p>所以递归结束之后，还要判断根节点，如果没有覆盖，result++，代码如下：</p>
+<pre><code class="language-cpp">int minCameraCover(TreeNode* root) {  
+    result = 0;  
+    if (traversal(root) == 0) { // root 无覆盖  
+        result++;  
+    }  
+    return result;  
+}
+</code></pre>
+<h2 id="c解法-130"><a class="header" href="#c解法-130">C++解法</a></h2>
+<p>C++代码如下：</p>
+<pre><code class="language-cpp">// 版本一  
+class Solution {  
+private:  
+    int result;  
+    int traversal(TreeNode* cur) {  
+​  
+        // 空节点，该节点有覆盖  
+        if (cur == NULL) return 2;  
+​  
+        int left = traversal(cur-&gt;left);    // 左  
+        int right = traversal(cur-&gt;right);  // 右  
+​  
+        // 情况1  
+        // 左右节点都有覆盖  
+        if (left == 2 &amp;&amp; right == 2) return 0;  
+​  
+        // 情况2  
+        // left == 0 &amp;&amp; right == 0 左右节点无覆盖  
+        // left == 1 &amp;&amp; right == 0 左节点有摄像头，右节点无覆盖  
+        // left == 0 &amp;&amp; right == 1 左节点有无覆盖，右节点摄像头  
+        // left == 0 &amp;&amp; right == 2 左节点无覆盖，右节点覆盖  
+        // left == 2 &amp;&amp; right == 0 左节点覆盖，右节点无覆盖  
+        if (left == 0 || right == 0) {  
+            result++;  
+            return 1;  
+        }  
+​  
+        // 情况3  
+        // left == 1 &amp;&amp; right == 2 左节点有摄像头，右节点有覆盖  
+        // left == 2 &amp;&amp; right == 1 左节点有覆盖，右节点有摄像头  
+        // left == 1 &amp;&amp; right == 1 左右节点都有摄像头  
+        // 其他情况前段代码均已覆盖  
+        if (left == 1 || right == 1) return 2;  
+​  
+        // 以上代码我没有使用else，主要是为了把各个分支条件展现出来，这样代码有助于读者理解  
+        // 这个 return -1 逻辑不会走到这里。  
+        return -1;  
+    }  
+​  
+public:  
+    int minCameraCover(TreeNode* root) {  
+        result = 0;  
+        // 情况4  
+        if (traversal(root) == 0) { // root 无覆盖  
+            result++;  
+        }  
+        return result;  
+    }  
+};
+</code></pre>
+<p>在以上代码的基础上，再进行精简，代码如下：</p>
+<pre><code class="language-cpp">// 版本二  
+class Solution {  
+private:  
+    int result;  
+    int traversal(TreeNode* cur) {  
+        if (cur == NULL) return 2;  
+        int left = traversal(cur-&gt;left);    // 左  
+        int right = traversal(cur-&gt;right);  // 右  
+        if (left == 2 &amp;&amp; right == 2) return 0;  
+        else if (left == 0 || right == 0) {  
+            result++;  
+            return 1;  
+        } else return 2;  
+    }  
+public:  
+    int minCameraCover(TreeNode* root) {  
+        result = 0;  
+        if (traversal(root) == 0) { // root 无覆盖  
+            result++;  
+        }  
+        return result;  
+    }  
+};  
+</code></pre>
+<p>​</p>
+<ul>
+<li>时间复杂度: O(n)，需要遍历二叉树上的每个节点</li>
+<li>空间复杂度: O(n)</li>
+</ul>
+<p>大家可能会惊讶，居然可以这么简短，<strong>其实就是在版本一的基础上，使用else把一些情况直接覆盖掉了</strong>。</p>
+<p>在网上关于这道题解可以搜到很多这种神级别的代码，但都没讲不清楚，如果直接看代码的话，指定越看越晕，<strong>所以建议大家对着版本一的代码一步一步来，版本二中看不中用！</strong>。</p>
+<div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
+<h1 id="单调栈法"><a class="header" href="#单调栈法">单调栈法</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
+<h1 id="动态规划-1"><a class="header" href="#动态规划-1">动态规划</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
 <h1 id="图论"><a class="header" href="#图论">图论</a></h1>
 

@@ -1,0 +1,568 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>区间和贪心算法 - 剑指Offer</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">剑指Offer</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
+<h1 id="区间和贪心算法"><a class="header" href="#区间和贪心算法">区间和贪心算法</a></h1>
+<ul>
+<li><a href="#452-minimum-number-of-arrows-to-burst-balloons">452. Minimum Number of Arrows to Burst Balloons</a>
+<ul>
+<li><a href="#%E6%80%9D%E8%B7%AF">思路</a></li>
+<li><a href="#c%E8%A7%A3%E6%B3%95">C++解法</a></li>
+<li><a href="#java%E8%A7%A3%E6%B3%95">Java解法</a></li>
+</ul>
+</li>
+<li><a href="#435-non-overlapping-intervals">435. Non-overlapping Intervals</a>
+<ul>
+<li><a href="#%E6%80%9D%E8%B7%AF-1">思路</a></li>
+<li><a href="#c%E8%A7%A3%E6%B3%95-1">C++解法</a></li>
+<li><a href="#java%E8%A7%A3%E6%B3%95-1">Java解法</a></li>
+</ul>
+</li>
+<li><a href="#56-merge-intervals">56. Merge Intervals</a>
+<ul>
+<li><a href="#%E6%80%9D%E8%B7%AF-2">思路</a></li>
+<li><a href="#c%E8%A7%A3%E6%B3%95-2">C++解法</a></li>
+<li><a href="#java%E8%A7%A3%E6%B3%95-2">Java解法</a></li>
+</ul>
+</li>
+</ul>
+<h1 id="452-minimum-number-of-arrows-to-burst-balloons"><a class="header" href="#452-minimum-number-of-arrows-to-burst-balloons"><a href="https://leetcode.com/problems/minimum-number-of-arrows-to-burst-balloons/">452. Minimum Number of Arrows to Burst Balloons</a></a></h1>
+<p>There are some spherical balloons taped onto a flat wall that represents the XY-plane. The balloons are represented as a 2D integer array <code>points</code> where <code>points[i] = [xstart, xend]</code> denotes a balloon whose <strong>horizontal diameter</strong> stretches between <code>xstart</code> and <code>xend</code>. You do not know the exact y-coordinates of the balloons.</p>
+<p>Arrows can be shot up <strong>directly vertically</strong> (in the positive y-direction) from different points along the x-axis. A balloon with <code>xstart</code> and <code>xend</code> is <strong>burst</strong> by an arrow shot at <code>x</code> if <code>xstart &lt;= x &lt;= xend</code>. There is <strong>no limit</strong> to the number of arrows that can be shot. A shot arrow keeps traveling up infinitely, bursting any balloons in its path.</p>
+<p>Given the array <code>points</code>, return <em>the <strong>minimum</strong> number of arrows that must be shot to burst all balloons</em>.</p>
+<p><strong>Example 1:</strong></p>
+<p><strong>Input:</strong> <code>points = [[10,16],[2,8],[1,6],[7,12]]</code><br />
+<strong>Output:</strong> 2<br />
+<strong>Explanation:</strong> The balloons can be burst by 2 arrows:</p>
+<ul>
+<li>Shoot an arrow at x = 6, bursting the balloons [2,8] and [1,6].</li>
+<li>Shoot an arrow at x = 11, bursting the balloons [10,16] and [7,12].</li>
+</ul>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> <code>points = [[1,2],[3,4],[5,6],[7,8]]</code><br />
+<strong>Output:</strong> 4<br />
+<strong>Explanation:</strong> One arrow needs to be shot for each balloon for a total of 4 arrows.</p>
+<p><strong>Example 3:</strong></p>
+<p><strong>Input:</strong> <code>points = [[1,2],[2,3],[3,4],[4,5]]</code><br />
+<strong>Output:</strong> 2
+<strong>Explanation:</strong> The balloons can be burst by 2 arrows:</p>
+<ul>
+<li>Shoot an arrow at x = 2, bursting the balloons [1,2] and [2,3].</li>
+<li>Shoot an arrow at x = 4, bursting the balloons [3,4] and [4,5].</li>
+</ul>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= points.length &lt;= 10^5</code></li>
+<li><code>points[i].length == 2</code></li>
+<li><code>-2^31 &lt;= xstart &lt; xend &lt;= 2^31 - 1</code></li>
+</ul>
+<h2 id="思路"><a class="header" href="#思路">思路</a></h2>
+<p>如何使用最少的弓箭呢？</p>
+<p>直觉上来看，貌似只射重叠最多的气球，用的弓箭一定最少，那么有没有当前重叠了三个气球，我射两个，留下一个和后面的一起射这样弓箭用的更少的情况呢？</p>
+<p>尝试一下举反例，发现没有这种情况。</p>
+<p>那么就试一试贪心吧！局部最优：当气球出现重叠，一起射，所用弓箭最少。全局最优：把所有气球射爆所用弓箭最少。</p>
+<p><strong>算法确定下来了，那么如何模拟气球射爆的过程呢？是在数组中移除元素还是做标记呢？</strong></p>
+<p>如果真实的模拟射气球的过程，应该射一个，气球数组就remove一个元素，这样最直观，毕竟气球被射了。</p>
+<p>但仔细思考一下就发现：如果把气球排序之后，从前到后遍历气球，被射过的气球仅仅跳过就行了，没有必要让气球数组remove气球，只要记录一下箭的数量就可以了。</p>
+<p>以上为思考过程，已经确定下来使用贪心了，那么开始解题。</p>
+<p><strong>为了让气球尽可能的重叠，需要对数组进行排序</strong>。</p>
+<p>那么按照气球起始位置排序，还是按照气球终止位置排序呢？</p>
+<p>其实都可以！只不过对应的遍历顺序不同，我就按照气球的起始位置排序了。</p>
+<p>既然按照起始位置排序，那么就从前向后遍历气球数组，靠左尽可能让气球重复。</p>
+<p>从前向后遍历遇到重叠的气球了怎么办？</p>
+<p><strong>如果气球重叠了，重叠气球中右边边界的最小值 之前的区间一定需要一个弓箭</strong>。</p>
+<p>以题目示例： <code>[[10,16],[2,8],[1,6],[7,12]]</code>为例，如图：（方便起见，已经排序）</p>
+<p><img src="https://code-thinking-1253855093.file.myqcloud.com/pics/20201123101929791.png" alt="452.用最少数量的箭引爆气球" /></p>
+<p>可以看出首先第一组重叠气球，一定是需要一个箭，气球3的左边界大于了第一组重叠气球的最小右边界，所以再需要一支箭来射气球3了。</p>
+<p><strong>注意事项</strong></p>
+<p>注意题目中说的是：满足 xstart ≤ x ≤ xend，则该气球会被引爆。那么说明两个气球挨在一起不重叠也可以一起射爆，</p>
+<p>所以代码中 <code>if (points[i][0] &gt; points[i - 1][1])</code> 不能是&gt;=</p>
+<p><strong>总结</strong></p>
+<p>这道题目贪心的思路很简单也很直接，就是重复的一起射了，但本题我认为是有难度的。</p>
+<p>就算思路都想好了，模拟射气球的过程，很多同学真的要去模拟了，实时把气球从数组中移走，这么写的话就复杂了。</p>
+<p>而且寻找重复的气球，寻找重叠气球最小右边界，其实都有代码技巧。</p>
+<p>贪心题目有时候就是这样，看起来很简单，思路很直接，但是一写代码就感觉贼复杂无从下手。</p>
+<p>这里其实是需要代码功底的，那代码功底怎么练？</p>
+<p><strong>多看多写多总结！</strong></p>
+<h2 id="c解法"><a class="header" href="#c解法">C++解法</a></h2>
+<p>C++代码如下：</p>
+<pre><code class="language-cpp">class Solution {  
+private:  
+    static bool cmp(const vector&lt;int&gt;&amp; a, const vector&lt;int&gt;&amp; b) {  
+        return a[0] &lt; b[0];  
+    }  
+public:  
+    int findMinArrowShots(vector&lt;vector&lt;int&gt;&gt;&amp; points) {  
+        if (points.size() == 0) return 0;  
+        sort(points.begin(), points.end(), cmp);  
+​  
+        int result = 1; // points 不为空至少需要一支箭  
+        for (int i = 1; i &lt; points.size(); i++) {  
+            if (points[i][0] &gt; points[i - 1][1]) {  // 气球i和气球i-1不挨着，注意这里不是&gt;=  
+                result++; // 需要一支箭  
+            }  
+            else {  // 气球i和气球i-1挨着  
+                points[i][1] = min(points[i - 1][1], points[i][1]); // 更新重叠气球最小右边界  
+            }  
+        }  
+        return result;  
+    }  
+};
+</code></pre>
+<ul>
+<li>时间复杂度：<span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathnormal">n</span><span class="mord mathnormal" style="margin-right:0.01968em;">l</span><span class="mord mathnormal">o</span><span class="mord mathnormal" style="margin-right:0.03588em;">g</span><span class="mord mathnormal">n</span><span class="mclose">)</span></span></span></span>，因为有一个快排</li>
+<li>空间复杂度：<span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord">1</span><span class="mclose">)</span></span></span></span>，有一个快排，最差情况(倒序)时，需要n次递归调用。因此确实需要O(n)的栈空间</li>
+</ul>
+<h2 id="java解法"><a class="header" href="#java解法">Java解法</a></h2>
+<pre><code class="language-java">import java.util.Arrays;
+import java.util.Comparator;
+
+class Solution {
+    public int findMinArrowShots(int[][] points) {
+        if (points == null || points.length == 0) {
+            return 0;
+        }
+
+        // 使用Comparator接口实现自定义排序，按照气球的右边界升序排列
+        Arrays.sort(points, Comparator.comparingInt(a -&gt; a[1]));
+
+        int num = 1; // 至少需要一支箭
+        int end = points[0][1]; // 第一支箭射击的位置，初始化为第一个气球的右边界
+
+        for (int i = 1; i &lt; points.length; i++) {
+            // 如果当前气球的左边界大于之前的最小右边界，则需要一支新的箭
+            if (points[i][0] &gt; end) {
+                num++; // 增加箭的数量
+                end = points[i][1]; // 更新箭的射击位置为当前气球的右边界
+            }
+        }
+        return num;
+    }
+}
+</code></pre>
+<p><strong>代码逻辑：</strong></p>
+<ol>
+<li>对气球按照右边界进行升序排序。</li>
+<li>初始化箭的数量为1，第一支箭射击的位置为第一个气球的右边界。</li>
+<li>遍历剩余的气球，如果当前气球的左边界大于当前箭可以射爆的最远右边界，则需要一支新的箭，并更新箭的射击位置为当前气球的右边界。</li>
+<li>返回箭的数量。</li>
+</ol>
+<h1 id="435-non-overlapping-intervals"><a class="header" href="#435-non-overlapping-intervals"><a href="https://leetcode.com/problems/non-overlapping-intervals/">435. Non-overlapping Intervals</a></a></h1>
+<p>Given an array of intervals <code>intervals</code> where <code>intervals[i] = [starti, endi]</code>, return <em>the minimum number of intervals you need to remove to make the rest of the intervals non-overlapping</em>.</p>
+<p><strong>Note</strong> that intervals which only touch at a point are <strong>non-overlapping</strong>. For example, <code>[1, 2]</code> and <code>[2, 3]</code> are non-overlapping.</p>
+<p><strong>Example 1:</strong></p>
+<p><strong>Input:</strong> <code>intervals = [[1,2],[2,3],[3,4],[1,3]]</code><br />
+<strong>Output:</strong> 1<br />
+<strong>Explanation:</strong> [1,3] can be removed and the rest of the intervals are non-overlapping.</p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> <code>intervals = [[1,2],[1,2],[1,2]]</code><br />
+<strong>Output:</strong> 2<br />
+<strong>Explanation:</strong> You need to remove two [1,2] to make the rest of the intervals non-overlapping.</p>
+<p><strong>Example 3:</strong></p>
+<p><strong>Input:</strong> <code>intervals = [[1,2],[2,3]]</code><br />
+<strong>Output:</strong> 0<br />
+<strong>Explanation:</strong> You don't need to remove any of the intervals since they're already non-overlapping.</p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= intervals.length &lt;= 10^5</code></li>
+<li><code>intervals[i].length == 2</code></li>
+<li><code>-5 * 10^4 &lt;= starti &lt; endi &lt;= 5 * 10^4</code></li>
+</ul>
+<h2 id="思路-1"><a class="header" href="#思路-1">思路</a></h2>
+<p><strong>相信很多同学看到这道题目都冥冥之中感觉要排序，但是究竟是按照右边界排序，还是按照左边界排序呢？</strong></p>
+<p>其实都可以。主要就是为了让区间尽可能的重叠。</p>
+<p><strong>我来按照右边界排序，从左向右记录非交叉区间的个数。最后用区间总数减去非交叉区间的个数就是需要移除的区间个数了</strong>。</p>
+<p>此时问题就是要求非交叉区间的最大个数。</p>
+<p>这里记录非交叉区间的个数还是有技巧的，如图：</p>
+<p><img src="https://code-thinking-1253855093.file.myqcloud.com/pics/20230201164134.png" alt="" /></p>
+<p>区间，1，2，3，4，5，6都按照右边界排好序。</p>
+<p>当确定区间 1 和 区间2 重叠后，如何确定是否与 区间3 也重贴呢？</p>
+<p>就是取 区间1 和 区间2 右边界的最小值，因为这个最小值之前的部分一定是 区间1 和区间2 的重合部分，如果这个最小值也触达到区间3，那么说明 区间 1，2，3都是重合的。</p>
+<p>接下来就是找大于区间1结束位置的区间，是从区间4开始。<strong>那有同学问了为什么不从区间5开始？别忘了已经是按照右边界排序的了</strong>。</p>
+<p>区间4结束之后，再找到区间6，所以一共记录非交叉区间的个数是三个。</p>
+<p>总共区间个数为6，减去非交叉区间的个数3。移除区间的最小数量就是3。</p>
+<h2 id="c解法-1"><a class="header" href="#c解法-1">C++解法</a></h2>
+<p>C++代码如下：</p>
+<pre><code class="language-cpp">class Solution {  
+public:  
+    // 按照区间右边界排序  
+    static bool cmp (const vector&lt;int&gt;&amp; a, const vector&lt;int&gt;&amp; b) {  
+        return a[1] &lt; b[1];  
+    }  
+    int eraseOverlapIntervals(vector&lt;vector&lt;int&gt;&gt;&amp; intervals) {  
+        if (intervals.size() == 0) return 0;  
+        sort(intervals.begin(), intervals.end(), cmp);  
+        int count = 1; // 记录非交叉区间的个数  
+        int end = intervals[0][1]; // 记录区间分割点  
+        for (int i = 1; i &lt; intervals.size(); i++) {  
+            if (end &lt;= intervals[i][0]) {  
+                end = intervals[i][1];  
+                count++;  
+            }  
+        }  
+        return intervals.size() - count;  
+    }  
+};
+</code></pre>
+<ul>
+<li>时间复杂度：<span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathnormal">n</span><span class="mord mathnormal" style="margin-right:0.01968em;">l</span><span class="mord mathnormal">o</span><span class="mord mathnormal" style="margin-right:0.03588em;">g</span><span class="mord mathnormal">n</span><span class="mclose">)</span></span></span></span> ，有一个快排</li>
+<li>空间复杂度：<span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathnormal">n</span><span class="mclose">)</span></span></span></span>，有一个快排，最差情况(倒序)时，需要n次递归调用。因此确实需要$O(n)的栈空间</li>
+</ul>
+<h2 id="java解法-1"><a class="header" href="#java解法-1">Java解法</a></h2>
+<p><strong>修改后的代码：</strong></p>
+<pre><code class="language-java">import java.util.Arrays;
+import java.util.Comparator;
+
+class Solution {
+    public int eraseOverlapIntervals(int[][] intervals) {
+        if (intervals == null || intervals.length == 0) {
+            return 0;
+        }
+
+        // 按照区间的结束时间升序排序
+        Arrays.sort(intervals, Comparator.comparingInt(a -&gt; a[1]));
+
+        int num = 0; // 需要移除的区间数量
+        int end = intervals[0][1]; // 初始化为第一个区间的结束时间
+
+        for (int i = 1; i &lt; intervals.length; i++) {
+            if (intervals[i][0] &lt; end) {
+                // 发现重叠区间，需要移除一个
+                num++;
+            } else {
+                // 没有重叠，更新 end 为当前区间的结束时间
+                end = intervals[i][1];
+            }
+        }
+
+        return num;
+    }
+}
+</code></pre>
+<p><strong>代码解释：</strong></p>
+<ol>
+<li>
+<p><strong>排序：</strong> 首先，我们按照每个区间的结束时间对所有区间进行排序。这样做是为了确保我们总是优先选择结束时间最早的区间，这样可以尽可能多地保留不重叠的区间。</p>
+</li>
+<li>
+<p><strong>贪心选择：</strong></p>
+<ul>
+<li>我们初始化 <code>num</code> 为0，表示需要移除的区间数量。</li>
+<li><code>end</code> 变量用来记录当前已选择的、不重叠的区间的结束时间。初始值设置为第一个区间的结束时间。</li>
+<li>然后，我们遍历排序后的区间。对于每个区间，我们检查它是否与当前已选择的区间重叠（即，当前区间的开始时间是否小于 <code>end</code>）。</li>
+<li>如果重叠，则 <code>num</code> 加1，表示需要移除当前区间。</li>
+<li>如果不重叠，则更新 <code>end</code> 为当前区间的结束时间。</li>
+</ul>
+</li>
+<li>
+<p><strong>返回结果：</strong>  最后，返回需要移除的区间数量 <code>num</code>。</p>
+</li>
+</ol>
+<h1 id="56-merge-intervals"><a class="header" href="#56-merge-intervals"><a href="https://leetcode.com/problems/merge-intervals/">56. Merge Intervals</a></a></h1>
+<p>Given an array of <code>intervals</code> where <code>intervals[i] = [starti, endi]</code>, merge all overlapping intervals, and return <em>an array of the non-overlapping intervals that cover all the intervals in the input</em>.</p>
+<p><strong>Example 1:</strong></p>
+<p><strong>Input:</strong> <code>intervals = [[1,3],[2,6],[8,10],[15,18]]</code><br />
+<strong>Output:</strong> <code>[[1,6],[8,10],[15,18]]</code><br />
+<strong>Explanation:</strong> Since intervals [1,3] and [2,6] overlap, merge them into [1,6].</p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> <code>intervals = [[1,4],[4,5]]</code><br />
+<strong>Output:</strong> <code>[[1,5]]</code>
+<strong>Explanation:</strong> Intervals [1,4] and [4,5] are considered overlapping.</p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= intervals.length &lt;= 10^4</code></li>
+<li><code>intervals[i].length == 2</code></li>
+<li><code>0 &lt;= starti &lt;= endi &lt;= 10^4</code></li>
+</ul>
+<h2 id="思路-2"><a class="header" href="#思路-2">思路</a></h2>
+<p>本题的本质其实还是判断重叠区间问题。</p>
+<p>大家如果认真做题的话，话发现和我们刚刚讲过的<a href="https://programmercarl.com/0452.%E7%94%A8%E6%9C%80%E5%B0%91%E6%95%B0%E9%87%8F%E7%9A%84%E7%AE%AD%E5%BC%95%E7%88%86%E6%B0%94%E7%90%83.html">452. 用最少数量的箭引爆气球</a> 和 <a href="https://programmercarl.com/0435.%E6%97%A0%E9%87%8D%E5%8F%A0%E5%8C%BA%E9%97%B4.html">435. 无重叠区间</a> 都是一个套路。</p>
+<p>这几道题都是判断区间重叠，区别就是判断区间重叠后的逻辑，本题是判断区间重贴后要进行区间合并。</p>
+<p>所以一样的套路，先排序，让所有的相邻区间尽可能的重叠在一起，按左边界，或者右边界排序都可以，处理逻辑稍有不同。</p>
+<p>按照左边界从小到大排序之后，如果 <code>intervals[i][0] &lt;= intervals[i - 1][1]</code> 即<code>intervals[i]</code>的左边界 &lt;= <code>intervals[i - 1]</code>的右边界，则一定有重叠。（本题相邻区间也算重贴，所以是&lt;=）</p>
+<p>这么说有点抽象，看图：（<strong>注意图中区间都是按照左边界排序之后了</strong>）</p>
+<p><img src="https://code-thinking-1253855093.file.myqcloud.com/pics/20201223200632791.png" alt="56.合并区间" /></p>
+<p>知道如何判断重复之后，剩下的就是合并了，如何去模拟合并区间呢？</p>
+<p>其实就是用合并区间后左边界和右边界，作为一个新的区间，加入到result数组里就可以了。如果没有合并就把原区间加入到result数组。</p>
+<h2 id="c解法-2"><a class="header" href="#c解法-2">C++解法</a></h2>
+<p>C++代码如下：</p>
+<pre><code class="language-cpp">class Solution {  
+public:  
+    vector&lt;vector&lt;int&gt;&gt; merge(vector&lt;vector&lt;int&gt;&gt;&amp; intervals) {  
+        vector&lt;vector&lt;int&gt;&gt; result;  
+        if (intervals.size() == 0) return result; // 区间集合为空直接返回  
+        // 排序的参数使用了lambda表达式  
+        sort(intervals.begin(), intervals.end(), [](const vector&lt;int&gt;&amp; a, const vector&lt;int&gt;&amp; b){return a[0] &lt; b[0];});  
+​  
+        // 第一个区间就可以放进结果集里，后面如果重叠，在result上直接合并  
+        result.push_back(intervals[0]);   
+​  
+        for (int i = 1; i &lt; intervals.size(); i++) {  
+            if (result.back()[1] &gt;= intervals[i][0]) { // 发现重叠区间  
+                // 合并区间，只更新右边界就好，因为result.back()的左边界一定是最小值，因为我们按照左边界排序的  
+                result.back()[1] = max(result.back()[1], intervals[i][1]);   
+            } else {  
+                result.push_back(intervals[i]); // 区间不重叠   
+            }  
+        }  
+        return result;  
+    }  
+};
+</code></pre>
+<ul>
+<li>时间复杂度: O(nlogn)</li>
+<li>空间复杂度: O(logn)，排序需要的空间开销</li>
+</ul>
+<h2 id="java解法-2"><a class="header" href="#java解法-2">Java解法</a></h2>
+<p>下面是修改后的代码：</p>
+<pre><code class="language-java">import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.List;
+
+class Solution {
+    public int[][] merge(int[][] intervals) {
+        if (intervals == null || intervals.length &lt;= 1) {
+            return intervals; // 如果为空或只有一个区间，则直接返回
+        }
+
+        // 按照区间的起始位置排序
+        Arrays.sort(intervals, Comparator.comparingInt(a -&gt; a[0]));
+
+        List&lt;int[]&gt; result = new ArrayList&lt;&gt;();
+        int start = intervals[0][0];
+        int end = intervals[0][1];
+
+        for (int i = 1; i &lt; intervals.length; i++) {
+            if (intervals[i][0] &lt;= end) {
+                // 如果当前区间的起始位置小于等于end，则合并区间
+                end = Math.max(end, intervals[i][1]); //end取最大值，考虑[1,5][2,3]这种情况
+            } else {
+                // 否则，将当前区间添加到结果列表中
+                result.add(new int[]{start, end});
+                start = intervals[i][0];
+                end = intervals[i][1];
+            }
+        }
+
+        // 添加最后一个区间
+        result.add(new int[]{start, end});
+
+        // 将List&lt;int[]&gt;转换为int[][]
+        return result.toArray(new int[result.size()][]);
+    }
+}
+</code></pre>
+<p><strong>代码解释和改进:</strong></p>
+<ol>
+<li><strong>空值和单区间检查:</strong> 添加了对 <code>intervals</code> 为空或只有一个区间的检查，直接返回原数组，避免了后续的空指针异常和不必要的处理。</li>
+<li><strong>使用 <code>ArrayList</code></strong>: 使用 <code>ArrayList&lt;int[]&gt;</code> 来动态存储合并后的区间。</li>
+<li><strong>正确的添加方式</strong>: 使用 <code>result.add(new int[]{start, end})</code> 来添加新的区间到 <code>ArrayList</code> 中。</li>
+<li><strong>处理最后一个区间</strong>: 在循环结束后，将最后一个合并的区间添加到 <code>result</code> 中。</li>
+<li><strong>转换为 <code>int[][]</code></strong>: 使用 <code>result.toArray(new int[result.size()][])</code> 将 <code>ArrayList&lt;int[]&gt;</code> 转换为 <code>int[][]</code> 并返回。</li>
+<li><strong>合并区间时的 <code>end</code> 更新</strong>: 使用 <code>end = Math.max(end, intervals[i][1]);</code> 确保 <code>end</code> 总是包含到目前为止的最远位置。 考虑类似 <code>[1,5]</code> 和 <code>[2,3]</code> 这样的例子，合并后应该是 <code>[1,5]</code>。</li>
+<li><strong>注释</strong>:  添加了更详细的注释，方便理解代码的逻辑。</li>
+</ol>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../贪心/跳跃游戏.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../贪心/字符串和贪心算法.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../贪心/跳跃游戏.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../贪心/字符串和贪心算法.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>
