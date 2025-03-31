@@ -1,0 +1,837 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>打家劫舍 - 剑指Offer</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">剑指Offer</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
+<h1 id="打家劫舍"><a class="header" href="#打家劫舍">打家劫舍</a></h1>
+<ul>
+<li><a href="#198-house-robber">198. House Robber</a>
+<ul>
+<li><a href="#%E6%80%9D%E8%B7%AF">思路</a></li>
+<li><a href="#c%E8%A7%A3%E6%B3%95">C++解法</a></li>
+<li><a href="#java%E8%A7%A3%E6%B3%95">Java解法</a></li>
+</ul>
+</li>
+<li><a href="#213-house-robber-ii">213. House Robber II</a>
+<ul>
+<li><a href="#%E6%80%9D%E8%B7%AF-1">思路</a></li>
+<li><a href="#c%E8%A7%A3%E6%B3%95-1">C++解法</a></li>
+<li><a href="#java%E8%A7%A3%E6%B3%95-1">Java解法</a></li>
+</ul>
+</li>
+<li><a href="#337-house-robber-iii">337. House Robber III</a>
+<ul>
+<li><a href="#%E6%80%9D%E8%B7%AF-2">思路</a></li>
+<li><a href="#c%E8%A7%A3%E6%B3%95-2">C++解法</a>
+<ul>
+<li><a href="#%E8%AE%B0%E5%BF%86%E5%8C%96%E9%80%92%E6%8E%A8">记忆化递推</a></li>
+<li><a href="#%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92">动态规划</a></li>
+</ul>
+</li>
+<li><a href="#java%E8%A7%A3%E6%B3%95-2">Java解法</a></li>
+</ul>
+</li>
+<li><a href="#2560-house-robber-iv">2560. House Robber IV</a>
+<ul>
+<li><a href="#%E6%80%9D%E8%B7%AF-3">思路</a></li>
+<li><a href="#c%E8%A7%A3%E6%B3%95-3">C++解法</a></li>
+<li><a href="#java%E8%A7%A3%E6%B3%95-3">Java解法</a></li>
+</ul>
+</li>
+</ul>
+<h1 id="198-house-robber"><a class="header" href="#198-house-robber"><a href="https://leetcode.com/problems/house-robber/">198. House Robber</a></a></h1>
+<p>You are a professional robber planning to rob houses along a street. Each house has a certain amount of money stashed, the only constraint stopping you from robbing each of them is that adjacent houses have security systems connected and <strong>it will automatically contact the police if two adjacent houses were broken into on the same night</strong>.</p>
+<p>Given an integer array <code>nums</code> representing the amount of money of each house, return <em>the maximum amount of money you can rob tonight <strong>without alerting the police</strong></em>.</p>
+<p><strong>Example 1:</strong></p>
+<p><strong>Input:</strong> nums = [1,2,3,1]<br />
+<strong>Output:</strong> 4<br />
+<strong>Explanation:</strong> Rob house 1 (money = 1) and then rob house 3 (money = 3).
+Total amount you can rob = 1 + 3 = 4.</p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> nums = [2,7,9,3,1]<br />
+<strong>Output:</strong> 12<br />
+<strong>Explanation:</strong> Rob house 1 (money = 2), rob house 3 (money = 9) and rob house 5 (money = 1).
+Total amount you can rob = 2 + 9 + 1 = 12.</p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= nums.length &lt;= 100</code></li>
+<li><code>0 &lt;= nums[i] &lt;= 400</code></li>
+</ul>
+<h2 id="思路"><a class="header" href="#思路">思路</a></h2>
+<p>大家如果刚接触这样的题目，会有点困惑，当前的状态我是偷还是不偷呢？</p>
+<p>仔细一想，当前房屋偷与不偷取决于前一个房屋和前两个房屋是否被偷了。</p>
+<p>所以这里就更感觉到，当前状态和前面状态会有一种依赖关系，那么这种依赖关系都是动规的递推公式。</p>
+<p>当然以上是大概思路，打家劫舍是dp解决的经典问题，接下来我们来动规五部曲分析如下：</p>
+<ol>
+<li>确定dp数组（dp table）以及下标的含义</li>
+</ol>
+<p><strong>dp[i]：考虑下标i（包括i）以内的房屋，最多可以偷窃的金额为dp[i]</strong>。</p>
+<ol start="2">
+<li>确定递推公式</li>
+</ol>
+<p>决定dp[i]的因素就是第i房间偷还是不偷。</p>
+<p>如果偷第i房间，那么<code>dp[i] = dp[i - 2] + nums[i]</code> ，即：第i-1房一定是不考虑的，找出 下标i-2（包括i-2）以内的房屋，最多可以偷窃的金额为dp[i-2] 加上第i房间偷到的钱。</p>
+<p>如果不偷第i房间，那么<code>dp[i] = dp[i - 1]</code>，即考虑i-1房，（<strong>注意这里是考虑，并不是一定要偷i-1房，这是很多同学容易混淆的点</strong>）</p>
+<p>然后dp[i]取最大值，即<code>dp[i] = max(dp[i - 2] + nums[i], dp[i - 1]);</code></p>
+<ol start="3">
+<li>dp数组如何初始化</li>
+</ol>
+<p>从递推公式<code>dp[i] = max(dp[i - 2] + nums[i], dp[i - 1]);</code>可以看出，递推公式的基础就是dp[0] 和 dp[1]</p>
+<p>从dp[i]的定义上来讲，dp[0] 一定是 nums[0]，dp[1]就是nums[0]和nums[1]的最大值即：<code>dp[1] = max(nums[0], nums[1]);</code></p>
+<p>代码如下：</p>
+<pre><code class="language-cpp">vector&lt;int&gt; dp(nums.size());  
+dp[0] = nums[0];  
+dp[1] = max(nums[0], nums[1]);
+</code></pre>
+<ol start="4">
+<li>确定遍历顺序</li>
+</ol>
+<p>dp[i] 是根据dp[i - 2] 和 dp[i - 1] 推导出来的，那么一定是从前到后遍历！</p>
+<p>代码如下：</p>
+<pre><code class="language-cpp">for (int i = 2; i &lt; nums.size(); i++) {  
+    dp[i] = max(dp[i - 2] + nums[i], dp[i - 1]);  
+}
+</code></pre>
+<ol start="5">
+<li>举例推导dp数组</li>
+</ol>
+<p>以示例二，输入[2,7,9,3,1]为例。</p>
+<p><img src="https://code-thinking-1253855093.file.myqcloud.com/pics/20210221170954115.jpg" alt="198.打家劫舍" /></p>
+<p>红框<code>dp[nums.size() - 1]</code>为结果。</p>
+<h2 id="c解法"><a class="header" href="#c解法">C++解法</a></h2>
+<p>以上分析完毕，C++代码如下：</p>
+<pre><code class="language-cpp">class Solution {  
+public:  
+    int rob(vector&lt;int&gt;&amp; nums) {  
+        if (nums.size() == 0) return 0;  
+        if (nums.size() == 1) return nums[0];  
+        vector&lt;int&gt; dp(nums.size());  
+        dp[0] = nums[0];  
+        dp[1] = max(nums[0], nums[1]);  
+        for (int i = 2; i &lt; nums.size(); i++) {  
+            dp[i] = max(dp[i - 2] + nums[i], dp[i - 1]);  
+        }  
+        return dp[nums.size() - 1];  
+    }  
+};
+</code></pre>
+<ul>
+<li>时间复杂度: O(n)</li>
+<li>空间复杂度: O(n)</li>
+</ul>
+<h2 id="java解法"><a class="header" href="#java解法">Java解法</a></h2>
+<pre><code class="language-java">// 动态规划
+class Solution {
+	public int rob(int[] nums) {
+		if (nums == null || nums.length == 0) return 0;
+		if (nums.length == 1) return nums[0];
+
+		int[] dp = new int[nums.length];
+		dp[0] = nums[0];
+		dp[1] = Math.max(dp[0], nums[1]);
+		for (int i = 2; i &lt; nums.length; i++) {
+			dp[i] = Math.max(dp[i - 1], dp[i - 2] + nums[i]);
+		}
+
+		return dp[nums.length - 1];
+	}
+}
+
+// 使用滚动数组思想，优化空间
+// 分析本题可以发现，所求结果仅依赖于前两种状态，此时可以使用滚动数组思想将空间复杂度降低为3个空间
+class Solution {
+    public int rob(int[] nums) {
+        
+        int len = nums.length;
+
+        if (len == 0) return 0;
+        else if (len == 1) return nums[0];
+        else if (len == 2) return Math.max(nums[0],nums[1]);
+
+
+        int[] result = new int[3]; //存放选择的结果
+        result[0] = nums[0];
+        result[1] = Math.max(nums[0],nums[1]);
+        
+
+        for(int i=2;i&lt;len;i++){
+
+            result[2] = Math.max(result[0]+nums[i],result[1]);
+
+            result[0] = result[1];
+            result[1] = result[2];
+        }
+        
+        return result[2];
+    }
+}
+
+// 进一步对滚动数组的空间优化 dp数组只存与计算相关的两次数据
+class Solution {
+    public int rob(int[] nums) {
+        if (nums.length == 1)  {
+            return nums[0];
+        }
+        // 初始化dp数组
+        // 优化空间 dp数组只用2格空间 只记录与当前计算相关的前两个结果
+        int[] dp = new int[2];
+        dp[0] = nums[0];
+        dp[1] = Math.max(nums[0],nums[1]);
+        int res = 0;
+        // 遍历
+        for (int i = 2; i &lt; nums.length; i++) {
+            res = Math.max((dp[0] + nums[i]) , dp[1] );
+            dp[0] = dp[1];
+            dp[1] = res;
+        }
+        // 输出结果
+        return dp[1];
+    }
+}
+</code></pre>
+<h1 id="213-house-robber-ii"><a class="header" href="#213-house-robber-ii"><a href="https://leetcode.com/problems/house-robber-ii/">213. House Robber II</a></a></h1>
+<p>You are a professional robber planning to rob houses along a street. Each house has a certain amount of money stashed. All houses at this place are <strong>arranged in a circle.</strong> That means the first house is the neighbor of the last one. Meanwhile, adjacent houses have a security system connected, and <strong>it will automatically contact the police if two adjacent houses were broken into on the same night</strong>.</p>
+<p>Given an integer array <code>nums</code> representing the amount of money of each house, return <em>the maximum amount of money you can rob tonight <strong>without alerting the police</strong></em>.</p>
+<p><strong>Example 1:</strong></p>
+<p><strong>Input:</strong> nums = [2,3,2]<br />
+<strong>Output:</strong> 3<br />
+<strong>Explanation:</strong> You cannot rob house 1 (money = 2) and then rob house 3 (money = 2), because they are adjacent houses.</p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> nums = [1,2,3,1]<br />
+<strong>Output:</strong> 4<br />
+<strong>Explanation:</strong> Rob house 1 (money = 1) and then rob house 3 (money = 3).
+Total amount you can rob = 1 + 3 = 4.</p>
+<p><strong>Example 3:</strong></p>
+<p><strong>Input:</strong> nums = [1,2,3]<br />
+<strong>Output:</strong> 3</p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= nums.length &lt;= 100</code></li>
+<li><code>0 &lt;= nums[i] &lt;= 1000</code></li>
+</ul>
+<h2 id="思路-1"><a class="header" href="#思路-1">思路</a></h2>
+<p>这道题目和<a href="https://programmercarl.com/0198.%E6%89%93%E5%AE%B6%E5%8A%AB%E8%88%8D.html">198.打家劫舍</a>是差不多的，唯一区别就是成环了。</p>
+<p>对于一个数组，成环的话主要有如下三种情况：</p>
+<ul>
+<li>情况一：考虑不包含首尾元素</li>
+</ul>
+<p><img src="https://code-thinking-1253855093.file.myqcloud.com/pics/20210129160748643-20230310134000692.jpg" alt="213.打家劫舍II" /></p>
+<ul>
+<li>
+<p>情况二：考虑包含首元素，不包含尾元素</p>
+</li>
+<li>
+<p>情况三：考虑包含尾元素，不包含首元素</p>
+</li>
+</ul>
+<p><img src="https://code-thinking-1253855093.file.myqcloud.com/pics/20210129160842491-20230310134008133.jpg" alt="213.打家劫舍II2" /></p>
+<p><strong>注意我这里用的是"考虑"</strong>，例如情况三，虽然是考虑包含尾元素，但不一定要选尾部元素！ 对于情况三，取nums[1] 和 nums[3]就是最大的。</p>
+<p><strong>而情况二 和 情况三 都包含了情况一了，所以只考虑情况二和情况三就可以了</strong>。</p>
+<p>分析到这里，本题其实比较简单了。 剩下的和<a href="https://programmercarl.com/0198.%E6%89%93%E5%AE%B6%E5%8A%AB%E8%88%8D.html">198.打家劫舍</a>就是一样的了。</p>
+<h2 id="c解法-1"><a class="header" href="#c解法-1">C++解法</a></h2>
+<p>注意注释中的情况二情况三，以及把198.打家劫舍的代码抽离出来了。完整代码如下：</p>
+<pre><code class="language-cpp">class Solution {  
+public:  
+    int rob(vector&lt;int&gt;&amp; nums) {  
+        if (nums.size() == 0) return 0;  
+        if (nums.size() == 1) return nums[0];  
+        int result1 = robRange(nums, 0, nums.size() - 2); // 情况二  
+        int result2 = robRange(nums, 1, nums.size() - 1); // 情况三  
+        return max(result1, result2);  
+    }  
+    // 198.打家劫舍的逻辑  
+    int robRange(vector&lt;int&gt;&amp; nums, int start, int end) {  
+        if (end == start) return nums[start];  
+        vector&lt;int&gt; dp(nums.size());  
+        dp[start] = nums[start];  
+        dp[start + 1] = max(nums[start], nums[start + 1]);  
+        for (int i = start + 2; i &lt;= end; i++) {  
+            dp[i] = max(dp[i - 2] + nums[i], dp[i - 1]);  
+        }  
+        return dp[end];  
+    }  
+};
+</code></pre>
+<ul>
+<li>时间复杂度: O(n)</li>
+<li>空间复杂度: O(n)</li>
+</ul>
+<h2 id="java解法-1"><a class="header" href="#java解法-1">Java解法</a></h2>
+<pre><code class="language-java">class Solution {
+    public int robLinearArray(int[] nums) {
+        int[] dp = new int[nums.length + 1];
+        dp[0] = nums[0];
+        if(nums.length == 1){
+            return dp[0];
+        }
+        if(nums.length &gt; 1){
+            dp[1] = Math.max(nums[0], nums[1]);
+            for(int j = 2; j &lt; nums.length; j++){
+                dp[j] =  Math.max(dp[j - 1], dp[j - 2] + nums[j]);
+            }
+        }
+        return dp[nums.length - 1];
+    }
+    public int rob(int[] nums) {
+        if(nums.length == 1){
+            return nums[0];
+        } 
+        int[] resultWithoutFirst = Arrays.copyOfRange(nums, 1, nums.length);  
+        int[] resultWithoutLast = Arrays.copyOfRange(nums, 0, nums.length - 1);  
+        int maxLeft = robLinearArray(resultWithoutFirst);
+        int maxRight = robLinearArray(resultWithoutLast);
+        return Math.max(maxLeft, maxRight);
+    }
+}
+</code></pre>
+<h1 id="337-house-robber-iii"><a class="header" href="#337-house-robber-iii"><a href="https://leetcode.com/problems/house-robber-iii/">337. House Robber III</a></a></h1>
+<p>The thief has found himself a new place for his thievery again. There is only one entrance to this area, called <code>root</code>.</p>
+<p>Besides the <code>root</code>, each house has one and only one parent house. After a tour, the smart thief realized that all houses in this place form a binary tree. It will automatically contact the police if <strong>two directly-linked houses were broken into on the same night</strong>.</p>
+<p>Given the <code>root</code> of the binary tree, return <em>the maximum amount of money the thief can rob <strong>without alerting the police</strong></em>.</p>
+<p><strong>Example 1:</strong></p>
+<p><img src="https://assets.leetcode.com/uploads/2021/03/10/rob1-tree.jpg" alt="" /></p>
+<p><strong>Input:</strong> root = [3,2,3,null,3,null,1]<br />
+<strong>Output:</strong> 7<br />
+<strong>Explanation:</strong> Maximum amount of money the thief can rob = 3 + 3 + 1 = 7.</p>
+<p><strong>Example 2:</strong></p>
+<p><img src="https://assets.leetcode.com/uploads/2021/03/10/rob2-tree.jpg" alt="" /></p>
+<p><strong>Input:</strong> root = [3,4,5,1,3,null,1]<br />
+<strong>Output:</strong> 9<br />
+<strong>Explanation:</strong> Maximum amount of money the thief can rob = 4 + 5 = 9.</p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li>The number of nodes in the tree is in the range <code>[1, 10^4]</code>.</li>
+<li><code>0 &lt;= Node.val &lt;= 10^4</code></li>
+</ul>
+<h2 id="思路-2"><a class="header" href="#思路-2">思路</a></h2>
+<p>对于树的话，首先就要想到遍历方式，前中后序（深度优先搜索）还是层序遍历（广度优先搜索）。</p>
+<p><strong>本题一定是要后序遍历，因为通过递归函数的返回值来做下一步计算</strong>。</p>
+<p>与198.打家劫舍，213.打家劫舍II一样，关键是要讨论当前节点抢还是不抢。</p>
+<p>如果抢了当前节点，两个孩子就不能动，如果没抢当前节点，就可以考虑抢左右孩子（<strong>注意这里说的是“考虑”</strong>）</p>
+<p>动态规划其实就是使用状态转移容器来记录状态的变化，这里可以使用一个长度为2的数组，记录当前节点偷与不偷所得到的的最大金钱。</p>
+<p><strong>这道题目算是树形dp的入门题目，因为是在树上进行状态转移，我们在讲解二叉树的时候说过递归三部曲，那么下面我以递归三部曲为框架，其中融合动规五部曲的内容来进行讲解</strong>。</p>
+<ol>
+<li>确定递归函数的参数和返回值</li>
+</ol>
+<p>这里我们要求一个节点 偷与不偷的两个状态所得到的金钱，那么返回值就是一个长度为2的数组。</p>
+<p>参数为当前节点，代码如下：</p>
+<pre><code class="language-cpp">vector&lt;int&gt; robTree(TreeNode* cur) {
+</code></pre>
+<p>其实这里的返回数组就是dp数组。</p>
+<p>所以dp数组（dp table）以及下标的含义：下标为0记录不偷该节点所得到的的最大金钱，下标为1记录偷该节点所得到的的最大金钱。</p>
+<p><strong>所以本题dp数组就是一个长度为2的数组！</strong></p>
+<p>那么有同学可能疑惑，长度为2的数组怎么标记树中每个节点的状态呢？</p>
+<p><strong>别忘了在递归的过程中，系统栈会保存每一层递归的参数</strong>。</p>
+<p>如果还不理解的话，就接着往下看，看到代码就理解了哈。</p>
+<ol start="2">
+<li>确定终止条件</li>
+</ol>
+<p>在遍历的过程中，如果遇到空节点的话，很明显，无论偷还是不偷都是0，所以就返回</p>
+<pre><code class="language-cpp">if (cur == NULL) return vector&lt;int&gt;{0, 0};
+</code></pre>
+<p>这也相当于dp数组的初始化</p>
+<ol start="3">
+<li>确定遍历顺序</li>
+</ol>
+<p>首先明确的是使用后序遍历。 因为要通过递归函数的返回值来做下一步计算。</p>
+<p>通过递归左节点，得到左节点偷与不偷的金钱。</p>
+<p>通过递归右节点，得到右节点偷与不偷的金钱。</p>
+<p>代码如下：</p>
+<pre><code class="language-cpp">// 下标0：不偷，下标1：偷  
+vector&lt;int&gt; left = robTree(cur-&gt;left); // 左  
+vector&lt;int&gt; right = robTree(cur-&gt;right); // 右  
+// 中  
+</code></pre>
+<p>​
+4. 确定单层递归的逻辑</p>
+<p>如果是偷当前节点，那么左右孩子就不能偷，<code>val1 = cur-&gt;val + left[0] + right[0];</code> （<strong>如果对下标含义不理解就再回顾一下dp数组的含义</strong>）</p>
+<p>如果不偷当前节点，那么左右孩子就可以偷，至于到底偷不偷一定是选一个最大的，所以：<code>val2 = max(left[0], left[1]) + max(right[0], right[1]);</code></p>
+<p>最后当前节点的状态就是{val2, val1}; 即：{不偷当前节点得到的最大金钱，偷当前节点得到的最大金钱}</p>
+<p>代码如下：</p>
+<pre><code class="language-cpp">vector&lt;int&gt; left = robTree(cur-&gt;left); // 左  
+vector&lt;int&gt; right = robTree(cur-&gt;right); // 右  
+​  
+// 偷cur  
+int val1 = cur-&gt;val + left[0] + right[0];  
+// 不偷cur  
+int val2 = max(left[0], left[1]) + max(right[0], right[1]);  
+return {val2, val1};
+</code></pre>
+<ol start="5">
+<li>举例推导dp数组</li>
+</ol>
+<p>以示例1为例，dp数组状态如下：（<strong>注意用后序遍历的方式推导</strong>）</p>
+<p><img src="https://code-thinking-1253855093.file.myqcloud.com/pics/20230203110031.png" alt="" /></p>
+<p><strong>最后头结点就是取下标0 和下标1的最大值就是偷得的最大金钱</strong>。</p>
+<h2 id="c解法-2"><a class="header" href="#c解法-2">C++解法</a></h2>
+<p>暴力递归代码如下：</p>
+<pre><code class="language-cpp">class Solution {  
+public:  
+    int rob(TreeNode* root) {  
+        if (root == NULL) return 0;  
+        if (root-&gt;left == NULL &amp;&amp; root-&gt;right == NULL) return root-&gt;val;  
+        // 偷父节点  
+        int val1 = root-&gt;val;  
+        if (root-&gt;left) val1 += rob(root-&gt;left-&gt;left) + rob(root-&gt;left-&gt;right); // 跳过root-&gt;left，相当于不考虑左孩子了  
+        if (root-&gt;right) val1 += rob(root-&gt;right-&gt;left) + rob(root-&gt;right-&gt;right); // 跳过root-&gt;right，相当于不考虑右孩子了  
+        // 不偷父节点  
+        int val2 = rob(root-&gt;left) + rob(root-&gt;right); // 考虑root的左右孩子  
+        return max(val1, val2);  
+    }  
+};
+</code></pre>
+<ul>
+<li>时间复杂度：O(n^2)，这个时间复杂度不太标准，也不容易准确化，例如越往下的节点重复计算次数就越多</li>
+<li>空间复杂度：O(log n)，算上递推系统栈的空间</li>
+</ul>
+<p>当然以上代码超时了，这个递归的过程中其实是有重复计算了。</p>
+<p>我们计算了root的四个孙子（左右孩子的孩子）为头结点的子树的情况，又计算了root的左右孩子为头结点的子树的情况，计算左右孩子的时候其实又把孙子计算了一遍。</p>
+<h3 id="记忆化递推"><a class="header" href="#记忆化递推">记忆化递推</a></h3>
+<p>所以可以使用一个map把计算过的结果保存一下，这样如果计算过孙子了，那么计算孩子的时候可以复用孙子节点的结果。</p>
+<p>代码如下：</p>
+<pre><code class="language-cpp">class Solution {  
+public:  
+    unordered_map&lt;TreeNode* , int&gt; umap; // 记录计算过的结果  
+    int rob(TreeNode* root) {  
+        if (root == NULL) return 0;  
+        if (root-&gt;left == NULL &amp;&amp; root-&gt;right == NULL) return root-&gt;val;  
+        if (umap[root]) return umap[root]; // 如果umap里已经有记录则直接返回  
+        // 偷父节点  
+        int val1 = root-&gt;val;  
+        if (root-&gt;left) val1 += rob(root-&gt;left-&gt;left) + rob(root-&gt;left-&gt;right); // 跳过root-&gt;left  
+        if (root-&gt;right) val1 += rob(root-&gt;right-&gt;left) + rob(root-&gt;right-&gt;right); // 跳过root-&gt;right  
+        // 不偷父节点  
+        int val2 = rob(root-&gt;left) + rob(root-&gt;right); // 考虑root的左右孩子  
+        umap[root] = max(val1, val2); // umap记录一下结果  
+        return max(val1, val2);  
+    }  
+};  
+</code></pre>
+<ul>
+<li>时间复杂度：O(n)</li>
+<li>空间复杂度：O(log n)，算上递推系统栈的空间</li>
+</ul>
+<h3 id="动态规划"><a class="header" href="#动态规划">动态规划</a></h3>
+<p>递归三部曲与动规五部曲分析完毕，C++代码如下：</p>
+<pre><code class="language-cpp">class Solution {  
+public:  
+    int rob(TreeNode* root) {  
+        vector&lt;int&gt; result = robTree(root);  
+        return max(result[0], result[1]);  
+    }  
+    // 长度为2的数组，0：不偷，1：偷  
+    vector&lt;int&gt; robTree(TreeNode* cur) {  
+        if (cur == NULL) return vector&lt;int&gt;{0, 0};  
+        vector&lt;int&gt; left = robTree(cur-&gt;left);  
+        vector&lt;int&gt; right = robTree(cur-&gt;right);  
+        // 偷cur，那么就不能偷左右节点。  
+        int val1 = cur-&gt;val + left[0] + right[0];  
+        // 不偷cur，那么可以偷也可以不偷左右节点，则取较大的情况  
+        int val2 = max(left[0], left[1]) + max(right[0], right[1]);  
+        return {val2, val1};  
+    }  
+};
+</code></pre>
+<ul>
+<li>时间复杂度：O(n)，每个节点只遍历了一次</li>
+<li>空间复杂度：O(log n)，算上递推系统栈的空间</li>
+</ul>
+<h2 id="java解法-2"><a class="header" href="#java解法-2">Java解法</a></h2>
+<pre><code class="language-java">class Solution {
+    // 1.递归去偷，超时
+    public int rob(TreeNode root) {
+        if (root == null)
+            return 0;
+        int money = root.val;
+        if (root.left != null) {
+            money += rob(root.left.left) + rob(root.left.right);
+        }
+        if (root.right != null) {
+            money += rob(root.right.left) + rob(root.right.right);
+        }
+        return Math.max(money, rob(root.left) + rob(root.right));
+    }
+
+    // 2.递归去偷，记录状态
+    // 执行用时：3 ms , 在所有 Java 提交中击败了 56.24% 的用户
+    public int rob1(TreeNode root) {
+        Map&lt;TreeNode, Integer&gt; memo = new HashMap&lt;&gt;();
+        return robAction(root, memo);
+    }
+
+    int robAction(TreeNode root, Map&lt;TreeNode, Integer&gt; memo) {
+        if (root == null)
+            return 0;
+        if (memo.containsKey(root))
+            return memo.get(root);
+        int money = root.val;
+        if (root.left != null) {
+            money += robAction(root.left.left, memo) + robAction(root.left.right, memo);
+        }
+        if (root.right != null) {
+            money += robAction(root.right.left, memo) + robAction(root.right.right, memo);
+        }
+        int res = Math.max(money, robAction(root.left, memo) + robAction(root.right, memo));
+        memo.put(root, res);
+        return res;
+    }
+
+    // 3.状态标记递归
+    // 执行用时：0 ms , 在所有 Java 提交中击败了 100% 的用户
+    // 不偷：Max(左孩子不偷，左孩子偷) + Max(右孩子不偷，右孩子偷)
+    // root[0] = Math.max(rob(root.left)[0], rob(root.left)[1]) +
+    // Math.max(rob(root.right)[0], rob(root.right)[1])
+    // 偷：左孩子不偷+ 右孩子不偷 + 当前节点偷
+    // root[1] = rob(root.left)[0] + rob(root.right)[0] + root.val;
+    public int rob3(TreeNode root) {
+        int[] res = robAction1(root);
+        return Math.max(res[0], res[1]);
+    }
+
+    int[] robAction1(TreeNode root) {
+        int res[] = new int[2];
+        if (root == null)
+            return res;
+
+        int[] left = robAction1(root.left);
+        int[] right = robAction1(root.right);
+
+        res[0] = Math.max(left[0], left[1]) + Math.max(right[0], right[1]);
+        res[1] = root.val + left[0] + right[0];
+        return res;
+    }
+}
+</code></pre>
+<h1 id="2560-house-robber-iv"><a class="header" href="#2560-house-robber-iv"><a href="https://leetcode.com/problems/house-robber-iv/">2560. House Robber IV</a></a></h1>
+<p>There are several consecutive houses along a street, each of which has some money inside. There is also a robber, who wants to steal money from the homes, but he <strong>refuses to steal from adjacent homes</strong>.</p>
+<p>The <strong>capability</strong> of the robber is the maximum amount of money he steals from one house of all the houses he robbed.</p>
+<p>You are given an integer array <code>nums</code> representing how much money is stashed in each house. More formally, the <code>ith</code> house from the left has <code>nums[i]</code> dollars.</p>
+<p>You are also given an integer <code>k</code>, representing the <strong>minimum</strong> number of houses the robber will steal from. It is always possible to steal at least <code>k</code> houses.</p>
+<p>Return <em>the <strong>minimum</strong> capability of the robber out of all the possible ways to steal at least</em> <code>k</code> <em>houses</em>.</p>
+<p><strong>Example 1:</strong></p>
+<p><strong>Input:</strong> nums = [2,3,5,9], k = 2<br />
+<strong>Output:</strong> 5<br />
+<strong>Explanation:</strong>
+There are three ways to rob at least 2 houses:</p>
+<ul>
+<li>Rob the houses at indices 0 and 2. Capability is max(nums[0], nums[2]) = 5.</li>
+<li>Rob the houses at indices 0 and 3. Capability is max(nums[0], nums[3]) = 9.</li>
+<li>Rob the houses at indices 1 and 3. Capability is max(nums[1], nums[3]) = 9.
+Therefore, we return min(5, 9, 9) = 5.</li>
+</ul>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> nums = [2,7,9,3,1], k = 2<br />
+<strong>Output:</strong> 2<br />
+<strong>Explanation:</strong> There are 7 ways to rob the houses. The way which leads to minimum capability is to rob the house at index 0 and 4. Return max(nums[0], nums[4]) = 2.</p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= nums.length &lt;= 10^5</code></li>
+<li><code>1 &lt;= nums[i] &lt;= 10^9</code></li>
+<li><code>1 &lt;= k &lt;= (nums.length + 1)/2</code></li>
+</ul>
+<h2 id="思路-3"><a class="header" href="#思路-3">思路</a></h2>
+<p>Can we use binary search to find the minimum value of a non-contiguous subsequence of a given size k?</p>
+<p>Initialize the search range with the minimum and maximum elements of the input array.</p>
+<p>Use a check function to determine if it is possible to select k non-consecutive elements that are less than or equal to the current "guess" value.</p>
+<p>Adjust the search range based on the outcome of the check function, until the range converges and the minimum value is found.</p>
+<p>方法一：二分查找</p>
+<p>二分查找答案：找到最小的 x ，使得数组 nums 存在至少 k 个不超过 x 的数。</p>
+<p>题目需要获取窃取至少 k 间房屋时小偷的最小窃取能力，属于常见的最小化最大值问题。</p>
+<p>记当前偷取的房屋数目为 count，遍历数组 nums，假设当前遍历的房屋的金额为 x，如果 x≤y 成立，且上一遍历的房屋没有被偷取，那么令偷取的房屋数目 count 加 1，表示该房屋被偷取。
+遍历结束后 f(y)=count，显然 f(y) 是非递减函数。</p>
+<p>那么我们可以使用二分查找的方法，找到满足 f(y)≥k 的最小 y，即题目所求的小偷最小窃取能力。</p>
+<h2 id="c解法-3"><a class="header" href="#c解法-3">C++解法</a></h2>
+<p>具体二分查找算法如下：</p>
+<p>初始时 lower=numsmin，upper=numsmax。</p>
+<p>令 middle=⌊(lower+upper)/2⌋，如果 f(middle)≥k，那么 upper=middle−1；否则 lower=middle+1。</p>
+<p>当 lower≤upper 时，继续执行步骤 2；否则返回 lower 为结果。</p>
+<pre><code class="language-cpp">class Solution {
+public:
+    int minCapability(vector&lt;int&gt;&amp; nums, int k) {
+        int lower = *min_element(nums.begin(), nums.end());
+        int upper = *max_element(nums.begin(), nums.end());
+        while (lower &lt;= upper) {
+            int middle = (lower + upper) / 2;
+            int count = 0;
+            bool visited = false;
+            for (int x : nums) {
+                if (x &lt;= middle &amp;&amp; !visited) {
+                    count++;
+                    visited = true;
+                } else {
+                    visited = false;
+                }
+            }
+            if (count &gt;= k) {
+                upper = middle - 1;
+            } else {
+                lower = middle + 1;
+            }
+        }
+        return lower;
+    }
+};
+</code></pre>
+<p>复杂度分析</p>
+<p>时间复杂度：O(nlogT)，其中 n 是数组 nums 的长度，T 是数组最大值与最小值之差。二分查找的次数为 O(logT)，每次查找需要 O(n)。</p>
+<p>空间复杂度：O(1)。</p>
+<p>另一种解法如下所示：</p>
+<pre><code class="language-cpp">class Solution {
+public:
+    bool canRob(vector&lt;int&gt;&amp; nums, int mid, int k) {
+        int count = 0, n = nums.size();
+        for (int i = 0; i &lt; n; i++) {
+            if (nums[i] &lt;= mid) {
+                count++;
+                i++;
+            }
+        }
+        return count &gt;= k;
+    }
+
+    int minCapability(vector&lt;int&gt;&amp; nums, int k) {
+        int left = 1, right = *max_element(nums.begin(), nums.end()), ans = right;
+        while (left &lt;= right) {
+            int mid = (left + right) / 2;
+            if (canRob(nums, mid, k)) {
+                ans = mid;
+                right = mid - 1;
+            } else {
+                left = mid + 1;
+            }
+        }
+        return ans;
+    }
+};
+
+</code></pre>
+<h2 id="java解法-3"><a class="header" href="#java解法-3">Java解法</a></h2>
+<pre><code class="language-java">class Solution {
+    public boolean canRob(int[] nums, int mid, int k) {
+        int count = 0, n = nums.length;
+        for (int i = 0; i &lt; n; i++) {
+            if (nums[i] &lt;= mid) {
+                count++;
+                i++;
+            }
+        }
+        return count &gt;= k;
+    }
+
+    public int minCapability(int[] nums, int k) {
+        int left = 1, right = Arrays.stream(nums).max().getAsInt(), ans = right;
+        while (left &lt;= right) {
+            int mid = (left + right) / 2;
+            if (canRob(nums, mid, k)) {
+                ans = mid;
+                right = mid - 1;
+            } else {
+                left = mid + 1;
+            }
+        }
+        return ans;
+    }
+}
+</code></pre>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../动态规划/多重背包.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../动态规划/买卖股票.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../动态规划/多重背包.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../动态规划/买卖股票.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

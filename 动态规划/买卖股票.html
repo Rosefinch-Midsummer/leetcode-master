@@ -1,0 +1,1149 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>买卖股票 - 剑指Offer</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">剑指Offer</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
+<h1 id="买卖股票"><a class="header" href="#买卖股票">买卖股票</a></h1>
+<ul>
+<li><a href="#121-best-time-to-buy-and-sell-stock">121. Best Time to Buy and Sell Stock</a>
+<ul>
+<li><a href="#%E6%80%9D%E8%B7%AF">思路</a></li>
+<li><a href="#c%E8%A7%A3%E6%B3%95">C++解法</a>
+<ul>
+<li><a href="#%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92">动态规划</a></li>
+<li><a href="#%E6%9A%B4%E5%8A%9B">暴力</a></li>
+<li><a href="#%E8%B4%AA%E5%BF%83">贪心</a></li>
+</ul>
+</li>
+<li><a href="#java%E8%A7%A3%E6%B3%95">Java解法</a></li>
+</ul>
+</li>
+<li><a href="#122-best-time-to-buy-and-sell-stock-ii">122. Best Time to Buy and Sell Stock II</a>
+<ul>
+<li><a href="#%E6%80%9D%E8%B7%AF-1">思路</a></li>
+<li><a href="#c%E8%A7%A3%E6%B3%95-1">C++解法</a></li>
+<li><a href="#java%E8%A7%A3%E6%B3%95-1">Java解法</a></li>
+</ul>
+</li>
+<li><a href="#123-best-time-to-buy-and-sell-stock-iii">123. Best Time to Buy and Sell Stock III</a>
+<ul>
+<li><a href="#%E6%80%9D%E8%B7%AF-2">思路</a></li>
+<li><a href="#c%E8%A7%A3%E6%B3%95-2">C++解法</a></li>
+<li><a href="#java%E8%A7%A3%E6%B3%95-2">Java解法</a></li>
+</ul>
+</li>
+<li><a href="#188-best-time-to-buy-and-sell-stock-iv">188. Best Time to Buy and Sell Stock IV</a>
+<ul>
+<li><a href="#%E6%80%9D%E8%B7%AF-3">思路</a></li>
+<li><a href="#c%E8%A7%A3%E6%B3%95-3">C++解法</a></li>
+<li><a href="#java%E8%A7%A3%E6%B3%95-3">Java解法</a></li>
+</ul>
+</li>
+<li><a href="#309-best-time-to-buy-and-sell-stock-with-cooldown">309. Best Time to Buy and Sell Stock with Cooldown</a>
+<ul>
+<li><a href="#%E6%80%9D%E8%B7%AF-4">思路</a></li>
+<li><a href="#c%E8%A7%A3%E6%B3%95-4">C++解法</a></li>
+<li><a href="#java%E8%A7%A3%E6%B3%95-4">Java解法</a></li>
+</ul>
+</li>
+<li><a href="#714-best-time-to-buy-and-sell-stock-with-transaction-fee">714. Best Time to Buy and Sell Stock with Transaction Fee</a>
+<ul>
+<li><a href="#%E6%80%9D%E8%B7%AF-5">思路</a></li>
+<li><a href="#c%E8%A7%A3%E6%B3%95-5">C++解法</a></li>
+<li><a href="#java%E8%A7%A3%E6%B3%95-5">Java解法</a></li>
+</ul>
+</li>
+</ul>
+<h1 id="121-best-time-to-buy-and-sell-stock"><a class="header" href="#121-best-time-to-buy-and-sell-stock"><a href="https://leetcode.com/problems/best-time-to-buy-and-sell-stock/">121. Best Time to Buy and Sell Stock</a></a></h1>
+<p>You are given an array <code>prices</code> where <code>prices[i]</code> is the price of a given stock on the <code>ith</code> day.</p>
+<p>You want to maximize your profit by choosing a <strong>single day</strong> to buy one stock and choosing a <strong>different day in the future</strong> to sell that stock.</p>
+<p>Return <em>the maximum profit you can achieve from this transaction</em>. If you cannot achieve any profit, return <code>0</code>.</p>
+<p><strong>Example 1:</strong></p>
+<p><strong>Input:</strong> prices = [7,1,5,3,6,4]<br />
+<strong>Output:</strong> 5<br />
+<strong>Explanation:</strong> Buy on day 2 (price = 1) and sell on day 5 (price = 6), profit = 6-1 = 5.
+Note that buying on day 2 and selling on day 1 is not allowed because you must buy before you sell.</p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> prices = [7,6,4,3,1]<br />
+<strong>Output:</strong> 0<br />
+<strong>Explanation:</strong> In this case, no transactions are done and the max profit = 0.</p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= prices.length &lt;= 10^5</code></li>
+<li><code>0 &lt;= prices[i] &lt;= 10^4</code></li>
+</ul>
+<h2 id="思路"><a class="header" href="#思路">思路</a></h2>
+<p>动规五部曲分析如下：</p>
+<ol>
+<li>确定dp数组（dp table）以及下标的含义</li>
+</ol>
+<p><code>dp[i][j]</code> 表示第i天持有股票所得最多现金 ，<strong>这里可能有同学疑惑，本题中只能买卖一次，持有股票之后哪还有现金呢？</strong></p>
+<p>其实一开始现金是0，那么加入第i天买入股票现金就是 -prices[i]， 这是一个负数。</p>
+<p><code>dp[i][j]</code> 表示第i天不持有股票所得最多现金</p>
+<p><strong>注意这里说的是“持有”，“持有”不代表就是当天“买入”！也有可能是昨天就买入了，今天保持持有的状态</strong></p>
+<p>很多同学把“持有”和“买入”没区分清楚。</p>
+<p>在下面递推公式分析中，我会进一步讲解。</p>
+<ol start="2">
+<li>确定递推公式</li>
+</ol>
+<p>如果第i天持有股票即<code>dp[i][j]</code>， 那么可以由两个状态推出来</p>
+<ul>
+<li>第i-1天就持有股票，那么就保持现状，所得现金就是昨天持有股票的所得现金 即：<code>dp[i-1][j]</code></li>
+<li>第i天买入股票，所得现金就是买入今天的股票后所得现金即：-prices[i]</li>
+</ul>
+<p>那么<code>dp[i][j]</code>应该选所得现金最大的，所以<code>dp[i][j]</code> = max(<code>dp[i-1][j]</code>, -prices[i]);</p>
+<p>如果第i天不持有股票即<code>dp[i][j]</code>， 也可以由两个状态推出来</p>
+<ul>
+<li>第i-1天就不持有股票，那么就保持现状，所得现金就是昨天不持有股票的所得现金 即：<code>dp[i-1][j]</code></li>
+<li>第i天卖出股票，所得现金就是按照今天股票价格卖出后所得现金即：prices[i] + <code>dp[i-1][j]</code></li>
+</ul>
+<p>同样<code>dp[i][j]</code>取最大的，<code>dp[i][j]</code> = max(<code>dp[i-1][j]</code>, prices[i] + <code>dp[i-1][j]</code>);</p>
+<p>这样递推公式我们就分析完了</p>
+<ol start="3">
+<li>dp数组如何初始化</li>
+</ol>
+<p>由递推公式 <code>dp[i][j]</code> = max(<code>dp[i-1][j]</code>, -prices[i]); 和 <code>dp[i][j]</code> = max(<code>dp[i-1][j]</code>, prices[i] + <code>dp[i-1][j]</code>);可以看出</p>
+<p>其基础都是要从<code>dp[0][0]</code>和<code>dp[0][1]</code>推导出来。</p>
+<p>那么<code>dp[0][1]</code>表示第0天持有股票，此时的持有股票就一定是买入股票了，因为不可能有前一天推出来，所以<code>dp[0][1] -= prices[0];</code></p>
+<p><code>dp[0][0]</code>表示第0天不持有股票，不持有股票那么现金就是0，所以<code>dp[0][0] = 0;</code></p>
+<ol start="4">
+<li>确定遍历顺序</li>
+</ol>
+<p>从递推公式可以看出<code>dp[i]</code>都是由<code>dp[i - 1]</code>推导出来的，那么一定是从前向后遍历。</p>
+<ol start="5">
+<li>举例推导dp数组</li>
+</ol>
+<p>以示例1，输入：<code>[7,1,5,3,6,4]</code>为例，dp数组状态如下：</p>
+<p><img src="https://code-thinking-1253855093.file.myqcloud.com/pics/20210224225642465.png" alt="121.买卖股票的最佳时机" /></p>
+<p>`dp[5][1]就是最终结果。</p>
+<p>为什么不是<code>dp[5][0]</code>呢？</p>
+<p><strong>因为本题中不持有股票状态所得金钱一定比持有股票状态得到的多！</strong></p>
+<h2 id="c解法"><a class="header" href="#c解法">C++解法</a></h2>
+<h3 id="动态规划"><a class="header" href="#动态规划">动态规划</a></h3>
+<p>以上分析完毕，C++代码如下：</p>
+<pre><code class="language-cpp">// 版本一  
+class Solution {  
+public:  
+    int maxProfit(vector&lt;int&gt;&amp; prices) {  
+        int len = prices.size();  
+        if (len == 0) return 0;  
+        vector&lt;vector&lt;int&gt;&gt; dp(len, vector&lt;int&gt;(2));  
+        dp[0][0] -= prices[0];  
+        dp[0][1] = 0;  
+        for (int i = 1; i &lt; len; i++) {  
+            dp[i][0] = max(dp[i - 1][0], -prices[i]);  
+            dp[i][1] = max(dp[i - 1][1], prices[i] + dp[i - 1][0]);  
+        }  
+        return dp[len - 1][1];  
+    }  
+};
+</code></pre>
+<ul>
+<li>时间复杂度：O(n)</li>
+<li>空间复杂度：O(n)</li>
+</ul>
+<p>从递推公式可以看出，dp[i]只是依赖于dp[i - 1]的状态。</p>
+<pre><code class="language-cpp">dp[i][0] = max(dp[i - 1][0], -prices[i]);  
+dp[i][1] = max(dp[i - 1][1], prices[i] + dp[i - 1][0]);
+</code></pre>
+<p>那么我们只需要记录 当前天的dp状态和前一天的dp状态就可以了，可以使用滚动数组来节省空间，代码如下：</p>
+<pre><code class="language-cpp">// 版本二  
+class Solution {  
+public:  
+    int maxProfit(vector&lt;int&gt;&amp; prices) {  
+        int len = prices.size();  
+        vector&lt;vector&lt;int&gt;&gt; dp(2, vector&lt;int&gt;(2)); // 注意这里只开辟了一个2 * 2大小的二维数组  
+        dp[0][0] -= prices[0];  
+        dp[0][1] = 0;  
+        for (int i = 1; i &lt; len; i++) {  
+            dp[i % 2][0] = max(dp[(i - 1) % 2][0], -prices[i]);  
+            dp[i % 2][1] = max(dp[(i - 1) % 2][1], prices[i] + dp[(i - 1) % 2][0]);  
+        }  
+        return dp[(len - 1) % 2][1];  
+    }  
+};
+</code></pre>
+<ul>
+<li>时间复杂度：O(n)</li>
+<li>空间复杂度：O(1)</li>
+</ul>
+<p>这里能写出版本一就可以了，版本二虽然原理都一样，但是想直接写出版本二还是有点麻烦，容易自己给自己找bug。</p>
+<p>所以建议是先写出版本一，然后在版本一的基础上优化成版本二，而不是直接就写出版本二。</p>
+<h3 id="暴力"><a class="header" href="#暴力">暴力</a></h3>
+<p>这道题目最直观的想法，就是暴力，找最优间距了。</p>
+<pre><code class="language-cpp">class Solution {  
+public:  
+    int maxProfit(vector&lt;int&gt;&amp; prices) {  
+        int result = 0;  
+        for (int i = 0; i &lt; prices.size(); i++) {  
+            for (int j = i + 1; j &lt; prices.size(); j++){  
+                result = max(result, prices[j] - prices[i]);  
+            }  
+        }  
+        return result;  
+    }  
+};
+</code></pre>
+<ul>
+<li>时间复杂度：O(n^2)</li>
+<li>空间复杂度：O(1)</li>
+</ul>
+<p>当然该方法超时了。</p>
+<h3 id="贪心"><a class="header" href="#贪心">贪心</a></h3>
+<p>因为股票就买卖一次，那么贪心的想法很自然就是取最左最小值，取最右最大值，那么得到的差值就是最大利润。</p>
+<p>C++代码如下：</p>
+<pre><code class="language-cpp">class Solution {  
+public:  
+    int maxProfit(vector&lt;int&gt;&amp; prices) {  
+        int low = INT_MAX;  
+        int result = 0;  
+        for (int i = 0; i &lt; prices.size(); i++) {  
+            low = min(low, prices[i]);  // 取最左最小价格  
+            result = max(result, prices[i] - low); // 直接取最大区间利润  
+        }  
+        return result;  
+    }  
+};
+</code></pre>
+<ul>
+<li>时间复杂度：O(n)</li>
+<li>空间复杂度：O(1)</li>
+</ul>
+<h2 id="java解法"><a class="header" href="#java解法">Java解法</a></h2>
+<pre><code class="language-java">// 优化空间
+class Solution {
+    public int maxProfit(int[] prices) {
+        int[] dp = new int[2];
+        // 0表示持有，1表示卖出
+        dp[0] = -prices[0];
+        dp[1] = 0;
+        for(int i = 1; i &lt;= prices.length; i++){
+            // 前一天持有; 既然不限制交易次数，那么再次买股票时，要加上之前的收益
+            dp[0] = Math.max(dp[0], dp[1] - prices[i-1]);
+            // 前一天卖出; 或当天卖出，当天卖出，得先持有
+            dp[1] = Math.max(dp[1], dp[0] + prices[i-1]);
+        }
+        return dp[1];
+    }
+}
+</code></pre>
+<h1 id="122-best-time-to-buy-and-sell-stock-ii"><a class="header" href="#122-best-time-to-buy-and-sell-stock-ii"><a href="https://leetcode.com/problems/best-time-to-buy-and-sell-stock-ii/">122. Best Time to Buy and Sell Stock II</a></a></h1>
+<p>You are given an integer array <code>prices</code> where <code>prices[i]</code> is the price of a given stock on the <code>ith</code> day.</p>
+<p>On each day, you may decide to buy and/or sell the stock. You can only hold <strong>at most one</strong> share of the stock at any time. However, you can buy it then immediately sell it on the <strong>same day</strong>.</p>
+<p>Find and return <em>the <strong>maximum</strong> profit you can achieve</em>.</p>
+<p><strong>Example 1:</strong></p>
+<p><strong>Input:</strong> prices = [7,1,5,3,6,4]<br />
+<strong>Output:</strong> 7<br />
+<strong>Explanation:</strong> Buy on day 2 (price = 1) and sell on day 3 (price = 5), profit = 5-1 = 4.
+Then buy on day 4 (price = 3) and sell on day 5 (price = 6), profit = 6-3 = 3.
+Total profit is 4 + 3 = 7.</p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> prices = [1,2,3,4,5]<br />
+<strong>Output:</strong> 4<br />
+<strong>Explanation:</strong> Buy on day 1 (price = 1) and sell on day 5 (price = 5), profit = 5-1 = 4.
+Total profit is 4.</p>
+<p><strong>Example 3:</strong></p>
+<p><strong>Input:</strong> prices = [7,6,4,3,1]<br />
+<strong>Output:</strong> 0<br />
+<strong>Explanation:</strong> There is no way to make a positive profit, so we never buy the stock to achieve the maximum profit of 0.</p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= prices.length &lt;= 3 * 10^4</code></li>
+<li><code>0 &lt;= prices[i] &lt;= 10^4</code></li>
+</ul>
+<h2 id="思路-1"><a class="header" href="#思路-1">思路</a></h2>
+<p>本题我们在讲解贪心专题的时候就已经讲解过了<a href="https://programmercarl.com/0122.%E4%B9%B0%E5%8D%96%E8%82%A1%E7%A5%A8%E7%9A%84%E6%9C%80%E4%BD%B3%E6%97%B6%E6%9C%BAII.html">贪心算法：买卖股票的最佳时机II</a>，只不过没有深入讲解动态规划的解法，那么这次我们再好好分析一下动规的解法。</p>
+<p>本题和<a href="https://programmercarl.com/0121.%E4%B9%B0%E5%8D%96%E8%82%A1%E7%A5%A8%E7%9A%84%E6%9C%80%E4%BD%B3%E6%97%B6%E6%9C%BA.html">121. 买卖股票的最佳时机</a>的唯一区别是本题股票可以买卖多次了（注意只有一只股票，所以再次购买前要出售掉之前的股票）</p>
+<p><strong>在动规五部曲中，这个区别主要是体现在递推公式上，其他都和<a href="https://programmercarl.com/0121.%E4%B9%B0%E5%8D%96%E8%82%A1%E7%A5%A8%E7%9A%84%E6%9C%80%E4%BD%B3%E6%97%B6%E6%9C%BA.html">121. 买卖股票的最佳时机</a>一样一样的</strong>。</p>
+<p>所以我们重点讲一讲递推公式。</p>
+<p>这里重申一下dp数组的含义：</p>
+<ul>
+<li><code>dp[i][j]</code> 表示第i天持有股票所得现金。</li>
+<li><code>dp[i][j]</code> 表示第i天不持有股票所得最多现金</li>
+</ul>
+<p>如果第i天持有股票即<code>dp[i][j]</code>， 那么可以由两个状态推出来</p>
+<ul>
+<li>第i-1天就持有股票，那么就保持现状，所得现金就是昨天持有股票的所得现金 即：<code>dp[i-1][j]</code></li>
+<li>第i天买入股票，所得现金就是昨天不持有股票的所得现金减去 今天的股票价格 即：<code>dp[i-1][j]</code> - prices[i]</li>
+</ul>
+<p><strong>注意这里和<a href="https://programmercarl.com/0121.%E4%B9%B0%E5%8D%96%E8%82%A1%E7%A5%A8%E7%9A%84%E6%9C%80%E4%BD%B3%E6%97%B6%E6%9C%BA.html">121. 买卖股票的最佳时机</a>唯一不同的地方，就是推导<code>dp[i][j]</code>的时候，第i天买入股票的情况</strong>。</p>
+<p>在<a href="https://programmercarl.com/0121.%E4%B9%B0%E5%8D%96%E8%82%A1%E7%A5%A8%E7%9A%84%E6%9C%80%E4%BD%B3%E6%97%B6%E6%9C%BA.html">121. 买卖股票的最佳时机</a>中，因为股票全程只能买卖一次，所以如果买入股票，那么第i天持有股票即<code>dp[i][j]</code>一定就是 -prices[i]。</p>
+<p>而本题，因为一只股票可以买卖多次，所以当第i天买入股票的时候，所持有的现金可能有之前买卖过的利润。</p>
+<p>那么第i天持有股票即<code>dp[i][j]</code>，如果是第i天买入股票，所得现金就是昨天不持有股票的所得现金 减去 今天的股票价格 即：<code>dp[i-1][j]</code> - prices[i]。</p>
+<p>再来看看如果第i天不持有股票即<code>dp[i][j]</code>的情况， 依然可以由两个状态推出来</p>
+<ul>
+<li>第i-1天就不持有股票，那么就保持现状，所得现金就是昨天不持有股票的所得现金 即：<code>dp[i-1][j]</code></li>
+<li>第i天卖出股票，所得现金就是按照今天股票价格卖出后所得现金即：prices[i] + <code>dp[i-1][j]</code></li>
+</ul>
+<p><strong>注意这里和<a href="https://programmercarl.com/0121.%E4%B9%B0%E5%8D%96%E8%82%A1%E7%A5%A8%E7%9A%84%E6%9C%80%E4%BD%B3%E6%97%B6%E6%9C%BA.html">121. 买卖股票的最佳时机</a>就是一样的逻辑，卖出股票收获利润（可能是负值）天经地义！</strong></p>
+<h2 id="c解法-1"><a class="header" href="#c解法-1">C++解法</a></h2>
+<p>代码如下：（注意代码中的注释，标记了和121.买卖股票的最佳时机唯一不同的地方）</p>
+<pre><code class="language-cpp">class Solution {  
+public:  
+    int maxProfit(vector&lt;int&gt;&amp; prices) {  
+        int len = prices.size();  
+        vector&lt;vector&lt;int&gt;&gt; dp(len, vector&lt;int&gt;(2, 0));  
+        dp[0][0] -= prices[0];  
+        dp[0][1] = 0;  
+        for (int i = 1; i &lt; len; i++) {  
+            dp[i][0] = max(dp[i - 1][0], dp[i - 1][1] - prices[i]); // 注意这里是和121. 买卖股票的最佳时机唯一不同的地方。  
+            dp[i][1] = max(dp[i - 1][1], dp[i - 1][0] + prices[i]);  
+        }  
+        return dp[len - 1][1];  
+    }  
+};
+</code></pre>
+<ul>
+<li>时间复杂度：O(n)</li>
+<li>空间复杂度：O(n)</li>
+</ul>
+<p>大家可以本题和<a href="https://programmercarl.com/0121.%E4%B9%B0%E5%8D%96%E8%82%A1%E7%A5%A8%E7%9A%84%E6%9C%80%E4%BD%B3%E6%97%B6%E6%9C%BA.html">121. 买卖股票的最佳时机</a>的代码几乎一样，唯一的区别在：</p>
+<p><code>dp[i][0] = max(dp[i - 1][0], dp[i - 1][1] - prices[i]);</code></p>
+<p><strong>这正是因为本题的股票可以买卖多次！</strong> 所以买入股票的时候，可能会有之前买卖的利润即：<code>dp[i-1][j]</code>，所以<code>dp[i-1][j] - prices[i]</code>。</p>
+<p>想到到这一点，对这两道题理解的就比较深刻了。</p>
+<p>这里我依然给出滚动数组的版本，C++代码如下：</p>
+<pre><code class="language-cpp">// 版本二  
+class Solution {  
+public:  
+    int maxProfit(vector&lt;int&gt;&amp; prices) {  
+        int len = prices.size();  
+        vector&lt;vector&lt;int&gt;&gt; dp(2, vector&lt;int&gt;(2)); // 注意这里只开辟了一个2 * 2大小的二维数组  
+        dp[0][0] -= prices[0];  
+        dp[0][1] = 0;  
+        for (int i = 1; i &lt; len; i++) {  
+            dp[i % 2][0] = max(dp[(i - 1) % 2][0], dp[(i - 1) % 2][1] - prices[i]);  
+            dp[i % 2][1] = max(dp[(i - 1) % 2][1], prices[i] + dp[(i - 1) % 2][0]);  
+        }  
+        return dp[(len - 1) % 2][1];  
+    }  
+};
+</code></pre>
+<ul>
+<li>时间复杂度：O(n)</li>
+<li>空间复杂度：O(1)</li>
+</ul>
+<h2 id="java解法-1"><a class="header" href="#java解法-1">Java解法</a></h2>
+<pre><code class="language-java">// 动态规划
+class Solution 
+    // 实现1：二维数组存储
+    // 可以将每天持有与否的情况分别用 dp[i][0] 和 dp[i][1] 来进行存储
+    // 时间复杂度：O(n)，空间复杂度：O(n)
+    public int maxProfit(int[] prices) {
+        int n = prices.length;
+        int[][] dp = new int[n][2];     // 创建二维数组存储状态
+        dp[0][0] = 0;                   // 初始状态
+        dp[0][1] = -prices[0];
+        for (int i = 1; i &lt; n; ++i) {
+            dp[i][0] = Math.max(dp[i - 1][0], dp[i - 1][1] + prices[i]);    // 第 i 天，没有股票
+            dp[i][1] = Math.max(dp[i - 1][1], dp[i - 1][0] - prices[i]);    // 第 i 天，持有股票
+        }
+        return dp[n - 1][0];    // 卖出股票收益高于持有股票收益，因此取[0]
+    }
+}
+</code></pre>
+<p>贪心解法：</p>
+<pre><code class="language-java">class Solution {
+    public int maxProfit(int[] prices) {
+        int result = 0;
+        for(int i = 1; i &lt; prices.length; i++){
+            result += Math.max(prices[i] - prices[i - 1], 0);
+        }
+        return result;
+    }
+}
+</code></pre>
+<h1 id="123-best-time-to-buy-and-sell-stock-iii"><a class="header" href="#123-best-time-to-buy-and-sell-stock-iii"><a href="https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iii/">123. Best Time to Buy and Sell Stock III</a></a></h1>
+<p>You are given an array <code>prices</code> where <code>prices[i]</code> is the price of a given stock on the <code>ith</code> day.</p>
+<p>Find the maximum profit you can achieve. You may complete <strong>at most two transactions</strong>.</p>
+<p><strong>Note:</strong> You may not engage in multiple transactions simultaneously (i.e., you must sell the stock before you buy again).</p>
+<p><strong>Example 1:</strong></p>
+<p><strong>Input:</strong> prices = [3,3,5,0,0,3,1,4]<br />
+<strong>Output:</strong> 6<br />
+<strong>Explanation:</strong> Buy on day 4 (price = 0) and sell on day 6 (price = 3), profit = 3-0 = 3.
+Then buy on day 7 (price = 1) and sell on day 8 (price = 4), profit = 4-1 = 3.</p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> prices = [1,2,3,4,5]<br />
+<strong>Output:</strong> 4<br />
+<strong>Explanation:</strong> Buy on day 1 (price = 1) and sell on day 5 (price = 5), profit = 5-1 = 4.
+Note that you cannot buy on day 1, buy on day 2 and sell them later, as you are engaging multiple transactions at the same time. You must sell before buying again.</p>
+<p><strong>Example 3:</strong></p>
+<p><strong>Input:</strong> prices = [7,6,4,3,1]<br />
+<strong>Output:</strong> 0<br />
+<strong>Explanation:</strong> In this case, no transaction is done, i.e. max profit = 0.</p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= prices.length &lt;= 10^5</code></li>
+<li><code>0 &lt;= prices[i] &lt;= 10^5</code></li>
+</ul>
+<h2 id="思路-2"><a class="header" href="#思路-2">思路</a></h2>
+<p>这道题目相对 <a href="https://programmercarl.com/0121.%E4%B9%B0%E5%8D%96%E8%82%A1%E7%A5%A8%E7%9A%84%E6%9C%80%E4%BD%B3%E6%97%B6%E6%9C%BA.html">121.买卖股票的最佳时机</a> 和 <a href="https://programmercarl.com/0122.%E4%B9%B0%E5%8D%96%E8%82%A1%E7%A5%A8%E7%9A%84%E6%9C%80%E4%BD%B3%E6%97%B6%E6%9C%BAII.html">122.买卖股票的最佳时机II</a> 难了不少。</p>
+<p>关键在于至多买卖两次，这意味着可以买卖一次，可以买卖两次，也可以不买卖。</p>
+<p>接来下我用动态规划五部曲详细分析一下：</p>
+<ol>
+<li>确定dp数组以及下标的含义</li>
+</ol>
+<p>一天一共就有五个状态，</p>
+<ol start="0">
+<li>没有操作 （其实我们也可以不设置这个状态）</li>
+<li>第一次持有股票</li>
+<li>第一次不持有股票</li>
+<li>第二次持有股票</li>
+<li>第二次不持有股票</li>
+</ol>
+<p><code>dp[i][j]</code>中 i表示第i天，j为 [0 - 4] 五个状态，<code>dp[i][j]</code>表示第i天状态j所剩最大现金。</p>
+<p>需要注意：<code>dp[i][j]</code>，<strong>表示的是第i天，买入股票的状态，并不是说一定要第i天买入股票，这是很多同学容易陷入的误区</strong>。</p>
+<p>例如 <code>dp[i][j]</code> ，并不是说 第i天一定买入股票，有可能 第 i-1天 就买入了，那么 <code>dp[i][j]</code> 延续买入股票的这个状态。</p>
+<ol start="2">
+<li>确定递推公式</li>
+</ol>
+<p>达到<code>dp[i][j]</code>状态，有两个具体操作：</p>
+<ul>
+<li>操作一：第i天买入股票了，那么<code>dp[i][j] = dp[i-1][j] - prices[i]</code></li>
+<li>操作二：第i天没有操作，而是沿用前一天买入的状态，即：<code>dp[i][j]</code> = <code>dp[i-1][j]</code></li>
+</ul>
+<p>那么<code>dp[i][j]</code>究竟选 <code>dp[i-1][j] - prices[i]</code>，还是<code>dp[i-1][j]</code>呢？</p>
+<p>一定是选最大的，所以 <code>dp[i][j] = max(dp[i-1][j] - prices[i], dp[i-1][j]);</code></p>
+<p>同理<code>dp[i][j]</code>也有两个操作：</p>
+<ul>
+<li>操作一：第i天卖出股票了，那么<code>dp[i][j] = dp[i-1][j] + prices[i]</code></li>
+<li>操作二：第i天没有操作，沿用前一天卖出股票的状态，即：<code>dp[i][j]</code> = <code>dp[i-1][j]</code></li>
+</ul>
+<p>所以<code>dp[i][j] = max(dp[i-1][j] + prices[i], dp[i-1][j])</code></p>
+<p>同理可推出剩下状态部分：</p>
+<p><code>dp[i][j]</code> = max(<code>dp[i-1][j]</code>, <code>dp[i-1][j]</code> - prices[i]);</p>
+<p><code>dp[i][j]</code> = max(<code>dp[i-1][j]</code>, <code>dp[i-1][j]</code> + prices[i]);</p>
+<ol start="3">
+<li>dp数组如何初始化</li>
+</ol>
+<p>第0天没有操作，这个最容易想到，就是0，即：<code>dp[0][0] = 0;</code></p>
+<p>第0天做第一次买入的操作，<code>dp[0][1] = -prices[0];</code></p>
+<p>第0天做第一次卖出的操作，这个初始值应该是多少呢？</p>
+<p>此时还没有买入，怎么就卖出呢？ 其实大家可以理解当天买入，当天卖出，所以<code>dp[0][2] = 0;</code></p>
+<p>第0天第二次买入操作，初始值应该是多少呢？应该不少同学疑惑，第一次还没买入呢，怎么初始化第二次买入呢？</p>
+<p>第二次买入依赖于第一次卖出的状态，其实相当于第0天第一次买入了，第一次卖出了，然后再买入一次（第二次买入），那么现在手头上没有现金，只要买入，现金就做相应的减少。</p>
+<p>所以第二次买入操作，初始化为：<code>dp[0][3] = -prices[0];</code></p>
+<p>同理第二次卖出初始化<code>dp[0][4] = 0;</code></p>
+<ol start="4">
+<li>确定遍历顺序</li>
+</ol>
+<p>从递归公式其实已经可以看出，一定是从前向后遍历，因为dp[i]，依靠dp[i - 1]的数值。</p>
+<ol start="5">
+<li>举例推导dp数组</li>
+</ol>
+<p>以输入[1,2,3,4,5]为例</p>
+<p><img src="https://code-thinking-1253855093.file.myqcloud.com/pics/20201228181724295-20230310134201291.png" alt="123.买卖股票的最佳时机III" /></p>
+<p>大家可以看到红色框为最后两次卖出的状态。</p>
+<p>现在最大的时候一定是卖出的状态，而两次卖出的状态现金最大一定是最后一次卖出。如果想不明白的录友也可以这么理解：如果第一次卖出已经是最大值了，那么我们可以在当天立刻买入再立刻卖出。所以<code>dp[4][4]</code>已经包含了<code>dp[4][4]</code>的情况。也就是说第二次卖出手里所剩的钱一定是最多的。</p>
+<p>所以最终最大利润是<code>dp[4][4]</code></p>
+<h2 id="c解法-2"><a class="header" href="#c解法-2">C++解法</a></h2>
+<p>以上五部都分析完了，不难写出如下代码：</p>
+<pre><code class="language-cpp">// 版本一  
+class Solution {  
+public:  
+    int maxProfit(vector&lt;int&gt;&amp; prices) {  
+        if (prices.size() == 0) return 0;  
+        vector&lt;vector&lt;int&gt;&gt; dp(prices.size(), vector&lt;int&gt;(5, 0));  
+        dp[0][1] = -prices[0];  
+        dp[0][3] = -prices[0];  
+        for (int i = 1; i &lt; prices.size(); i++) {  
+            dp[i][0] = dp[i - 1][0];  
+            dp[i][1] = max(dp[i - 1][1], dp[i - 1][0] - prices[i]);  
+            dp[i][2] = max(dp[i - 1][2], dp[i - 1][1] + prices[i]);  
+            dp[i][3] = max(dp[i - 1][3], dp[i - 1][2] - prices[i]);  
+            dp[i][4] = max(dp[i - 1][4], dp[i - 1][3] + prices[i]);  
+        }  
+        return dp[prices.size() - 1][4];  
+    }  
+};
+</code></pre>
+<ul>
+<li>时间复杂度：O(n)</li>
+<li>空间复杂度：O(n × 5)</li>
+</ul>
+<p>当然，大家可以看到力扣官方题解里的一种优化空间写法，我这里给出对应的C++版本：</p>
+<pre><code class="language-cpp">// 版本二  
+class Solution {  
+public:  
+    int maxProfit(vector&lt;int&gt;&amp; prices) {  
+        if (prices.size() == 0) return 0;  
+        vector&lt;int&gt; dp(5, 0);  
+        dp[1] = -prices[0];  
+        dp[3] = -prices[0];  
+        for (int i = 1; i &lt; prices.size(); i++) {  
+            dp[1] = max(dp[1], dp[0] - prices[i]);  
+            dp[2] = max(dp[2], dp[1] + prices[i]);  
+            dp[3] = max(dp[3], dp[2] - prices[i]);  
+            dp[4] = max(dp[4], dp[3] + prices[i]);  
+        }  
+        return dp[4];  
+    }  
+};
+</code></pre>
+<ul>
+<li>时间复杂度：O(n)</li>
+<li>空间复杂度：O(1)</li>
+</ul>
+<p>大家会发现dp[2]利用的是当天的dp[1]。 但结果也是对的。</p>
+<p>我来简单解释一下：</p>
+<p><code>dp[1] = max(dp[1], dp[0] - prices[i]);</code> 如果dp[1]取dp[1]，即保持买入股票的状态，那么 <code>dp[2] = max(dp[2], dp[1] + prices[i]);</code>中dp[1] + prices[i] 就是今天卖出。</p>
+<p>如果dp[1]取<code>dp[0] - prices[i]</code>，今天买入股票，那么<code>dp[2] = max(dp[2], dp[1] + prices[i]);</code>中的<code>dp[1] + prices[i]</code>相当于是今天再卖出股票，一买一卖收益为0，对所得现金没有影响。相当于今天买入股票又卖出股票，等于没有操作，保持昨天卖出股票的状态了。</p>
+<p><strong>这种写法看上去简单，其实思路很绕，不建议大家这么写，这么思考，很容易把自己绕进去！</strong></p>
+<p>对于本题，把版本一的写法研究明白，足以！</p>
+<h2 id="java解法-2"><a class="header" href="#java解法-2">Java解法</a></h2>
+<pre><code class="language-java">// 版本一
+class Solution {
+    public int maxProfit(int[] prices) {
+        int len = prices.length;
+        // 边界判断, 题目中 length &gt;= 1, 所以可省去
+        if (prices.length == 0) return 0;
+
+        /*
+         * 定义 5 种状态:
+         * 0: 没有操作, 1: 第一次买入, 2: 第一次卖出, 3: 第二次买入, 4: 第二次卖出
+         */
+        int[][] dp = new int[len][5];
+        dp[0][1] = -prices[0];
+        // 初始化第二次买入的状态是确保 最后结果是最多两次买卖的最大利润
+        dp[0][3] = -prices[0];
+
+        for (int i = 1; i &lt; len; i++) {
+            dp[i][1] = Math.max(dp[i - 1][1], -prices[i]);
+            dp[i][2] = Math.max(dp[i - 1][2], dp[i - 1][1] + prices[i]);
+            dp[i][3] = Math.max(dp[i - 1][3], dp[i - 1][2] - prices[i]);
+            dp[i][4] = Math.max(dp[i - 1][4], dp[i - 1][3] + prices[i]);
+        }
+
+        return dp[len - 1][4];
+    }
+}
+
+// 版本二: 空间优化
+class Solution {
+    public int maxProfit(int[] prices) {
+        int[] dp = new int[4]; 
+        // 存储两次交易的状态就行了
+        // dp[0]代表第一次交易的买入
+        dp[0] = -prices[0];
+        // dp[1]代表第一次交易的卖出
+        dp[1] = 0;
+        // dp[2]代表第二次交易的买入
+        dp[2] = -prices[0];
+        // dp[3]代表第二次交易的卖出
+        dp[3] = 0;
+        for(int i = 1; i &lt;= prices.length; i++){
+            // 要么保持不变，要么没有就买，有了就卖
+            dp[0] = Math.max(dp[0], -prices[i-1]);
+            dp[1] = Math.max(dp[1], dp[0]+prices[i-1]);
+            // 这已经是第二次交易了，所以得加上前一次交易卖出去的收获
+            dp[2] = Math.max(dp[2], dp[1]-prices[i-1]);
+            dp[3] = Math.max(dp[3], dp[2]+ prices[i-1]);
+        }
+        return dp[3];
+    }
+}
+</code></pre>
+<h1 id="188-best-time-to-buy-and-sell-stock-iv"><a class="header" href="#188-best-time-to-buy-and-sell-stock-iv"><a href="https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iv/">188. Best Time to Buy and Sell Stock IV</a></a></h1>
+<p>You are given an integer array <code>prices</code> where <code>prices[i]</code> is the price of a given stock on the <code>ith</code> day, and an integer <code>k</code>.</p>
+<p>Find the maximum profit you can achieve. You may complete at most <code>k</code> transactions: i.e. you may buy at most <code>k</code> times and sell at most <code>k</code> times.</p>
+<p><strong>Note:</strong> You may not engage in multiple transactions simultaneously (i.e., you must sell the stock before you buy again).</p>
+<p><strong>Example 1:</strong></p>
+<p><strong>Input:</strong> k = 2, prices = [2,4,1]<br />
+<strong>Output:</strong> 2<br />
+<strong>Explanation:</strong> Buy on day 1 (price = 2) and sell on day 2 (price = 4), profit = 4-2 = 2.</p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> k = 2, prices = [3,2,6,5,0,3]<br />
+<strong>Output:</strong> 7<br />
+<strong>Explanation:</strong> Buy on day 2 (price = 2) and sell on day 3 (price = 6), profit = 6-2 = 4. Then buy on day 5 (price = 0) and sell on day 6 (price = 3), profit = 3-0 = 3.</p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= k &lt;= 100</code></li>
+<li><code>1 &lt;= prices.length &lt;= 1000</code></li>
+<li><code>0 &lt;= prices[i] &lt;= 1000</code></li>
+</ul>
+<h2 id="思路-3"><a class="header" href="#思路-3">思路</a></h2>
+<p>这道题目可以说是<a href="https://programmercarl.com/0123.%E4%B9%B0%E5%8D%96%E8%82%A1%E7%A5%A8%E7%9A%84%E6%9C%80%E4%BD%B3%E6%97%B6%E6%9C%BAIII.html">动态规划：123.买卖股票的最佳时机III</a>的进阶版，这里要求至多有k次交易。</p>
+<p>动规五部曲，分析如下：</p>
+<ol>
+<li>确定dp数组以及下标的含义</li>
+</ol>
+<p>在<a href="https://programmercarl.com/0123.%E4%B9%B0%E5%8D%96%E8%82%A1%E7%A5%A8%E7%9A%84%E6%9C%80%E4%BD%B3%E6%97%B6%E6%9C%BAIII.html">动态规划：123.买卖股票的最佳时机III</a>中，我是定义了一个二维dp数组，本题其实依然可以用一个二维dp数组。</p>
+<p>使用二维数组 <code>dp[i][j]</code> ：第i天的状态为j，所剩下的最大现金是<code>dp[i][j]</code></p>
+<p>j的状态表示为：</p>
+<ul>
+<li>0 表示不操作</li>
+<li>1 第一次买入</li>
+<li>2 第一次卖出</li>
+<li>3 第二次买入</li>
+<li>4 第二次卖出</li>
+<li>.....</li>
+</ul>
+<p><strong>大家应该发现规律了吧 ，除了0以外，偶数就是卖出，奇数就是买入</strong>。</p>
+<p>题目要求是至多有K笔交易，那么j的范围就定义为 2 * k + 1 就可以了。</p>
+<p>所以二维dp数组的C++定义为：</p>
+<pre><code class="language-cpp">vector&lt;vector&lt;int&gt;&gt; dp(prices.size(), vector&lt;int&gt;(2 * k + 1, 0));
+</code></pre>
+<ol start="2">
+<li>确定递推公式</li>
+</ol>
+<p>还要强调一下：<code>dp[i][j]</code>，<strong>表示的是第i天，买入股票的状态，并不是说一定要第i天买入股票，这是很多同学容易陷入的误区</strong>。</p>
+<p>达到<code>dp[i][j]</code>状态，有两个具体操作：</p>
+<ul>
+<li>操作一：第i天买入股票了，那么<code>dp[i][j]</code> = <code>dp[i-1][j]</code> - prices[i]</li>
+<li>操作二：第i天没有操作，而是沿用前一天买入的状态，即：<code>dp[i][j]</code> = <code>dp[i-1][j]</code></li>
+</ul>
+<p>选最大的，所以 <code>dp[i][j]</code> = max(<code>dp[i-1][j]</code> - prices[i], <code>dp[i-1][j]</code>);</p>
+<p>同理<code>dp[i][j]</code>也有两个操作：</p>
+<ul>
+<li>操作一：第i天卖出股票了，那么<code>dp[i][j]</code> = <code>dp[i-1][j]</code> + prices[i]</li>
+<li>操作二：第i天没有操作，沿用前一天卖出股票的状态，即：<code>dp[i][j]</code> = <code>dp[i-1][j]</code></li>
+</ul>
+<p>所以``dp[i][j]<code> = max(</code>dp[i-1][j]<code>+ prices[i],</code>dp[i-1][j]<code>)</code></p>
+<p>同理可以类比剩下的状态，代码如下：</p>
+<pre><code class="language-cpp">for (int j = 0; j &lt; 2 * k - 1; j += 2) {  
+    dp[i][j + 1] = max(dp[i - 1][j + 1], dp[i - 1][j] - prices[i]);  
+    dp[i][j + 2] = max(dp[i - 1][j + 2], dp[i - 1][j + 1] + prices[i]);  
+}
+</code></pre>
+<p><strong>本题和<a href="https://programmercarl.com/0123.%E4%B9%B0%E5%8D%96%E8%82%A1%E7%A5%A8%E7%9A%84%E6%9C%80%E4%BD%B3%E6%97%B6%E6%9C%BAIII.html">动态规划：123.买卖股票的最佳时机III</a>最大的区别就是这里要类比j为奇数是买，偶数是卖的状态</strong>。</p>
+<ol start="3">
+<li>dp数组如何初始化</li>
+</ol>
+<p>第0天没有操作，这个最容易想到，就是0，即：<code>dp[0][0] = 0;</code></p>
+<p>第0天做第一次买入的操作，<code>dp[0][1] = -prices[0];</code></p>
+<p>第0天做第一次卖出的操作，这个初始值应该是多少呢？</p>
+<p>此时还没有买入，怎么就卖出呢？ 其实大家可以理解当天买入，当天卖出，所以<code>dp[0][2] = 0;</code></p>
+<p>第0天第二次买入操作，初始值应该是多少呢？应该不少同学疑惑，第一次还没买入呢，怎么初始化第二次买入呢？</p>
+<p>第二次买入依赖于第一次卖出的状态，其实相当于第0天第一次买入了，第一次卖出了，然后在买入一次（第二次买入），那么现在手头上没有现金，只要买入，现金就做相应的减少。</p>
+<p>所以第二次买入操作，初始化为：<code>dp[0][1] = -prices[0];</code></p>
+<p>第二次卖出初始化<code>dp[0][2] = 0;</code></p>
+<p><strong>所以同理可以推出<code>dp[0][1]</code>当j为奇数的时候都初始化为 <code>-prices[0]</code></strong></p>
+<p>代码如下：</p>
+<pre><code class="language-cpp">for (int j = 1; j &lt; 2 * k; j += 2) {  
+    dp[0][j] = -prices[0];  
+}
+</code></pre>
+<p><strong>在初始化的地方同样要类比j为偶数是卖、奇数是买的状态</strong>。</p>
+<ol start="4">
+<li>确定遍历顺序</li>
+</ol>
+<p>从递归公式其实已经可以看出，一定是从前向后遍历，因为dp[i]，依靠dp[i - 1]的数值。</p>
+<ol start="5">
+<li>举例推导dp数组</li>
+</ol>
+<p>以输入[1,2,3,4,5]，k=2为例。</p>
+<p>最后一次卖出，一定是利润最大的，<code>dp[prices.size() - 1][2 * k]</code>即红色部分就是最后求解。</p>
+<h2 id="c解法-3"><a class="header" href="#c解法-3">C++解法</a></h2>
+<p>以上分析完毕，C++代码如下：</p>
+<pre><code class="language-cpp">class Solution {  
+public:  
+    int maxProfit(int k, vector&lt;int&gt;&amp; prices) {  
+​  
+        if (prices.size() == 0) return 0;  
+        vector&lt;vector&lt;int&gt;&gt; dp(prices.size(), vector&lt;int&gt;(2 * k + 1, 0));  
+        for (int j = 1; j &lt; 2 * k; j += 2) {  
+            dp[0][j] = -prices[0];  
+        }  
+        for (int i = 1;i &lt; prices.size(); i++) {  
+            for (int j = 0; j &lt; 2 * k - 1; j += 2) {  
+                dp[i][j + 1] = max(dp[i - 1][j + 1], dp[i - 1][j] - prices[i]);  
+                dp[i][j + 2] = max(dp[i - 1][j + 2], dp[i - 1][j + 1] + prices[i]);  
+            }  
+        }  
+        return dp[prices.size() - 1][2 * k];  
+    }  
+};
+</code></pre>
+<ul>
+<li>时间复杂度: O(n * k)，其中 n 为 prices 的长度</li>
+<li>空间复杂度: O(n * k)</li>
+</ul>
+<p>当然有的解法是定义一个三维数组<code>dp[i][j]</code>[k]，第i天，第j次买卖，k表示买还是卖的状态，从定义上来讲是比较直观。</p>
+<p>但感觉三维数组操作起来有些麻烦，我是直接用二维数组来模拟三维数组的情况，代码看起来也清爽一些。</p>
+<h2 id="java解法-3"><a class="header" href="#java解法-3">Java解法</a></h2>
+<pre><code class="language-java">// 版本二: 二维 dp数组
+class Solution {
+    public int maxProfit(int k, int[] prices) {
+        if (prices.length == 0) return 0;
+
+        // [天数][股票状态]
+        // 股票状态: 奇数表示第 k 次交易持有/买入, 偶数表示第 k 次交易不持有/卖出, 0 表示没有操作
+        int len = prices.length;
+        int[][] dp = new int[len][k*2 + 1];
+        
+        // dp数组的初始化, 与版本一同理
+        for (int i = 1; i &lt; k*2; i += 2) {
+            dp[0][i] = -prices[0];
+        }
+
+        for (int i = 1; i &lt; len; i++) {
+            for (int j = 0; j &lt; k*2 - 1; j += 2) {
+                dp[i][j + 1] = Math.max(dp[i - 1][j + 1], dp[i - 1][j] - prices[i]);
+                dp[i][j + 2] = Math.max(dp[i - 1][j + 2], dp[i - 1][j + 1] + prices[i]);
+            }
+        }
+        return dp[len - 1][k*2];
+    }
+}
+</code></pre>
+<h1 id="309-best-time-to-buy-and-sell-stock-with-cooldown"><a class="header" href="#309-best-time-to-buy-and-sell-stock-with-cooldown"><a href="https://leetcode.com/problems/best-time-to-buy-and-sell-stock-with-cooldown/">309. Best Time to Buy and Sell Stock with Cooldown</a></a></h1>
+<p>You are given an array <code>prices</code> where <code>prices[i]</code> is the price of a given stock on the <code>ith</code> day.</p>
+<p>Find the maximum profit you can achieve. You may complete as many transactions as you like (i.e., buy one and sell one share of the stock multiple times) with the following restrictions:</p>
+<ul>
+<li>After you sell your stock, you cannot buy stock on the next day (i.e., cooldown one day).</li>
+</ul>
+<p><strong>Note:</strong> You may not engage in multiple transactions simultaneously (i.e., you must sell the stock before you buy again).</p>
+<p><strong>Example 1:</strong></p>
+<p><strong>Input:</strong> prices = [1,2,3,0,2]<br />
+<strong>Output:</strong> 3<br />
+<strong>Explanation:</strong> transactions = [buy, sell, cooldown, buy, sell]</p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> prices = [1]<br />
+<strong>Output:</strong> 0</p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= prices.length &lt;= 5000</code></li>
+<li><code>0 &lt;= prices[i] &lt;= 1000</code></li>
+</ul>
+<h2 id="思路-4"><a class="header" href="#思路-4">思路</a></h2>
+<p>相对于<a href="https://programmercarl.com/0122.%E4%B9%B0%E5%8D%96%E8%82%A1%E7%A5%A8%E7%9A%84%E6%9C%80%E4%BD%B3%E6%97%B6%E6%9C%BAII%EF%BC%88%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%EF%BC%89.html">动态规划：122.买卖股票的最佳时机II</a>，本题加上了一个冷冻期</p>
+<p>在<a href="https://programmercarl.com/0122.%E4%B9%B0%E5%8D%96%E8%82%A1%E7%A5%A8%E7%9A%84%E6%9C%80%E4%BD%B3%E6%97%B6%E6%9C%BAII%EF%BC%88%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%EF%BC%89.html">动态规划：122.买卖股票的最佳时机II</a> 中有两个状态，持有股票后的最多现金，和不持有股票的最多现金。</p>
+<p>动规五部曲，分析如下：</p>
+<ol>
+<li>确定dp数组以及下标的含义</li>
+</ol>
+<p><code>dp[i][j]</code>，第i天状态为j，所剩的最多现金为<code>dp[i][j]</code>。</p>
+<p><strong>其实本题很多同学搞的比较懵，是因为出现冷冻期之后，状态其实是比较复杂度</strong>，例如今天买入股票、今天卖出股票、今天是冷冻期，都是不能操作股票的。</p>
+<p>具体可以区分出如下四个状态：</p>
+<ul>
+<li>
+<p>状态一：持有股票状态（今天买入股票，或者是之前就买入了股票然后没有操作，一直持有）</p>
+</li>
+<li>
+<p>不持有股票状态，这里就有两种卖出股票状态</p>
+<ul>
+<li>
+<p>状态二：保持卖出股票的状态（两天前就卖出了股票，度过一天冷冻期。或者是前一天就是卖出股票状态，一直没操作）</p>
+</li>
+<li>
+<p>状态三：今天卖出股票</p>
+</li>
+</ul>
+</li>
+<li>
+<p>状态四：今天为冷冻期状态，但冷冻期状态不可持续，只有一天！</p>
+</li>
+</ul>
+<p>j的状态为：</p>
+<ul>
+<li>0：状态一</li>
+<li>1：状态二</li>
+<li>2：状态三</li>
+<li>3：状态四</li>
+</ul>
+<p>很多题解为什么讲的比较模糊，是因为把这四个状态合并成三个状态了，其实就是把状态二和状态四合并在一起了。</p>
+<p>从代码上来看确实可以合并，但从逻辑上分析合并之后就很难理解了，所以我下面的讲解是按照这四个状态来的，把每一个状态分析清楚。</p>
+<p>「今天卖出股票」我是没有单独列出一个状态的归类为「不持有股票的状态」，而本题为什么要单独列出「今天卖出股票」 一个状态呢？</p>
+<p>因为本题我们有冷冻期，而冷冻期的前一天，只能是 「今天卖出股票」状态，如果是 「不持有股票状态」那么就很模糊，因为不一定是 卖出股票的操作。</p>
+<p><strong>注意这里的每一个状态，例如状态一，是持有股票股票状态并不是说今天一定就买入股票，而是说保持买入股票的状态即：可能是前几天买入的，之后一直没操作，所以保持买入股票的状态</strong>。</p>
+<ol>
+<li>确定递推公式</li>
+</ol>
+<p><strong>达到买入股票状态</strong>（状态一）即：<code>dp[i][j]</code>，有两个具体操作：</p>
+<ul>
+<li>
+<p>操作一：前一天就是持有股票状态（状态一），<code>dp[i][j]</code> = <code>dp[i-1][j]</code></p>
+</li>
+<li>
+<p>操作二：今天买入了，有两种情况</p>
+<ul>
+<li>
+<p>前一天是冷冻期（状态四），<code>dp[i-1][j]</code> - prices[i]</p>
+</li>
+<li>
+<p>前一天是保持卖出股票的状态（状态二），<code>dp[i-1][j]</code> - prices[i]</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>那么<code>dp[i][j]</code> = max(<code>dp[i-1][j]</code>, <code>dp[i-1][j]</code> - prices[i], <code>dp[i-1][j]</code> - prices[i]);</p>
+<p><strong>达到保持卖出股票状态</strong>（状态二）即：<code>dp[i][j]</code>，有两个具体操作：</p>
+<ul>
+<li>操作一：前一天就是状态二</li>
+<li>操作二：前一天是冷冻期（状态四）</li>
+</ul>
+<p><code>dp[i][j]</code> = max(<code>dp[i-1][j]</code>, <code>dp[i-1][j]</code>);</p>
+<p><strong>达到今天就卖出股票状态</strong>（状态三），即：<code>dp[i][j]</code> ，只有一个操作：</p>
+<p>昨天一定是持有股票状态（状态一），今天卖出</p>
+<p>即：<code>dp[i][j]</code> = <code>dp[i-1][j]</code> + prices[i];</p>
+<p><strong>达到冷冻期状态</strong>（状态四），即：<code>dp[i][j]</code>，只有一个操作：</p>
+<p>昨天卖出了股票（状态三）</p>
+<p><code>dp[i][j]</code> = <code>dp[i-1][j]</code>;</p>
+<p>综上分析，递推代码如下：</p>
+<pre><code class="language-cpp">dp[i][0] = max(dp[i - 1][0], max(dp[i - 1][3], dp[i - 1][1]) - prices[i]);  
+dp[i][1] = max(dp[i - 1][1], dp[i - 1][3]);  
+dp[i][2] = dp[i - 1][0] + prices[i];  
+dp[i][3] = dp[i - 1][2];
+</code></pre>
+<ol start="3">
+<li>dp数组如何初始化</li>
+</ol>
+<p>这里主要讨论一下第0天如何初始化。</p>
+<p>如果是持有股票状态（状态一）那么：<code>dp[0][0] = -prices[0]</code>，一定是当天买入股票。</p>
+<p>保持卖出股票状态（状态二），这里其实从 「状态二」的定义来说 ，很难明确应该初始多少，这种情况我们就看递推公式需要我们给他初始成什么数值。</p>
+<p>如果i为1，第1天买入股票，那么递归公式中需要计算 <code>dp[i-1][j] - prices[i]</code> ，即 <code>dp[0][j] - prices[1]</code>，那么大家感受一下<code>dp[0][2]</code> （即第0天的状态二）应该初始成多少，只能初始为0。想一想如果初始为其他数值，是我们第1天买入股票后 手里还剩的现金数量是不是就不对了。</p>
+<p>今天卖出了股票（状态三），同上分析，<code>dp[0][2]</code>初始化为0，<code>dp[0][3]</code>也初始为0。</p>
+<ol start="4">
+<li>确定遍历顺序</li>
+</ol>
+<p>从递归公式上可以看出，<code>dp[i]</code> 依赖于 <code>dp[i-1]</code>，所以是从前向后遍历。</p>
+<ol start="5">
+<li>举例推导dp数组</li>
+</ol>
+<p>以 <code>[1,2,3,0,2]</code> 为例，dp数组如下：</p>
+<p><img src="https://code-thinking-1253855093.file.myqcloud.com/pics/2021032317451040.png" alt="309.最佳买卖股票时机含冷冻期" /></p>
+<p>最后结果是取状态二，状态三和状态四的最大值，不少同学会把状态四忘了，状态四是冷冻期，最后一天如果是冷冻期也可能是最大值。</p>
+<h2 id="c解法-4"><a class="header" href="#c解法-4">C++解法</a></h2>
+<p>代码如下：</p>
+<pre><code class="language-cpp">class Solution {  
+public:  
+    int maxProfit(vector&lt;int&gt;&amp; prices) {  
+        int n = prices.size();  
+        if (n == 0) return 0;  
+        vector&lt;vector&lt;int&gt;&gt; dp(n, vector&lt;int&gt;(4, 0));  
+        dp[0][0] -= prices[0]; // 持股票  
+        for (int i = 1; i &lt; n; i++) {  
+            dp[i][0] = max(dp[i - 1][0], max(dp[i - 1][3] - prices[i], dp[i - 1][1] - prices[i]));  
+            dp[i][1] = max(dp[i - 1][1], dp[i - 1][3]);  
+            dp[i][2] = dp[i - 1][0] + prices[i];  
+            dp[i][3] = dp[i - 1][2];  
+        }  
+        return max(dp[n - 1][3], max(dp[n - 1][1], dp[n - 1][2]));  
+    }  
+};
+</code></pre>
+<ul>
+<li>时间复杂度：O(n)</li>
+<li>空间复杂度：O(n)</li>
+</ul>
+<p>当然，空间复杂度可以优化，定义一个<code>dp[2][4]</code>大小的数组就可以了，就保存前一天的当前的状态，感兴趣的同学可以自己去写一写，思路是一样的。</p>
+<h2 id="java解法-4"><a class="header" href="#java解法-4">Java解法</a></h2>
+<pre><code class="language-java">class Solution {
+    public int maxProfit(int[] prices) {
+        if (prices == null || prices.length &lt; 2) {
+            return 0;
+        }
+        int[][] dp = new int[prices.length][2];
+
+        // bad case
+        dp[0][0] = 0;
+        dp[0][1] = -prices[0];
+        dp[1][0] = Math.max(dp[0][0], dp[0][1] + prices[1]);
+        dp[1][1] = Math.max(dp[0][1], -prices[1]);
+
+        for (int i = 2; i &lt; prices.length; i++) {
+            // dp公式
+            dp[i][0] = Math.max(dp[i - 1][0], dp[i - 1][1] + prices[i]);
+            dp[i][1] = Math.max(dp[i - 1][1], dp[i - 2][0] - prices[i]);
+        }
+
+        return dp[prices.length - 1][0];
+    }
+}
+</code></pre>
+<h1 id="714-best-time-to-buy-and-sell-stock-with-transaction-fee"><a class="header" href="#714-best-time-to-buy-and-sell-stock-with-transaction-fee"><a href="https://leetcode.com/problems/best-time-to-buy-and-sell-stock-with-transaction-fee/">714. Best Time to Buy and Sell Stock with Transaction Fee</a></a></h1>
+<p>You are given an array <code>prices</code> where <code>prices[i]</code> is the price of a given stock on the <code>ith</code> day, and an integer <code>fee</code> representing a transaction fee.</p>
+<p>Find the maximum profit you can achieve. You may complete as many transactions as you like, but you need to pay the transaction fee for each transaction.</p>
+<p><strong>Note:</strong></p>
+<ul>
+<li>You may not engage in multiple transactions simultaneously (i.e., you must sell the stock before you buy again).</li>
+<li>The transaction fee is only charged once for each stock purchase and sale.</li>
+</ul>
+<p><strong>Example 1:</strong></p>
+<p><strong>Input:</strong> prices = [1,3,2,8,4,9], fee = 2<br />
+<strong>Output:</strong> 8<br />
+<strong>Explanation:</strong> The maximum profit can be achieved by:</p>
+<ul>
+<li>Buying at prices[0] = 1</li>
+<li>Selling at prices[3] = 8</li>
+<li>Buying at prices[4] = 4</li>
+<li>Selling at prices[5] = 9
+The total profit is ((8 - 1) - 2) + ((9 - 4) - 2) = 8.</li>
+</ul>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> prices = [1,3,7,5,10,3], fee = 3<br />
+<strong>Output:</strong> 6</p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= prices.length &lt;= 5 * 10^4</code></li>
+<li><code>1 &lt;= prices[i] &lt; 5 * 10^4</code></li>
+<li><code>0 &lt;= fee &lt; 5 * 10^4</code></li>
+</ul>
+<h2 id="思路-5"><a class="header" href="#思路-5">思路</a></h2>
+<p>本题贪心解法：<a href="https://programmercarl.com/0714.%E4%B9%B0%E5%8D%96%E8%82%A1%E7%A5%A8%E7%9A%84%E6%9C%80%E4%BD%B3%E6%97%B6%E6%9C%BA%E5%90%AB%E6%89%8B%E7%BB%AD%E8%B4%B9.html">贪心算法：买卖股票的最佳时机含手续费</a></p>
+<p>性能是：</p>
+<ul>
+<li>时间复杂度：O(n)</li>
+<li>空间复杂度：O(1)</li>
+</ul>
+<p>本题使用贪心算法并不好理解，也很容易出错，那么我们再来看看是使用动规的方法如何解题。</p>
+<p>相对于<a href="https://programmercarl.com/0122.%E4%B9%B0%E5%8D%96%E8%82%A1%E7%A5%A8%E7%9A%84%E6%9C%80%E4%BD%B3%E6%97%B6%E6%9C%BAII%EF%BC%88%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%EF%BC%89.html">动态规划：122.买卖股票的最佳时机II</a>，本题只需要在计算卖出操作的时候减去手续费就可以了，代码几乎是一样的。</p>
+<p>唯一差别在于递推公式部分，所以本篇也就不按照动规五部曲详细讲解了，主要讲解一下递推公式部分。</p>
+<p>这里重申一下dp数组的含义：</p>
+<p><code>dp[i][j]</code> 表示第i天持有股票所省最多现金。 <code>dp[i][j]</code> 表示第i天不持有股票所得最多现金</p>
+<p>如果第i天持有股票即<code>dp[i][j]</code>， 那么可以由两个状态推出来</p>
+<ul>
+<li>第i-1天就持有股票，那么就保持现状，所得现金就是昨天持有股票的所得现金 即：<code>dp[i-1][j]</code></li>
+<li>第i天买入股票，所得现金就是昨天不持有股票的所得现金减去 今天的股票价格 即：<code>dp[i-1][j]</code> - prices[i]</li>
+</ul>
+<p>所以：<code>dp[i][j]</code> = max(<code>dp[i-1][j]</code>, <code>dp[i-1][j]</code> - prices[i]);</p>
+<p>在来看看如果第i天不持有股票即<code>dp[i][j]</code>的情况， 依然可以由两个状态推出来</p>
+<ul>
+<li>第i-1天就不持有股票，那么就保持现状，所得现金就是昨天不持有股票的所得现金 即：<code>dp[i-1][j]</code></li>
+<li>第i天卖出股票，所得现金就是按照今天股票价格卖出后所得现金，<strong>注意这里需要有手续费了</strong>即：<code>dp[i-1][j]</code> + prices[i] - fee</li>
+</ul>
+<p>所以：<code>dp[i][j]</code> = max(<code>dp[i-1][j]</code>, <code>dp[i-1][j]</code> + prices[i] - fee);</p>
+<p><strong>本题和<a href="https://programmercarl.com/0122.%E4%B9%B0%E5%8D%96%E8%82%A1%E7%A5%A8%E7%9A%84%E6%9C%80%E4%BD%B3%E6%97%B6%E6%9C%BAII%EF%BC%88%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%EF%BC%89.html">动态规划：122.买卖股票的最佳时机II</a>的区别就是这里需要多一个减去手续费的操作</strong>。</p>
+<h2 id="c解法-5"><a class="header" href="#c解法-5">C++解法</a></h2>
+<p>以上分析完毕，C++代码如下：</p>
+<pre><code class="language-cpp">class Solution {  
+public:  
+    int maxProfit(vector&lt;int&gt;&amp; prices, int fee) {  
+        int n = prices.size();  
+        vector&lt;vector&lt;int&gt;&gt; dp(n, vector&lt;int&gt;(2, 0));  
+        dp[0][0] -= prices[0]; // 持股票  
+        for (int i = 1; i &lt; n; i++) {  
+            dp[i][0] = max(dp[i - 1][0], dp[i - 1][1] - prices[i]);  
+            dp[i][1] = max(dp[i - 1][1], dp[i - 1][0] + prices[i] - fee);  
+        }  
+        return max(dp[n - 1][0], dp[n - 1][1]);  
+    }  
+};
+</code></pre>
+<ul>
+<li>时间复杂度：O(n)</li>
+<li>空间复杂度：O(n)</li>
+</ul>
+<h2 id="java解法-5"><a class="header" href="#java解法-5">Java解法</a></h2>
+<pre><code class="language-java">/**
+ * 买入时支付手续费
+ * @param prices
+ * @param fee
+ * @return
+ */
+public int maxProfit(int[] prices, int fee) {
+    int len = prices.length;
+    // 0 : 持股（买入）
+    // 1 : 不持股（售出）
+    // dp 定义第i天持股/不持股 所得最多现金
+    int[][] dp = new int[len][2];
+    // 考虑买入的时候就支付手续费
+    dp[0][0] = -prices[0] - fee;
+    for (int i = 1; i &lt; len; i++) {
+        dp[i][0] = Math.max(dp[i - 1][0], dp[i - 1][1] - prices[i] - fee);
+        dp[i][1] = Math.max(dp[i - 1][0] + prices[i], dp[i - 1][1]);
+    }
+    return Math.max(dp[len - 1][0], dp[len - 1][1]);
+}
+</code></pre>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../动态规划/打家劫舍.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../动态规划/子序列.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../动态规划/打家劫舍.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../动态规划/子序列.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

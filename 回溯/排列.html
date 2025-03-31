@@ -232,7 +232,7 @@ public:
 };
 </code></pre>
 <ul>
-<li>时间复杂度: O(n!)</li>
+<li>时间复杂度: O(n! * n)</li>
 <li>空间复杂度: O(n)</li>
 </ul>
 <h1 id="47-permutations-ii"><a class="header" href="#47-permutations-ii"><a href="https://leetcode.com/problems/permutations-ii/">47. Permutations II</a></a></h1>
@@ -291,10 +291,11 @@ public:
         return result;
     }
 };
-
-// 时间复杂度: 最差情况所有元素都是唯一的。复杂度和全排列1都是 O(n! * n) 对于 n 个元素一共有 n! 中排列方案。而对于每一个答案，我们需要 O(n) 去复制最终放到 result 数组
-// 空间复杂度: O(n) 回溯树的深度取决于我们有多少个元素
 </code></pre>
+<p>时间复杂度: 最差情况所有元素都是唯一的。复杂度和全排列1都是 O(n! * n)</p>
+<p>对于 n 个元素一共有 n! 中排列方案。而对于每一个答案，我们需要 O(n) 去复制最终放到 result 数组</p>
+<p>空间复杂度: O(n)</p>
+<p>回溯树的深度取决于我们有多少个元素</p>
 <h1 id="784-letter-case-permutation"><a class="header" href="#784-letter-case-permutation"><a href="https://leetcode.com/problems/letter-case-permutation/">784. Letter Case Permutation</a></a></h1>
 <p>Given a string <code>s</code>, you can transform every letter individually to be lowercase or uppercase to create another string.</p>
 <p>Return <em>a list of all possible strings we could create</em>. Return the output in <strong>any order</strong>.</p>

@@ -1,0 +1,724 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>不同路径 - 剑指Offer</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">剑指Offer</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
+<h1 id="不同路径"><a class="header" href="#不同路径">不同路径</a></h1>
+<ul>
+<li><a href="#62-unique-paths">62. Unique Paths</a>
+<ul>
+<li><a href="#%E6%80%9D%E8%B7%AF">思路</a>
+<ul>
+<li><a href="#%E6%B7%B1%E6%90%9C">深搜</a></li>
+<li><a href="#%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92">动态规划</a></li>
+<li><a href="#%E6%95%B0%E8%AE%BA%E6%96%B9%E6%B3%95">数论方法</a></li>
+</ul>
+</li>
+<li><a href="#c%E8%A7%A3%E6%B3%95">C++解法</a></li>
+<li><a href="#java%E8%A7%A3%E6%B3%95">Java解法</a></li>
+</ul>
+</li>
+<li><a href="#63-unique-paths-ii">63. Unique Paths II</a>
+<ul>
+<li><a href="#%E6%80%9D%E8%B7%AF-1">思路</a></li>
+<li><a href="#c%E8%A7%A3%E6%B3%95-1">C++解法</a></li>
+<li><a href="#java%E8%A7%A3%E6%B3%95-1">Java解法</a></li>
+</ul>
+</li>
+<li><a href="#980-unique-paths-iii%E5%9B%9E%E6%BA%AF">980. Unique Paths III（回溯）</a>
+<ul>
+<li><a href="#%E6%80%9D%E8%B7%AF-2">思路</a></li>
+<li><a href="#c%E8%A7%A3%E6%B3%95-2">C++解法</a></li>
+<li><a href="#java%E8%A7%A3%E6%B3%95-2">Java解法</a></li>
+</ul>
+</li>
+</ul>
+<h1 id="62-unique-paths"><a class="header" href="#62-unique-paths"><a href="https://leetcode.com/problems/unique-paths/">62. Unique Paths</a></a></h1>
+<p>There is a robot on an <code>m x n</code> grid. The robot is initially located at the <strong>top-left corner</strong> (i.e., <code>grid[0][0]</code>). The robot tries to move to the <strong>bottom-right corner</strong> (i.e., <code>grid[m - 1][n - 1]</code>). The robot can only move either down or right at any point in time.</p>
+<p>Given the two integers <code>m</code> and <code>n</code>, return <em>the number of possible unique paths that the robot can take to reach the bottom-right corner</em>.</p>
+<p>The test cases are generated so that the answer will be less than or equal to <code>2 * 10^9</code>.</p>
+<p><strong>Example 1:</strong></p>
+<p><img src="https://assets.leetcode.com/uploads/2018/10/22/robot_maze.png" alt="" /></p>
+<p><strong>Input:</strong> m = 3, n = 7<br />
+<strong>Output:</strong> 28</p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> m = 3, n = 2<br />
+<strong>Output:</strong> 3
+<strong>Explanation:</strong> From the top-left corner, there are a total of 3 ways to reach the bottom-right corner:</p>
+<ol>
+<li>Right -&gt; Down -&gt; Down</li>
+<li>Down -&gt; Down -&gt; Right</li>
+<li>Down -&gt; Right -&gt; Down</li>
+</ol>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= m, n &lt;= 100</code></li>
+</ul>
+<h2 id="思路"><a class="header" href="#思路">思路</a></h2>
+<h3 id="深搜"><a class="header" href="#深搜">深搜</a></h3>
+<p>这道题目，刚一看最直观的想法就是用图论里的深搜，来枚举出来有多少种路径。</p>
+<p>注意题目中说机器人每次只能向下或者向右移动一步，那么其实<strong>机器人走过的路径可以抽象为一棵二叉树，而叶子节点就是终点！</strong></p>
+<p>如图举例：</p>
+<p><img src="https://code-thinking-1253855093.file.myqcloud.com/pics/20201209113602700.png" alt="62.不同路径" /></p>
+<p>此时问题就可以转化为求二叉树叶子节点的个数，代码如下：</p>
+<pre><code class="language-cpp">class Solution {  
+private:  
+    int dfs(int i, int j, int m, int n) {  
+        if (i &gt; m || j &gt; n) return 0; // 越界了  
+        if (i == m &amp;&amp; j == n) return 1; // 找到一种方法，相当于找到了叶子节点  
+        return dfs(i + 1, j, m, n) + dfs(i, j + 1, m, n);  
+    }  
+public:  
+    int uniquePaths(int m, int n) {  
+        return dfs(1, 1, m, n);  
+    }  
+};
+</code></pre>
+<p><strong>大家如果提交了代码就会发现超时了！</strong></p>
+<p>来分析一下时间复杂度，这个深搜的算法，其实就是要遍历整个二叉树。</p>
+<p>这棵树的深度其实就是m+n-1（深度按从1开始计算）。</p>
+<p>那二叉树的节点个数就是 <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9713em;vertical-align:-0.0833em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.888em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mopen mtight">(</span><span class="mord mathnormal mtight">m</span><span class="mbin mtight">+</span><span class="mord mathnormal mtight">n</span><span class="mbin mtight">−</span><span class="mord mtight">1</span><span class="mclose mtight">)</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1</span></span></span></span>。可以理解深搜的算法就是遍历了整个满二叉树（其实没有遍历整个满二叉树，只是近似而已）</p>
+<p>所以上面深搜代码的时间复杂度为<span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.138em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.888em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mopen mtight">(</span><span class="mord mathnormal mtight">m</span><span class="mbin mtight">+</span><span class="mord mathnormal mtight">n</span><span class="mbin mtight">−</span><span class="mord mtight">1</span><span class="mclose mtight">)</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">)</span></span></span></span>，可以看出，这是指数级别的时间复杂度，是非常大的。</p>
+<h3 id="动态规划"><a class="header" href="#动态规划">动态规划</a></h3>
+<p>机器人从(0 , 0) 位置出发，到(m - 1, n - 1)终点。</p>
+<p>按照动规五部曲来分析：</p>
+<ol>
+<li>确定dp数组（dp table）以及下标的含义</li>
+</ol>
+<p><code>dp[i][j]</code>：表示从（0 ，0）出发，到(i, j) 有<code>dp[i][j]</code>条不同的路径。</p>
+<ol start="2">
+<li>确定递推公式</li>
+</ol>
+<p>想要求<code>dp[i][j]</code>，只能有两个方向来推导出来，即<code>dp[i - 1][j]</code> 和 <code>dp[i][j - 1]</code>。</p>
+<p>此时在回顾一下 <code>dp[i - 1][j]</code> 表示啥，是从(0, 0)的位置到(i - 1, j)有几条路径，<code>dp[i][j]</code>同理。</p>
+<p>那么很自然，<code>dp[i][j] = dp[i - 1][j] + dp[i][j - 1]</code>，因为<code>dp[i][j]</code>只有这两个方向过来。</p>
+<ol start="3">
+<li>dp数组的初始化</li>
+</ol>
+<p>如何初始化呢，首先<code>dp[i][j]</code>一定都是1，因为从(0, 0)的位置到(i, 0)的路径只有一条，那么dp<a href="#">0</a>也同理。</p>
+<p>所以初始化代码为：</p>
+<pre><code class="language-cpp">for (int i = 0; i &lt; m; i++) dp[i][0] = 1;  
+for (int j = 0; j &lt; n; j++) dp[0][j] = 1;
+</code></pre>
+<ol start="4">
+<li>确定遍历顺序</li>
+</ol>
+<p>这里要看一下递推公式<code>dp[i][j] = dp[i - 1][j] + dp[i][j - 1]</code>，<code>dp[i][j]</code>都是从其上方和左方推导而来，那么从左到右一层一层遍历就可以了。</p>
+<ol start="5">
+<li>举例推导dp数组</li>
+</ol>
+<p>如图所示：</p>
+<p><img src="https://code-thinking-1253855093.file.myqcloud.com/pics/20201209113631392.png" alt="62.不同路径1" /></p>
+<h3 id="数论方法"><a class="header" href="#数论方法">数论方法</a></h3>
+<p>在这个图中，可以看出一共m，n的话，无论怎么走，走到终点都需要 m + n - 2 步。</p>
+<p><img src="https://code-thinking-1253855093.file.myqcloud.com/pics/20201209113602700-20230310120944078.png" alt="62.不同路径" /></p>
+<p>在这m + n - 2 步中，一定有 m - 1 步是要向下走的，不用管什么时候向下走。</p>
+<p>那么有几种走法呢？ 可以转化为，给你m + n - 2个不同的数，随便取m - 1个数，有几种取法。</p>
+<p>那么这就是一个组合问题了。</p>
+<p>那么答案，如图所示：</p>
+<p><img src="https://code-thinking-1253855093.file.myqcloud.com/pics/20201209113725324.png" alt="62.不同路径2" /></p>
+<p><strong>求组合的时候，要防止两个int相乘溢出！</strong> 所以不能把算式的分子都算出来，分母都算出来再做除法。</p>
+<p>例如如下代码是不行的。</p>
+<pre><code class="language-cpp">class Solution {  
+public:  
+    int uniquePaths(int m, int n) {  
+        int numerator = 1, denominator = 1;  
+        int count = m - 1;  
+        int t = m + n - 2;  
+        while (count--) numerator *= (t--); // 计算分子，此时分子就会溢出  
+        for (int i = 1; i &lt;= m - 1; i++) denominator *= i; // 计算分母  
+        return numerator / denominator;  
+    }  
+};  
+</code></pre>
+<p>​</p>
+<p>需要在计算分子的时候，不断除以分母，代码如下：</p>
+<pre><code class="language-cpp">class Solution {  
+public:  
+    int uniquePaths(int m, int n) {  
+        long long numerator = 1; // 分子  
+        int denominator = m - 1; // 分母  
+        int count = m - 1;  
+        int t = m + n - 2;  
+        while (count--) {  
+            numerator *= (t--);  
+            while (denominator != 0 &amp;&amp; numerator % denominator == 0) {  
+                numerator /= denominator;  
+                denominator--;  
+            }  
+        }  
+        return numerator;  
+    }  
+};
+</code></pre>
+<ul>
+<li>时间复杂度：O(m)</li>
+<li>空间复杂度：O(1)</li>
+</ul>
+<p><strong>计算组合问题的代码还是有难度的，特别是处理溢出的情况！</strong></p>
+<h2 id="c解法"><a class="header" href="#c解法">C++解法</a></h2>
+<p>以上动规五部曲分析完毕，C++代码如下：</p>
+<pre><code class="language-cpp">class Solution {  
+public:  
+    int uniquePaths(int m, int n) {  
+        vector&lt;vector&lt;int&gt;&gt; dp(m, vector&lt;int&gt;(n, 0));  
+        for (int i = 0; i &lt; m; i++) dp[i][0] = 1;  
+        for (int j = 0; j &lt; n; j++) dp[0][j] = 1;  
+        for (int i = 1; i &lt; m; i++) {  
+            for (int j = 1; j &lt; n; j++) {  
+                dp[i][j] = dp[i - 1][j] + dp[i][j - 1];  
+            }  
+        }  
+        return dp[m - 1][n - 1];  
+    }  
+};
+</code></pre>
+<ul>
+<li>时间复杂度：O(m × n)</li>
+<li>空间复杂度：O(m × n)</li>
+</ul>
+<p>其实用一个一维数组（也可以理解是滚动数组）就可以了，但是不利于理解，可以优化点空间，建议先理解了二维，在理解一维，C++代码如下：</p>
+<pre><code class="language-cpp">class Solution {  
+public:  
+    int uniquePaths(int m, int n) {  
+        vector&lt;int&gt; dp(n);  
+        for (int i = 0; i &lt; n; i++) dp[i] = 1;  
+        for (int j = 1; j &lt; m; j++) {  
+            for (int i = 1; i &lt; n; i++) {  
+                dp[i] += dp[i - 1];  
+            }  
+        }  
+        return dp[n - 1];  
+    }  
+};
+</code></pre>
+<ul>
+<li>时间复杂度：O(m × n)</li>
+<li>空间复杂度：O(n)</li>
+</ul>
+<h2 id="java解法"><a class="header" href="#java解法">Java解法</a></h2>
+<pre><code class="language-java">  /**
+     * 1. 确定dp数组下标含义 dp[i][j] 到每一个坐标可能的路径种类
+     * 2. 递推公式 dp[i][j] = dp[i-1][j] dp[i][j-1]
+     * 3. 初始化 dp[i][0]=1 dp[0][i]=1 初始化横竖就可
+     * 4. 遍历顺序 一行一行遍历
+     * 5. 推导结果 。。。。。。。。
+     *
+     * @param m
+     * @param n
+     * @return
+     */
+    public static int uniquePaths(int m, int n) {
+        int[][] dp = new int[m][n];
+        //初始化
+        for (int i = 0; i &lt; m; i++) {
+            dp[i][0] = 1;
+        }
+        for (int i = 0; i &lt; n; i++) {
+            dp[0][i] = 1;
+        }
+
+        for (int i = 1; i &lt; m; i++) {
+            for (int j = 1; j &lt; n; j++) {
+                dp[i][j] = dp[i-1][j]+dp[i][j-1];
+            }
+        }
+        return dp[m-1][n-1];
+    }
+</code></pre>
+<h1 id="63-unique-paths-ii"><a class="header" href="#63-unique-paths-ii"><a href="https://leetcode.com/problems/unique-paths-ii/">63. Unique Paths II</a></a></h1>
+<p>You are given an <code>m x n</code> integer array <code>grid</code>. There is a robot initially located at the <strong>top-left corner</strong> (i.e., <code>grid[0][0]</code>). The robot tries to move to the <strong>bottom-right corner</strong> (i.e., <code>grid[m - 1][n - 1]</code>). The robot can only move either down or right at any point in time.</p>
+<p>An obstacle and space are marked as <code>1</code> or <code>0</code> respectively in <code>grid</code>. A path that the robot takes cannot include <strong>any</strong> square that is an obstacle.</p>
+<p>Return <em>the number of possible unique paths that the robot can take to reach the bottom-right corner</em>.</p>
+<p>The testcases are generated so that the answer will be less than or equal to <code>2 * 10^9</code>.</p>
+<p><strong>Example 1:</strong></p>
+<p><img src="https://assets.leetcode.com/uploads/2020/11/04/robot1.jpg" alt="" /></p>
+<p><strong>Input:</strong> <code>obstacleGrid = [[0,0,0],[0,1,0],[0,0,0]]</code><br />
+<strong>Output:</strong> 2<br />
+<strong>Explanation:</strong> There is one obstacle in the middle of the 3x3 grid above.
+There are two ways to reach the bottom-right corner:</p>
+<ol>
+<li>Right -&gt; Right -&gt; Down -&gt; Down</li>
+<li>Down -&gt; Down -&gt; Right -&gt; Right</li>
+</ol>
+<p><strong>Example 2:</strong></p>
+<p><img src="https://assets.leetcode.com/uploads/2020/11/04/robot2.jpg" alt="" /></p>
+<p><strong>Input:</strong> <code>obstacleGrid = [[0,1],[0,0]]</code><br />
+<strong>Output:</strong> 1</p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>m == obstacleGrid.length</code></li>
+<li><code>n == obstacleGrid[i].length</code></li>
+<li><code>1 &lt;= m, n &lt;= 100</code></li>
+<li><code>obstacleGrid[i][j]</code> is <code>0</code> or <code>1</code>.</li>
+</ul>
+<h2 id="思路-1"><a class="header" href="#思路-1">思路</a></h2>
+<p><a href="https://programmercarl.com/0062.%E4%B8%8D%E5%90%8C%E8%B7%AF%E5%BE%84.html">62.不同路径</a>中我们已经详细分析了没有障碍的情况，有障碍的话，其实就是标记对应的dp table（dp数组）保持初始值(0)就可以了。</p>
+<p>动规五部曲：</p>
+<ol>
+<li>确定dp数组（dp table）以及下标的含义</li>
+</ol>
+<p><code>dp[i][j]</code> ：表示从（0 ，0）出发，到(i, j) 有<code>dp[i][j]</code>条不同的路径。</p>
+<ol start="2">
+<li>确定递推公式</li>
+</ol>
+<p>递推公式和62.不同路径一样，<code>dp[i][j] = dp[i - 1][j] + dp[i][j - 1]</code></p>
+<p>但这里需要注意一点，因为有了障碍，(i, j)如果就是障碍的话应该就保持初始状态（初始状态为0）。</p>
+<p>所以代码为：</p>
+<pre><code class="language-cpp">if (obstacleGrid[i][j] == 0) { // 当(i, j)没有障碍的时候，再推导dp[i][j]  
+    dp[i][j] = dp[i - 1][j] + dp[i][j - 1];  
+}
+</code></pre>
+<ol start="3">
+<li>dp数组如何初始化</li>
+</ol>
+<p>在<a href="https://programmercarl.com/0062.%E4%B8%8D%E5%90%8C%E8%B7%AF%E5%BE%84.html">62.不同路径</a>不同路径中我们给出如下的初始化：</p>
+<pre><code class="language-cpp">vector&lt;vector&lt;int&gt;&gt; dp(m, vector&lt;int&gt;(n, 0)); // 初始值为0  
+for (int i = 0; i &lt; m; i++) dp[i][0] = 1;  
+for (int j = 0; j &lt; n; j++) dp[0][j] = 1;
+</code></pre>
+<p>因为从(0, 0)的位置到(i, 0)的路径只有一条，所以<code>dp[i][j]</code>一定为1，dp<a href="#">0</a>也同理。</p>
+<p>但如果(i, 0) 这条边有了障碍之后，障碍之后（包括障碍）都是走不到的位置了，所以障碍之后的<code>dp[i][j]</code>应该还是初始值0。</p>
+<p>如图：</p>
+<p>下标(0, j)的初始化情况同理。</p>
+<p>所以本题初始化代码为：</p>
+<pre><code class="language-cpp">vector&lt;vector&lt;int&gt;&gt; dp(m, vector&lt;int&gt;(n, 0));  
+for (int i = 0; i &lt; m &amp;&amp; obstacleGrid[i][0] == 0; i++) dp[i][0] = 1;  
+for (int j = 0; j &lt; n &amp;&amp; obstacleGrid[0][j] == 0; j++) dp[0][j] = 1;
+</code></pre>
+<p><strong>注意代码里for循环的终止条件，一旦遇到<code>obstacleGrid[i][0] == 1</code>的情况就停止<code>dp[i][j]</code>的赋值1的操作，<code>dp[0][j]</code>同理</strong></p>
+<ol start="4">
+<li>确定遍历顺序</li>
+</ol>
+<p>从递归公式<code>dp[i][j] = dp[i - 1][j] + dp[i][j - 1]</code>中可以看出，一定是从左到右一层一层遍历，这样保证推导<code>dp[i][j]</code>的时候，<code>dp[i - 1][j]</code>和 <code>dp[i][j - 1]</code>一定是有数值。</p>
+<p>代码如下：</p>
+<pre><code class="language-cpp">for (int i = 1; i &lt; m; i++) {  
+    for (int j = 1; j &lt; n; j++) {  
+        if (obstacleGrid[i][j] == 1) continue;  
+        dp[i][j] = dp[i - 1][j] + dp[i][j - 1];  
+    }  
+}
+</code></pre>
+<ol start="5">
+<li>举例推导dp数组</li>
+</ol>
+<p>拿示例1来举例如题：</p>
+<p>对应的dp table 如图：</p>
+<p>如果这个图看不懂，建议再理解一下递归公式，然后照着文章中说的遍历顺序，自己推导一下！</p>
+<h2 id="c解法-1"><a class="header" href="#c解法-1">C++解法</a></h2>
+<p>动规五部分分析完毕，对应C++代码如下：</p>
+<pre><code class="language-cpp">class Solution {  
+public:  
+    int uniquePathsWithObstacles(vector&lt;vector&lt;int&gt;&gt;&amp; obstacleGrid) {  
+        int m = obstacleGrid.size();  
+        int n = obstacleGrid[0].size();  
+    if (obstacleGrid[m - 1][n - 1] == 1 || obstacleGrid[0][0] == 1) //如果在起点或终点出现了障碍，直接返回0  
+            return 0;  
+        vector&lt;vector&lt;int&gt;&gt; dp(m, vector&lt;int&gt;(n, 0));  
+        for (int i = 0; i &lt; m &amp;&amp; obstacleGrid[i][0] == 0; i++) dp[i][0] = 1;  
+        for (int j = 0; j &lt; n &amp;&amp; obstacleGrid[0][j] == 0; j++) dp[0][j] = 1;  
+        for (int i = 1; i &lt; m; i++) {  
+            for (int j = 1; j &lt; n; j++) {  
+                if (obstacleGrid[i][j] == 1) continue;  
+                dp[i][j] = dp[i - 1][j] + dp[i][j - 1];  
+            }  
+        }  
+        return dp[m - 1][n - 1];  
+    }  
+};
+</code></pre>
+<ul>
+<li>时间复杂度：O(n × m)，n、m 分别为obstacleGrid 长度和宽度</li>
+<li>空间复杂度：O(n × m)</li>
+</ul>
+<p>同样我们给出空间优化版本：</p>
+<pre><code class="language-cpp">class Solution {  
+public:  
+    int uniquePathsWithObstacles(vector&lt;vector&lt;int&gt;&gt;&amp; obstacleGrid) {  
+        if (obstacleGrid[0][0] == 1)  
+            return 0;  
+        vector&lt;int&gt; dp(obstacleGrid[0].size());  
+        for (int j = 0; j &lt; dp.size(); ++j)  
+            if (obstacleGrid[0][j] == 1)  
+                dp[j] = 0;  
+            else if (j == 0)  
+                dp[j] = 1;  
+            else  
+                dp[j] = dp[j-1];  
+​  
+        for (int i = 1; i &lt; obstacleGrid.size(); ++i)  
+            for (int j = 0; j &lt; dp.size(); ++j){  
+                if (obstacleGrid[i][j] == 1)  
+                    dp[j] = 0;  
+                else if (j != 0)  
+                    dp[j] = dp[j] + dp[j-1];  
+            }  
+        return dp.back();  
+    }  
+};
+</code></pre>
+<ul>
+<li>时间复杂度：O(n × m)，n、m 分别为obstacleGrid 长度和宽度</li>
+<li>空间复杂度：O(m)</li>
+</ul>
+<h2 id="java解法-1"><a class="header" href="#java解法-1">Java解法</a></h2>
+<pre><code class="language-java">// 空间优化版本
+class Solution {
+    public int uniquePathsWithObstacles(int[][] obstacleGrid) {
+        int m = obstacleGrid.length;
+        int n = obstacleGrid[0].length;
+        int[] dp = new int[n];
+
+        for (int j = 0; j &lt; n &amp;&amp; obstacleGrid[0][j] == 0; j++) {
+            dp[j] = 1;
+        }
+
+        for (int i = 1; i &lt; m; i++) {
+            for (int j = 0; j &lt; n; j++) {
+                if (obstacleGrid[i][j] == 1) {
+                    dp[j] = 0;
+                } else if (j != 0) {
+                    dp[j] += dp[j - 1];
+                }
+            }
+        }
+        return dp[n - 1];
+    }
+}
+</code></pre>
+<h1 id="980-unique-paths-iii回溯"><a class="header" href="#980-unique-paths-iii回溯"><a href="https://leetcode.com/problems/unique-paths-iii/">980. Unique Paths III</a>（回溯）</a></h1>
+<p>You are given an <code>m x n</code> integer array <code>grid</code> where <code>grid[i][j]</code> could be:</p>
+<ul>
+<li><code>1</code> representing the starting square. There is exactly one starting square.</li>
+<li><code>2</code> representing the ending square. There is exactly one ending square.</li>
+<li><code>0</code> representing empty squares we can walk over.</li>
+<li><code>-1</code> representing obstacles that we cannot walk over.</li>
+</ul>
+<p>Return <em>the number of 4-directional walks from the starting square to the ending square, that walk over every non-obstacle square exactly once</em>.</p>
+<p><strong>Example 1:</strong></p>
+<p><img src="https://assets.leetcode.com/uploads/2021/08/02/lc-unique1.jpg" alt="" /></p>
+<p><strong>Input:</strong> <code>grid = [[1,0,0,0],[0,0,0,0],[0,0,2,-1]]</code><br />
+<strong>Output:</strong> 2<br />
+<strong>Explanation:</strong> We have the following two paths:</p>
+<ol>
+<li>(0,0),(0,1),(0,2),(0,3),(1,3),(1,2),(1,1),(1,0),(2,0),(2,1),(2,2)</li>
+<li>(0,0),(1,0),(2,0),(2,1),(1,1),(0,1),(0,2),(0,3),(1,3),(1,2),(2,2)</li>
+</ol>
+<p><strong>Example 2:</strong></p>
+<p><img src="https://assets.leetcode.com/uploads/2021/08/02/lc-unique2.jpg" alt="" /></p>
+<p><strong>Input:</strong> <code>grid = [[1,0,0,0],[0,0,0,0],[0,0,0,2]]</code><br />
+<strong>Output:</strong> 4<br />
+<strong>Explanation:</strong> We have the following four paths:</p>
+<ol>
+<li>(0,0),(0,1),(0,2),(0,3),(1,3),(1,2),(1,1),(1,0),(2,0),(2,1),(2,2),(2,3)</li>
+<li>(0,0),(0,1),(1,1),(1,0),(2,0),(2,1),(2,2),(1,2),(0,2),(0,3),(1,3),(2,3)</li>
+<li>(0,0),(1,0),(2,0),(2,1),(2,2),(1,2),(1,1),(0,1),(0,2),(0,3),(1,3),(2,3)</li>
+<li>(0,0),(1,0),(2,0),(2,1),(1,1),(0,1),(0,2),(0,3),(1,3),(1,2),(2,2),(2,3)</li>
+</ol>
+<p><strong>Example 3:</strong></p>
+<p><img src="https://assets.leetcode.com/uploads/2021/08/02/lc-unique3-.jpg" alt="" /></p>
+<p><strong>Input:</strong> <code>grid = [[0,1],[2,0]]</code><br />
+<strong>Output:</strong> 0<br />
+<strong>Explanation:</strong> There is no path that walks over every empty square exactly once.
+Note that the starting and ending square can be anywhere in the grid.</p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>m == grid.length</code></li>
+<li><code>n == grid[i].length</code></li>
+<li><code>1 &lt;= m, n &lt;= 20</code></li>
+<li><code>1 &lt;= m * n &lt;= 20</code></li>
+<li><code>-1 &lt;= grid[i][j] &lt;= 2</code></li>
+<li>There is exactly one starting cell and one ending cell.</li>
+</ul>
+<h2 id="思路-2"><a class="header" href="#思路-2">思路</a></h2>
+<p><strong>Brute Force Backtracking</strong></p>
+<p>First, find out where the start and end points are.</p>
+<p>We also need to know the number of empty cells.</p>
+<p>When we try to explore a cell, it will change 0 to -2 and perform a DFS in 4 directions.</p>
+<p>If we hit the target and have passed all the empty cells, we increment the result.</p>
+<p>The time complexity is comparable to dynamic programming, but it takes up less space and is easier to implement.</p>
+<p>In the first step, we need to identify the starting point. We also want to know the number of empty cells.</p>
+<p>Next, we iterate through the grid to count the empty cells and save the starting point as <code>start_x</code> and <code>start_y</code>.</p>
+<p>Now, we perform a classic DFS, marking the visited cells with -1 and counting the cells we have traversed. If we reach the ending point and have passed the specified number of empty cells, it means we have visited every non-obstacle cell.</p>
+<p><strong>暴力回溯法</strong></p>
+<p>首先，找出起点和终点的位置。</p>
+<p>我们还需要知道空单元格的数量。</p>
+<p>当我们尝试探索一个单元格时，它将把0变为-2，并在四个方向上执行深度优先搜索（DFS）。</p>
+<p>如果我们到达目标并经过了所有空单元格，我们就会增加结果计数。</p>
+<p>时间复杂度与动态规划相当，但所需空间更少，且实现较为简单。</p>
+<p>第一步，我们需要确定起点的位置。我们还想知道空单元格的数量。</p>
+<p>接下来，我们遍历网格，计算空单元格的数量，并保存起点 <code>start_x</code> 和 <code>start_y</code>。</p>
+<p>现在，我们执行经典的DFS，标记访问过的单元格为-1，并计算我们经过的单元格数。 如果我们到达终点并经过了指定数量的空单元格，这意味着我们访问了每个非障碍物单元格。</p>
+<h2 id="c解法-2"><a class="header" href="#c解法-2">C++解法</a></h2>
+<pre><code class="language-cpp">class Solution {
+public:
+    int res = 0, empty = 1;
+    void dfs(vector&lt;vector&lt;int&gt;&gt;&amp; grid, int x, int y, int count) {
+        if (x &lt; 0 || x &gt;= grid.size() || y &lt; 0 || y &gt;= grid[0].size() || grid[x][y] == -1) return;
+        
+        if (grid[x][y] == 2) {
+            if(empty == count) res++; 
+            return;
+        }
+        
+        grid[x][y] = -1;
+        
+        dfs(grid, x+1, y, count+1);
+        dfs(grid, x-1, y, count+1);
+        dfs(grid, x, y+1, count+1);
+        dfs(grid, x, y-1, count+1);
+        
+        grid[x][y] = 0;
+        
+    }
+    
+    int uniquePathsIII(vector&lt;vector&lt;int&gt;&gt;&amp; grid) {
+        int start_x, start_y;
+        for (int i = 0; i &lt; grid.size(); i++) {
+            for (int j = 0; j &lt; grid[0].size(); j++) {
+                if (grid[i][j] == 1) start_x = i, start_y = j;
+                else if (grid[i][j] == 0) empty++;
+            }
+        }
+        
+        dfs(grid, start_x, start_y, 0);
+        return res;
+    }
+};
+</code></pre>
+<h2 id="java解法-2"><a class="header" href="#java解法-2">Java解法</a></h2>
+<pre><code class="language-java">    int res = 0, empty = 1, sx, sy, ex, ey;
+    public int uniquePathsIII(int[][] grid) {
+        int m = grid.length, n = grid[0].length;
+        for (int i = 0; i &lt; m; ++i) {
+            for (int j = 0; j &lt; n; ++j) {
+                if (grid[i][j] == 0) empty++;
+                else if (grid[i][j] == 1) {
+                    sx = i;
+                    sy = j;
+                }
+            }
+        }
+        dfs(grid, sx, sy);
+        return res;
+    }
+
+    public void dfs(int[][] grid, int x, int y) {
+        if (x &lt; 0 || x &gt;= grid.length || y &lt; 0 || y &gt;= grid[0].length || grid[x][y] &lt; 0)
+            return;
+        if (grid[x][y] == 2) {
+            if (empty == 0) res++;
+            return;
+        }
+        grid[x][y] = -2;
+        empty--;
+        dfs(grid, x + 1, y);
+        dfs(grid, x - 1, y);
+        dfs(grid, x, y + 1);
+        dfs(grid, x, y - 1);
+        grid[x][y] = 0;
+        empty++;
+    }
+</code></pre>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../动态规划/爬楼梯.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../动态规划/不同二叉搜索树.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../动态规划/爬楼梯.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../动态规划/不同二叉搜索树.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

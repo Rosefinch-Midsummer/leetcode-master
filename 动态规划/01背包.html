@@ -1,0 +1,1108 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>01背包 - 剑指Offer</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">剑指Offer</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
+<h1 id="01背包"><a class="header" href="#01背包">01背包</a></h1>
+<ul>
+<li><a href="#%E7%90%86%E8%AE%BA%E5%9F%BA%E7%A1%80">理论基础</a>
+<ul>
+<li><a href="#%E5%89%8D%E8%A8%80">前言</a></li>
+<li><a href="#%E4%BA%8C%E7%BB%B4dp%E6%95%B0%E7%BB%8401%E8%83%8C%E5%8C%85">二维dp数组01背包</a></li>
+<li><a href="#%E4%B8%80%E7%BB%B4dp%E6%95%B0%E7%BB%84%E6%BB%9A%E5%8A%A8%E6%95%B0%E7%BB%84">一维dp数组（滚动数组）</a></li>
+<li><a href="#%E6%80%BB%E7%BB%93">总结</a></li>
+</ul>
+</li>
+<li><a href="#416-partition-equal-subset-sum">416. Partition Equal Subset Sum</a>
+<ul>
+<li><a href="#%E6%80%9D%E8%B7%AF">思路</a></li>
+<li><a href="#c%E8%A7%A3%E6%B3%95">C++解法</a></li>
+<li><a href="#java%E8%A7%A3%E6%B3%95">Java解法</a></li>
+</ul>
+</li>
+<li><a href="#1049-last-stone-weight-ii">1049. Last Stone Weight II</a>
+<ul>
+<li><a href="#%E6%80%9D%E8%B7%AF-1">思路</a></li>
+<li><a href="#c%E8%A7%A3%E6%B3%95-1">C++解法</a></li>
+<li><a href="#java%E8%A7%A3%E6%B3%95-1">Java解法</a></li>
+</ul>
+</li>
+<li><a href="#494-target-sum">494. Target Sum</a>
+<ul>
+<li><a href="#%E6%80%9D%E8%B7%AF-2">思路</a></li>
+<li><a href="#c%E8%A7%A3%E6%B3%95-2">C++解法</a></li>
+<li><a href="#java%E8%A7%A3%E6%B3%95-2">Java解法</a></li>
+</ul>
+</li>
+<li><a href="#474-ones-and-zeroes">474. Ones and Zeroes</a>
+<ul>
+<li><a href="#%E6%80%9D%E8%B7%AF-3">思路</a></li>
+<li><a href="#c%E8%A7%A3%E6%B3%95-3">C++解法</a></li>
+<li><a href="#java%E8%A7%A3%E6%B3%95-3">Java解法</a></li>
+</ul>
+</li>
+</ul>
+<h1 id="理论基础"><a class="header" href="#理论基础">理论基础</a></h1>
+<h2 id="前言"><a class="header" href="#前言">前言</a></h2>
+<p>对于面试的话，其实掌握01背包，和完全背包，就够用了，最多可以再来一个多重背包。</p>
+<p>至于背包九讲其他背包，面试几乎不会问，都是竞赛级别的了，leetcode上连多重背包的题目都没有，所以题库也告诉我们，01背包和完全背包就够用了。</p>
+<p>而完全背包又是也是01背包稍作变化而来，即：完全背包的物品数量是无限的。</p>
+<p><strong>所以背包问题的理论基础重中之重是01背包，一定要理解透！</strong></p>
+<p>leetcode上没有纯01背包的问题，都是01背包应用方面的题目，也就是需要转化为01背包问题。</p>
+<p><strong>所以我先通过纯01背包问题，把01背包原理讲清楚，后续再讲解leetcode题目的时候，重点就是讲解如何转化为01背包问题了</strong>。</p>
+<p>之前可能有些录友已经可以熟练写出背包了，但只要把这个文章仔细看完，相信你会意外收获！</p>
+<p>01 背包：有n件物品和一个最多能背重量为w 的背包。第i件物品的重量是weight[i]，得到的价值是value[i] 。<strong>每件物品只能用一次</strong>，求解将哪些物品装入背包里物品价值总和最大。</p>
+<p><img src="https://code-thinking-1253855093.file.myqcloud.com/pics/20210117175428387.jpg" alt="动态规划-背包问题" /></p>
+<p>这是标准的背包问题，以至于很多同学看了这个自然就会想到背包，甚至都不知道暴力的解法应该怎么解了。</p>
+<p>这样其实是没有从底向上去思考，而是习惯性想到了背包，那么暴力的解法应该是怎么样的呢？</p>
+<p>每一件物品其实只有两个状态，取或者不取，所以可以使用回溯法搜索出所有的情况，那么时间复杂度就是<span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.6644em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">n</span></span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span>，这里的n表示物品数量。</p>
+<p><strong>所以暴力的解法是指数级别的时间复杂度。进而才需要动态规划的解法来进行优化！</strong></p>
+<p>在下面的讲解中，我举一个例子：</p>
+<p>背包最大重量为4。</p>
+<p>物品为：</p>
+<div class="table-wrapper"><table><thead><tr><th>-</th><th>重量</th><th>价值</th></tr></thead><tbody>
+<tr><td>物品0</td><td>1</td><td>15</td></tr>
+<tr><td>物品1</td><td>3</td><td>20</td></tr>
+<tr><td>物品2</td><td>4</td><td>30</td></tr>
+</tbody></table>
+</div>
+<p>问背包能背的物品最大价值是多少？</p>
+<p>以下讲解和图示中出现的数字都是以这个例子为例。</p>
+<h2 id="二维dp数组01背包"><a class="header" href="#二维dp数组01背包">二维dp数组01背包</a></h2>
+<p>依然动规五部曲分析一波。</p>
+<ol>
+<li>确定dp数组以及下标的含义</li>
+</ol>
+<p>对于背包问题，有一种写法， 是使用二维数组，即<code>dp[i][j]</code> 表示从下标为[0-i]的物品里任意取，放进容量为j的背包，价值总和最大是多少。</p>
+<p>只看这个二维数组的定义，大家一定会有点懵，看下面这个图：</p>
+<p><img src="https://code-thinking-1253855093.file.myqcloud.com/pics/20210110103003361.png" alt="动态规划-背包问题1" /></p>
+<p><strong>要时刻记着这个dp数组的含义，下面的一些步骤都围绕这dp数组的含义进行的</strong>，如果哪里看懵了，就来回顾一下i代表什么，j又代表什么。</p>
+<ol start="2">
+<li>确定递推公式</li>
+</ol>
+<p>再回顾一下<code>dp[i][j]</code>的含义：从下标为[0-i]的物品里任意取，放进容量为j的背包，价值总和最大是多少。</p>
+<p>那么可以有两个方向推出来<code>dp[i][j]</code>，</p>
+<ul>
+<li><strong>不放物品i</strong>：由<code>dp[i-1][j]</code>推出，即背包容量为j，里面不放物品i的最大价值，此时<code>dp[i][j]</code>就是<code>dp[i-1][j]</code>。(其实就是当物品i的重量大于背包j的重量时，物品i无法放进背包中，所以背包内的价值依然和前面相同。)</li>
+<li><strong>放物品i</strong>：由<code>dp[i-1][j]</code>推出，<code>dp[i-1][j]</code> 为背包容量为j - weight[i]的时候不放物品i的最大价值，那么<code>dp[i-1][j]</code> + value[i] （物品i的价值），就是背包放物品i得到的最大价值</li>
+</ul>
+<p>所以递归公式： <code>dp[i][j]</code> = max(<code>dp[i-1][j]</code>, <code>dp[i-1][j]</code> + value[i]);</p>
+<ol start="3">
+<li>dp数组如何初始化</li>
+</ol>
+<p><strong>关于初始化，一定要和dp数组的定义吻合，否则到递推公式的时候就会越来越乱</strong>。</p>
+<p>首先从<code>dp[i][j]</code>的定义出发，如果背包容量j为0的话，即<code>dp[i][j]</code>，无论是选取哪些物品，背包价值总和一定为0。如图：</p>
+<p><img src="https://code-thinking-1253855093.file.myqcloud.com/pics/2021011010304192.png" alt="动态规划-背包问题2" /></p>
+<p>在看其他情况。</p>
+<p>状态转移方程 <code>dp[i][j]</code> = max(<code>dp[i-1][j]</code>, <code>dp[i-1][j]</code> + value[i]); 可以看出i 是由 i-1 推导出来，那么i为0的时候就一定要初始化。</p>
+<p><code>dp[0][0]</code>，即：i为0，存放编号0的物品的时候，各个容量的背包所能存放的最大价值。</p>
+<p>那么很明显当 j &lt; weight[0]的时候，<code>dp[0][j]</code>应该是 0，因为背包容量比编号0的物品重量还小。</p>
+<p>当j &gt;= weight[0]时，<code>dp[0][j]</code>应该是value[0]，因为背包容量放足够放编号0物品。</p>
+<p>代码初始化如下：</p>
+<pre><code class="language-cpp">for (int j = 0 ; j &lt; weight[0]; j++) {  // 当然这一步，如果把dp数组预先初始化为0了，这一步就可以省略，但很多同学应该没有想清楚这一点。  
+    dp[0][j] = 0;  
+}  
+// 正序遍历  
+for (int j = weight[0]; j &lt;= bagweight; j++) {  
+    dp[0][j] = value[0];  
+}
+</code></pre>
+<p><code>dp[0][j]</code> 和 <code>dp[i][0]</code> 都已经初始化了，那么其他下标应该初始化多少呢？</p>
+<p>其实从递归公式： <code>dp[i][j]</code> = max(<code>dp[i-1][j]</code>, <code>dp[i-1][j]</code> + value[i]); 可以看出<code>dp[i][j]</code> 是由左上方数值推导出来了，那么 其他下标初始为什么数值都可以，因为都会被覆盖。</p>
+<p><strong>初始-1，初始-2，初始100，都可以！</strong></p>
+<p>但只不过一开始就统一把dp数组统一初始为0，更方便一些。</p>
+<p>如图：</p>
+<p>最后初始化代码如下：</p>
+<pre><code class="language-cpp">// 初始化 dp  
+vector&lt;vector&lt;int&gt;&gt; dp(weight.size(), vector&lt;int&gt;(bagweight + 1, 0));  
+for (int j = weight[0]; j &lt;= bagweight; j++) {  
+    dp[0][j] = value[0];  
+}  
+</code></pre>
+<p>​</p>
+<p><strong>费了这么大的功夫，才把如何初始化讲清楚，相信不少同学平时初始化dp数组是凭感觉来的，但有时候感觉是不靠谱的</strong>。</p>
+<ol start="4">
+<li>确定遍历顺序</li>
+</ol>
+<p>在如下图中，可以看出，有两个遍历的维度：物品与背包重量</p>
+<p>那么问题来了，<strong>先遍历 物品还是先遍历背包重量呢？</strong></p>
+<p><strong>其实都可以！！ 但是先遍历物品更好理解</strong>。</p>
+<p>那么我先给出先遍历物品，然后遍历背包重量的代码。</p>
+<pre><code class="language-cpp">// weight数组的大小 就是物品个数  
+for(int i = 1; i &lt; weight.size(); i++) { // 遍历物品  
+    for(int j = 0; j &lt;= bagweight; j++) { // 遍历背包容量  
+        if (j &lt; weight[i]) dp[i][j] = dp[i - 1][j];  
+        else dp[i][j] = max(dp[i - 1][j], dp[i - 1][j - weight[i]] + value[i]);  
+​  
+    }  
+}
+</code></pre>
+<p><strong>先遍历背包，再遍历物品，也是可以的！（注意我这里使用的二维dp数组）</strong></p>
+<p>例如这样：</p>
+<pre><code class="language-cpp">// weight数组的大小 就是物品个数  
+for(int j = 0; j &lt;= bagweight; j++) { // 遍历背包容量  
+    for(int i = 1; i &lt; weight.size(); i++) { // 遍历物品  
+        if (j &lt; weight[i]) dp[i][j] = dp[i - 1][j];  
+        else dp[i][j] = max(dp[i - 1][j], dp[i - 1][j - weight[i]] + value[i]);  
+    }  
+}
+</code></pre>
+<p>为什么也是可以的呢？</p>
+<p><strong>要理解递归的本质和递推的方向</strong>。</p>
+<p>递归公式：<code>dp[i][j] = max(dp[i - 1][j], dp[i - 1][j - weight[i]] + value[i]);</code></p>
+<p><strong>大家可以看出，虽然两个for循环遍历的次序不同，但是<code>dp[i][j]</code>所需要的数据就是左上角，根本不影响<code>dp[i][j]</code>公式的推导！</strong></p>
+<p>但先遍历物品再遍历背包这个顺序更好理解。</p>
+<p><strong>其实背包问题里，两个for循环的先后循序是非常有讲究的，理解遍历顺序其实比理解推导公式难多了</strong>。</p>
+<ol start="5">
+<li>举例推导dp数组</li>
+</ol>
+<p>来看一下对应的dp数组的数值，如图：</p>
+<p>最终结果就是<code>dp[2](#)</code>。</p>
+<p>建议大家此时自己在纸上推导一遍，看看dp数组里每一个数值是不是这样的。</p>
+<p><strong>做动态规划的题目，最好的过程就是自己在纸上举一个例子把对应的dp数组的数值推导一下，然后再动手写代码！</strong></p>
+<p>很多同学做dp题目，遇到各种问题，然后凭感觉东改改西改改，怎么改都不对，或者稀里糊涂就改过了。</p>
+<p>主要就是自己没有动手推导一下dp数组的演变过程，如果推导明白了，代码写出来就算有问题，只要把dp数组打印出来，对比一下和自己推导的有什么差异，很快就可以发现问题了。</p>
+<pre><code class="language-cpp">void test_2_wei_bag_problem1() {  
+    vector&lt;int&gt; weight = {1, 3, 4};  
+    vector&lt;int&gt; value = {15, 20, 30};  
+    int bagweight = 4;  
+​  
+    // 二维数组  
+    vector&lt;vector&lt;int&gt;&gt; dp(weight.size(), vector&lt;int&gt;(bagweight + 1, 0));  
+​  
+    // 初始化  
+    for (int j = weight[0]; j &lt;= bagweight; j++) {  
+        dp[0][j] = value[0];  
+    }  
+​  
+    // weight数组的大小 就是物品个数  
+    for(int i = 1; i &lt; weight.size(); i++) { // 遍历物品  
+        for(int j = 0; j &lt;= bagweight; j++) { // 遍历背包容量  
+            if (j &lt; weight[i]) dp[i][j] = dp[i - 1][j];  
+            else dp[i][j] = max(dp[i - 1][j], dp[i - 1][j - weight[i]] + value[i]);  
+​  
+        }  
+    }  
+​  
+    cout &lt;&lt; dp[weight.size() - 1][bagweight] &lt;&lt; endl;  
+}  
+​  
+int main() {  
+    test_2_wei_bag_problem1();  
+}  
+</code></pre>
+<p>​</p>
+<p>本题力扣上没有原题，大家可以去<a href="https://kamacoder.com/problempage.php?pid=1046">卡码网第46题</a>去练习，题意是一样的，代码如下：</p>
+<pre><code class="language-cpp">//二维dp数组实现  
+#include &lt;bits/stdc++.h&gt;  
+using namespace std;  
+​  
+int n, bagweight;// bagweight代表行李箱空间  
+void solve() {  
+    vector&lt;int&gt; weight(n, 0); // 存储每件物品所占空间  
+    vector&lt;int&gt; value(n, 0);  // 存储每件物品价值  
+    for(int i = 0; i &lt; n; ++i) {  
+        cin &gt;&gt; weight[i];  
+    }  
+    for(int j = 0; j &lt; n; ++j) {  
+        cin &gt;&gt; value[j];  
+    }  
+    // dp数组, dp[i][j]代表行李箱空间为j的情况下,从下标为[0, i]的物品里面任意取,能达到的最大价值  
+    vector&lt;vector&lt;int&gt;&gt; dp(weight.size(), vector&lt;int&gt;(bagweight + 1, 0));  
+​  
+    // 初始化, 因为需要用到dp[i - 1]的值  
+    // j &lt; weight[0]已在上方被初始化为0  
+    // j &gt;= weight[0]的值就初始化为value[0]  
+    for (int j = weight[0]; j &lt;= bagweight; j++) {  
+        dp[0][j] = value[0];  
+    }  
+​  
+    for(int i = 1; i &lt; weight.size(); i++) { // 遍历科研物品  
+        for(int j = 0; j &lt;= bagweight; j++) { // 遍历行李箱容量  
+            // 如果装不下这个物品,那么就继承dp[i - 1][j]的值  
+            if (j &lt; weight[i]) dp[i][j] = dp[i - 1][j];  
+            // 如果能装下,就将值更新为 不装这个物品的最大值 和 装这个物品的最大值 中的 最大值  
+            // 装这个物品的最大值由容量为j - weight[i]的包任意放入序号为[0, i - 1]的最大值 + 该物品的价值构成  
+            else dp[i][j] = max(dp[i - 1][j], dp[i - 1][j - weight[i]] + value[i]);  
+        }  
+    }  
+    cout &lt;&lt; dp[weight.size() - 1][bagweight] &lt;&lt; endl;  
+}  
+​  
+int main() {  
+    while(cin &gt;&gt; n &gt;&gt; bagweight) {  
+        solve();  
+    }  
+    return 0;  
+}  
+</code></pre>
+<p>​</p>
+<h2 id="一维dp数组滚动数组"><a class="header" href="#一维dp数组滚动数组">一维dp数组（滚动数组）</a></h2>
+<p>对于背包问题其实状态都是可以压缩的。</p>
+<p>在使用二维数组的时候，递推公式：dp[i] = max(dp[i - 1], dp[i - 1] + value[i]);</p>
+<p><strong>其实可以发现如果把dp[i - 1]那一层拷贝到dp[i]上，表达式完全可以是：dp[i] = max(dp[i], dp[i] + value[i]);</strong></p>
+<p><strong>与其把dp[i - 1]这一层拷贝到dp[i]上，不如只用一个一维数组了</strong>，只用dp[j]（一维数组，也可以理解是一个滚动数组）。</p>
+<p>这就是滚动数组的由来，需要满足的条件是上一层可以重复利用，直接拷贝到当前层。</p>
+<p>读到这里估计大家都忘了 dp[i]里的i和j表达的是什么了，i是物品，j是背包容量。</p>
+<p><strong>dp[i] 表示从下标为[0-i]的物品里任意取，放进容量为j的背包，价值总和最大是多少</strong>。</p>
+<p>一定要时刻记住这里i和j的含义，要不然很容易看懵了。</p>
+<p>动规五部曲分析如下：</p>
+<ol>
+<li>确定dp数组的定义</li>
+</ol>
+<p>在一维dp数组中，dp[j]表示：容量为j的背包，所背的物品价值可以最大为dp[j]。</p>
+<ol start="2">
+<li>一维dp数组的递推公式</li>
+</ol>
+<p>dp[j]为 容量为j的背包所背的最大价值，那么如何推导dp[j]呢？</p>
+<p>dp[j]可以通过dp[j - weight[i]]推导出来，dp[j - weight[i]]表示容量为j - weight[i]的背包所背的最大价值。</p>
+<p>dp[j - weight[i]] + value[i] 表示 容量为 j - 物品i重量 的背包 加上 物品i的价值。（也就是容量为j的背包，放入物品i了之后的价值即：dp[j]）</p>
+<p>此时dp[j]有两个选择，一个是取自己dp[j] 相当于 二维dp数组中的dp<a href="#">i-1</a>，即不放物品i，一个是取dp[j - weight[i]] + value[i]，即放物品i，指定是取最大的，毕竟是求最大价值，</p>
+<p>所以递归公式为：</p>
+<p><code>dp[j] = max(dp[j], dp[j - weight[i]] + value[i]);</code></p>
+<p>可以看出相对于二维dp数组的写法，就是把dp<a href="#">i</a>中i的维度去掉了。</p>
+<ol start="3">
+<li>一维dp数组如何初始化</li>
+</ol>
+<p><strong>关于初始化，一定要和dp数组的定义吻合，否则到递推公式的时候就会越来越乱</strong>。</p>
+<p>dp[j]表示：容量为j的背包，所背的物品价值可以最大为dp[j]，那么dp[0]就应该是0，因为背包容量为0所背的物品的最大价值就是0。</p>
+<p>那么dp数组除了下标0的位置，初始为0，其他下标应该初始化多少呢？</p>
+<p>看一下递归公式：<code>dp[j] = max(dp[j], dp[j - weight[i]] + value[i]);</code></p>
+<p>dp数组在推导的时候一定是取价值最大的数，如果题目给的价值都是正整数那么非0下标都初始化为0就可以了。</p>
+<p><strong>这样才能让dp数组在递归公式的过程中取的最大的价值，而不是被初始值覆盖了</strong>。</p>
+<p>那么我假设物品价值都是大于0的，所以dp数组初始化的时候，都初始为0就可以了。</p>
+<ol start="4">
+<li>一维dp数组遍历顺序</li>
+</ol>
+<p>代码如下：</p>
+<pre><code class="language-cpp">for(int i = 0; i &lt; weight.size(); i++) { // 遍历物品  
+    for(int j = bagWeight; j &gt;= weight[i]; j--) { // 遍历背包容量  
+        dp[j] = max(dp[j], dp[j - weight[i]] + value[i]);  
+​  
+    }  
+}
+</code></pre>
+<p><strong>这里大家发现和二维dp的写法中，遍历背包的顺序是不一样的！</strong></p>
+<p>二维dp遍历的时候，背包容量是从小到大，而一维dp遍历的时候，背包是从大到小。</p>
+<p>为什么呢？</p>
+<p><strong>倒序遍历是为了保证物品i只被放入一次！</strong>。但如果一旦正序遍历了，那么物品0就会被重复加入多次！</p>
+<p>举一个例子：物品0的重量weight[0] = 1，价值value[0] = 15</p>
+<p>如果正序遍历</p>
+<p><code>dp[1] = dp[1 - weight[0]] + value[0] = 15</code></p>
+<p><code>dp[2] = dp[2 - weight[0]] + value[0] = 30</code></p>
+<p>此时dp[2]就已经是30了，意味着物品0，被放入了两次，所以不能正序遍历。</p>
+<p>为什么倒序遍历，就可以保证物品只放入一次呢？</p>
+<p>倒序就是先算dp[2]</p>
+<p><code>dp[2] = dp[2 - weight[0]] + value[0] = 15</code> （dp数组已经都初始化为0）</p>
+<p><code>dp[1] = dp[1 - weight[0]] + value[0] = 15</code></p>
+<p>所以从后往前循环，每次取得状态不会和之前取得状态重合，这样每种物品就只取一次了。</p>
+<p><strong>那么问题又来了，为什么二维dp数组遍历的时候不用倒序呢？</strong></p>
+<p>因为对于二维dp，<code>dp[i]</code>都是通过上一层即<code>dp[i - 1]</code>计算而来，本层的<code>dp[i]</code>并不会被覆盖！</p>
+<p>（如何这里读不懂，大家就要动手试一试了，空想还是不靠谱的，实践出真知！）</p>
+<p><strong>再来看看两个嵌套for循环的顺序，代码中是先遍历物品嵌套遍历背包容量，那可不可以先遍历背包容量嵌套遍历物品呢？</strong></p>
+<p>不可以！</p>
+<p>因为一维dp的写法，背包容量一定是要倒序遍历（原因上面已经讲了），如果遍历背包容量放在上一层，那么每个dp[j]就只会放入一个物品，即：背包里只放入了一个物品。</p>
+<p>倒序遍历的原因是，本质上还是一个对二维数组的遍历，并且右下角的值依赖上一层左上角的值，因此需要保证左边的值仍然是上一层的，从右向左覆盖。</p>
+<p>（这里如果读不懂，就再回想一下dp[j]的定义，或者就把两个for循环顺序颠倒一下试试！）</p>
+<p><strong>所以一维dp数组的背包在遍历顺序上和二维其实是有很大差异的！</strong>，这一点大家一定要注意。</p>
+<ol start="5">
+<li>举例推导dp数组</li>
+</ol>
+<p>一维dp，分别用物品0，物品1，物品2 来遍历背包，最终得到结果如下：</p>
+<p>C++代码如下：</p>
+<pre><code class="language-cpp">void test_1_wei_bag_problem() {  
+    vector&lt;int&gt; weight = {1, 3, 4};  
+    vector&lt;int&gt; value = {15, 20, 30};  
+    int bagWeight = 4;  
+​  
+    // 初始化  
+    vector&lt;int&gt; dp(bagWeight + 1, 0);  
+    for(int i = 0; i &lt; weight.size(); i++) { // 遍历物品  
+        for(int j = bagWeight; j &gt;= weight[i]; j--) { // 遍历背包容量  
+            dp[j] = max(dp[j], dp[j - weight[i]] + value[i]);  
+        }  
+    }  
+    cout &lt;&lt; dp[bagWeight] &lt;&lt; endl;  
+}  
+​  
+int main() {  
+    test_1_wei_bag_problem();  
+}  
+</code></pre>
+<p>​</p>
+<p>本题力扣上没有原题，大家可以去<a href="https://kamacoder.com/problempage.php?pid=1046">卡码网第46题</a>去练习，题意是一样的，代码如下：</p>
+<pre><code class="language-cpp">// 一维dp数组实现  
+#include &lt;iostream&gt;  
+#include &lt;vector&gt;  
+using namespace std;  
+​  
+int main() {  
+    // 读取 M 和 N  
+    int M, N;  
+    cin &gt;&gt; M &gt;&gt; N;  
+​  
+    vector&lt;int&gt; costs(M);  
+    vector&lt;int&gt; values(M);  
+​  
+    for (int i = 0; i &lt; M; i++) {  
+        cin &gt;&gt; costs[i];  
+    }  
+    for (int j = 0; j &lt; M; j++) {  
+        cin &gt;&gt; values[j];  
+    }  
+​  
+    // 创建一个动态规划数组dp，初始值为0  
+    vector&lt;int&gt; dp(N + 1, 0);  
+​  
+    // 外层循环遍历每个类型的研究材料  
+    for (int i = 0; i &lt; M; ++i) {  
+        // 内层循环从 N 空间逐渐减少到当前研究材料所占空间  
+        for (int j = N; j &gt;= costs[i]; --j) {  
+            // 考虑当前研究材料选择和不选择的情况，选择最大值  
+            dp[j] = max(dp[j], dp[j - costs[i]] + values[i]);  
+        }  
+    }  
+​  
+    // 输出dp[N]，即在给定 N 行李空间可以携带的研究材料最大价值  
+    cout &lt;&lt; dp[N] &lt;&lt; endl;  
+​  
+    return 0;  
+}  
+</code></pre>
+<p>​
+可以看出，一维dp 的01背包，要比二维简洁的多！ 初始化 和 遍历顺序相对简单了。</p>
+<p><strong>所以我倾向于使用一维dp数组的写法，比较直观简洁，而且空间复杂度还降了一个数量级！</strong></p>
+<p><strong>在后面背包问题的讲解中，我都直接使用一维dp数组来进行推导</strong>。</p>
+<h2 id="总结"><a class="header" href="#总结">总结</a></h2>
+<p>以上的讲解可以开发一道面试题目（毕竟力扣上没原题）。</p>
+<p>就是本文中的题目，要求先实现一个纯二维的01背包，如果写出来了，然后再问为什么两个for循环的嵌套顺序这么写？反过来写行不行？再讲一讲初始化的逻辑。</p>
+<p>然后要求实现一个一维数组的01背包，最后再问，一维数组的01背包，两个for循环的顺序反过来写行不行？为什么？</p>
+<p>注意以上问题都是在候选人把代码写出来的情况下才问的。</p>
+<p>就是纯01背包的题目，都不用考01背包应用类的题目就可以看出候选人对算法的理解程度了。</p>
+<p><strong>相信大家读完这篇文章，应该对以上问题都有了答案！</strong></p>
+<p>此时01背包理论基础就讲完了，我用了两篇文章把01背包的dp数组定义、递推公式、初始化、遍历顺序从二维数组到一维数组统统深度剖析了一遍，没有放过任何难点。</p>
+<p>大家可以发现其实信息量还是挺大的。</p>
+<p>如果把<a href="https://programmercarl.com/%E8%83%8C%E5%8C%85%E7%90%86%E8%AE%BA%E5%9F%BA%E7%A1%8001%E8%83%8C%E5%8C%85-1.html">动态规划：关于01背包问题，你该了解这些！</a>和本篇的内容都理解了，后面我们在做01背包的题目，就会发现非常简单了。</p>
+<p>不用再凭感觉或者记忆去写背包，而是有自己的思考，了解其本质，代码的方方面面都在自己的掌控之中。</p>
+<p>即使代码没有通过，也会有自己的逻辑去debug，这样就思维清晰了。</p>
+<p>接下来就要开始用这两天的理论基础去做力扣上的背包面试题目了，录友们握紧扶手，我们要上高速啦！</p>
+<h1 id="416-partition-equal-subset-sum"><a class="header" href="#416-partition-equal-subset-sum"><a href="https://leetcode.com/problems/partition-equal-subset-sum/">416. Partition Equal Subset Sum</a></a></h1>
+<p>Given an integer array <code>nums</code>, return <code>true</code> <em>if you can partition the array into two subsets such that the sum of the elements in both subsets is equal or</em> <code>false</code> <em>otherwise</em>.</p>
+<p><strong>Example 1:</strong></p>
+<p><strong>Input:</strong> nums = [1,5,11,5]<br />
+<strong>Output:</strong> true<br />
+<strong>Explanation:</strong> The array can be partitioned as [1, 5, 5] and [11].</p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> nums = [1,2,3,5]<br />
+<strong>Output:</strong> false<br />
+<strong>Explanation:</strong> The array cannot be partitioned into equal sum subsets.</p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= nums.length &lt;= 200</code></li>
+<li><code>1 &lt;= nums[i] &lt;= 100</code></li>
+</ul>
+<h2 id="思路"><a class="header" href="#思路">思路</a></h2>
+<p>这道题目是要找是否可以将这个数组分割成两个子集，使得两个子集的元素和相等。</p>
+<p>那么只要找到集合里能够出现 sum / 2 的子集总和，就算是可以分割成两个相同元素和子集了。</p>
+<p>本题是可以用回溯暴力搜索出所有答案的，但最后超时了，也不想再优化了，放弃回溯，直接上01背包吧。</p>
+<p><strong>要明确本题中我们要使用的是01背包，因为元素我们只能用一次。</strong></p>
+<p>回归主题：首先，本题要求集合里能否出现总和为 sum / 2 的子集。</p>
+<p>那么来一一对应一下本题，看看背包问题如何来解决。</p>
+<p><strong>只有确定了如下四点，才能把01背包问题套到本题上来。</strong></p>
+<ul>
+<li>背包的体积为sum / 2</li>
+<li>背包要放入的商品（集合里的元素）重量为 元素的数值，价值也为元素的数值</li>
+<li>背包如果正好装满，说明找到了总和为 sum / 2 的子集。</li>
+<li>背包中每一个元素是不可重复放入。</li>
+</ul>
+<p>以上分析完，我们就可以套用01背包，来解决这个问题了。</p>
+<p>动规五部曲分析如下：</p>
+<ol>
+<li>确定dp数组以及下标的含义</li>
+</ol>
+<p>01背包中，dp[j] 表示： 容量为j的背包，所背的物品价值最大可以为dp[j]。</p>
+<p>本题中每一个元素的数值既是重量，也是价值。</p>
+<p><strong>套到本题，dp[j]表示 背包总容量（所能装的总重量）是j，放进物品后，背的最大重量为dp[j]</strong>。</p>
+<p>那么如果背包容量为target， dp[target]就是装满 背包之后的重量，所以当<code>dp[target] == target</code>的时候，背包就装满了。</p>
+<p>有录友可能想，那还有装不满的时候？</p>
+<p>拿输入数组 [1, 5, 11, 5]，举例， dp[7] 只能等于 6，因为只能放进 1 和 5。</p>
+<p>而dp[6] 就可以等于6了，放进1 和 5，那么dp[6] == 6，说明背包装满了。</p>
+<ol start="2">
+<li>确定递推公式</li>
+</ol>
+<p>01背包的递推公式为：<code>dp[j] = max(dp[j], dp[j - weight[i]] + value[i]);</code></p>
+<p>本题，相当于背包里放入数值，那么物品i的重量是nums[i]，其价值也是nums[i]。</p>
+<p>所以递推公式：<code>dp[j] = max(dp[j], dp[j - nums[i]] + nums[i]);</code></p>
+<ol start="3">
+<li>dp数组如何初始化</li>
+</ol>
+<p>在01背包，一维dp如何初始化，已经讲过，</p>
+<p>从dp[j]的定义来看，首先dp[0]一定是0。</p>
+<p>如果题目给的价值都是正整数那么非0下标都初始化为0就可以了，如果题目给的价值有负数，那么非0下标就要初始化为负无穷。</p>
+<p><strong>这样才能让dp数组在递推的过程中取得最大的价值，而不是被初始值覆盖了</strong>。</p>
+<p>本题题目中 只包含正整数的非空数组，所以非0下标的元素初始化为0就可以了。</p>
+<p>代码如下：</p>
+<pre><code class="language-cpp">// 题目中说：每个数组中的元素不会超过 100，数组的大小不会超过 200  
+// 总和不会大于20000，背包最大只需要其中一半，所以10001大小就可以了  
+vector&lt;int&gt; dp(10001, 0);
+</code></pre>
+<ol start="4">
+<li>确定遍历顺序</li>
+</ol>
+<p>在<a href="https://programmercarl.com/%E8%83%8C%E5%8C%85%E7%90%86%E8%AE%BA%E5%9F%BA%E7%A1%8001%E8%83%8C%E5%8C%85-2.html">动态规划：关于01背包问题，你该了解这些！（滚动数组）</a>中就已经说明：如果使用一维dp数组，物品遍历的for循环放在外层，遍历背包的for循环放在内层，且内层for循环倒序遍历！</p>
+<p>代码如下：</p>
+<pre><code class="language-cpp">// 开始 01背包  
+for(int i = 0; i &lt; nums.size(); i++) {  
+    for(int j = target; j &gt;= nums[i]; j--) { // 每一个元素一定是不可重复放入，所以从大到小遍历  
+        dp[j] = max(dp[j], dp[j - nums[i]] + nums[i]);  
+    }  
+}
+</code></pre>
+<ol start="5">
+<li>举例推导dp数组</li>
+</ol>
+<p>dp[j]的数值一定是小于等于j的。</p>
+<p><strong>如果<code>dp[j] == j</code>说明，集合中的子集总和正好可以凑成总和j，理解这一点很重要。</strong></p>
+<p>用例1，输入[1,5,11,5] 为例，最后dp[11] == 11，说明可以将这个数组分割成两个子集，使得两个子集的元素和相等。</p>
+<h2 id="c解法"><a class="header" href="#c解法">C++解法</a></h2>
+<p>综上分析完毕，C++代码如下：</p>
+<pre><code class="language-cpp">class Solution {  
+public:  
+    bool canPartition(vector&lt;int&gt;&amp; nums) {  
+        int sum = 0;  
+​  
+        // dp[i]中的i表示背包内总和  
+        // 题目中说：每个数组中的元素不会超过 100，数组的大小不会超过 200  
+        // 总和不会大于20000，背包最大只需要其中一半，所以10001大小就可以了  
+        vector&lt;int&gt; dp(10001, 0);  
+        for (int i = 0; i &lt; nums.size(); i++) {  
+            sum += nums[i];  
+        }  
+        // 也可以使用库函数一步求和  
+        // int sum = accumulate(nums.begin(), nums.end(), 0);  
+        if (sum % 2 == 1) return false;  
+        int target = sum / 2;  
+​  
+        // 开始 01背包  
+        for(int i = 0; i &lt; nums.size(); i++) {  
+            for(int j = target; j &gt;= nums[i]; j--) { // 每一个元素一定是不可重复放入，所以从大到小遍历  
+                dp[j] = max(dp[j], dp[j - nums[i]] + nums[i]);  
+            }  
+        }  
+        // 集合中的元素正好可以凑成总和target  
+        if (dp[target] == target) return true;  
+        return false;  
+    }  
+};
+</code></pre>
+<ul>
+<li>时间复杂度：O(n^2)</li>
+<li>空间复杂度：O(n)，虽然dp数组大小为一个常数，但是大常数</li>
+</ul>
+<h2 id="java解法"><a class="header" href="#java解法">Java解法</a></h2>
+<pre><code class="language-java">class Solution {
+    public boolean canPartition(int[] nums) {
+        int total = 0;
+        for(int num : nums){
+            total += num;
+        }
+        if(total % 2 == 1) return false;
+        int capacity = total / 2;
+        int[] dp = new int[capacity + 1];
+        for(int i = 1; i &lt; nums.length; i++){
+            for(int j = capacity; j &gt;= nums[i]; j--){
+                dp[j] = Math.max(dp[j], dp[j - nums[i]] + nums[i]);
+                if(dp[capacity] == capacity){
+                    return true;
+                }
+            }
+        }
+        return false;
+
+    }
+}
+</code></pre>
+<h1 id="1049-last-stone-weight-ii"><a class="header" href="#1049-last-stone-weight-ii"><a href="https://leetcode.com/problems/last-stone-weight-ii/">1049. Last Stone Weight II</a></a></h1>
+<p>You are given an array of integers <code>stones</code> where <code>stones[i]</code> is the weight of the <code>ith</code> stone.</p>
+<p>We are playing a game with the stones. On each turn, we choose any two stones and smash them together. Suppose the stones have weights <code>x</code> and <code>y</code> with <code>x &lt;= y</code>. The result of this smash is:</p>
+<ul>
+<li>If <code>x == y</code>, both stones are destroyed, and</li>
+<li>If <code>x != y</code>, the stone of weight <code>x</code> is destroyed, and the stone of weight <code>y</code> has new weight <code>y - x</code>.</li>
+</ul>
+<p>At the end of the game, there is <strong>at most one</strong> stone left.</p>
+<p>Return <em>the smallest possible weight of the left stone</em>. If there are no stones left, return <code>0</code>.</p>
+<p><strong>Example 1:</strong></p>
+<p><strong>Input:</strong> stones = [2,7,4,1,8,1]<br />
+<strong>Output:</strong> 1<br />
+<strong>Explanation:</strong>
+We can combine 2 and 4 to get 2, so the array converts to [2,7,1,8,1] then,
+we can combine 7 and 8 to get 1, so the array converts to [2,1,1,1] then,
+we can combine 2 and 1 to get 1, so the array converts to [1,1,1] then,
+we can combine 1 and 1 to get 0, so the array converts to [1], then that's the optimal value.</p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> stones = [31,26,33,21,40]<br />
+<strong>Output:</strong> 5</p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= stones.length &lt;= 30</code></li>
+<li><code>1 &lt;= stones[i] &lt;= 100</code></li>
+</ul>
+<h2 id="思路-1"><a class="header" href="#思路-1">思路</a></h2>
+<p>本题其实就是尽量让石头分成重量相同的两堆，相撞之后剩下的石头最小，<strong>这样就化解成01背包问题了</strong>。</p>
+<p>是不是感觉和昨天讲解的<a href="https://programmercarl.com/0416.%E5%88%86%E5%89%B2%E7%AD%89%E5%92%8C%E5%AD%90%E9%9B%86.html">416. 分割等和子集</a>非常像了。</p>
+<p>本题物品的重量为stones[i]，物品的价值也为stones[i]。</p>
+<p>对应着01背包里的物品重量weight[i]和 物品价值value[i]。</p>
+<p>接下来进行动规五步曲：</p>
+<ol>
+<li>确定dp数组以及下标的含义</li>
+</ol>
+<p><strong>dp[j]表示容量（这里说容量更形象，其实就是重量）为j的背包，最多可以背最大重量为dp[j]</strong>。</p>
+<p>可以回忆一下01背包中，dp[j]的含义，容量为j的背包，最多可以装的价值为 dp[j]。</p>
+<p>相对于 01背包，本题中，石头的重量是 stones[i]，石头的价值也是 stones[i] ，可以 “最多可以装的价值为 dp[j]” == “最多可以背的重量为dp[j]”</p>
+<ol start="2">
+<li>确定递推公式</li>
+</ol>
+<p>01背包的递推公式为：<code>dp[j] = max(dp[j], dp[j - weight[i]] + value[i]);</code></p>
+<p>本题则是：<code>dp[j] = max(dp[j], dp[j - stones[i]] + stones[i]);</code></p>
+<p>一些同学可能看到这<code>dp[j - stones[i]] + stones[i]</code>中 又有<code>- stones[i]</code> 又有<code>+stones[i]</code>，看着有点晕乎。</p>
+<p>大家可以再去看 dp[j]的含义。</p>
+<ol start="3">
+<li>dp数组如何初始化</li>
+</ol>
+<p>既然 dp[j]中的j表示容量，那么最大容量（重量）是多少呢，就是所有石头的重量和。</p>
+<p>因为提示中给出1 &lt;= stones.length &lt;= 30，1 &lt;= stones[i] &lt;= 1000，所以最大重量就是30 * 1000 。</p>
+<p>而我们要求的target其实只是最大重量的一半，所以dp数组开到15000大小就可以了。</p>
+<p>当然也可以把石头遍历一遍，计算出石头总重量 然后除2，得到dp数组的大小。</p>
+<p>我这里就直接用15000了。</p>
+<p>接下来就是如何初始化dp[j]呢，因为重量都不会是负数，所以dp[j]都初始化为0就可以了，这样在递归公式<code>dp[j] = max(dp[j], dp[j - stones[i]] + stones[i]);</code>中dp[j]才不会初始值所覆盖。</p>
+<p>代码为：</p>
+<pre><code class="language-cpp">vector&lt;int&gt; dp(15001, 0);
+</code></pre>
+<ol start="4">
+<li>确定遍历顺序</li>
+</ol>
+<p>在<a href="https://programmercarl.com/%E8%83%8C%E5%8C%85%E7%90%86%E8%AE%BA%E5%9F%BA%E7%A1%8001%E8%83%8C%E5%8C%85-2.html">动态规划：关于01背包问题，你该了解这些！（滚动数组）</a>中就已经说明：如果使用一维dp数组，物品遍历的for循环放在外层，遍历背包的for循环放在内层，且内层for循环倒序遍历！</p>
+<p>代码如下：</p>
+<pre><code class="language-cpp">for (int i = 0; i &lt; stones.size(); i++) { // 遍历物品  
+    for (int j = target; j &gt;= stones[i]; j--) { // 遍历背包  
+        dp[j] = max(dp[j], dp[j - stones[i]] + stones[i]);  
+    }  
+}  
+</code></pre>
+<ol start="5">
+<li>举例推导dp数组</li>
+</ol>
+<p>举例，输入：[2,4,1,1]，此时target = (2 + 4 + 1 + 1)/2 = 4 ，dp数组状态图如下：</p>
+<p><img src="https://code-thinking-1253855093.file.myqcloud.com/pics/20210121115805904.jpg" alt="1049.最后一块石头的重量II" /></p>
+<p>最后<code>dp[target]</code>里是容量为target的背包所能背的最大重量。</p>
+<p>那么分成两堆石头，一堆石头的总重量是<code>dp[target]</code>，另一堆就是<code>sum - dp[target]</code>。</p>
+<p><strong>在计算target的时候，target = sum / 2 因为是向下取整，所以<code>sum - dp[target]</code> 一定是大于等于<code>dp[target]</code>的</strong>。</p>
+<p>那么相撞之后剩下的最小石头重量就是 <code>(sum - dp[target]) - dp[target]</code>。</p>
+<h2 id="c解法-1"><a class="header" href="#c解法-1">C++解法</a></h2>
+<p>以上分析完毕，C++代码如下：</p>
+<pre><code class="language-cpp">class Solution {  
+public:  
+    int lastStoneWeightII(vector&lt;int&gt;&amp; stones) {  
+        vector&lt;int&gt; dp(15001, 0);  
+        int sum = 0;  
+        for (int i = 0; i &lt; stones.size(); i++) sum += stones[i];  
+        int target = sum / 2;  
+        for (int i = 0; i &lt; stones.size(); i++) { // 遍历物品  
+            for (int j = target; j &gt;= stones[i]; j--) { // 遍历背包  
+                dp[j] = max(dp[j], dp[j - stones[i]] + stones[i]);  
+            }  
+        }  
+        return sum - dp[target] - dp[target];  
+    }  
+};  
+</code></pre>
+<p>​</p>
+<ul>
+<li>时间复杂度：O(m × n) , m是石头总重量（准确的说是总重量的一半），n为石头块数</li>
+<li>空间复杂度：O(m)</li>
+</ul>
+<h2 id="java解法-1"><a class="header" href="#java解法-1">Java解法</a></h2>
+<pre><code class="language-java">class Solution {
+    public int lastStoneWeightII(int[] stones) {
+        Arrays.sort(stones);
+        int sum = 0;
+        for(int stone : stones){
+            sum += stone;
+        }
+        int bagSize = sum / 2;
+        int[] dp = new int[1501];
+        dp[0] = 0;
+        for(int i = 0; i &lt; stones.length; i++){
+            for(int j = bagSize; j &gt;= stones[i]; j--){
+                dp[j] = Math.max(dp[j], dp[j - stones[i]] + stones[i]);
+            }
+        }
+        return sum - dp[bagSize] * 2;
+    }
+}
+</code></pre>
+<h1 id="494-target-sum"><a class="header" href="#494-target-sum"><a href="https://leetcode.com/problems/target-sum/">494. Target Sum</a></a></h1>
+<p>You are given an integer array <code>nums</code> and an integer <code>target</code>.</p>
+<p>You want to build an <strong>expression</strong> out of nums by adding one of the symbols <code>'+'</code> and <code>'-'</code> before each integer in nums and then concatenate all the integers.</p>
+<ul>
+<li>For example, if <code>nums = [2, 1]</code>, you can add a <code>'+'</code> before <code>2</code> and a <code>'-'</code> before <code>1</code> and concatenate them to build the expression <code>"+2-1"</code>.</li>
+</ul>
+<p>Return the number of different <strong>expressions</strong> that you can build, which evaluates to <code>target</code>.</p>
+<p><strong>Example 1:</strong></p>
+<p><strong>Input:</strong> nums = [1,1,1,1,1], target = 3<br />
+<strong>Output:</strong> 5<br />
+<strong>Explanation:</strong> There are 5 ways to assign symbols to make the sum of nums be target 3.
+-1 + 1 + 1 + 1 + 1 = 3
++1 - 1 + 1 + 1 + 1 = 3
++1 + 1 - 1 + 1 + 1 = 3
++1 + 1 + 1 - 1 + 1 = 3
++1 + 1 + 1 + 1 - 1 = 3</p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> nums = [1], target = 1<br />
+<strong>Output:</strong> 1</p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= nums.length &lt;= 20</code></li>
+<li><code>0 &lt;= nums[i] &lt;= 1000</code></li>
+<li><code>0 &lt;= sum(nums[i]) &lt;= 1000</code></li>
+<li><code>-1000 &lt;= target &lt;= 1000</code></li>
+</ul>
+<h2 id="思路-2"><a class="header" href="#思路-2">思路</a></h2>
+<p>本题要如何使表达式结果为target，</p>
+<p>既然为target，那么就一定有 left组合 - right组合 = target。</p>
+<p>left + right = sum，而sum是固定的。right = sum - left</p>
+<p>公式来了， left - (sum - left) = target 推导出 left = (target + sum)/2 。</p>
+<p>target是固定的，sum是固定的，left就可以求出来。</p>
+<p>此时问题就是在集合nums中找出和为left的组合。</p>
+<p>如何转化为01背包问题呢？</p>
+<p>假设加法的总和为x，那么减法对应的总和就是sum - x。</p>
+<p>所以我们要求的是 x - (sum - x) = target</p>
+<p>x = (target + sum) / 2</p>
+<p><strong>此时问题就转化为，装满容量为x的背包，有几种方法</strong>。</p>
+<p>这里的x，就是bagSize，也就是我们后面要求的背包容量。</p>
+<p>大家看到(target + sum) / 2 应该担心计算的过程中向下取整有没有影响。</p>
+<p>这么担心就对了，例如sum 是5，S是2的话其实就是无解的，所以：</p>
+<p>（C++代码中，输入的S 就是题目描述的 target）</p>
+<pre><code class="language-cpp">if ((S + sum) % 2 == 1) return 0; // 此时没有方案
+</code></pre>
+<p>同时如果 S的绝对值已经大于sum，那么也是没有方案的。</p>
+<p>（C++代码中，输入的S 就是题目描述的 target）</p>
+<pre><code class="language-cpp">if (abs(S) &gt; sum) return 0; // 此时没有方案
+</code></pre>
+<p>再回归到01背包问题，为什么是01背包呢？</p>
+<p>因为每个物品（题目中的1）只用一次！</p>
+<p>这次和之前遇到的背包问题不一样了，之前都是求容量为j的背包，最多能装多少。</p>
+<p>本题则是装满有几种方法。其实这就是一个组合问题了。</p>
+<ol>
+<li>确定dp数组以及下标的含义</li>
+</ol>
+<p>dp[j] 表示：填满j（包括j）这么大容积的包，有dp[j]种方法</p>
+<p>其实也可以使用二维dp数组来求解本题，<code>dp[i][j]</code>：使用 下标为[0, i]的nums[i]能够凑满j（包括j）这么大容量的包，有<code>dp[i][j]</code>种方法。</p>
+<p>下面我都是统一使用一维数组进行讲解， 二维降为一维（滚动数组），其实就是上一层拷贝下来，这个我在<a href="https://programmercarl.com/%E8%83%8C%E5%8C%85%E7%90%86%E8%AE%BA%E5%9F%BA%E7%A1%8001%E8%83%8C%E5%8C%85-2.html">动态规划：关于01背包问题，你该了解这些！（滚动数组）</a>也有介绍。</p>
+<ol start="2">
+<li>确定递推公式</li>
+</ol>
+<p>有哪些来源可以推出dp[j]呢？</p>
+<p>只要搞到nums[i]，凑成dp[j]就有dp[j - nums[i]] 种方法。</p>
+<p>例如：dp[j]，j 为5，</p>
+<ul>
+<li>已经有一个1（nums[i]） 的话，有 dp[4]种方法凑成容量为5的背包。</li>
+<li>已经有一个2（nums[i]） 的话，有 dp[3]种方法凑成容量为5的背包。</li>
+<li>已经有一个3（nums[i]） 的话，有 dp[2]中方法凑成容量为5的背包</li>
+<li>已经有一个4（nums[i]） 的话，有 dp[1]中方法凑成容量为5的背包</li>
+<li>已经有一个5 （nums[i]）的话，有 dp[0]中方法凑成容量为5的背包</li>
+</ul>
+<p>那么凑整dp[5]有多少方法呢，也就是把所有的<code>dp[j - nums[i]]</code>累加起来。</p>
+<p>所以求组合类问题的公式，都是类似这种：</p>
+<pre><code class="language-cpp">dp[j] += dp[j - nums[i]]
+</code></pre>
+<p><strong>这个公式在后面在讲解背包解决排列组合问题的时候还会用到！</strong></p>
+<ol start="3">
+<li>dp数组如何初始化</li>
+</ol>
+<p>从递推公式可以看出，在初始化的时候dp[0] 一定要初始化为1，因为dp[0]是在公式中一切递推结果的起源，如果dp[0]是0的话，递推结果将都是0。</p>
+<p>这里有录友可能认为从dp数组定义来说 dp[0] 应该是0，也有录友认为dp[0]应该是1。</p>
+<p>其实不要硬去解释它的含义，咱就把 dp[0]的情况带入本题看看应该等于多少。</p>
+<p>如果数组[0] ，target = 0，那么 bagSize = (target + sum) / 2 = 0。 dp[0]也应该是1， 也就是说给数组里的元素 0 前面无论放加法还是减法，都是 1 种方法。</p>
+<p>所以本题我们应该初始化 dp[0] 为 1。</p>
+<p>可能有同学想了，那 如果是 数组[0,0,0,0,0] target = 0 呢。</p>
+<p>其实此时最终的dp[0] = 32，也就是这五个零子集的所有组合情况，但此dp[0]非彼dp[0]，dp[0]能算出32，其基础是因为dp[0] = 1 累加起来的。</p>
+<p>dp[j]其他下标对应的数值也应该初始化为0，从递推公式也可以看出，dp[j]要保证是0的初始值，才能正确的由<code>dp[j - nums[i]]</code>推导出来。</p>
+<ol start="4">
+<li>确定遍历顺序</li>
+</ol>
+<p>在<a href="https://programmercarl.com/%E8%83%8C%E5%8C%85%E7%90%86%E8%AE%BA%E5%9F%BA%E7%A1%8001%E8%83%8C%E5%8C%85-2.html">动态规划：关于01背包问题，你该了解这些！（滚动数组）</a>中，我们讲过对于01背包问题一维dp的遍历，nums放在外循环，target在内循环，且内循环倒序。</p>
+<ol start="5">
+<li>举例推导dp数组</li>
+</ol>
+<p>输入：nums: [1, 1, 1, 1, 1], S: 3</p>
+<p>bagSize = (S + sum) / 2 = (3 + 5) / 2 = 4</p>
+<h2 id="c解法-2"><a class="header" href="#c解法-2">C++解法</a></h2>
+<p>C++代码如下：</p>
+<pre><code class="language-cpp">class Solution {  
+public:  
+    int findTargetSumWays(vector&lt;int&gt;&amp; nums, int S) {  
+        int sum = 0;  
+        for (int i = 0; i &lt; nums.size(); i++) sum += nums[i];  
+        if (abs(S) &gt; sum) return 0; // 此时没有方案  
+        if ((S + sum) % 2 == 1) return 0; // 此时没有方案  
+        int bagSize = (S + sum) / 2;  
+        vector&lt;int&gt; dp(bagSize + 1, 0);  
+        dp[0] = 1;  
+        for (int i = 0; i &lt; nums.size(); i++) {  
+            for (int j = bagSize; j &gt;= nums[i]; j--) {  
+                dp[j] += dp[j - nums[i]];  
+            }  
+        }  
+        return dp[bagSize];  
+    }  
+};  
+</code></pre>
+<p>​</p>
+<ul>
+<li>时间复杂度：O(n × m)，n为正数个数，m为背包容量</li>
+<li>空间复杂度：O(m)，m为背包容量</li>
+</ul>
+<h2 id="java解法-2"><a class="header" href="#java解法-2">Java解法</a></h2>
+<pre><code class="language-java">class Solution {
+    public int findTargetSumWays(int[] nums, int target) {
+        int sum = 0;
+        for(int num : nums){
+            sum += num;
+        }
+        if(Math.abs(target) &gt; sum) return 0;
+        if((sum + target) % 2 == 1) return 0;
+        int bagSize = (sum + target) / 2;
+        int[] dp = new int[bagSize + 1];
+        dp[0] = 1;
+        for(int i = 0; i &lt; nums.length; i++){
+            for(int j = bagSize; j &gt;= nums[i]; j--){
+                dp[j] += dp[j - nums[i]];
+            }
+        }
+        return dp[bagSize];
+    }
+}
+</code></pre>
+<h1 id="474-ones-and-zeroes"><a class="header" href="#474-ones-and-zeroes"><a href="https://leetcode.com/problems/ones-and-zeroes/">474. Ones and Zeroes</a></a></h1>
+<p>You are given an array of binary strings <code>strs</code> and two integers <code>m</code> and <code>n</code>.</p>
+<p>Return <em>the size of the largest subset of <code>strs</code> such that there are <strong>at most</strong></em> <code>m</code> <code>0</code><em>'s and</em> <code>n</code> <code>1</code><em>'s in the subset</em>.</p>
+<p>A set <code>x</code> is a <strong>subset</strong> of a set <code>y</code> if all elements of <code>x</code> are also elements of <code>y</code>.</p>
+<p><strong>Example 1:</strong></p>
+<p><strong>Input:</strong> strs = ["10","0001","111001","1","0"], m = 5, n = 3<br />
+<strong>Output:</strong> 4<br />
+<strong>Explanation:</strong> The largest subset with at most 5 0's and 3 1's is {"10", "0001", "1", "0"}, so the answer is 4.
+Other valid but smaller subsets include {"0001", "1"} and {"10", "1", "0"}.
+{"111001"} is an invalid subset because it contains 4 1's, greater than the maximum of 3.</p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> strs = ["10","0","1"], m = 1, n = 1<br />
+<strong>Output:</strong> 2<br />
+<strong>Explanation:</strong> The largest subset is {"0", "1"}, so the answer is 2.</p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= strs.length &lt;= 600</code></li>
+<li><code>1 &lt;= strs[i].length &lt;= 100</code></li>
+<li><code>strs[i]</code> consists only of digits <code>'0'</code> and <code>'1'</code>.</li>
+<li><code>1 &lt;= m, n &lt;= 100</code></li>
+</ul>
+<h2 id="思路-3"><a class="header" href="#思路-3">思路</a></h2>
+<p>多重背包是每个物品，数量不同的情况。</p>
+<p><strong>本题中strs 数组里的元素就是物品，每个物品都是一个！</strong></p>
+<p><strong>而m 和 n相当于是一个背包，两个维度的背包</strong>。</p>
+<p>理解成多重背包的同学主要是把m和n混淆为物品了，感觉这是不同数量的物品，所以以为是多重背包。</p>
+<p>但本题其实是01背包问题！</p>
+<p>只不过这个背包有两个维度，一个是m 一个是n，而不同长度的字符串就是不同大小的待装物品。</p>
+<p>开始动规五部曲：</p>
+<ol>
+<li>确定dp数组（dp table）以及下标的含义</li>
+</ol>
+<p><strong><code>dp[i][j]</code>：最多有i个0和j个1的strs的最大子集的大小为<code>dp[i][j]</code></strong>。</p>
+<ol start="2">
+<li>确定递推公式</li>
+</ol>
+<p><code>dp[i][j]</code> 可以由前一个strs里的字符串推导出来，strs里的字符串有zeroNum个0，oneNum个1。</p>
+<p><code>dp[i][j]</code> 就可以是 <code>dp[i - zeroNum][j - oneNum] + 1</code>。</p>
+<p>然后我们在遍历的过程中，取<code>dp[i][j]</code>的最大值。</p>
+<p>所以递推公式：<code>dp[i][j] = max(dp[i][j], dp[i - zeroNum][j - oneNum] + 1);</code></p>
+<p>此时大家可以回想一下01背包的递推公式：<code>dp[j] = max(dp[j], dp[j - weight[i]] + value[i]);</code></p>
+<p>对比一下就会发现，字符串的zeroNum和oneNum相当于物品的重量（weight[i]），字符串本身的个数相当于物品的价值（value[i]）。</p>
+<p><strong>这就是一个典型的01背包！</strong> 只不过物品的重量有了两个维度而已。</p>
+<ol start="3">
+<li>dp数组如何初始化</li>
+</ol>
+<p>在<a href="https://programmercarl.com/%E8%83%8C%E5%8C%85%E7%90%86%E8%AE%BA%E5%9F%BA%E7%A1%8001%E8%83%8C%E5%8C%85-2.html">动态规划：关于01背包问题，你该了解这些！（滚动数组）</a>中已经讲解了，01背包的dp数组初始化为0就可以。</p>
+<p>因为物品价值不会是负数，初始为0，保证递推的时候<code>dp[i][j]</code>不会被初始值覆盖。</p>
+<ol start="4">
+<li>确定遍历顺序</li>
+</ol>
+<p>在<a href="https://programmercarl.com/%E8%83%8C%E5%8C%85%E7%90%86%E8%AE%BA%E5%9F%BA%E7%A1%8001%E8%83%8C%E5%8C%85-2.html">动态规划：关于01背包问题，你该了解这些！（滚动数组）</a>中，我们讲到了01背包为什么一定是外层for循环遍历物品，内层for循环遍历背包容量且从后向前遍历！</p>
+<p>那么本题也是，物品就是strs里的字符串，背包容量就是题目描述中的m和n。</p>
+<p>代码如下：</p>
+<pre><code class="language-cpp">for (string str : strs) { // 遍历物品  
+    int oneNum = 0, zeroNum = 0;  
+    for (char c : str) {  
+        if (c == '0') zeroNum++;  
+        else oneNum++;  
+    }  
+    for (int i = m; i &gt;= zeroNum; i--) { // 遍历背包容量且从后向前遍历！  
+        for (int j = n; j &gt;= oneNum; j--) {  
+            dp[i][j] = max(dp[i][j], dp[i - zeroNum][j - oneNum] + 1);  
+        }  
+    }  
+}
+</code></pre>
+<p>有同学可能想，那个遍历背包容量的两层for循环先后循序有没有什么讲究？</p>
+<p>没讲究，都是物品重量的一个维度，先遍历哪个都行！</p>
+<ol start="5">
+<li>举例推导dp数组</li>
+</ol>
+<h2 id="c解法-3"><a class="header" href="#c解法-3">C++解法</a></h2>
+<p>以上动规五部曲分析完毕，C++代码如下：</p>
+<pre><code class="language-cpp">class Solution {  
+public:  
+    int findMaxForm(vector&lt;string&gt;&amp; strs, int m, int n) {  
+        vector&lt;vector&lt;int&gt;&gt; dp(m + 1, vector&lt;int&gt; (n + 1, 0)); // 默认初始化0  
+        for (string str : strs) { // 遍历物品  
+            int oneNum = 0, zeroNum = 0;  
+            for (char c : str) {  
+                if (c == '0') zeroNum++;  
+                else oneNum++;  
+            }  
+            for (int i = m; i &gt;= zeroNum; i--) { // 遍历背包容量且从后向前遍历！  
+                for (int j = n; j &gt;= oneNum; j--) {  
+                    dp[i][j] = max(dp[i][j], dp[i - zeroNum][j - oneNum] + 1);  
+                }  
+            }  
+        }  
+        return dp[m][n];  
+    }  
+};
+</code></pre>
+<ul>
+<li>时间复杂度: O(kmn)，k 为strs的长度</li>
+<li>空间复杂度: O(mn)</li>
+</ul>
+<h2 id="java解法-3"><a class="header" href="#java解法-3">Java解法</a></h2>
+<pre><code class="language-java">class Solution {
+    public int findMaxForm(String[] strs, int m, int n) {
+        int[][] dp = new int[m + 1][n + 1];
+        for(String str : strs){
+            int x = 0;
+            int y = 0;
+            char[] array = str.toCharArray();
+            for(char c : array){
+                if(c == '0') x++;
+                if(c == '1') y++;
+            }
+            for(int i = m; i &gt;= x; i--){
+                for(int j = n; j &gt;= y; j--){
+                    dp[i][j] = Math.max(dp[i][j], dp[i - x][j - y] + 1);
+                }
+            }
+        }
+        return dp[m][n];
+    }
+}
+</code></pre>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../动态规划/整数拆分.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../动态规划/完全背包.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../动态规划/整数拆分.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../动态规划/完全背包.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

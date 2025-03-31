@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>图论 - 剑指Offer</title>
+        <title>多重背包 - 剑指Offer</title>
 
 
         <!-- Custom HTML head -->
@@ -153,16 +153,136 @@
                 <div id="content" class="content">
                     <main>
                         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
-<h1 id="图论"><a class="header" href="#图论">图论</a></h1>
+<h1 id="多重背包"><a class="header" href="#多重背包">多重背包</a></h1>
+<ul>
+<li><a href="#%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E5%85%B3%E4%BA%8E%E5%A4%9A%E9%87%8D%E8%83%8C%E5%8C%85%E4%BD%A0%E8%AF%A5%E4%BA%86%E8%A7%A3%E8%BF%99%E4%BA%9B">动态规划：关于多重背包，你该了解这些！</a>
+<ul>
+<li><a href="#%E5%A4%9A%E9%87%8D%E8%83%8C%E5%8C%85">多重背包</a></li>
+<li><a href="#%E6%80%BB%E7%BB%93">总结</a></li>
+</ul>
+</li>
+</ul>
+<h1 id="动态规划关于多重背包你该了解这些"><a class="header" href="#动态规划关于多重背包你该了解这些">动态规划：关于多重背包，你该了解这些！</a></h1>
+<p>本题力扣上没有原题，大家可以去<a href="https://kamacoder.com/problempage.php?pid=1066">卡码网第56题</a>去练习，题意是一样的。</p>
+<h2 id="多重背包-1"><a class="header" href="#多重背包-1">多重背包</a></h2>
+<p>对于多重背包，我在力扣上还没发现对应的题目，所以这里就做一下简单介绍，大家大概了解一下。</p>
+<p>有N种物品和一个容量为V 的背包。第i种物品最多有Mi件可用，每件耗费的空间是Ci ，价值是Wi 。求解将哪些物品装入背包可使这些物品的耗费的空间 总和不超过背包容量，且价值总和最大。</p>
+<p>多重背包和01背包是非常像的， 为什么和01背包像呢？</p>
+<p>每件物品最多有Mi件可用，把Mi件摊开，其实就是一个01背包问题了。</p>
+<p>例如：</p>
+<p>背包最大重量为10。</p>
+<p>物品为：</p>
+<div class="table-wrapper"><table><thead><tr><th>-</th><th>重量</th><th>价值</th><th>数量</th></tr></thead><tbody>
+<tr><td>物品0</td><td>1</td><td>15</td><td>2</td></tr>
+<tr><td>物品1</td><td>3</td><td>20</td><td>3</td></tr>
+<tr><td>物品2</td><td>4</td><td>30</td><td>2</td></tr>
+</tbody></table>
+</div>
+<p>问背包能背的物品最大价值是多少？</p>
+<p>和如下情况有区别么？</p>
+<div class="table-wrapper"><table><thead><tr><th>-</th><th>重量</th><th>价值</th><th>数量</th></tr></thead><tbody>
+<tr><td>物品0</td><td>1</td><td>15</td><td>1</td></tr>
+<tr><td>物品0</td><td>1</td><td>15</td><td>1</td></tr>
+<tr><td>物品1</td><td>3</td><td>20</td><td>1</td></tr>
+<tr><td>物品1</td><td>3</td><td>20</td><td>1</td></tr>
+<tr><td>物品1</td><td>3</td><td>20</td><td>1</td></tr>
+<tr><td>物品2</td><td>4</td><td>30</td><td>1</td></tr>
+<tr><td>物品2</td><td>4</td><td>30</td><td>1</td></tr>
+</tbody></table>
+</div>
+<p>毫无区别，这就转成了一个01背包问题了，且每个物品只用一次。</p>
+<p>练习题目：<a href="https://kamacoder.com/problempage.php?pid=1066">卡码网第56题，多重背包</a></p>
+<p>代码如下：</p>
+<pre><code class="language-cpp">// 超时了  
+#include&lt;iostream&gt;  
+#include&lt;vector&gt;  
+using namespace std;  
+int main() {  
+    int bagWeight,n;  
+    cin &gt;&gt; bagWeight &gt;&gt; n;  
+    vector&lt;int&gt; weight(n, 0);   
+    vector&lt;int&gt; value(n, 0);  
+    vector&lt;int&gt; nums(n, 0);  
+    for (int i = 0; i &lt; n; i++) cin &gt;&gt; weight[i];  
+    for (int i = 0; i &lt; n; i++) cin &gt;&gt; value[i];  
+    for (int i = 0; i &lt; n; i++) cin &gt;&gt; nums[i];      
+      
+    for (int i = 0; i &lt; n; i++) {  
+        while (nums[i] &gt; 1) { // 物品数量不是一的，都展开  
+            weight.push_back(weight[i]);  
+            value.push_back(value[i]);  
+            nums[i]--;  
+        }  
+    }  
+   
+    vector&lt;int&gt; dp(bagWeight + 1, 0);  
+    for(int i = 0; i &lt; weight.size(); i++) { // 遍历物品，注意此时的物品数量不是n  
+        for(int j = bagWeight; j &gt;= weight[i]; j--) { // 遍历背包容量  
+            dp[j] = max(dp[j], dp[j - weight[i]] + value[i]);  
+        }  
+    }  
+    cout &lt;&lt; dp[bagWeight] &lt;&lt; endl;  
+}
+</code></pre>
+<p>大家去提交之后，发现这个解法超时了，为什么呢，哪里耗时呢？</p>
+<p>耗时就在这段代码：</p>
+<pre><code class="language-cpp">for (int i = 0; i &lt; n; i++) {  
+    while (nums[i] &gt; 1) { // 物品数量不是一的，都展开  
+        weight.push_back(weight[i]);  
+        value.push_back(value[i]);  
+        nums[i]--;  
+    }  
+}
+</code></pre>
+<p>如果物品数量很多的话，C++中，这种操作十分费时，主要消耗在vector的动态底层扩容上。（其实这里也可以优化，先把 所有物品数量都计算好，一起申请vector的空间。</p>
+<p>这里也有另一种实现方式，就是把每种商品遍历的个数放在01背包里面在遍历一遍。</p>
+<p>代码如下：（详看注释）</p>
+<pre><code class="language-cpp">#include&lt;iostream&gt;  
+#include&lt;vector&gt;  
+using namespace std;  
+int main() {  
+    int bagWeight,n;  
+    cin &gt;&gt; bagWeight &gt;&gt; n;  
+    vector&lt;int&gt; weight(n, 0);  
+    vector&lt;int&gt; value(n, 0);  
+    vector&lt;int&gt; nums(n, 0);  
+    for (int i = 0; i &lt; n; i++) cin &gt;&gt; weight[i];  
+    for (int i = 0; i &lt; n; i++) cin &gt;&gt; value[i];  
+    for (int i = 0; i &lt; n; i++) cin &gt;&gt; nums[i];  
+​  
+    vector&lt;int&gt; dp(bagWeight + 1, 0);  
+​  
+    for(int i = 0; i &lt; n; i++) { // 遍历物品  
+        for(int j = bagWeight; j &gt;= weight[i]; j--) { // 遍历背包容量  
+            // 以上为01背包，然后加一个遍历个数  
+            for (int k = 1; k &lt;= nums[i] &amp;&amp; (j - k * weight[i]) &gt;= 0; k++) { // 遍历个数  
+                dp[j] = max(dp[j], dp[j - k * weight[i]] + k * value[i]);  
+            }  
+        }  
+    }  
+​  
+    cout &lt;&lt; dp[bagWeight] &lt;&lt; endl;  
+}
+</code></pre>
+<p>时间复杂度：O(m × n × k)，m：物品种类个数，n背包容量，k单类物品数量</p>
+<p>从代码里可以看出是01背包里面在加一个for循环遍历一个每种商品的数量。 和01背包还是如出一辙的。</p>
+<p>当然还有那种二进制优化的方法，其实就是把每种物品的数量，打包成一个个独立的包。</p>
+<p>和以上在循环遍历上有所不同，因为是分拆为各个包最后可以组成一个完整背包，具体原理我就不做过多解释了，大家了解一下就行，面试的话基本不会考完这个深度了，感兴趣可以自己深入研究一波。</p>
+<h2 id="总结"><a class="header" href="#总结">总结</a></h2>
+<p>多重背包在面试中基本不会出现，力扣上也没有对应的题目，大家对多重背包的掌握程度知道它是一种01背包，并能在01背包的基础上写出对应代码就可以了。</p>
+<p>至于背包九讲里面还有混合背包，二维费用背包，分组背包等等这些，大家感兴趣可以自己去学习学习，这里也不做介绍了，面试也不会考。</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../动态规划/回文串.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../动态规划/完全背包.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
+                            <a rel="next prefetch" href="../动态规划/打家劫舍.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
 
                         <div style="clear: both"></div>
                     </nav>
@@ -170,10 +290,13 @@
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../动态规划/回文串.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../动态规划/完全背包.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
+                    <a rel="next prefetch" href="../动态规划/打家劫舍.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
             </nav>
 
         </div>

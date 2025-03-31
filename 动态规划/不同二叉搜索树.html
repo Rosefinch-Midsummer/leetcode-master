@@ -1,0 +1,390 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>不同二叉搜索树 - 剑指Offer</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">剑指Offer</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
+<h1 id="不同二叉搜索树"><a class="header" href="#不同二叉搜索树">不同二叉搜索树</a></h1>
+<ul>
+<li><a href="#96-unique-binary-search-trees">96. Unique Binary Search Trees</a>
+<ul>
+<li><a href="#%E6%80%9D%E8%B7%AF">思路</a></li>
+<li><a href="#c%E8%A7%A3%E6%B3%95">C++解法</a></li>
+<li><a href="#java%E8%A7%A3%E6%B3%95">Java解法</a></li>
+</ul>
+</li>
+<li><a href="#95-unique-binary-search-trees-ii">95. Unique Binary Search Trees II</a>
+<ul>
+<li><a href="#%E6%80%9D%E8%B7%AF-1">思路</a></li>
+<li><a href="#c%E8%A7%A3%E6%B3%95-1">C++解法</a></li>
+</ul>
+</li>
+</ul>
+<h1 id="96-unique-binary-search-trees"><a class="header" href="#96-unique-binary-search-trees"><a href="https://leetcode.com/problems/unique-binary-search-trees/">96. Unique Binary Search Trees</a></a></h1>
+<p>Given an integer <code>n</code>, return <em>the number of structurally unique <strong>BST'</strong> s (binary search trees) which has exactly</em> <code>n</code> <em>nodes of unique values from</em> <code>1</code> <em>to</em> <code>n</code>.</p>
+<p><strong>Example 1:</strong></p>
+<p><img src="https://assets.leetcode.com/uploads/2021/01/18/uniquebstn3.jpg" alt="" /></p>
+<p><strong>Input:</strong> n = 3<br />
+<strong>Output:</strong> 5</p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> n = 1<br />
+<strong>Output:</strong> 1</p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= n &lt;= 19</code></li>
+</ul>
+<h2 id="思路"><a class="header" href="#思路">思路</a></h2>
+<p>这道题目描述很简短，但估计大部分同学看完都是懵懵的状态，这得怎么统计呢？</p>
+<p>关于什么是二叉搜索树，我们之前在讲解二叉树专题的时候已经详细讲解过了，也可以看看这篇<a href="https://programmercarl.com/0700.%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91%E4%B8%AD%E7%9A%84%E6%90%9C%E7%B4%A2.html">二叉树：二叉搜索树登场！</a>再回顾一波。</p>
+<p>了解了二叉搜索树之后，我们应该先举几个例子，画画图，看看有没有什么规律，如图：</p>
+<p><img src="https://code-thinking-1253855093.file.myqcloud.com/pics/20210107093106367.png" alt="96.不同的二叉搜索树" /></p>
+<p>n为1的时候有一棵树，n为2有两棵树，这个是很直观的。</p>
+<p>来看看n为3的时候，有哪几种情况。</p>
+<p>当1为头结点的时候，其右子树有两个节点，看这两个节点的布局，是不是和 n 为2的时候两棵树的布局是一样的啊！</p>
+<p>（可能有同学问了，这布局不一样啊，节点数值都不一样。别忘了我们就是求不同树的数量，并不用把搜索树都列出来，所以不用关心其具体数值的差异）</p>
+<p>当3为头结点的时候，其左子树有两个节点，看这两个节点的布局，是不是和n为2的时候两棵树的布局也是一样的啊！</p>
+<p>当2为头结点的时候，其左右子树都只有一个节点，布局是不是和n为1的时候只有一棵树的布局也是一样的啊！</p>
+<p>发现到这里，其实我们就找到了重叠子问题了，其实也就是发现可以通过dp[1] 和 dp[2] 来推导出来dp[3]的某种方式。</p>
+<p>思考到这里，这道题目就有眉目了。</p>
+<p>dp[3]，就是 元素1为头结点搜索树的数量 + 元素2为头结点搜索树的数量 + 元素3为头结点搜索树的数量</p>
+<p>元素1为头结点搜索树的数量 = 右子树有2个元素的搜索树数量 * 左子树有0个元素的搜索树数量</p>
+<p>元素2为头结点搜索树的数量 = 右子树有1个元素的搜索树数量 * 左子树有1个元素的搜索树数量</p>
+<p>元素3为头结点搜索树的数量 = 右子树有0个元素的搜索树数量 * 左子树有2个元素的搜索树数量</p>
+<p>有2个元素的搜索树数量就是dp[2]。</p>
+<p>有1个元素的搜索树数量就是dp[1]。</p>
+<p>有0个元素的搜索树数量就是dp[0]。</p>
+<p>所以<code>dp[3] = dp[2] * dp[0] + dp[1] * dp[1] + dp[0] * dp[2]</code></p>
+<p>如图所示：</p>
+<p><img src="https://code-thinking-1253855093.file.myqcloud.com/pics/20210107093226241.png" alt="96.不同的二叉搜索树2" /></p>
+<p>此时我们已经找到递推关系了，那么可以用动规五部曲再系统分析一遍。</p>
+<ol>
+<li>确定dp数组（dp table）以及下标的含义</li>
+</ol>
+<p><strong>dp[i] ： 1到i为节点组成的二叉搜索树的个数为dp[i]</strong>。</p>
+<p>也可以理解是i个不同元素节点组成的二叉搜索树的个数为dp[i] ，都是一样的。</p>
+<p>以下分析如果想不清楚，就来回想一下dp[i]的定义</p>
+<ol start="2">
+<li>确定递推公式</li>
+</ol>
+<p>在上面的分析中，其实已经看出其递推关系， <code>dp[i] += dp[以j为头结点左子树节点数量] * dp[以j为头结点右子树节点数量]</code></p>
+<p>j相当于是头结点的元素，从1遍历到i为止。</p>
+<p>所以递推公式：<code>dp[i] += dp[j - 1] * dp[i - j];</code> ，j-1 为j为头结点左子树节点数量，i-j 为以j为头结点右子树节点数量</p>
+<ol start="3">
+<li>dp数组如何初始化</li>
+</ol>
+<p>初始化，只需要初始化dp[0]就可以了，推导的基础，都是dp[0]。</p>
+<p>那么dp[0]应该是多少呢？</p>
+<p>从定义上来讲，空节点也是一棵二叉树，也是一棵二叉搜索树，这是可以说得通的。</p>
+<p>从递归公式上来讲，<code>dp[以j为头结点左子树节点数量] * dp[以j为头结点右子树节点数量]</code> 中以j为头结点左子树节点数量为0，也需要<code>dp[以j为头结点左子树节点数量] = 1</code>， 否则乘法的结果就都变成0了。</p>
+<p>所以初始化<code>dp[0] = 1</code></p>
+<ol start="4">
+<li>确定遍历顺序</li>
+</ol>
+<p>首先一定是遍历节点数，从递归公式：<code>dp[i] += dp[j - 1] * dp[i - j]</code>可以看出，节点数为i的状态是依靠 i之前节点数的状态。</p>
+<p>那么遍历i里面每一个数作为头结点的状态，用j来遍历。</p>
+<p>代码如下：</p>
+<pre><code class="language-cpp">for (int i = 1; i &lt;= n; i++) {  
+    for (int j = 1; j &lt;= i; j++) {  
+        dp[i] += dp[j - 1] * dp[i - j];  
+    }  
+}
+</code></pre>
+<ol start="5">
+<li>举例推导dp数组</li>
+</ol>
+<p>n为5时候的dp数组状态如图：</p>
+<p><img src="https://code-thinking-1253855093.file.myqcloud.com/pics/20210107093253987.png" alt="96.不同的二叉搜索树3" /></p>
+<p>当然如果自己画图举例的话，基本举例到n为3就可以了，n为4的时候，画图已经比较麻烦了。</p>
+<p><strong>我这里列到了n为5的情况，是为了方便大家 debug代码的时候，把dp数组打出来，看看哪里有问题</strong>。</p>
+<h2 id="c解法"><a class="header" href="#c解法">C++解法</a></h2>
+<p>综上分析完毕，C++代码如下：</p>
+<pre><code class="language-cpp">class Solution {  
+public:  
+    int numTrees(int n) {  
+        vector&lt;int&gt; dp(n + 1);  
+        dp[0] = 1;  
+        for (int i = 1; i &lt;= n; i++) {  
+            for (int j = 1; j &lt;= i; j++) {  
+                dp[i] += dp[j - 1] * dp[i - j];  
+            }  
+        }  
+        return dp[n];  
+    }  
+};
+</code></pre>
+<ul>
+<li>时间复杂度：<span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.0641em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal">n</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span></li>
+<li>空间复杂度：<span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathnormal">n</span><span class="mclose">)</span></span></span></span></li>
+</ul>
+<h2 id="java解法"><a class="header" href="#java解法">Java解法</a></h2>
+<pre><code class="language-java">class Solution {
+    public int numTrees(int n) {
+        //初始化 dp 数组
+        int[] dp = new int[n + 1];
+        //初始化0个节点和1个节点的情况
+        dp[0] = 1;
+        dp[1] = 1;
+        for (int i = 2; i &lt;= n; i++) {
+            for (int j = 1; j &lt;= i; j++) {
+                //对于第i个节点，需要考虑1作为根节点直到i作为根节点的情况，所以需要累加
+                //一共i个节点，对于根节点j时,左子树的节点个数为j-1，右子树的节点个数为i-j
+                dp[i] += dp[j - 1] * dp[i - j];
+            }
+        }
+        return dp[n];
+    }
+}
+</code></pre>
+<h1 id="95-unique-binary-search-trees-ii"><a class="header" href="#95-unique-binary-search-trees-ii"><a href="https://leetcode.com/problems/unique-binary-search-trees-ii/">95. Unique Binary Search Trees II</a></a></h1>
+<p>Given an integer <code>n</code>, return <em>all the structurally unique **BST'**s (binary search trees), which has exactly</em> <code>n</code> <em>nodes of unique values from</em> <code>1</code> <em>to</em> <code>n</code>. Return the answer in <strong>any order</strong>.</p>
+<p><strong>Example 1:</strong></p>
+<p><img src="https://assets.leetcode.com/uploads/2021/01/18/uniquebstn3.jpg" alt="" /></p>
+<p><strong>Input:</strong> n = 3<br />
+<strong>Output:</strong> <code>[[1,null,2,null,3],[1,null,3,2],[2,1,3],[3,1,null,null,2],[3,2,null,1]]</code></p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> n = 1<br />
+<strong>Output:</strong> <code>[[1]]</code></p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= n &lt;= 8</code></li>
+</ul>
+<h2 id="思路-1"><a class="header" href="#思路-1">思路</a></h2>
+<p>https://leetcode.com/problems/unique-binary-search-trees-ii/solutions/3667682/unique-binary-search-trees-ii/</p>
+<h2 id="c解法-1"><a class="header" href="#c解法-1">C++解法</a></h2>
+<pre><code class="language-cpp">class Solution {
+public:
+    vector&lt;TreeNode*&gt; allPossibleBST(
+        int start, int end, map&lt;pair&lt;int, int&gt;, vector&lt;TreeNode*&gt;&gt;&amp; memo) {
+        vector&lt;TreeNode*&gt; res;
+        if (start &gt; end) {
+            res.push_back(nullptr);
+            return res;
+        }
+        if (memo.find(make_pair(start, end)) != memo.end()) {
+            return memo[make_pair(start, end)];
+        }
+        // Iterate through all values from start to end to construct left and
+        // right subtrees recursively.
+        for (int i = start; i &lt;= end; ++i) {
+            vector&lt;TreeNode*&gt; leftSubTrees = allPossibleBST(start, i - 1, memo);
+            vector&lt;TreeNode*&gt; rightSubTrees = allPossibleBST(i + 1, end, memo);
+
+            // Loop through all left and right subtrees and connect them to the
+            // ith root.
+            for (auto left : leftSubTrees) {
+                for (auto right : rightSubTrees) {
+                    TreeNode* root = new TreeNode(i, left, right);
+                    res.push_back(root);
+                }
+            }
+        }
+        return memo[make_pair(start, end)] = res;
+    }
+
+    vector&lt;TreeNode*&gt; generateTrees(int n) {
+        map&lt;pair&lt;int, int&gt;, vector&lt;TreeNode*&gt;&gt; memo;
+        return allPossibleBST(1, n, memo);
+    }
+};
+</code></pre>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../动态规划/不同路径.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../动态规划/整数拆分.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../动态规划/不同路径.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../动态规划/整数拆分.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

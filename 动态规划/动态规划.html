@@ -154,6 +154,545 @@
                     <main>
                         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
 <h1 id="动态规划"><a class="header" href="#动态规划">动态规划</a></h1>
+<ul>
+<li><a href="#%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E7%90%86%E8%AE%BA%E5%9F%BA%E7%A1%80">动态规划理论基础</a>
+<ul>
+<li><a href="#%E4%BB%80%E4%B9%88%E6%98%AF%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92">什么是动态规划</a></li>
+<li><a href="#%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E7%9A%84%E8%A7%A3%E9%A2%98%E6%AD%A5%E9%AA%A4">动态规划的解题步骤</a></li>
+<li><a href="#%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E5%BA%94%E8%AF%A5%E5%A6%82%E4%BD%95debug">动态规划应该如何debug</a></li>
+<li><a href="#%E6%80%BB%E7%BB%93">总结</a></li>
+</ul>
+</li>
+<li><a href="#%E5%90%AC%E8%AF%B4%E8%83%8C%E5%8C%85%E9%97%AE%E9%A2%98%E5%BE%88%E9%9A%BE-%E8%BF%99%E7%AF%87%E6%80%BB%E7%BB%93%E7%AF%87%E6%9D%A5%E6%8B%AF%E6%95%91%E4%BD%A0%E4%BA%86">听说背包问题很难？ 这篇总结篇来拯救你了</a>
+<ul>
+<li><a href="#%E8%83%8C%E5%8C%85%E9%80%92%E6%8E%A8%E5%85%AC%E5%BC%8F">背包递推公式</a></li>
+<li><a href="#%E9%81%8D%E5%8E%86%E9%A1%BA%E5%BA%8F">遍历顺序</a>
+<ul>
+<li><a href="#01%E8%83%8C%E5%8C%85">01背包</a></li>
+<li><a href="#%E5%AE%8C%E5%85%A8%E8%83%8C%E5%8C%85">完全背包</a></li>
+</ul>
+</li>
+<li><a href="#%E6%80%BB%E7%BB%93-1">总结</a></li>
+</ul>
+</li>
+<li><a href="#518-coin-change-ii">518. Coin Change II</a>
+<ul>
+<li><a href="#%E6%80%9D%E8%B7%AF">思路</a></li>
+<li><a href="#c%E8%A7%A3%E6%B3%95">C++解法</a></li>
+<li><a href="#java%E8%A7%A3%E6%B3%95">Java解法</a></li>
+</ul>
+</li>
+<li><a href="#322-coin-change">322. Coin Change</a>
+<ul>
+<li><a href="#%E6%80%9D%E8%B7%AF-1">思路</a></li>
+<li><a href="#c%E8%A7%A3%E6%B3%95-1">C++解法</a></li>
+<li><a href="#java%E8%A7%A3%E6%B3%95-1">Java解法</a></li>
+</ul>
+</li>
+<li><a href="#279-perfect-squares">279. Perfect Squares</a>
+<ul>
+<li><a href="#%E6%80%9D%E8%B7%AF-2">思路</a></li>
+<li><a href="#c%E8%A7%A3%E6%B3%95-2">C++解法</a></li>
+</ul>
+</li>
+</ul>
+<h1 id="动态规划理论基础"><a class="header" href="#动态规划理论基础">动态规划理论基础</a></h1>
+<p>动态规划刷题大纲</p>
+<p><img src="https://code-thinking.cdn.bcebos.com/pics/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92-%E6%80%BB%E7%BB%93%E5%A4%A7%E7%BA%B21.jpg" alt="" /></p>
+<h2 id="什么是动态规划"><a class="header" href="#什么是动态规划">什么是动态规划</a></h2>
+<p>动态规划，英文：Dynamic Programming，简称DP，如果某一问题有很多重叠子问题，使用动态规划是最有效的。</p>
+<p>所以动态规划中每一个状态一定是由上一个状态推导出来的，<strong>这一点就区分于贪心</strong>，贪心没有状态推导，而是从局部直接选最优的，</p>
+<p>在<a href="https://programmercarl.com/%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95%E7%90%86%E8%AE%BA%E5%9F%BA%E7%A1%80.html">关于贪心算法，你该了解这些！</a>中我举了一个背包问题的例子。</p>
+<p>例如：有N件物品和一个最多能背重量为W 的背包。第i件物品的重量是weight[i]，得到的价值是value[i] 。<strong>每件物品只能用一次</strong>，求解将哪些物品装入背包里物品价值总和最大。</p>
+<p>动态规划中dp[j]是由dp[j-weight[i]]推导出来的，然后取max(dp[j], dp[j - weight[i]] + value[i])。</p>
+<p>但如果是贪心呢，每次拿物品选一个最大的或者最小的就完事了，和上一个状态没有关系。</p>
+<p>所以贪心解决不了动态规划的问题。</p>
+<p><strong>其实大家也不用死扣动规和贪心的理论区别，后面做做题目自然就知道了</strong>。</p>
+<p>而且很多讲解动态规划的文章都会讲最优子结构啊和重叠子问题啊这些，这些东西都是教科书的上定义，晦涩难懂而且不实用。</p>
+<p>大家知道动规是由前一个状态推导出来的，而贪心是局部直接选最优的，对于刷题来说就够用了。</p>
+<p>上述提到的背包问题，后序会详细讲解。</p>
+<h2 id="动态规划的解题步骤"><a class="header" href="#动态规划的解题步骤">动态规划的解题步骤</a></h2>
+<p>做动规题目的时候，很多同学会陷入一个误区，就是以为把状态转移公式背下来，照葫芦画瓢改改，就开始写代码，甚至把题目AC之后，都不太清楚dp[i]表示的是什么。</p>
+<p><strong>这就是一种朦胧的状态，然后就把题给过了，遇到稍稍难一点的，可能直接就不会了，然后看题解，然后继续照葫芦画瓢陷入这种恶性循环中</strong>。</p>
+<p>状态转移公式（递推公式）是很重要，但动规不仅仅只有递推公式。</p>
+<p><strong>对于动态规划问题，我将拆解为如下五步曲，这五步都搞清楚了，才能说把动态规划真的掌握了！</strong></p>
+<ol>
+<li>确定dp数组（dp table）以及下标的含义</li>
+<li>确定递推公式</li>
+<li>dp数组如何初始化</li>
+<li>确定遍历顺序</li>
+<li>举例推导dp数组</li>
+</ol>
+<p>一些同学可能想为什么要先确定递推公式，然后在考虑初始化呢？</p>
+<p><strong>因为一些情况是递推公式决定了dp数组要如何初始化！</strong></p>
+<p>后面的讲解中我都是围绕着这五点来进行讲解。</p>
+<p>可能刷过动态规划题目的同学可能都知道递推公式的重要性，感觉确定了递推公式这道题目就解出来了。</p>
+<p>其实 确定递推公式 仅仅是解题里的一步而已！</p>
+<p>一些同学知道递推公式，但搞不清楚dp数组应该如何初始化，或者正确的遍历顺序，以至于记下来公式，但写的程序怎么改都通过不了。</p>
+<p>后序的讲解的大家就会慢慢感受到这五步的重要性了。</p>
+<h2 id="动态规划应该如何debug"><a class="header" href="#动态规划应该如何debug">动态规划应该如何debug</a></h2>
+<p>相信动规的题目，很大部分同学都是这样做的。</p>
+<p>看一下题解，感觉看懂了，然后照葫芦画瓢，如果能正好画对了，万事大吉，一旦要是没通过，就怎么改都通过不了，对 dp数组的初始化，递推公式，遍历顺序，处于一种黑盒的理解状态。</p>
+<p>写动规题目，代码出问题很正常！</p>
+<p><strong>找问题的最好方式就是把dp数组打印出来，看看究竟是不是按照自己思路推导的！</strong></p>
+<p>一些同学对于dp的学习是黑盒的状态，就是不清楚dp数组的含义，不懂为什么这么初始化，递推公式背下来了，遍历顺序靠习惯就是这么写的，然后一鼓作气写出代码，如果代码能通过万事大吉，通过不了的话就凭感觉改一改。</p>
+<p>这是一个很不好的习惯！</p>
+<p><strong>做动规的题目，写代码之前一定要把状态转移在dp数组的上具体情况模拟一遍，心中有数，确定最后推出的是想要的结果</strong>。</p>
+<p>然后再写代码，如果代码没通过就打印dp数组，看看是不是和自己预先推导的哪里不一样。</p>
+<p>如果打印出来和自己预先模拟推导是一样的，那么就是自己的递归公式、初始化或者遍历顺序有问题了。</p>
+<p>如果和自己预先模拟推导的不一样，那么就是代码实现细节有问题。</p>
+<p><strong>这样才是一个完整的思考过程，而不是一旦代码出问题，就毫无头绪的东改改西改改，最后过不了，或者说是稀里糊涂的过了</strong>。</p>
+<p>这也是我为什么在动规五步曲里强调推导dp数组的重要性。</p>
+<p>举个例子哈：在「代码随想录」刷题小分队微信群里，一些录友可能代码通过不了，会把代码抛到讨论群里问：我这里代码都已经和题解一模一样了，为什么通过不了呢？</p>
+<p>发出这样的问题之前，其实可以自己先思考这三个问题：</p>
+<ul>
+<li>这道题目我举例推导状态转移公式了么？</li>
+<li>我打印dp数组的日志了么？</li>
+<li>打印出来了dp数组和我想的一样么？</li>
+</ul>
+<p><strong>如果这灵魂三问自己都做到了，基本上这道题目也就解决了</strong>，或者更清晰的知道自己究竟是哪一点不明白，是状态转移不明白，还是实现代码不知道该怎么写，还是不理解遍历dp数组的顺序。</p>
+<p>然后在问问题，目的性就很强了，群里的小伙伴也可以快速知道提问者的疑惑了。</p>
+<p><strong>注意这里不是说不让大家问问题哈， 而是说问问题之前要有自己的思考，问题要问到点子上！</strong></p>
+<p><strong>大家工作之后就会发现，特别是大厂，问问题是一个专业活，是的，问问题也要体现出专业！</strong></p>
+<p>如果问同事很不专业的问题，同事们会懒的回答，领导也会认为你缺乏思考能力，这对职场发展是很不利的。</p>
+<p>所以大家在刷题的时候，就锻炼自己养成专业提问的好习惯。</p>
+<h2 id="总结"><a class="header" href="#总结">总结</a></h2>
+<p>这一篇是动态规划的整体概述，讲解了什么是动态规划，动态规划的解题步骤，以及如何debug。</p>
+<p>动态规划是一个很大的领域，今天这一篇讲解的内容是整个动态规划系列中都会使用到的一些理论基础。</p>
+<p>在后序讲解中针对某一具体问题，还会讲解其对应的理论基础，例如背包问题中的01背包，leetcode上的题目都是01背包的应用，而没有纯01背包的问题，那么就需要在把对应的理论知识讲解一下。</p>
+<p>大家会发现，我讲解的理论基础并不是教科书上各种动态规划的定义，错综复杂的公式。</p>
+<p>这里理论基础篇已经是非常偏实用的了，每个知识点都是在解题实战中非常有用的内容，大家要重视起来哈。</p>
+<h1 id="听说背包问题很难-这篇总结篇来拯救你了"><a class="header" href="#听说背包问题很难-这篇总结篇来拯救你了">听说背包问题很难？ 这篇总结篇来拯救你了</a></h1>
+<p>年前我们已经把背包问题都讲完了，那么现在我们要对背包问题进行总结一番。</p>
+<p>背包问题是动态规划里的非常重要的一部分，所以我把背包问题单独总结一下，等动态规划专题更新完之后，我们还会在整体总结一波动态规划。</p>
+<p>关于这几种常见的背包，其关系如下：</p>
+<p><img src="https://code-thinking-1253855093.file.myqcloud.com/pics/20230310000726.png" alt="416.分割等和子集1" /></p>
+<p>通过这个图，可以很清晰分清这几种常见背包之间的关系。</p>
+<p>在讲解背包问题的时候，我们都是按照如下五部来逐步分析，相信大家也体会到，把这五部都搞透了，算是对动规来理解深入了。</p>
+<ol>
+<li>确定dp数组（dp table）以及下标的含义</li>
+<li>确定递推公式</li>
+<li>dp数组如何初始化</li>
+<li>确定遍历顺序</li>
+<li>举例推导dp数组</li>
+</ol>
+<p><strong>其实这五部里哪一步都很关键，但确定递推公式和确定遍历顺序都具有规律性和代表性，所以下面我从这两点来对背包问题做一做总结</strong>。</p>
+<h2 id="背包递推公式"><a class="header" href="#背包递推公式">背包递推公式</a></h2>
+<p>问能否能装满背包（或者最多装多少）：dp[j] = max(dp[j], dp[j - nums[i]] + nums[i]); ，对应题目如下：</p>
+<ul>
+<li><a href="https://programmercarl.com/0416.%E5%88%86%E5%89%B2%E7%AD%89%E5%92%8C%E5%AD%90%E9%9B%86.html">动态规划：416.分割等和子集</a></li>
+<li><a href="https://programmercarl.com/1049.%E6%9C%80%E5%90%8E%E4%B8%80%E5%9D%97%E7%9F%B3%E5%A4%B4%E7%9A%84%E9%87%8D%E9%87%8FII.html">动态规划：1049.最后一块石头的重量 II</a></li>
+</ul>
+<p>问装满背包有几种方法：dp[j] += dp[j - nums[i]] ，对应题目如下：</p>
+<ul>
+<li><a href="https://programmercarl.com/0494.%E7%9B%AE%E6%A0%87%E5%92%8C.html">动态规划：494.目标和</a></li>
+<li><a href="https://programmercarl.com/0518.%E9%9B%B6%E9%92%B1%E5%85%91%E6%8D%A2II.html">动态规划：518. 零钱兑换 II</a></li>
+<li><a href="https://programmercarl.com/0377.%E7%BB%84%E5%90%88%E6%80%BB%E5%92%8C%E2%85%A3.html">动态规划：377.组合总和Ⅳ</a></li>
+<li><a href="https://programmercarl.com/0070.%E7%88%AC%E6%A5%BC%E6%A2%AF%E5%AE%8C%E5%85%A8%E8%83%8C%E5%8C%85%E7%89%88%E6%9C%AC.html">动态规划：70. 爬楼梯进阶版（完全背包）</a></li>
+</ul>
+<p>问背包装满最大价值：dp[j] = max(dp[j], dp[j - weight[i]] + value[i]); ，对应题目如下：</p>
+<ul>
+<li><a href="https://programmercarl.com/0474.%E4%B8%80%E5%92%8C%E9%9B%B6.html">动态规划：474.一和零</a></li>
+</ul>
+<p>问装满背包所有物品的最小个数：dp[j] = min(dp[j - coins[i]] + 1, dp[j]); ，对应题目如下：</p>
+<ul>
+<li><a href="https://programmercarl.com/0322.%E9%9B%B6%E9%92%B1%E5%85%91%E6%8D%A2.html">动态规划：322.零钱兑换</a></li>
+<li><a href="https://programmercarl.com/0279.%E5%AE%8C%E5%85%A8%E5%B9%B3%E6%96%B9%E6%95%B0.html">动态规划：279.完全平方数</a></li>
+</ul>
+<h2 id="遍历顺序"><a class="header" href="#遍历顺序">遍历顺序</a></h2>
+<h3 id="01背包"><a class="header" href="#01背包">01背包</a></h3>
+<p>在<a href="https://programmercarl.com/%E8%83%8C%E5%8C%85%E7%90%86%E8%AE%BA%E5%9F%BA%E7%A1%8001%E8%83%8C%E5%8C%85-1.html">动态规划：关于01背包问题，你该了解这些！</a>中我们讲解二维dp数组01背包先遍历物品还是先遍历背包都是可以的，且第二层for循环是从小到大遍历。</p>
+<p>和<a href="https://programmercarl.com/%E8%83%8C%E5%8C%85%E7%90%86%E8%AE%BA%E5%9F%BA%E7%A1%8001%E8%83%8C%E5%8C%85-2.html">动态规划：关于01背包问题，你该了解这些！（滚动数组）</a>中，我们讲解一维dp数组01背包只能先遍历物品再遍历背包容量，且第二层for循环是从大到小遍历。</p>
+<p><strong>一维dp数组的背包在遍历顺序上和二维dp数组实现的01背包其实是有很大差异的，大家需要注意！</strong></p>
+<h3 id="完全背包"><a class="header" href="#完全背包">完全背包</a></h3>
+<p>说完01背包，再看看完全背包。</p>
+<p>在<a href="https://programmercarl.com/%E8%83%8C%E5%8C%85%E9%97%AE%E9%A2%98%E7%90%86%E8%AE%BA%E5%9F%BA%E7%A1%80%E5%AE%8C%E5%85%A8%E8%83%8C%E5%8C%85.html">动态规划：关于完全背包，你该了解这些！</a>中，讲解了纯完全背包的一维dp数组实现，先遍历物品还是先遍历背包都是可以的，且第二层for循环是从小到大遍历。</p>
+<p>但是仅仅是纯完全背包的遍历顺序是这样的，题目稍有变化，两个for循环的先后顺序就不一样了。</p>
+<p><strong>如果求组合数就是外层for循环遍历物品，内层for遍历背包</strong>。</p>
+<p><strong>如果求排列数就是外层for遍历背包，内层for循环遍历物品</strong>。</p>
+<p>相关题目如下：</p>
+<ul>
+<li>求组合数：<a href="https://programmercarl.com/0518.%E9%9B%B6%E9%92%B1%E5%85%91%E6%8D%A2II.html">动态规划：518.零钱兑换II</a></li>
+<li>求排列数：<a href="https://mp.weixin.qq.com/s/Iixw0nahJWQgbqVNk8k6gA">动态规划：377. 组合总和 Ⅳ</a>、<a href="https://programmercarl.com/0070.%E7%88%AC%E6%A5%BC%E6%A2%AF%E5%AE%8C%E5%85%A8%E8%83%8C%E5%8C%85%E7%89%88%E6%9C%AC.html">动态规划：70. 爬楼梯进阶版（完全背包）</a></li>
+</ul>
+<p>如果求最小数，那么两层for循环的先后顺序就无所谓了，相关题目如下：</p>
+<ul>
+<li>求最小数：<a href="https://programmercarl.com/0322.%E9%9B%B6%E9%92%B1%E5%85%91%E6%8D%A2.html">动态规划：322. 零钱兑换</a>、<a href="https://programmercarl.com/0279.%E5%AE%8C%E5%85%A8%E5%B9%B3%E6%96%B9%E6%95%B0.html">动态规划：279.完全平方数</a></li>
+</ul>
+<p><strong>对于背包问题，其实递推公式算是容易的，难是难在遍历顺序上，如果把遍历顺序搞透，才算是真正理解了</strong>。</p>
+<h2 id="总结-1"><a class="header" href="#总结-1">总结</a></h2>
+<p><strong>这篇背包问题总结篇是对背包问题的高度概括，讲最关键的两部：递推公式和遍历顺序，结合力扣上的题目全都抽象出来了</strong>。</p>
+<p><strong>而且每一个点，我都给出了对应的力扣题目</strong>。</p>
+<p>最后如果你想了解多重背包，可以看这篇<a href="https://programmercarl.com/%E8%83%8C%E5%8C%85%E9%97%AE%E9%A2%98%E7%90%86%E8%AE%BA%E5%9F%BA%E7%A1%80%E5%A4%9A%E9%87%8D%E8%83%8C%E5%8C%85.html">动态规划：关于多重背包，你该了解这些！</a>，力扣上还没有多重背包的题目，也不是面试考察的重点。</p>
+<p>如果把我本篇总结出来的内容都掌握的话，可以说对背包问题理解的就很深刻了，用来对付面试中的背包问题绰绰有余！</p>
+<p>背包问题总结：</p>
+<p><img src="https://code-thinking-1253855093.file.myqcloud.com/pics/%E8%83%8C%E5%8C%85%E9%97%AE%E9%A2%981.jpeg" alt="" /></p>
+<h1 id="518-coin-change-ii"><a class="header" href="#518-coin-change-ii"><a href="https://leetcode.com/problems/coin-change-ii/">518. Coin Change II</a></a></h1>
+<p>You are given an integer array <code>coins</code> representing coins of different denominations and an integer <code>amount</code> representing a total amount of money.</p>
+<p>Return <em>the number of combinations that make up that amount</em>. If that amount of money cannot be made up by any combination of the coins, return <code>0</code>.</p>
+<p>You may assume that you have an infinite number of each kind of coin.</p>
+<p>The answer is <strong>guaranteed</strong> to fit into a signed <strong>32-bit</strong> integer.</p>
+<p><strong>Example 1:</strong></p>
+<p><strong>Input:</strong> amount = 5, coins = [1,2,5]<br />
+<strong>Output:</strong> 4<br />
+<strong>Explanation:</strong> there are four ways to make up the amount:
+5=5
+5=2+2+1
+5=2+1+1+1
+5=1+1+1+1+1</p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> amount = 3, coins = [2]<br />
+<strong>Output:</strong> 0<br />
+<strong>Explanation:</strong> the amount of 3 cannot be made up just with coins of 2.</p>
+<p><strong>Example 3:</strong></p>
+<p><strong>Input:</strong> amount = 10, coins = [10]<br />
+<strong>Output:</strong> 1</p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= coins.length &lt;= 300</code></li>
+<li><code>1 &lt;= coins[i] &lt;= 5000</code></li>
+<li>All the values of <code>coins</code> are <strong>unique</strong>.</li>
+<li><code>0 &lt;= amount &lt;= 5000</code></li>
+</ul>
+<h2 id="思路"><a class="header" href="#思路">思路</a></h2>
+<p>这是一道典型的背包问题，一看到钱币数量不限，就知道这是一个完全背包。</p>
+<p>对完全背包还不了解的同学，可以看这篇：<a href="https://programmercarl.com/%E8%83%8C%E5%8C%85%E9%97%AE%E9%A2%98%E7%90%86%E8%AE%BA%E5%9F%BA%E7%A1%80%E5%AE%8C%E5%85%A8%E8%83%8C%E5%8C%85.html">动态规划：关于完全背包，你该了解这些！</a></p>
+<p>但本题和纯完全背包不一样，<strong>纯完全背包是凑成背包最大价值是多少，而本题是要求凑成总金额的物品组合个数！</strong></p>
+<p>注意题目描述中是凑成总金额的硬币组合数，为什么强调是组合数呢？</p>
+<p>例如示例一：</p>
+<p>5 = 2 + 2 + 1</p>
+<p>5 = 2 + 1 + 2</p>
+<p>这是一种组合，都是 2 2 1。</p>
+<p>如果问的是排列数，那么上面就是两种排列了。</p>
+<p><strong>组合不强调元素之间的顺序，排列强调元素之间的顺序</strong>。 其实这一点我们在讲解回溯算法专题的时候就讲过了哈。</p>
+<p>那我为什么要介绍这些呢，因为这和下文讲解遍历顺序息息相关!</p>
+<p>回归本题，动规五步曲来分析如下：</p>
+<ol>
+<li>确定dp数组以及下标的含义</li>
+</ol>
+<p><code>dp[j]</code>：凑成总金额j的货币组合数为<code>dp[j]</code></p>
+<ol start="2">
+<li>确定递推公式</li>
+</ol>
+<p><code>dp[j]</code> 就是所有的<code>dp[j - coins[i]]</code>（考虑coins[i]的情况）相加。</p>
+<p>所以递推公式：<code>dp[j] += dp[j - coins[i]];</code></p>
+<p><strong>这个递推公式大家应该不陌生了，我在讲解01背包题目的时候在这篇<a href="https://programmercarl.com/0494.%E7%9B%AE%E6%A0%87%E5%92%8C.html">494. 目标和</a>中就讲解了，求装满背包有几种方法，公式都是：<code>dp[j] += dp[j - nums[i]];</code></strong></p>
+<ol start="3">
+<li>dp数组如何初始化</li>
+</ol>
+<p>首先dp[0]一定要为1，dp[0] = 1是 递归公式的基础。如果dp[0] = 0 的话，后面所有推导出来的值都是0了。</p>
+<p>那么 dp[0] = 1 有没有含义，其实既可以说 凑成总金额0的货币组合数为1，也可以说 凑成总金额0的货币组合数为0，好像都没有毛病。</p>
+<p>但题目描述中，也没明确说 amount = 0 的情况，结果应该是多少。</p>
+<p>这里我认为题目描述还是要说明一下，因为后台测试数据是默认，amount = 0 的情况，组合数为1的。</p>
+<p>下标非0的dp[j]初始化为0，这样累计加<code>dp[j - coins[i]]</code>的时候才不会影响真正的dp[j]</p>
+<p>dp[0]=1还说明了一种情况：如果正好选了coins[i]后，也就是j-coins[i] == 0的情况表示这个硬币刚好能选，此时dp[0]为1表示只选coins[i]存在这样的一种选法。</p>
+<ol start="4">
+<li>确定遍历顺序</li>
+</ol>
+<p>本题中我们是外层for循环遍历物品（钱币），内层for遍历背包（金钱总额），还是外层for遍历背包（金钱总额），内层for循环遍历物品（钱币）呢？</p>
+<p>我在<a href="https://programmercarl.com/%E8%83%8C%E5%8C%85%E9%97%AE%E9%A2%98%E7%90%86%E8%AE%BA%E5%9F%BA%E7%A1%80%E5%AE%8C%E5%85%A8%E8%83%8C%E5%8C%85.html">动态规划：关于完全背包，你该了解这些！</a>中讲解了完全背包的两个for循环的先后顺序都是可以的。</p>
+<p><strong>但本题就不行了！</strong></p>
+<p>因为纯完全背包求得装满背包的最大价值是多少，和凑成总和的元素有没有顺序没关系，即：有顺序也行，没有顺序也行！</p>
+<p>而本题要求凑成总和的组合数，元素之间明确要求没有顺序。</p>
+<p>所以纯完全背包是能凑成总和就行，不用管怎么凑的。</p>
+<p>本题是求凑出来的方案个数，且每个方案个数是为组合数。</p>
+<p>那么本题，两个for循环的先后顺序可就有说法了。</p>
+<p>我们先来看 外层for循环遍历物品（钱币），内层for遍历背包（金钱总额）的情况。</p>
+<p>代码如下：</p>
+<pre><code class="language-cpp">for (int i = 0; i &lt; coins.size(); i++) { // 遍历物品  
+    for (int j = coins[i]; j &lt;= amount; j++) { // 遍历背包容量  
+        dp[j] += dp[j - coins[i]];  
+    }  
+}
+</code></pre>
+<p>假设：coins[0] = 1，coins[1] = 5。</p>
+<p>那么就是先把1加入计算，然后再把5加入计算，得到的方法数量只有{1, 5}这种情况。而不会出现{5, 1}的情况。</p>
+<p><strong>所以这种遍历顺序中dp[j]里计算的是组合数！</strong></p>
+<p>如果把两个for交换顺序，代码如下：</p>
+<pre><code class="language-cpp">for (int j = 0; j &lt;= amount; j++) { // 遍历背包容量  
+    for (int i = 0; i &lt; coins.size(); i++) { // 遍历物品  
+        if (j - coins[i] &gt;= 0) dp[j] += dp[j - coins[i]];  
+    }  
+}
+</code></pre>
+<p>背包容量的每一个值，都是经过 1 和 5 的计算，包含了{1, 5} 和 {5, 1}两种情况。</p>
+<p><strong>此时dp[j]里算出来的就是排列数！</strong></p>
+<p>可能这里很多同学还不是很理解，<strong>建议动手把这两种方案的dp数组数值变化打印出来，对比看一看！（实践出真知）</strong></p>
+<ol start="5">
+<li>举例推导dp数组</li>
+</ol>
+<p>输入: amount = 5, coins = [1, 2, 5] ，dp状态图如下：</p>
+<p><img src="https://code-thinking-1253855093.file.myqcloud.com/pics/20210120181331461.jpg" alt="518.零钱兑换II" /></p>
+<p>最后红色框dp[amount]为最终结果。</p>
+<h2 id="c解法"><a class="header" href="#c解法">C++解法</a></h2>
+<p>以上分析完毕，C++代码如下：</p>
+<pre><code class="language-cpp">class Solution {  
+public:  
+    int change(int amount, vector&lt;int&gt;&amp; coins) {  
+        vector&lt;int&gt; dp(amount + 1, 0);  
+        dp[0] = 1;  
+        for (int i = 0; i &lt; coins.size(); i++) { // 遍历物品  
+            for (int j = coins[i]; j &lt;= amount; j++) { // 遍历背包  
+                dp[j] += dp[j - coins[i]];  
+            }  
+        }  
+        return dp[amount];  
+    }  
+};
+</code></pre>
+<ul>
+<li>时间复杂度: O(mn)，其中 m 是amount，n 是 coins 的长度</li>
+<li>空间复杂度: O(m)</li>
+</ul>
+<h2 id="java解法"><a class="header" href="#java解法">Java解法</a></h2>
+<pre><code class="language-java">class Solution {  
+    public int change(int amount, int[] coins) {  
+        //递推表达式  
+        int[] dp = new int[amount + 1];  
+        //初始化dp数组，表示金额为0时只有一种情况，也就是什么都不装  
+        dp[0] = 1;  
+        for (int i = 0; i &lt; coins.length; i++) {  
+            for (int j = coins[i]; j &lt;= amount; j++) {  
+                dp[j] += dp[j - coins[i]];  
+            }  
+        }  
+        return dp[amount];  
+    }  
+}
+</code></pre>
+<h1 id="322-coin-change"><a class="header" href="#322-coin-change"><a href="https://leetcode.com/problems/coin-change/">322. Coin Change</a></a></h1>
+<p>You are given an integer array <code>coins</code> representing coins of different denominations and an integer <code>amount</code> representing a total amount of money.</p>
+<p>Return <em>the fewest number of coins that you need to make up that amount</em>. If that amount of money cannot be made up by any combination of the coins, return <code>-1</code>.</p>
+<p>You may assume that you have an infinite number of each kind of coin.</p>
+<p><strong>Example 1:</strong></p>
+<p><strong>Input:</strong> coins = [1,2,5], amount = 11<br />
+<strong>Output:</strong> 3<br />
+<strong>Explanation:</strong> 11 = 5 + 5 + 1</p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> coins = [2], amount = 3<br />
+<strong>Output:</strong> -1</p>
+<p><strong>Example 3:</strong></p>
+<p><strong>Input:</strong> coins = [1], amount = 0<br />
+<strong>Output:</strong> 0</p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= coins.length &lt;= 12</code></li>
+<li><code>1 &lt;= coins[i] &lt;= 2^31 - 1</code></li>
+<li><code>0 &lt;= amount &lt;= 10^4</code></li>
+</ul>
+<h2 id="思路-1"><a class="header" href="#思路-1">思路</a></h2>
+<p>在<a href="https://programmercarl.com/0518.%E9%9B%B6%E9%92%B1%E5%85%91%E6%8D%A2II.html">动态规划：518.零钱兑换II</a>中我们已经兑换一次零钱了，这次又要兑换，套路不一样！</p>
+<p>题目中说每种硬币的数量是无限的，可以看出是典型的完全背包问题。</p>
+<p>动规五部曲分析如下：</p>
+<ol>
+<li>确定dp数组以及下标的含义</li>
+</ol>
+<p><strong><code>dp[j]</code>：凑足总额为j所需钱币的最少个数为<code>dp[j]</code></strong></p>
+<ol start="2">
+<li>确定递推公式</li>
+</ol>
+<p>凑足总额为<code>j - coins[i]</code>的最少个数为<code>dp[j - coins[i]]</code>，那么只需要加上一个钱币<code>coins[i]</code>即<code>dp[j - coins[i]] + 1</code>就是<code>dp[j]</code>（考虑<code>coins[i]</code>）</p>
+<p>所以<code>dp[j]</code> 要取所有 <code>dp[j - coins[i]] + 1</code> 中最小的。</p>
+<p>递推公式：<code>dp[j] = min(dp[j - coins[i]] + 1, dp[j]);</code></p>
+<ol start="3">
+<li>dp数组如何初始化</li>
+</ol>
+<p>首先凑足总金额为0所需钱币的个数一定是0，那么dp[0] = 0;</p>
+<p>其他下标对应的数值呢？</p>
+<p>考虑到递推公式的特性，<code>dp[j]</code>必须初始化为一个最大的数，否则就会在<code>min(dp[j - coins[i]] + 1, dp[j])</code>比较的过程中被初始值覆盖。</p>
+<p>所以下标非0的元素都是应该是最大值。</p>
+<p>代码如下：</p>
+<pre><code class="language-cpp">vector&lt;int&gt; dp(amount + 1, INT_MAX);  
+dp[0] = 0;
+</code></pre>
+<ol start="4">
+<li>确定遍历顺序</li>
+</ol>
+<p>本题求钱币最小个数，<strong>那么钱币有顺序和没有顺序都可以，都不影响钱币的最小个数</strong>。</p>
+<p>所以本题并不强调集合是组合还是排列。</p>
+<p><strong>如果求组合数就是外层for循环遍历物品，内层for遍历背包</strong>。</p>
+<p><strong>如果求排列数就是外层for遍历背包，内层for循环遍历物品</strong>。</p>
+<p>在动态规划专题我们讲过了求组合数是<a href="https://programmercarl.com/0518.%E9%9B%B6%E9%92%B1%E5%85%91%E6%8D%A2II.html">动态规划：518.零钱兑换II</a>，求排列数是<a href="https://programmercarl.com/0377.%E7%BB%84%E5%90%88%E6%80%BB%E5%92%8C%E2%85%A3.html">动态规划：377. 组合总和 Ⅳ</a>。</p>
+<p><strong>所以本题的两个for循环的关系是：外层for循环遍历物品，内层for遍历背包或者外层for遍历背包，内层for循环遍历物品都是可以的！</strong></p>
+<p>那么我采用coins放在外循环，target在内循环的方式。</p>
+<p>本题钱币数量可以无限使用，那么是完全背包。所以遍历的内循环是正序</p>
+<p>综上所述，遍历顺序为：coins（物品）放在外循环，target（背包）在内循环。且内循环正序。</p>
+<ol start="5">
+<li>举例推导dp数组</li>
+</ol>
+<p>以输入：coins = [1, 2, 5], amount = 5为例</p>
+<p><img src="https://code-thinking-1253855093.file.myqcloud.com/pics/20210201111833906.jpg" alt="322.零钱兑换" /></p>
+<p>dp[amount]为最终结果。</p>
+<h2 id="c解法-1"><a class="header" href="#c解法-1">C++解法</a></h2>
+<p>以上分析完毕，C++ 代码如下：</p>
+<pre><code class="language-cpp">// 版本一  
+class Solution {  
+public:  
+    int coinChange(vector&lt;int&gt;&amp; coins, int amount) {  
+        vector&lt;int&gt; dp(amount + 1, INT_MAX);  
+        dp[0] = 0;  
+        for (int i = 0; i &lt; coins.size(); i++) { // 遍历物品  
+            for (int j = coins[i]; j &lt;= amount; j++) { // 遍历背包  
+                if (dp[j - coins[i]] != INT_MAX) { // 如果dp[j - coins[i]]是初始值则跳过  
+                    dp[j] = min(dp[j - coins[i]] + 1, dp[j]);  
+                }  
+            }  
+        }  
+        if (dp[amount] == INT_MAX) return -1;  
+        return dp[amount];  
+    }  
+};
+</code></pre>
+<ul>
+<li>时间复杂度: O(n * amount)，其中 n 为 coins 的长度</li>
+<li>空间复杂度: O(amount)</li>
+</ul>
+<p>对于遍历方式遍历背包放在外循环，遍历物品放在内循环也是可以的，我就直接给出代码了</p>
+<pre><code class="language-cpp">// 版本二  
+class Solution {  
+public:  
+    int coinChange(vector&lt;int&gt;&amp; coins, int amount) {  
+        vector&lt;int&gt; dp(amount + 1, INT_MAX);  
+        dp[0] = 0;  
+        for (int i = 1; i &lt;= amount; i++) {  // 遍历背包  
+            for (int j = 0; j &lt; coins.size(); j++) { // 遍历物品  
+                if (i - coins[j] &gt;= 0 &amp;&amp; dp[i - coins[j]] != INT_MAX ) {  
+                    dp[i] = min(dp[i - coins[j]] + 1, dp[i]);  
+                }  
+            }  
+        }  
+        if (dp[amount] == INT_MAX) return -1;  
+        return dp[amount];  
+    }  
+};
+</code></pre>
+<ul>
+<li>时间复杂度: O(n * amount)，其中 n 为 coins 的长度</li>
+<li>空间复杂度: O(amount)</li>
+</ul>
+<h2 id="java解法-1"><a class="header" href="#java解法-1">Java解法</a></h2>
+<pre><code class="language-cpp">class Solution {  
+    public int coinChange(int[] coins, int amount) {  
+        int max = Integer.MAX_VALUE;  
+        int[] dp = new int[amount + 1];  
+        //初始化dp数组为最大值  
+        for (int j = 0; j &lt; dp.length; j++) {  
+            dp[j] = max;  
+        }  
+        //当金额为0时需要的硬币数目为0  
+        dp[0] = 0;  
+        for (int i = 0; i &lt; coins.length; i++) {  
+            //正序遍历：完全背包每个硬币可以选择多次  
+            for (int j = coins[i]; j &lt;= amount; j++) {  
+                //只有dp[j-coins[i]]不是初始最大值时，该位才有选择的必要  
+                if (dp[j - coins[i]] != max) {  
+                    //选择硬币数目最小的情况  
+                    dp[j] = Math.min(dp[j], dp[j - coins[i]] + 1);  
+                }  
+            }  
+        }  
+        return dp[amount] == max ? -1 : dp[amount];  
+    }  
+}
+</code></pre>
+<h1 id="279-perfect-squares"><a class="header" href="#279-perfect-squares"><a href="https://leetcode.com/problems/perfect-squares/">279. Perfect Squares</a></a></h1>
+<p>Given an integer <code>n</code>, return <em>the least number of perfect square numbers that sum to</em> <code>n</code>.</p>
+<p>A <strong>perfect square</strong> is an integer that is the square of an integer; in other words, it is the product of some integer with itself. For example, <code>1</code>, <code>4</code>, <code>9</code>, and <code>16</code> are perfect squares while <code>3</code> and <code>11</code> are not.</p>
+<p><strong>Example 1:</strong></p>
+<p><strong>Input:</strong> n = 12<br />
+<strong>Output:</strong> 3<br />
+<strong>Explanation:</strong> 12 = 4 + 4 + 4.</p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> n = 13<br />
+<strong>Output:</strong> 2<br />
+<strong>Explanation:</strong> 13 = 4 + 9.</p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= n &lt;= 10^4</code></li>
+</ul>
+<h2 id="思路-2"><a class="header" href="#思路-2">思路</a></h2>
+<p>可能刚看这种题感觉没啥思路，又平方和的，又最小数的。</p>
+<p><strong>我来把题目翻译一下：完全平方数就是物品（可以无限件使用），凑个正整数n就是背包，问凑满这个背包最少有多少物品？</strong></p>
+<p>感受出来了没，这么浓厚的完全背包氛围，而且和昨天的题目<a href="https://programmercarl.com/0322.%E9%9B%B6%E9%92%B1%E5%85%91%E6%8D%A2.html">动态规划：322. 零钱兑换</a>就是一样一样的！</p>
+<p>动规五部曲分析如下：</p>
+<ol>
+<li>确定dp数组（dp table）以及下标的含义</li>
+</ol>
+<p><strong><code>dp[j]</code>：和为j的完全平方数的最少数量为<code>dp[j]</code></strong></p>
+<ol start="2">
+<li>确定递推公式</li>
+</ol>
+<p><code>dp[j]</code> 可以由<code>dp[j - i * i]</code>推出， <code>dp[j - i * i] + 1</code> 便可以凑成<code>dp[j]</code>。</p>
+<p>此时我们要选择最小的dp[j]，所以递推公式：<code>dp[j] = min(dp[j - i * i] + 1, dp[j]);</code></p>
+<ol start="3">
+<li>dp数组如何初始化</li>
+</ol>
+<p><code>dp[0]</code>表示 和为0的完全平方数的最小数量，那么<code>dp[0]</code>一定是0。</p>
+<p>有同学问题，那0 * 0 也算是一种啊，为啥<code>dp[0]</code> 就是 0呢？</p>
+<p>看题目描述，找到若干个完全平方数（比如 1, 4, 9, 16, ...），题目描述中可没说要从0开始，dp[0]=0完全是为了递推公式。</p>
+<p>非0下标的<code>dp[j]</code>应该是多少呢？</p>
+<p>从递归公式<code>dp[j] = min(dp[j - i * i] + 1, dp[j]);</code>中可以看出每次dp[j]都要选最小的，<strong>所以非0下标的dp[j]一定要初始为最大值，这样dp[j]在递推的时候才不会被初始值覆盖</strong>。</p>
+<ol start="4">
+<li>确定遍历顺序</li>
+</ol>
+<p>我们知道这是完全背包，</p>
+<p>如果求组合数就是外层for循环遍历物品，内层for遍历背包。</p>
+<p>如果求排列数就是外层for遍历背包，内层for循环遍历物品。</p>
+<p>在<a href="https://programmercarl.com/0322.%E9%9B%B6%E9%92%B1%E5%85%91%E6%8D%A2.html">动态规划：322. 零钱兑换</a>中我们就深入探讨了这个问题，本题也是一样的，是求最小数！</p>
+<p><strong>所以本题外层for遍历背包，内层for遍历物品，还是外层for遍历物品，内层for遍历背包，都是可以的！</strong></p>
+<p>我这里先给出外层遍历背包，内层遍历物品的代码：</p>
+<pre><code class="language-cpp">vector&lt;int&gt; dp(n + 1, INT_MAX);  
+dp[0] = 0;  
+for (int i = 0; i &lt;= n; i++) { // 遍历背包  
+    for (int j = 1; j * j &lt;= i; j++) { // 遍历物品  
+        dp[i] = min(dp[i - j * j] + 1, dp[i]);  
+    }  
+}  
+</code></pre>
+<p>​</p>
+<ol start="5">
+<li>举例推导dp数组</li>
+</ol>
+<p>已输入n为5例，dp状态图如下：</p>
+<p><code>dp[0] = 0 dp[1] = min(dp[0] + 1) = 1 dp[2] = min(dp[1] + 1) = 2 dp[3] = min(dp[2] + 1) = 3 dp[4] = min(dp[3] + 1, dp[0] + 1) = 1 dp[5] = min(dp[4] + 1, dp[1] + 1) = 2</code></p>
+<p>最后的dp[n]为最终结果。</p>
+<h2 id="c解法-2"><a class="header" href="#c解法-2">C++解法</a></h2>
+<p>以上动规五部曲分析完毕C++代码如下：</p>
+<pre><code class="language-cpp">// 版本一  
+class Solution {  
+public:  
+    int numSquares(int n) {  
+        vector&lt;int&gt; dp(n + 1, INT_MAX);  
+        dp[0] = 0;  
+        for (int i = 0; i &lt;= n; i++) { // 遍历背包  
+            for (int j = 1; j * j &lt;= i; j++) { // 遍历物品  
+                dp[i] = min(dp[i - j * j] + 1, dp[i]);  
+            }  
+        }  
+        return dp[n];  
+    }  
+};
+</code></pre>
+<ul>
+<li>时间复杂度: O(n * √n)</li>
+<li>空间复杂度: O(n)</li>
+</ul>
+<p>同样我在给出先遍历物品，在遍历背包的代码，一样的可以AC的。</p>
+<pre><code class="language-cpp">// 版本二  
+class Solution {  
+public:  
+    int numSquares(int n) {  
+        vector&lt;int&gt; dp(n + 1, INT_MAX);  
+        dp[0] = 0;  
+        for (int i = 1; i * i &lt;= n; i++) { // 遍历物品  
+            for (int j = i * i; j &lt;= n; j++) { // 遍历背包  
+                dp[j] = min(dp[j - i * i] + 1, dp[j]);  
+            }  
+        }  
+        return dp[n];  
+    }  
+};
+</code></pre>
 
                     </main>
 
@@ -163,7 +702,7 @@
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="../图论/图论.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../动态规划/爬楼梯.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -177,7 +716,7 @@
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="../图论/图论.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../动态规划/爬楼梯.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

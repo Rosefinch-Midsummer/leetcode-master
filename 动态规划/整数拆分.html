@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>图论 - 剑指Offer</title>
+        <title>整数拆分 - 剑指Offer</title>
 
 
         <!-- Custom HTML head -->
@@ -153,16 +153,145 @@
                 <div id="content" class="content">
                     <main>
                         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
-<h1 id="图论"><a class="header" href="#图论">图论</a></h1>
+<h1 id="整数拆分"><a class="header" href="#整数拆分">整数拆分</a></h1>
+<ul>
+<li><a href="#343-integer-break">343. Integer Break</a>
+<ul>
+<li><a href="#%E6%80%9D%E8%B7%AF">思路</a></li>
+<li><a href="#c%E8%A7%A3%E6%B3%95">C++解法</a></li>
+<li><a href="#java%E8%A7%A3%E6%B3%95">Java解法</a></li>
+</ul>
+</li>
+</ul>
+<h1 id="343-integer-break"><a class="header" href="#343-integer-break"><a href="https://leetcode.com/problems/integer-break/">343. Integer Break</a></a></h1>
+<p>Given an integer <code>n</code>, break it into the sum of <code>k</code> <strong>positive integers</strong>, where <code>k &gt;= 2</code>, and maximize the product of those integers.</p>
+<p>Return <em>the maximum product you can get</em>.</p>
+<p><strong>Example 1:</strong></p>
+<p><strong>Input:</strong> n = 2<br />
+<strong>Output:</strong> 1<br />
+<strong>Explanation:</strong> 2 = 1 + 1, 1 × 1 = 1.</p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> n = 10<br />
+<strong>Output:</strong> 36<br />
+<strong>Explanation:</strong> 10 = 3 + 3 + 4, 3 × 3 × 4 = 36.</p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>2 &lt;= n &lt;= 58</code></li>
+</ul>
+<h2 id="思路"><a class="header" href="#思路">思路</a></h2>
+<p>看到这道题目，都会想拆成两个呢，还是三个呢，还是四个....</p>
+<p>我们来看一下如何使用动态规划来解决。</p>
+<p>动规五部曲，分析如下：</p>
+<ol>
+<li>确定dp数组（dp table）以及下标的含义</li>
+</ol>
+<p><code>dp[i]</code>：分拆数字i，可以得到的最大乘积为<code>dp[i]</code>。</p>
+<p><code>dp[i]</code>的定义将贯彻整个解题过程，下面哪一步想不懂了，就想想dp[i]究竟表示的是啥！</p>
+<ol start="2">
+<li>确定递推公式</li>
+</ol>
+<p>可以想 <code>dp[i]</code>最大乘积是怎么得到的呢？</p>
+<p>其实可以从1遍历j，然后有两种渠道得到<code>dp[i]</code>.</p>
+<p>一个是j * (i - j) 直接相乘。</p>
+<p>一个是<code>j * dp[i - j]</code>，相当于是拆分(i - j)，对这个拆分不理解的话，可以回想dp数组的定义。</p>
+<p><strong>那有同学问了，j怎么就不拆分呢？</strong></p>
+<p>j是从1开始遍历，拆分j的情况，在遍历j的过程中其实都计算过了。那么从1遍历j，比较(i - j) * j和<code>dp[i - j] * j</code> 取最大的。递推公式：<code>dp[i] = max(dp[i], max((i - j) * j, dp[i - j] * j));</code></p>
+<p>也可以这么理解，j * (i - j) 是单纯的把整数拆分为两个数相乘，而<code>j * dp[i - j]</code>是拆分成两个以及两个以上的个数相乘。</p>
+<p>如果定义<code>dp[i - j] * dp[j]</code> 也是默认将一个数强制拆成4份以及4份以上了。</p>
+<p>所以递推公式：<code>dp[i] = max({dp[i], (i - j) * j, dp[i - j] * j});</code></p>
+<p>那么在取最大值的时候，为什么还要比较<code>dp[i]</code>呢？</p>
+<p>因为在递推公式推导的过程中，每次计算<code>dp[i]</code>，取最大的而已。</p>
+<ol start="3">
+<li>dp的初始化</li>
+</ol>
+<p>不少同学应该疑惑，<code>dp[0] dp[1]</code>应该初始化多少呢？</p>
+<p>有的题解里会给出<code>dp[0] = 1，dp[1] = 1</code>的初始化，但解释比较牵强，主要还是因为这么初始化可以把题目过了。</p>
+<p>严格从<code>dp[i]</code>的定义来说，<code>dp[0] dp[1]</code> 就不应该初始化，也就是没有意义的数值。</p>
+<p>拆分0和拆分1的最大乘积是多少？</p>
+<p>这是无解的。</p>
+<p>这里我只初始化<code>dp[2] = 1</code>，从<code>dp[i]</code>的定义来说，拆分数字2，得到的最大乘积是1，这个没有任何异议！</p>
+<ol start="4">
+<li>确定遍历顺序</li>
+</ol>
+<p>确定遍历顺序，先来看看递归公式：<code>dp[i] = max(dp[i], max((i - j) * j, dp[i - j] * j));</code></p>
+<p><code>dp[i]</code> 是依靠 <code>dp[i - j]</code>的状态，所以遍历i一定是从前向后遍历，先有<code>dp[i - j]</code>再有<code>dp[i]</code>。</p>
+<p>所以遍历顺序为：</p>
+<pre><code class="language-cpp">for (int i = 3; i &lt;= n ; i++) {  
+    for (int j = 1; j &lt; i - 1; j++) {  
+        dp[i] = max(dp[i], max((i - j) * j, dp[i - j] * j));  
+    }  
+}
+</code></pre>
+<p>注意 枚举j的时候，是从1开始的。从0开始的话，那么让拆分一个数拆个0，求最大乘积就没有意义了。</p>
+<p>j的结束条件是 j &lt; i - 1 ，其实 j &lt; i 也是可以的，不过可以节省一步，例如让j = i - 1，的话，其实在 j = 1的时候，这一步就已经拆出来了，重复计算，所以 j &lt; i - 1</p>
+<p>至于 i是从3开始，这样<code>dp[i - j]</code>就是<code>dp[2]</code>正好可以通过我们初始化的数值求出来。</p>
+<p>更优化一步，可以这样：</p>
+<pre><code class="language-cpp">for (int i = 3; i &lt;= n ; i++) {  
+    for (int j = 1; j &lt;= i / 2; j++) {  
+        dp[i] = max(dp[i], max((i - j) * j, dp[i - j] * j));  
+    }  
+}
+</code></pre>
+<p>因为拆分一个数n 使之乘积最大，那么一定是拆分成m个近似相同的子数相乘才是最大的。</p>
+<p>例如 6 拆成 3 * 3， 10 拆成 3 * 3 * 4。 100的话 也是拆成m个近似数组的子数 相乘才是最大的。</p>
+<p>只不过我们不知道m究竟是多少而已，但可以明确的是m一定大于等于2，既然m大于等于2，也就是 最差也应该是拆成两个相同的 可能是最大值。</p>
+<p>那么 j 遍历，只需要遍历到 n/2 就可以，后面就没有必要遍历了，一定不是最大值。</p>
+<p>至于 “拆分一个数n 使之乘积最大，那么一定是拆分成m个近似相同的子数相乘才是最大的” 这个我就不去做数学证明了，感兴趣的同学，可以自己证明。</p>
+<ol start="5">
+<li>举例推导dp数组</li>
+</ol>
+<h2 id="c解法"><a class="header" href="#c解法">C++解法</a></h2>
+<p>以上动规五部曲分析完毕，C++代码如下：</p>
+<pre><code class="language-cpp">class Solution {  
+public:  
+    int integerBreak(int n) {  
+        vector&lt;int&gt; dp(n + 1);  
+        dp[2] = 1;  
+        for (int i = 3; i &lt;= n ; i++) {  
+            for (int j = 1; j &lt;= i / 2; j++) {  
+                dp[i] = max(dp[i], max((i - j) * j, dp[i - j] * j));  
+            }  
+        }  
+        return dp[n];  
+    }  
+};
+</code></pre>
+<ul>
+<li>时间复杂度：O(n^2)</li>
+<li>空间复杂度：O(n)</li>
+</ul>
+<h2 id="java解法"><a class="header" href="#java解法">Java解法</a></h2>
+<pre><code class="language-java">class Solution {
+    public int integerBreak(int n) {
+        //dp[i] 为正整数 i 拆分后的结果的最大乘积
+        int[] dp = new int[n+1];
+        dp[2] = 1;
+        for(int i = 3; i &lt;= n; i++) {
+            for(int j = 1; j &lt;= i-j; j++) {
+                // 这里的 j 其实最大值为 i-j,再大只不过是重复而已，
+                //并且，在本题中，我们分析 dp[0], dp[1]都是无意义的，
+                //j 最大到 i-j,就不会用到 dp[0]与dp[1]
+                dp[i] = Math.max(dp[i], Math.max(j*(i-j), j*dp[i-j]));
+                // j * (i - j) 是单纯的把整数 i 拆分为两个数 也就是 i,i-j ，再相乘
+                //而j * dp[i - j]是将 i 拆分成两个以及两个以上的个数,再相乘。
+            }
+        }
+        return dp[n];
+    }
+}
+</code></pre>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../动态规划/回文串.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../动态规划/不同二叉搜索树.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
+                            <a rel="next prefetch" href="../动态规划/01背包.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
 
                         <div style="clear: both"></div>
                     </nav>
@@ -170,10 +299,13 @@
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../动态规划/回文串.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../动态规划/不同二叉搜索树.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
+                    <a rel="next prefetch" href="../动态规划/01背包.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
             </nav>
 
         </div>
