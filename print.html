@@ -25010,10 +25010,16 @@ class climbStairs{
 <li><a href="%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/%E4%B8%8D%E5%90%8C%E8%B7%AF%E5%BE%84.html#java%E8%A7%A3%E6%B3%95-1">Java解法</a></li>
 </ul>
 </li>
-<li><a href="%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/%E4%B8%8D%E5%90%8C%E8%B7%AF%E5%BE%84.html#980-unique-paths-iii%E5%9B%9E%E6%BA%AF">980. Unique Paths III（回溯）</a>
+<li><a href="%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/%E4%B8%8D%E5%90%8C%E8%B7%AF%E5%BE%84.html#64-minimum-path-sum">64. Minimum Path Sum</a>
 <ul>
 <li><a href="%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/%E4%B8%8D%E5%90%8C%E8%B7%AF%E5%BE%84.html#%E6%80%9D%E8%B7%AF-2">思路</a></li>
 <li><a href="%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/%E4%B8%8D%E5%90%8C%E8%B7%AF%E5%BE%84.html#c%E8%A7%A3%E6%B3%95-2">C++解法</a></li>
+</ul>
+</li>
+<li><a href="%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/%E4%B8%8D%E5%90%8C%E8%B7%AF%E5%BE%84.html#980-unique-paths-iii%E5%9B%9E%E6%BA%AF">980. Unique Paths III（回溯）</a>
+<ul>
+<li><a href="%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/%E4%B8%8D%E5%90%8C%E8%B7%AF%E5%BE%84.html#%E6%80%9D%E8%B7%AF-3">思路</a></li>
+<li><a href="%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/%E4%B8%8D%E5%90%8C%E8%B7%AF%E5%BE%84.html#c%E8%A7%A3%E6%B3%95-3">C++解法</a></li>
 <li><a href="%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/%E4%B8%8D%E5%90%8C%E8%B7%AF%E5%BE%84.html#java%E8%A7%A3%E6%B3%95-2">Java解法</a></li>
 </ul>
 </li>
@@ -25371,6 +25377,57 @@ class Solution {
     }
 }
 </code></pre>
+<h1 id="64-minimum-path-sum"><a class="header" href="#64-minimum-path-sum"><a href="https://leetcode.com/problems/minimum-path-sum/">64. Minimum Path Sum</a></a></h1>
+<p>Given a <code>m x n</code> <code>grid</code> filled with non-negative numbers, find a path from top left to bottom right, which minimizes the sum of all numbers along its path.</p>
+<p><strong>Note:</strong> You can only move either down or right at any point in time.</p>
+<p><strong>Example 1:</strong></p>
+<p><img src="https://assets.leetcode.com/uploads/2020/11/05/minpath.jpg" alt="" /></p>
+<p><strong>Input:</strong> <code>grid = [[1,3,1],[1,5,1],[4,2,1]]</code><br />
+<strong>Output:</strong> 7<br />
+<strong>Explanation:</strong> Because the path 1 → 3 → 1 → 1 → 1 minimizes the sum.</p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> <code>grid = [[1,2,3],[4,5,6]]</code><br />
+<strong>Output:</strong> 12</p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>m == grid.length</code></li>
+<li><code>n == grid[i].length</code></li>
+<li><code>1 &lt;= m, n &lt;= 200</code></li>
+<li><code>0 &lt;= grid[i][j] &lt;= 200</code></li>
+</ul>
+<h2 id="思路-165"><a class="header" href="#思路-165">思路</a></h2>
+<p>二维DP</p>
+<h2 id="c解法-148"><a class="header" href="#c解法-148">C++解法</a></h2>
+<pre><code class="language-cpp">class Solution {  
+public:  
+    int minPathSum(vector&lt;vector&lt;int&gt;&gt;&amp; grid) {  
+        int m = grid.size();  
+        int n = grid[0].size();  
+        vector&lt;vector&lt;int&gt;&gt; dp(m, vector&lt;int&gt;(n, 0));  
+        
+        // 初始化起点  
+        dp[0][0] = grid[0][0];  
+        
+        // 初始化第一列  
+        for (int i = 1; i &lt; m; i++) {  
+            dp[i][0] = dp[i - 1][0] + grid[i][0];  
+        }  
+        // 初始化第一行  
+        for (int j = 1; j &lt; n; j++) {  
+            dp[0][j] = dp[0][j - 1] + grid[0][j];  
+        }  
+        
+        // 计算其他位置的最小路径和  
+        for (int i = 1; i &lt; m; i++) {  
+            for (int j = 1; j &lt; n; j++) {  
+                dp[i][j] = min(dp[i - 1][j], dp[i][j - 1]) + grid[i][j];  
+            }  
+        }  
+        
+        return dp[m - 1][n - 1];  
+    }  
+};  
+</code></pre>
 <h1 id="980-unique-paths-iii回溯"><a class="header" href="#980-unique-paths-iii回溯"><a href="https://leetcode.com/problems/unique-paths-iii/">980. Unique Paths III</a>（回溯）</a></h1>
 <p>You are given an <code>m x n</code> integer array <code>grid</code> where <code>grid[i][j]</code> could be:</p>
 <ul>
@@ -25415,7 +25472,7 @@ Note that the starting and ending square can be anywhere in the grid.</p>
 <li><code>-1 &lt;= grid[i][j] &lt;= 2</code></li>
 <li>There is exactly one starting cell and one ending cell.</li>
 </ul>
-<h2 id="思路-165"><a class="header" href="#思路-165">思路</a></h2>
+<h2 id="思路-166"><a class="header" href="#思路-166">思路</a></h2>
 <p><strong>Brute Force Backtracking</strong></p>
 <p>First, find out where the start and end points are.</p>
 <p>We also need to know the number of empty cells.</p>
@@ -25434,7 +25491,7 @@ Note that the starting and ending square can be anywhere in the grid.</p>
 <p>第一步，我们需要确定起点的位置。我们还想知道空单元格的数量。</p>
 <p>接下来，我们遍历网格，计算空单元格的数量，并保存起点 <code>start_x</code> 和 <code>start_y</code>。</p>
 <p>现在，我们执行经典的DFS，标记访问过的单元格为-1，并计算我们经过的单元格数。 如果我们到达终点并经过了指定数量的空单元格，这意味着我们访问了每个非障碍物单元格。</p>
-<h2 id="c解法-148"><a class="header" href="#c解法-148">C++解法</a></h2>
+<h2 id="c解法-149"><a class="header" href="#c解法-149">C++解法</a></h2>
 <pre><code class="language-cpp">class Solution {
 public:
     int res = 0, empty = 1;
@@ -25535,7 +25592,7 @@ public:
 <ul>
 <li><code>1 &lt;= n &lt;= 19</code></li>
 </ul>
-<h2 id="思路-166"><a class="header" href="#思路-166">思路</a></h2>
+<h2 id="思路-167"><a class="header" href="#思路-167">思路</a></h2>
 <p>这道题目描述很简短，但估计大部分同学看完都是懵懵的状态，这得怎么统计呢？</p>
 <p>关于什么是二叉搜索树，我们之前在讲解二叉树专题的时候已经详细讲解过了，也可以看看这篇<a href="https://programmercarl.com/0700.%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91%E4%B8%AD%E7%9A%84%E6%90%9C%E7%B4%A2.html">二叉树：二叉搜索树登场！</a>再回顾一波。</p>
 <p>了解了二叉搜索树之后，我们应该先举几个例子，画画图，看看有没有什么规律，如图：</p>
@@ -25598,7 +25655,7 @@ public:
 <p><img src="https://code-thinking-1253855093.file.myqcloud.com/pics/20210107093253987.png" alt="96.不同的二叉搜索树3" /></p>
 <p>当然如果自己画图举例的话，基本举例到n为3就可以了，n为4的时候，画图已经比较麻烦了。</p>
 <p><strong>我这里列到了n为5的情况，是为了方便大家 debug代码的时候，把dp数组打出来，看看哪里有问题</strong>。</p>
-<h2 id="c解法-149"><a class="header" href="#c解法-149">C++解法</a></h2>
+<h2 id="c解法-150"><a class="header" href="#c解法-150">C++解法</a></h2>
 <p>综上分析完毕，C++代码如下：</p>
 <pre><code class="language-cpp">class Solution {  
 public:  
@@ -25650,9 +25707,9 @@ public:
 <ul>
 <li><code>1 &lt;= n &lt;= 8</code></li>
 </ul>
-<h2 id="思路-167"><a class="header" href="#思路-167">思路</a></h2>
+<h2 id="思路-168"><a class="header" href="#思路-168">思路</a></h2>
 <p>https://leetcode.com/problems/unique-binary-search-trees-ii/solutions/3667682/unique-binary-search-trees-ii/</p>
-<h2 id="c解法-150"><a class="header" href="#c解法-150">C++解法</a></h2>
+<h2 id="c解法-151"><a class="header" href="#c解法-151">C++解法</a></h2>
 <pre><code class="language-cpp">class Solution {
 public:
     vector&lt;TreeNode*&gt; allPossibleBST(
@@ -25690,16 +25747,95 @@ public:
 };
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
-<h1 id="整数拆分"><a class="header" href="#整数拆分">整数拆分</a></h1>
+<h1 id="拆分系列"><a class="header" href="#拆分系列">拆分系列</a></h1>
 <ul>
-<li><a href="%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/%E6%95%B4%E6%95%B0%E6%8B%86%E5%88%86.html#343-integer-break">343. Integer Break</a>
+<li><a href="%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/%E6%8B%86%E5%88%86%E7%B3%BB%E5%88%97.html#139-word-break">139. Word Break</a>
 <ul>
-<li><a href="%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/%E6%95%B4%E6%95%B0%E6%8B%86%E5%88%86.html#%E6%80%9D%E8%B7%AF">思路</a></li>
-<li><a href="%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/%E6%95%B4%E6%95%B0%E6%8B%86%E5%88%86.html#c%E8%A7%A3%E6%B3%95">C++解法</a></li>
-<li><a href="%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/%E6%95%B4%E6%95%B0%E6%8B%86%E5%88%86.html#java%E8%A7%A3%E6%B3%95">Java解法</a></li>
+<li><a href="%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/%E6%8B%86%E5%88%86%E7%B3%BB%E5%88%97.html#%E6%80%9D%E8%B7%AF">思路</a></li>
+<li><a href="%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/%E6%8B%86%E5%88%86%E7%B3%BB%E5%88%97.html#c%E8%A7%A3%E6%B3%95">C++解法</a></li>
+<li><a href="%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/%E6%8B%86%E5%88%86%E7%B3%BB%E5%88%97.html#java%E8%A7%A3%E6%B3%95">Java解法</a></li>
+</ul>
+</li>
+<li><a href="%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/%E6%8B%86%E5%88%86%E7%B3%BB%E5%88%97.html#343-integer-break">343. Integer Break</a>
+<ul>
+<li><a href="%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/%E6%8B%86%E5%88%86%E7%B3%BB%E5%88%97.html#%E6%80%9D%E8%B7%AF-1">思路</a></li>
+<li><a href="%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/%E6%8B%86%E5%88%86%E7%B3%BB%E5%88%97.html#c%E8%A7%A3%E6%B3%95-1">C++解法</a></li>
+<li><a href="%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/%E6%8B%86%E5%88%86%E7%B3%BB%E5%88%97.html#java%E8%A7%A3%E6%B3%95-1">Java解法</a></li>
+</ul>
+</li>
+<li><a href="%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/%E6%8B%86%E5%88%86%E7%B3%BB%E5%88%97.html#279-perfect-squares">279. Perfect Squares</a>
+<ul>
+<li><a href="%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/%E6%8B%86%E5%88%86%E7%B3%BB%E5%88%97.html#%E6%80%9D%E8%B7%AF-2">思路</a></li>
+<li><a href="%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/%E6%8B%86%E5%88%86%E7%B3%BB%E5%88%97.html#c%E8%A7%A3%E6%B3%95-2">C++解法</a></li>
+<li><a href="%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/%E6%8B%86%E5%88%86%E7%B3%BB%E5%88%97.html#java%E8%A7%A3%E6%B3%95-2">Java解法</a></li>
+<li><a href="%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/%E6%8B%86%E5%88%86%E7%B3%BB%E5%88%97.html#go%E8%A7%A3%E6%B3%95">Go解法</a></li>
 </ul>
 </li>
 </ul>
+<h1 id="139-word-break"><a class="header" href="#139-word-break"><a href="https://leetcode.com/problems/word-break/">139. Word Break</a></a></h1>
+<p>Given a string <code>s</code> and a dictionary of strings <code>wordDict</code>, return <code>true</code> if <code>s</code> can be segmented into a space-separated sequence of one or more dictionary words.</p>
+<p><strong>Note</strong> that the same word in the dictionary may be reused multiple times in the segmentation.</p>
+<p><strong>Example 1:</strong></p>
+<p><strong>Input:</strong> s = "leetcode", wordDict = ["leet","code"]<br />
+<strong>Output:</strong> true<br />
+<strong>Explanation:</strong> Return true because "leetcode" can be segmented as "leet code".</p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> s = "applepenapple", wordDict = ["apple","pen"]<br />
+<strong>Output:</strong> true<br />
+<strong>Explanation:</strong> Return true because "applepenapple" can be segmented as "apple pen apple".
+Note that you are allowed to reuse a dictionary word.</p>
+<p><strong>Example 3:</strong></p>
+<p><strong>Input:</strong> s = "catsandog", wordDict = ["cats","dog","sand","and","cat"]<br />
+<strong>Output:</strong> false</p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= s.length &lt;= 300</code></li>
+<li><code>1 &lt;= wordDict.length &lt;= 1000</code></li>
+<li><code>1 &lt;= wordDict[i].length &lt;= 20</code></li>
+<li><code>s</code> and <code>wordDict[i]</code> consist of only lowercase English letters.</li>
+<li>All the strings of <code>wordDict</code> are <strong>unique</strong>.</li>
+</ul>
+<h2 id="思路-169"><a class="header" href="#思路-169">思路</a></h2>
+<p>动态规划，字符串拆分，使用布尔型数组</p>
+<h2 id="c解法-152"><a class="header" href="#c解法-152">C++解法</a></h2>
+<pre><code class="language-cpp">class Solution {
+public:
+    bool wordBreak(string s, vector&lt;string&gt;&amp; wordDict) {
+        unordered_set&lt;string&gt; wordSet(wordDict.begin(), wordDict.end());
+        vector&lt;bool&gt; dp(s.size() + 1, false);
+        dp[0] = true;
+        for(int j = 1; j &lt;= s.size(); j++){
+            for(int i = 0; i &lt; j; i++){
+                string tempStr = s.substr(i, j - i);
+                if(wordSet.find(tempStr) != wordSet.end() &amp;&amp; dp[i] == true){
+                    dp[j] = true;
+                }
+            }
+        }
+        return dp[s.size()];
+    }
+};
+</code></pre>
+<h2 id="java解法-106"><a class="header" href="#java解法-106">Java解法</a></h2>
+<pre><code class="language-java">class Solution {
+    public boolean wordBreak(String s, List&lt;String&gt; wordDict) {
+        HashSet&lt;String&gt; set = new HashSet&lt;&gt;(wordDict);  // 优化：直接用构造函数初始化
+        boolean[] dp = new boolean[s.length() + 1];
+        dp[0] = true;  // 空字符串可以被分割
+        
+        for (int j = 1; j &lt;= s.length(); j++) {
+            for (int i = 0; i &lt; j; i++) {
+                String temp = s.substring(i, j);  // 取子串 s[i, j)
+                if (set.contains(temp) &amp;&amp; dp[i]) {
+                    dp[j] = true;
+                    break;  // 一旦满足条件，跳出内层循环
+                }
+            }
+        }
+        return dp[s.length()];
+    }
+}
+</code></pre>
 <h1 id="343-integer-break"><a class="header" href="#343-integer-break"><a href="https://leetcode.com/problems/integer-break/">343. Integer Break</a></a></h1>
 <p>Given an integer <code>n</code>, break it into the sum of <code>k</code> <strong>positive integers</strong>, where <code>k &gt;= 2</code>, and maximize the product of those integers.</p>
 <p>Return <em>the maximum product you can get</em>.</p>
@@ -25715,7 +25851,7 @@ public:
 <ul>
 <li><code>2 &lt;= n &lt;= 58</code></li>
 </ul>
-<h2 id="思路-168"><a class="header" href="#思路-168">思路</a></h2>
+<h2 id="思路-170"><a class="header" href="#思路-170">思路</a></h2>
 <p>看到这道题目，都会想拆成两个呢，还是三个呢，还是四个....</p>
 <p>我们来看一下如何使用动态规划来解决。</p>
 <p>动规五部曲，分析如下：</p>
@@ -25777,7 +25913,7 @@ public:
 <ol start="5">
 <li>举例推导dp数组</li>
 </ol>
-<h2 id="c解法-151"><a class="header" href="#c解法-151">C++解法</a></h2>
+<h2 id="c解法-153"><a class="header" href="#c解法-153">C++解法</a></h2>
 <p>以上动规五部曲分析完毕，C++代码如下：</p>
 <pre><code class="language-cpp">class Solution {  
 public:  
@@ -25797,7 +25933,7 @@ public:
 <li>时间复杂度：O(n^2)</li>
 <li>空间复杂度：O(n)</li>
 </ul>
-<h2 id="java解法-106"><a class="header" href="#java解法-106">Java解法</a></h2>
+<h2 id="java解法-107"><a class="header" href="#java解法-107">Java解法</a></h2>
 <pre><code class="language-java">class Solution {
     public int integerBreak(int n) {
         //dp[i] 为正整数 i 拆分后的结果的最大乘积
@@ -25815,6 +25951,72 @@ public:
         }
         return dp[n];
     }
+}
+</code></pre>
+<h1 id="279-perfect-squares-1"><a class="header" href="#279-perfect-squares-1"><a href="https://leetcode.com/problems/perfect-squares/">279. Perfect Squares</a></a></h1>
+<p>Given an integer <code>n</code>, return <em>the least number of perfect square numbers that sum to</em> <code>n</code>.</p>
+<p>A <strong>perfect square</strong> is an integer that is the square of an integer; in other words, it is the product of some integer with itself. For example, <code>1</code>, <code>4</code>, <code>9</code>, and <code>16</code> are perfect squares while <code>3</code> and <code>11</code> are not.</p>
+<p><strong>Example 1:</strong></p>
+<p><strong>Input:</strong> n = 12<br />
+<strong>Output:</strong> 3<br />
+<strong>Explanation:</strong> 12 = 4 + 4 + 4.</p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> n = 13<br />
+<strong>Output:</strong> 2<br />
+<strong>Explanation:</strong> 13 = 4 + 9.</p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= n &lt;= 10^4</code></li>
+</ul>
+<h2 id="思路-171"><a class="header" href="#思路-171">思路</a></h2>
+<p>动态规划，拆分数字，递推公式为<code>dp[j] = min(dp[j], dp[j - i * i] + 1);</code></p>
+<h2 id="c解法-154"><a class="header" href="#c解法-154">C++解法</a></h2>
+<pre><code class="language-cpp">class Solution {
+public:
+    int numSquares(int n) {
+        vector&lt;int&gt; dp(n + 1, INT_MAX);
+        dp[0] = 0;
+        for(int i = 1; i &lt;= sqrt(n); i++){
+            for(int j = i * i; j &lt;= n; j++){
+                if((dp[j - i * i] + i * i) != INT_MAX){
+                    dp[j] = min(dp[j], dp[j - i * i] + 1);
+                }
+            }
+        }
+        return dp[n];
+    }
+};
+</code></pre>
+<h2 id="java解法-108"><a class="header" href="#java解法-108">Java解法</a></h2>
+<pre><code class="language-java">class Solution {
+    public int numSquares(int n) {
+        int[] dp = new int[n + 1];
+        Arrays.fill(dp, Integer.MAX_VALUE);
+        dp[0] = 0;
+
+        for (int i = 1; i &lt;= n; i++) {
+            for (int j = 1; j * j &lt;= i; j++) {
+                dp[i] = Math.min(dp[i], dp[i - j * j] + 1);
+            }
+        }
+
+        return dp[n];
+    }
+}
+</code></pre>
+<h2 id="go解法-53"><a class="header" href="#go解法-53">Go解法</a></h2>
+<pre><code class="language-go">func numSquares(amount int) int {
+    dp := make([]int, amount + 1);
+    for i := 0; i &lt; len(dp); i++ {
+        dp[i] = math.MaxInt32;
+    }
+    dp[0] = 0;
+    for j := 1; j &lt;= amount; j++ {
+        for i := 1; i * i &lt;= j; i++ {
+            dp[j] = min(dp[j], dp[j - i * i] + 1);
+        }
+    }
+    return dp[amount];
 }
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
@@ -26216,7 +26418,7 @@ int main() {
 <li><code>1 &lt;= nums.length &lt;= 200</code></li>
 <li><code>1 &lt;= nums[i] &lt;= 100</code></li>
 </ul>
-<h2 id="思路-169"><a class="header" href="#思路-169">思路</a></h2>
+<h2 id="思路-172"><a class="header" href="#思路-172">思路</a></h2>
 <p>这道题目是要找是否可以将这个数组分割成两个子集，使得两个子集的元素和相等。</p>
 <p>那么只要找到集合里能够出现 sum / 2 的子集总和，就算是可以分割成两个相同元素和子集了。</p>
 <p>本题是可以用回溯暴力搜索出所有答案的，但最后超时了，也不想再优化了，放弃回溯，直接上01背包吧。</p>
@@ -26279,7 +26481,7 @@ for(int i = 0; i &lt; nums.size(); i++) {
 <p>dp[j]的数值一定是小于等于j的。</p>
 <p><strong>如果<code>dp[j] == j</code>说明，集合中的子集总和正好可以凑成总和j，理解这一点很重要。</strong></p>
 <p>用例1，输入[1,5,11,5] 为例，最后dp[11] == 11，说明可以将这个数组分割成两个子集，使得两个子集的元素和相等。</p>
-<h2 id="c解法-152"><a class="header" href="#c解法-152">C++解法</a></h2>
+<h2 id="c解法-155"><a class="header" href="#c解法-155">C++解法</a></h2>
 <p>综上分析完毕，C++代码如下：</p>
 <pre><code class="language-cpp">class Solution {  
 public:  
@@ -26314,7 +26516,7 @@ public:
 <li>时间复杂度：O(n^2)</li>
 <li>空间复杂度：O(n)，虽然dp数组大小为一个常数，但是大常数</li>
 </ul>
-<h2 id="java解法-107"><a class="header" href="#java解法-107">Java解法</a></h2>
+<h2 id="java解法-109"><a class="header" href="#java解法-109">Java解法</a></h2>
 <pre><code class="language-java">class Solution {
     public boolean canPartition(int[] nums) {
         int total = 0;
@@ -26362,7 +26564,7 @@ we can combine 1 and 1 to get 0, so the array converts to [1], then that's the o
 <li><code>1 &lt;= stones.length &lt;= 30</code></li>
 <li><code>1 &lt;= stones[i] &lt;= 100</code></li>
 </ul>
-<h2 id="思路-170"><a class="header" href="#思路-170">思路</a></h2>
+<h2 id="思路-173"><a class="header" href="#思路-173">思路</a></h2>
 <p>本题其实就是尽量让石头分成重量相同的两堆，相撞之后剩下的石头最小，<strong>这样就化解成01背包问题了</strong>。</p>
 <p>是不是感觉和昨天讲解的<a href="https://programmercarl.com/0416.%E5%88%86%E5%89%B2%E7%AD%89%E5%92%8C%E5%AD%90%E9%9B%86.html">416. 分割等和子集</a>非常像了。</p>
 <p>本题物品的重量为stones[i]，物品的价值也为stones[i]。</p>
@@ -26413,7 +26615,7 @@ we can combine 1 and 1 to get 0, so the array converts to [1], then that's the o
 <p>那么分成两堆石头，一堆石头的总重量是<code>dp[target]</code>，另一堆就是<code>sum - dp[target]</code>。</p>
 <p><strong>在计算target的时候，target = sum / 2 因为是向下取整，所以<code>sum - dp[target]</code> 一定是大于等于<code>dp[target]</code>的</strong>。</p>
 <p>那么相撞之后剩下的最小石头重量就是 <code>(sum - dp[target]) - dp[target]</code>。</p>
-<h2 id="c解法-153"><a class="header" href="#c解法-153">C++解法</a></h2>
+<h2 id="c解法-156"><a class="header" href="#c解法-156">C++解法</a></h2>
 <p>以上分析完毕，C++代码如下：</p>
 <pre><code class="language-cpp">class Solution {  
 public:  
@@ -26436,7 +26638,7 @@ public:
 <li>时间复杂度：O(m × n) , m是石头总重量（准确的说是总重量的一半），n为石头块数</li>
 <li>空间复杂度：O(m)</li>
 </ul>
-<h2 id="java解法-108"><a class="header" href="#java解法-108">Java解法</a></h2>
+<h2 id="java解法-110"><a class="header" href="#java解法-110">Java解法</a></h2>
 <pre><code class="language-java">class Solution {
     public int lastStoneWeightII(int[] stones) {
         Arrays.sort(stones);
@@ -26482,7 +26684,7 @@ public:
 <li><code>0 &lt;= sum(nums[i]) &lt;= 1000</code></li>
 <li><code>-1000 &lt;= target &lt;= 1000</code></li>
 </ul>
-<h2 id="思路-171"><a class="header" href="#思路-171">思路</a></h2>
+<h2 id="思路-174"><a class="header" href="#思路-174">思路</a></h2>
 <p>本题要如何使表达式结果为target，</p>
 <p>既然为target，那么就一定有 left组合 - right组合 = target。</p>
 <p>left + right = sum，而sum是固定的。right = sum - left</p>
@@ -26552,7 +26754,7 @@ public:
 </ol>
 <p>输入：nums: [1, 1, 1, 1, 1], S: 3</p>
 <p>bagSize = (S + sum) / 2 = (3 + 5) / 2 = 4</p>
-<h2 id="c解法-154"><a class="header" href="#c解法-154">C++解法</a></h2>
+<h2 id="c解法-157"><a class="header" href="#c解法-157">C++解法</a></h2>
 <p>C++代码如下：</p>
 <pre><code class="language-cpp">class Solution {  
 public:  
@@ -26578,7 +26780,7 @@ public:
 <li>时间复杂度：O(n × m)，n为正数个数，m为背包容量</li>
 <li>空间复杂度：O(m)，m为背包容量</li>
 </ul>
-<h2 id="java解法-109"><a class="header" href="#java解法-109">Java解法</a></h2>
+<h2 id="java解法-111"><a class="header" href="#java解法-111">Java解法</a></h2>
 <pre><code class="language-java">class Solution {
     public int findTargetSumWays(int[] nums, int target) {
         int sum = 0;
@@ -26620,7 +26822,7 @@ Other valid but smaller subsets include {"0001", "1"} and {"10", "1", "0"}.
 <li><code>strs[i]</code> consists only of digits <code>'0'</code> and <code>'1'</code>.</li>
 <li><code>1 &lt;= m, n &lt;= 100</code></li>
 </ul>
-<h2 id="思路-172"><a class="header" href="#思路-172">思路</a></h2>
+<h2 id="思路-175"><a class="header" href="#思路-175">思路</a></h2>
 <p>多重背包是每个物品，数量不同的情况。</p>
 <p><strong>本题中strs 数组里的元素就是物品，每个物品都是一个！</strong></p>
 <p><strong>而m 和 n相当于是一个背包，两个维度的背包</strong>。</p>
@@ -26671,7 +26873,7 @@ Other valid but smaller subsets include {"0001", "1"} and {"10", "1", "0"}.
 <ol start="5">
 <li>举例推导dp数组</li>
 </ol>
-<h2 id="c解法-155"><a class="header" href="#c解法-155">C++解法</a></h2>
+<h2 id="c解法-158"><a class="header" href="#c解法-158">C++解法</a></h2>
 <p>以上动规五部曲分析完毕，C++代码如下：</p>
 <pre><code class="language-cpp">class Solution {  
 public:  
@@ -26697,7 +26899,7 @@ public:
 <li>时间复杂度: O(kmn)，k 为strs的长度</li>
 <li>空间复杂度: O(mn)</li>
 </ul>
-<h2 id="java解法-110"><a class="header" href="#java解法-110">Java解法</a></h2>
+<h2 id="java解法-112"><a class="header" href="#java解法-112">Java解法</a></h2>
 <pre><code class="language-java">class Solution {
     public int findMaxForm(String[] strs, int m, int n) {
         int[][] dp = new int[m + 1][n + 1];
@@ -27054,7 +27256,7 @@ Total amount you can rob = 2 + 9 + 1 = 12.</p>
 <li><code>1 &lt;= nums.length &lt;= 100</code></li>
 <li><code>0 &lt;= nums[i] &lt;= 400</code></li>
 </ul>
-<h2 id="思路-173"><a class="header" href="#思路-173">思路</a></h2>
+<h2 id="思路-176"><a class="header" href="#思路-176">思路</a></h2>
 <p>大家如果刚接触这样的题目，会有点困惑，当前的状态我是偷还是不偷呢？</p>
 <p>仔细一想，当前房屋偷与不偷取决于前一个房屋和前两个房屋是否被偷了。</p>
 <p>所以这里就更感觉到，当前状态和前面状态会有一种依赖关系，那么这种依赖关系都是动规的递推公式。</p>
@@ -27095,7 +27297,7 @@ dp[1] = max(nums[0], nums[1]);
 <p>以示例二，输入[2,7,9,3,1]为例。</p>
 <p><img src="https://code-thinking-1253855093.file.myqcloud.com/pics/20210221170954115.jpg" alt="198.打家劫舍" /></p>
 <p>红框<code>dp[nums.size() - 1]</code>为结果。</p>
-<h2 id="c解法-156"><a class="header" href="#c解法-156">C++解法</a></h2>
+<h2 id="c解法-159"><a class="header" href="#c解法-159">C++解法</a></h2>
 <p>以上分析完毕，C++代码如下：</p>
 <pre><code class="language-cpp">class Solution {  
 public:  
@@ -27116,7 +27318,7 @@ public:
 <li>时间复杂度: O(n)</li>
 <li>空间复杂度: O(n)</li>
 </ul>
-<h2 id="java解法-111"><a class="header" href="#java解法-111">Java解法</a></h2>
+<h2 id="java解法-113"><a class="header" href="#java解法-113">Java解法</a></h2>
 <pre><code class="language-java">// 动态规划
 class Solution {
 	public int rob(int[] nums) {
@@ -27206,7 +27408,7 @@ Total amount you can rob = 1 + 3 = 4.</p>
 <li><code>1 &lt;= nums.length &lt;= 100</code></li>
 <li><code>0 &lt;= nums[i] &lt;= 1000</code></li>
 </ul>
-<h2 id="思路-174"><a class="header" href="#思路-174">思路</a></h2>
+<h2 id="思路-177"><a class="header" href="#思路-177">思路</a></h2>
 <p>这道题目和<a href="https://programmercarl.com/0198.%E6%89%93%E5%AE%B6%E5%8A%AB%E8%88%8D.html">198.打家劫舍</a>是差不多的，唯一区别就是成环了。</p>
 <p>对于一个数组，成环的话主要有如下三种情况：</p>
 <ul>
@@ -27225,7 +27427,7 @@ Total amount you can rob = 1 + 3 = 4.</p>
 <p><strong>注意我这里用的是"考虑"</strong>，例如情况三，虽然是考虑包含尾元素，但不一定要选尾部元素！ 对于情况三，取nums[1] 和 nums[3]就是最大的。</p>
 <p><strong>而情况二 和 情况三 都包含了情况一了，所以只考虑情况二和情况三就可以了</strong>。</p>
 <p>分析到这里，本题其实比较简单了。 剩下的和<a href="https://programmercarl.com/0198.%E6%89%93%E5%AE%B6%E5%8A%AB%E8%88%8D.html">198.打家劫舍</a>就是一样的了。</p>
-<h2 id="c解法-157"><a class="header" href="#c解法-157">C++解法</a></h2>
+<h2 id="c解法-160"><a class="header" href="#c解法-160">C++解法</a></h2>
 <p>注意注释中的情况二情况三，以及把198.打家劫舍的代码抽离出来了。完整代码如下：</p>
 <pre><code class="language-cpp">class Solution {  
 public:  
@@ -27253,7 +27455,7 @@ public:
 <li>时间复杂度: O(n)</li>
 <li>空间复杂度: O(n)</li>
 </ul>
-<h2 id="java解法-112"><a class="header" href="#java解法-112">Java解法</a></h2>
+<h2 id="java解法-114"><a class="header" href="#java解法-114">Java解法</a></h2>
 <pre><code class="language-java">class Solution {
     public int robLinearArray(int[] nums) {
         int[] dp = new int[nums.length + 1];
@@ -27300,7 +27502,7 @@ public:
 <li>The number of nodes in the tree is in the range <code>[1, 10^4]</code>.</li>
 <li><code>0 &lt;= Node.val &lt;= 10^4</code></li>
 </ul>
-<h2 id="思路-175"><a class="header" href="#思路-175">思路</a></h2>
+<h2 id="思路-178"><a class="header" href="#思路-178">思路</a></h2>
 <p>对于树的话，首先就要想到遍历方式，前中后序（深度优先搜索）还是层序遍历（广度优先搜索）。</p>
 <p><strong>本题一定是要后序遍历，因为通过递归函数的返回值来做下一步计算</strong>。</p>
 <p>与198.打家劫舍，213.打家劫舍II一样，关键是要讨论当前节点抢还是不抢。</p>
@@ -27360,7 +27562,7 @@ return {val2, val1};
 <p>以示例1为例，dp数组状态如下：（<strong>注意用后序遍历的方式推导</strong>）</p>
 <p><img src="https://code-thinking-1253855093.file.myqcloud.com/pics/20230203110031.png" alt="" /></p>
 <p><strong>最后头结点就是取下标0 和下标1的最大值就是偷得的最大金钱</strong>。</p>
-<h2 id="c解法-158"><a class="header" href="#c解法-158">C++解法</a></h2>
+<h2 id="c解法-161"><a class="header" href="#c解法-161">C++解法</a></h2>
 <p>暴力递归代码如下：</p>
 <pre><code class="language-cpp">class Solution {  
 public:  
@@ -27433,7 +27635,7 @@ public:
 <li>时间复杂度：O(n)，每个节点只遍历了一次</li>
 <li>空间复杂度：O(log n)，算上递推系统栈的空间</li>
 </ul>
-<h2 id="java解法-113"><a class="header" href="#java解法-113">Java解法</a></h2>
+<h2 id="java解法-115"><a class="header" href="#java解法-115">Java解法</a></h2>
 <pre><code class="language-java">class Solution {
     // 1.递归去偷，超时
     public int rob(TreeNode root) {
@@ -27526,7 +27728,7 @@ Therefore, we return min(5, 9, 9) = 5.</li>
 <li><code>1 &lt;= nums[i] &lt;= 10^9</code></li>
 <li><code>1 &lt;= k &lt;= (nums.length + 1)/2</code></li>
 </ul>
-<h2 id="思路-176"><a class="header" href="#思路-176">思路</a></h2>
+<h2 id="思路-179"><a class="header" href="#思路-179">思路</a></h2>
 <p>Can we use binary search to find the minimum value of a non-contiguous subsequence of a given size k?</p>
 <p>Initialize the search range with the minimum and maximum elements of the input array.</p>
 <p>Use a check function to determine if it is possible to select k non-consecutive elements that are less than or equal to the current "guess" value.</p>
@@ -27537,7 +27739,7 @@ Therefore, we return min(5, 9, 9) = 5.</li>
 <p>记当前偷取的房屋数目为 count，遍历数组 nums，假设当前遍历的房屋的金额为 x，如果 x≤y 成立，且上一遍历的房屋没有被偷取，那么令偷取的房屋数目 count 加 1，表示该房屋被偷取。
 遍历结束后 f(y)=count，显然 f(y) 是非递减函数。</p>
 <p>那么我们可以使用二分查找的方法，找到满足 f(y)≥k 的最小 y，即题目所求的小偷最小窃取能力。</p>
-<h2 id="c解法-159"><a class="header" href="#c解法-159">C++解法</a></h2>
+<h2 id="c解法-162"><a class="header" href="#c解法-162">C++解法</a></h2>
 <p>具体二分查找算法如下：</p>
 <p>初始时 lower=numsmin，upper=numsmax。</p>
 <p>令 middle=⌊(lower+upper)/2⌋，如果 f(middle)≥k，那么 upper=middle−1；否则 lower=middle+1。</p>
@@ -27602,7 +27804,7 @@ public:
 };
 
 </code></pre>
-<h2 id="java解法-114"><a class="header" href="#java解法-114">Java解法</a></h2>
+<h2 id="java解法-116"><a class="header" href="#java解法-116">Java解法</a></h2>
 <pre><code class="language-java">class Solution {
     public boolean canRob(int[] nums, int mid, int k) {
         int count = 0, n = nums.length;
@@ -27700,7 +27902,7 @@ Note that buying on day 2 and selling on day 1 is not allowed because you must b
 <li><code>1 &lt;= prices.length &lt;= 10^5</code></li>
 <li><code>0 &lt;= prices[i] &lt;= 10^4</code></li>
 </ul>
-<h2 id="思路-177"><a class="header" href="#思路-177">思路</a></h2>
+<h2 id="思路-180"><a class="header" href="#思路-180">思路</a></h2>
 <p>动规五部曲分析如下：</p>
 <ol>
 <li>确定dp数组（dp table）以及下标的含义</li>
@@ -27746,7 +27948,7 @@ Note that buying on day 2 and selling on day 1 is not allowed because you must b
 <p>`dp[5][1]就是最终结果。</p>
 <p>为什么不是<code>dp[5][0]</code>呢？</p>
 <p><strong>因为本题中不持有股票状态所得金钱一定比持有股票状态得到的多！</strong></p>
-<h2 id="c解法-160"><a class="header" href="#c解法-160">C++解法</a></h2>
+<h2 id="c解法-163"><a class="header" href="#c解法-163">C++解法</a></h2>
 <h3 id="动态规划-4"><a class="header" href="#动态规划-4">动态规划</a></h3>
 <p>以上分析完毕，C++代码如下：</p>
 <pre><code class="language-cpp">// 版本一  
@@ -27837,7 +28039,7 @@ public:
 <li>时间复杂度：O(n)</li>
 <li>空间复杂度：O(1)</li>
 </ul>
-<h2 id="java解法-115"><a class="header" href="#java解法-115">Java解法</a></h2>
+<h2 id="java解法-117"><a class="header" href="#java解法-117">Java解法</a></h2>
 <pre><code class="language-java">// 优化空间
 class Solution {
     public int maxProfit(int[] prices) {
@@ -27879,7 +28081,7 @@ Total profit is 4.</p>
 <li><code>1 &lt;= prices.length &lt;= 3 * 10^4</code></li>
 <li><code>0 &lt;= prices[i] &lt;= 10^4</code></li>
 </ul>
-<h2 id="思路-178"><a class="header" href="#思路-178">思路</a></h2>
+<h2 id="思路-181"><a class="header" href="#思路-181">思路</a></h2>
 <p>本题我们在讲解贪心专题的时候就已经讲解过了<a href="https://programmercarl.com/0122.%E4%B9%B0%E5%8D%96%E8%82%A1%E7%A5%A8%E7%9A%84%E6%9C%80%E4%BD%B3%E6%97%B6%E6%9C%BAII.html">贪心算法：买卖股票的最佳时机II</a>，只不过没有深入讲解动态规划的解法，那么这次我们再好好分析一下动规的解法。</p>
 <p>本题和<a href="https://programmercarl.com/0121.%E4%B9%B0%E5%8D%96%E8%82%A1%E7%A5%A8%E7%9A%84%E6%9C%80%E4%BD%B3%E6%97%B6%E6%9C%BA.html">121. 买卖股票的最佳时机</a>的唯一区别是本题股票可以买卖多次了（注意只有一只股票，所以再次购买前要出售掉之前的股票）</p>
 <p><strong>在动规五部曲中，这个区别主要是体现在递推公式上，其他都和<a href="https://programmercarl.com/0121.%E4%B9%B0%E5%8D%96%E8%82%A1%E7%A5%A8%E7%9A%84%E6%9C%80%E4%BD%B3%E6%97%B6%E6%9C%BA.html">121. 买卖股票的最佳时机</a>一样一样的</strong>。</p>
@@ -27904,7 +28106,7 @@ Total profit is 4.</p>
 <li>第i天卖出股票，所得现金就是按照今天股票价格卖出后所得现金即：prices[i] + <code>dp[i-1][j]</code></li>
 </ul>
 <p><strong>注意这里和<a href="https://programmercarl.com/0121.%E4%B9%B0%E5%8D%96%E8%82%A1%E7%A5%A8%E7%9A%84%E6%9C%80%E4%BD%B3%E6%97%B6%E6%9C%BA.html">121. 买卖股票的最佳时机</a>就是一样的逻辑，卖出股票收获利润（可能是负值）天经地义！</strong></p>
-<h2 id="c解法-161"><a class="header" href="#c解法-161">C++解法</a></h2>
+<h2 id="c解法-164"><a class="header" href="#c解法-164">C++解法</a></h2>
 <p>代码如下：（注意代码中的注释，标记了和121.买卖股票的最佳时机唯一不同的地方）</p>
 <pre><code class="language-cpp">class Solution {  
 public:  
@@ -27950,7 +28152,7 @@ public:
 <li>时间复杂度：O(n)</li>
 <li>空间复杂度：O(1)</li>
 </ul>
-<h2 id="java解法-116"><a class="header" href="#java解法-116">Java解法</a></h2>
+<h2 id="java解法-118"><a class="header" href="#java解法-118">Java解法</a></h2>
 <pre><code class="language-java">// 动态规划
 class Solution 
     // 实现1：二维数组存储
@@ -28003,7 +28205,7 @@ Note that you cannot buy on day 1, buy on day 2 and sell them later, as you are 
 <li><code>1 &lt;= prices.length &lt;= 10^5</code></li>
 <li><code>0 &lt;= prices[i] &lt;= 10^5</code></li>
 </ul>
-<h2 id="思路-179"><a class="header" href="#思路-179">思路</a></h2>
+<h2 id="思路-182"><a class="header" href="#思路-182">思路</a></h2>
 <p>这道题目相对 <a href="https://programmercarl.com/0121.%E4%B9%B0%E5%8D%96%E8%82%A1%E7%A5%A8%E7%9A%84%E6%9C%80%E4%BD%B3%E6%97%B6%E6%9C%BA.html">121.买卖股票的最佳时机</a> 和 <a href="https://programmercarl.com/0122.%E4%B9%B0%E5%8D%96%E8%82%A1%E7%A5%A8%E7%9A%84%E6%9C%80%E4%BD%B3%E6%97%B6%E6%9C%BAII.html">122.买卖股票的最佳时机II</a> 难了不少。</p>
 <p>关键在于至多买卖两次，这意味着可以买卖一次，可以买卖两次，也可以不买卖。</p>
 <p>接来下我用动态规划五部曲详细分析一下：</p>
@@ -28063,7 +28265,7 @@ Note that you cannot buy on day 1, buy on day 2 and sell them later, as you are 
 <p>大家可以看到红色框为最后两次卖出的状态。</p>
 <p>现在最大的时候一定是卖出的状态，而两次卖出的状态现金最大一定是最后一次卖出。如果想不明白的录友也可以这么理解：如果第一次卖出已经是最大值了，那么我们可以在当天立刻买入再立刻卖出。所以<code>dp[4][4]</code>已经包含了<code>dp[4][4]</code>的情况。也就是说第二次卖出手里所剩的钱一定是最多的。</p>
 <p>所以最终最大利润是<code>dp[4][4]</code></p>
-<h2 id="c解法-162"><a class="header" href="#c解法-162">C++解法</a></h2>
+<h2 id="c解法-165"><a class="header" href="#c解法-165">C++解法</a></h2>
 <p>以上五部都分析完了，不难写出如下代码：</p>
 <pre><code class="language-cpp">// 版本一  
 class Solution {  
@@ -28117,7 +28319,7 @@ public:
 <p>如果dp[1]取<code>dp[0] - prices[i]</code>，今天买入股票，那么<code>dp[2] = max(dp[2], dp[1] + prices[i]);</code>中的<code>dp[1] + prices[i]</code>相当于是今天再卖出股票，一买一卖收益为0，对所得现金没有影响。相当于今天买入股票又卖出股票，等于没有操作，保持昨天卖出股票的状态了。</p>
 <p><strong>这种写法看上去简单，其实思路很绕，不建议大家这么写，这么思考，很容易把自己绕进去！</strong></p>
 <p>对于本题，把版本一的写法研究明白，足以！</p>
-<h2 id="java解法-117"><a class="header" href="#java解法-117">Java解法</a></h2>
+<h2 id="java解法-119"><a class="header" href="#java解法-119">Java解法</a></h2>
 <pre><code class="language-java">// 版本一
 class Solution {
     public int maxProfit(int[] prices) {
@@ -28188,7 +28390,7 @@ class Solution {
 <li><code>1 &lt;= prices.length &lt;= 1000</code></li>
 <li><code>0 &lt;= prices[i] &lt;= 1000</code></li>
 </ul>
-<h2 id="思路-180"><a class="header" href="#思路-180">思路</a></h2>
+<h2 id="思路-183"><a class="header" href="#思路-183">思路</a></h2>
 <p>这道题目可以说是<a href="https://programmercarl.com/0123.%E4%B9%B0%E5%8D%96%E8%82%A1%E7%A5%A8%E7%9A%84%E6%9C%80%E4%BD%B3%E6%97%B6%E6%9C%BAIII.html">动态规划：123.买卖股票的最佳时机III</a>的进阶版，这里要求至多有k次交易。</p>
 <p>动规五部曲，分析如下：</p>
 <ol>
@@ -28260,7 +28462,7 @@ class Solution {
 </ol>
 <p>以输入[1,2,3,4,5]，k=2为例。</p>
 <p>最后一次卖出，一定是利润最大的，<code>dp[prices.size() - 1][2 * k]</code>即红色部分就是最后求解。</p>
-<h2 id="c解法-163"><a class="header" href="#c解法-163">C++解法</a></h2>
+<h2 id="c解法-166"><a class="header" href="#c解法-166">C++解法</a></h2>
 <p>以上分析完毕，C++代码如下：</p>
 <pre><code class="language-cpp">class Solution {  
 public:  
@@ -28287,7 +28489,7 @@ public:
 </ul>
 <p>当然有的解法是定义一个三维数组<code>dp[i][j]</code>[k]，第i天，第j次买卖，k表示买还是卖的状态，从定义上来讲是比较直观。</p>
 <p>但感觉三维数组操作起来有些麻烦，我是直接用二维数组来模拟三维数组的情况，代码看起来也清爽一些。</p>
-<h2 id="java解法-118"><a class="header" href="#java解法-118">Java解法</a></h2>
+<h2 id="java解法-120"><a class="header" href="#java解法-120">Java解法</a></h2>
 <pre><code class="language-java">// 版本二: 二维 dp数组
 class Solution {
     public int maxProfit(int k, int[] prices) {
@@ -28332,7 +28534,7 @@ class Solution {
 <li><code>1 &lt;= prices.length &lt;= 5000</code></li>
 <li><code>0 &lt;= prices[i] &lt;= 1000</code></li>
 </ul>
-<h2 id="思路-181"><a class="header" href="#思路-181">思路</a></h2>
+<h2 id="思路-184"><a class="header" href="#思路-184">思路</a></h2>
 <p>相对于<a href="https://programmercarl.com/0122.%E4%B9%B0%E5%8D%96%E8%82%A1%E7%A5%A8%E7%9A%84%E6%9C%80%E4%BD%B3%E6%97%B6%E6%9C%BAII%EF%BC%88%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%EF%BC%89.html">动态规划：122.买卖股票的最佳时机II</a>，本题加上了一个冷冻期</p>
 <p>在<a href="https://programmercarl.com/0122.%E4%B9%B0%E5%8D%96%E8%82%A1%E7%A5%A8%E7%9A%84%E6%9C%80%E4%BD%B3%E6%97%B6%E6%9C%BAII%EF%BC%88%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%EF%BC%89.html">动态规划：122.买卖股票的最佳时机II</a> 中有两个状态，持有股票后的最多现金，和不持有股票的最多现金。</p>
 <p>动规五部曲，分析如下：</p>
@@ -28430,7 +28632,7 @@ dp[i][3] = dp[i - 1][2];
 <p>以 <code>[1,2,3,0,2]</code> 为例，dp数组如下：</p>
 <p><img src="https://code-thinking-1253855093.file.myqcloud.com/pics/2021032317451040.png" alt="309.最佳买卖股票时机含冷冻期" /></p>
 <p>最后结果是取状态二，状态三和状态四的最大值，不少同学会把状态四忘了，状态四是冷冻期，最后一天如果是冷冻期也可能是最大值。</p>
-<h2 id="c解法-164"><a class="header" href="#c解法-164">C++解法</a></h2>
+<h2 id="c解法-167"><a class="header" href="#c解法-167">C++解法</a></h2>
 <p>代码如下：</p>
 <pre><code class="language-cpp">class Solution {  
 public:  
@@ -28454,7 +28656,7 @@ public:
 <li>空间复杂度：O(n)</li>
 </ul>
 <p>当然，空间复杂度可以优化，定义一个<code>dp[2][4]</code>大小的数组就可以了，就保存前一天的当前的状态，感兴趣的同学可以自己去写一写，思路是一样的。</p>
-<h2 id="java解法-119"><a class="header" href="#java解法-119">Java解法</a></h2>
+<h2 id="java解法-121"><a class="header" href="#java解法-121">Java解法</a></h2>
 <pre><code class="language-java">class Solution {
     public int maxProfit(int[] prices) {
         if (prices == null || prices.length &lt; 2) {
@@ -28506,7 +28708,7 @@ The total profit is ((8 - 1) - 2) + ((9 - 4) - 2) = 8.</li>
 <li><code>1 &lt;= prices[i] &lt; 5 * 10^4</code></li>
 <li><code>0 &lt;= fee &lt; 5 * 10^4</code></li>
 </ul>
-<h2 id="思路-182"><a class="header" href="#思路-182">思路</a></h2>
+<h2 id="思路-185"><a class="header" href="#思路-185">思路</a></h2>
 <p>本题贪心解法：<a href="https://programmercarl.com/0714.%E4%B9%B0%E5%8D%96%E8%82%A1%E7%A5%A8%E7%9A%84%E6%9C%80%E4%BD%B3%E6%97%B6%E6%9C%BA%E5%90%AB%E6%89%8B%E7%BB%AD%E8%B4%B9.html">贪心算法：买卖股票的最佳时机含手续费</a></p>
 <p>性能是：</p>
 <ul>
@@ -28531,7 +28733,7 @@ The total profit is ((8 - 1) - 2) + ((9 - 4) - 2) = 8.</li>
 </ul>
 <p>所以：<code>dp[i][j]</code> = max(<code>dp[i-1][j]</code>, <code>dp[i-1][j]</code> + prices[i] - fee);</p>
 <p><strong>本题和<a href="https://programmercarl.com/0122.%E4%B9%B0%E5%8D%96%E8%82%A1%E7%A5%A8%E7%9A%84%E6%9C%80%E4%BD%B3%E6%97%B6%E6%9C%BAII%EF%BC%88%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%EF%BC%89.html">动态规划：122.买卖股票的最佳时机II</a>的区别就是这里需要多一个减去手续费的操作</strong>。</p>
-<h2 id="c解法-165"><a class="header" href="#c解法-165">C++解法</a></h2>
+<h2 id="c解法-168"><a class="header" href="#c解法-168">C++解法</a></h2>
 <p>以上分析完毕，C++代码如下：</p>
 <pre><code class="language-cpp">class Solution {  
 public:  
@@ -28551,7 +28753,7 @@ public:
 <li>时间复杂度：O(n)</li>
 <li>空间复杂度：O(n)</li>
 </ul>
-<h2 id="java解法-120"><a class="header" href="#java解法-120">Java解法</a></h2>
+<h2 id="java解法-122"><a class="header" href="#java解法-122">Java解法</a></h2>
 <pre><code class="language-java">/**
  * 买入时支付手续费
  * @param prices
@@ -28636,7 +28838,7 @@ public int maxProfit(int[] prices, int fee) {
 <li><code>-10^4 &lt;= nums[i] &lt;= 10^4</code></li>
 </ul>
 <p><strong>Follow up:</strong> Can you come up with an algorithm that runs in <code>O(n log(n))</code> time complexity?</p>
-<h2 id="思路-183"><a class="header" href="#思路-183">思路</a></h2>
+<h2 id="思路-186"><a class="header" href="#思路-186">思路</a></h2>
 <p>首先通过本题大家要明确什么是子序列，“子序列是由数组派生而来的序列，删除（或不删除）数组中的元素而不改变其余元素的顺序”。</p>
 <p>本题也是代码随想录中子序列问题的第一题，如果没接触过这种题目的话，本题还是很难的，甚至想暴力去搜索也不知道怎么搜。 子序列问题是动态规划解决的经典问题，当前下标i的递增子序列长度，其实和i之前的下表j的子序列长度有关系，那又是什么样的关系呢。</p>
 <p>接下来，我们依然用动规五部曲来详细分析一波：</p>
@@ -28675,7 +28877,7 @@ public int maxProfit(int[] prices, int fee) {
 <p>输入：[0,1,0,3,2]，dp数组的变化如下：</p>
 <p><img src="https://code-thinking-1253855093.file.myqcloud.com/pics/20210110170945618.jpg" alt="300.最长上升子序列" /></p>
 <p>如果代码写出来，但一直AC不了，那么就把dp数组打印出来，看看对不对！</p>
-<h2 id="c解法-166"><a class="header" href="#c解法-166">C++解法</a></h2>
+<h2 id="c解法-169"><a class="header" href="#c解法-169">C++解法</a></h2>
 <p>以上五部分析完毕，C++代码如下：</p>
 <pre><code class="language-cpp">class Solution {  
 public:  
@@ -28697,7 +28899,7 @@ public:
 <li>时间复杂度: O(n^2)</li>
 <li>空间复杂度: O(n)</li>
 </ul>
-<h2 id="java解法-121"><a class="header" href="#java解法-121">Java解法</a></h2>
+<h2 id="java解法-123"><a class="header" href="#java解法-123">Java解法</a></h2>
 <pre><code class="language-java">class Solution {
     public int lengthOfLIS(int[] nums) {
         int[] dp = new int[nums.length];
@@ -28734,7 +28936,7 @@ increasing.</p>
 <li><code>1 &lt;= nums.length &lt;= 10^4</code></li>
 <li><code>-10^9 &lt;= nums[i] &lt;= 10^9</code></li>
 </ul>
-<h2 id="思路-184"><a class="header" href="#思路-184">思路</a></h2>
+<h2 id="思路-187"><a class="header" href="#思路-187">思路</a></h2>
 <p>本题相对于昨天的<a href="https://programmercarl.com/0300.%E6%9C%80%E9%95%BF%E4%B8%8A%E5%8D%87%E5%AD%90%E5%BA%8F%E5%88%97.html">动态规划：300.最长递增子序列</a>最大的区别在于“连续”。</p>
 <p>本题要求的是最长<strong>连续</strong>递增序列</p>
 <p>动规五部曲分析如下：</p>
@@ -28778,7 +28980,7 @@ increasing.</p>
 <p>在动规分析中，关键是要理解和<a href="https://programmercarl.com/0300.%E6%9C%80%E9%95%BF%E4%B8%8A%E5%8D%87%E5%AD%90%E5%BA%8F%E5%88%97.html">动态规划：300.最长递增子序列</a>的区别。</p>
 <p><strong>要联动起来，才能理解递增子序列怎么求，递增连续子序列又要怎么求</strong>。</p>
 <p>概括来说：不连续递增子序列的跟前0-i 个状态有关，连续递增的子序列只跟前一个状态有关</p>
-<h2 id="c解法-167"><a class="header" href="#c解法-167">C++解法</a></h2>
+<h2 id="c解法-170"><a class="header" href="#c解法-170">C++解法</a></h2>
 <p>以上分析完毕，C++代码如下：</p>
 <pre><code class="language-cpp">class Solution {  
 public:  
@@ -28824,7 +29026,7 @@ public:
 <li>时间复杂度：O(n)</li>
 <li>空间复杂度：O(1)</li>
 </ul>
-<h2 id="java解法-122"><a class="header" href="#java解法-122">Java解法</a></h2>
+<h2 id="java解法-124"><a class="header" href="#java解法-124">Java解法</a></h2>
 <blockquote>
 <p>动态规划：</p>
 </blockquote>
@@ -28904,7 +29106,7 @@ public:
 <li><code>1 &lt;= nums1.length, nums2.length &lt;= 1000</code></li>
 <li><code>0 &lt;= nums1[i], nums2[i] &lt;= 100</code></li>
 </ul>
-<h2 id="思路-185"><a class="header" href="#思路-185">思路</a></h2>
+<h2 id="思路-188"><a class="header" href="#思路-188">思路</a></h2>
 <p>注意题目中说的子数组，其实就是连续子序列。</p>
 <p>要求两个数组中最长重复子数组，如果是暴力的解法 只需要先两层for循环确定两个数组起始位置，然后再来一个循环可以是for或者while，来从两个起始位置开始比较，取得重复子数组的长度。</p>
 <p>本题其实是动规解决的经典题目，我们只要想到 用二维数组可以记录两个字符串的所有比较情况，这样就比较好推 递推公式了。 动规五部曲分析如下：</p>
@@ -28952,7 +29154,7 @@ public:
 </ol>
 <p>拿示例1中，A: [1,2,3,2,1]，B: [3,2,1,4,7]为例，画一个dp数组的状态变化，如下：</p>
 <p><img src="https://code-thinking-1253855093.file.myqcloud.com/pics/2021011215282060.jpg" alt="718.最长重复子数组" /></p>
-<h2 id="c解法-168"><a class="header" href="#c解法-168">C++解法</a></h2>
+<h2 id="c解法-171"><a class="header" href="#c解法-171">C++解法</a></h2>
 <p>以上五部曲分析完毕，C++代码如下：</p>
 <pre><code class="language-cpp">// 版本一  
 class Solution {  
@@ -29003,7 +29205,7 @@ public:
 <li>时间复杂度：<span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathnormal">n</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">m</span><span class="mclose">)</span></span></span></span>，n 为A长度，m为B长度</li>
 <li>空间复杂度：<span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathnormal">m</span><span class="mclose">)</span></span></span></span></li>
 </ul>
-<h2 id="java解法-123"><a class="header" href="#java解法-123">Java解法</a></h2>
+<h2 id="java解法-125"><a class="header" href="#java解法-125">Java解法</a></h2>
 <pre><code class="language-java">// 版本一  
 class Solution {  
     public int findLength(int[] nums1, int[] nums2) {  
@@ -29068,7 +29270,7 @@ class Solution {
 <li><code>1 &lt;= text1.length, text2.length &lt;= 1000</code></li>
 <li><code>text1</code> and <code>text2</code> consist of only lowercase English characters.</li>
 </ul>
-<h2 id="思路-186"><a class="header" href="#思路-186">思路</a></h2>
+<h2 id="思路-189"><a class="header" href="#思路-189">思路</a></h2>
 <p>本题和<a href="https://programmercarl.com/0718.%E6%9C%80%E9%95%BF%E9%87%8D%E5%A4%8D%E5%AD%90%E6%95%B0%E7%BB%84.html">动态规划：718. 最长重复子数组</a>区别在于这里不要求是连续的了，但要有相对顺序，即："ace" 是 "abcde" 的子序列，但 "aec" 不是 "abcde" 的子序列。</p>
 <p>继续动规五部曲分析如下：</p>
 <ol>
@@ -29113,7 +29315,7 @@ class Solution {
 <p>以输入：text1 = "abcde", text2 = "ace" 为例，dp状态如图：</p>
 <p><img src="https://code-thinking-1253855093.file.myqcloud.com/pics/20210210150215918.jpg" alt="1143.最长公共子序列1" /></p>
 <p>最后红框dp<a href="%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/%E5%AD%90%E5%BA%8F%E5%88%97.html#">text1.size()</a>为最终结果。</p>
-<h2 id="c解法-169"><a class="header" href="#c解法-169">C++解法</a></h2>
+<h2 id="c解法-172"><a class="header" href="#c解法-172">C++解法</a></h2>
 <p>以上分析完毕，C++代码如下：</p>
 <pre><code class="language-cpp">class Solution {  
 public:  
@@ -29136,7 +29338,7 @@ public:
 <li>时间复杂度: O(n * m)，其中 n 和 m 分别为 text1 和 text2 的长度</li>
 <li>空间复杂度: O(n * m)</li>
 </ul>
-<h2 id="java解法-124"><a class="header" href="#java解法-124">Java解法</a></h2>
+<h2 id="java解法-126"><a class="header" href="#java解法-126">Java解法</a></h2>
 <pre><code class="language-java">/*  
     二维dp数组  
 */  
@@ -29230,7 +29432,7 @@ We cannot draw 3 uncrossed lines, because the line from nums1[1] = 4 to nums2[2]
 <li><code>1 &lt;= nums1.length, nums2.length &lt;= 500</code></li>
 <li><code>1 &lt;= nums1[i], nums2[j] &lt;= 2000</code></li>
 </ul>
-<h2 id="思路-187"><a class="header" href="#思路-187">思路</a></h2>
+<h2 id="思路-190"><a class="header" href="#思路-190">思路</a></h2>
 <p>绘制一些连接两个数字 A[i] 和 B[j] 的直线，只要 A[i] == B[j]，且直线不能相交！</p>
 <p>直线不能相交，这就是说明在字符串A中 找到一个与字符串B相同的子序列，且这个子序列不能改变相对顺序，只要相对顺序不改变，链接相同数字的直线就不会相交。</p>
 <p>拿示例一A = [1,4,2], B = [1,2,4]为例，相交情况如图：</p>
@@ -29241,7 +29443,7 @@ We cannot draw 3 uncrossed lines, because the line from nums1[1] = 4 to nums2[2]
 <p>一样到什么程度呢？ 把字符串名字改一下，其他代码都不用改，直接copy过来就行了。</p>
 <p>其实本题就是求最长公共子序列的长度，介于我们刚刚讲过<a href="https://programmercarl.com/1143.%E6%9C%80%E9%95%BF%E5%85%AC%E5%85%B1%E5%AD%90%E5%BA%8F%E5%88%97.html">动态规划：1143.最长公共子序列</a>，所以本题我就不再做动规五部曲分析了。</p>
 <p>如果大家有点遗忘了最长公共子序列，就再看一下这篇：<a href="https://programmercarl.com/1143.%E6%9C%80%E9%95%BF%E5%85%AC%E5%85%B1%E5%AD%90%E5%BA%8F%E5%88%97.html">动态规划：1143.最长公共子序列</a></p>
-<h2 id="c解法-170"><a class="header" href="#c解法-170">C++解法</a></h2>
+<h2 id="c解法-173"><a class="header" href="#c解法-173">C++解法</a></h2>
 <p>本题代码如下：</p>
 <pre><code class="language-cpp">class Solution {  
 public:  
@@ -29264,7 +29466,7 @@ public:
 <li>时间复杂度: O(n * m)</li>
 <li>空间复杂度: O(n * m)</li>
 </ul>
-<h2 id="java解法-125"><a class="header" href="#java解法-125">Java解法</a></h2>
+<h2 id="java解法-127"><a class="header" href="#java解法-127">Java解法</a></h2>
 <pre><code class="language-java">  class Solution {
     public int maxUncrossedLines(int[] nums1, int[] nums2) {
         int len1 = nums1.length;
@@ -29305,7 +29507,7 @@ public:
 <li><code>-10^4 &lt;= nums[i] &lt;= 10^4</code></li>
 </ul>
 <p><strong>Follow up:</strong> If you have figured out the <code>O(n)</code> solution, try coding another solution using the <strong>divide and conquer</strong> approach, which is more subtle.</p>
-<h2 id="思路-188"><a class="header" href="#思路-188">思路</a></h2>
+<h2 id="思路-191"><a class="header" href="#思路-191">思路</a></h2>
 <p>这道题之前我们在讲解贪心专题的时候用贪心算法解决过一次，<a href="https://programmercarl.com/0053.%E6%9C%80%E5%A4%A7%E5%AD%90%E5%BA%8F%E5%92%8C.html">贪心算法：最大子序和</a>。</p>
 <p>这次我们用动态规划的思路再来分析一次。</p>
 <p>动规五部曲如下：</p>
@@ -29341,7 +29543,7 @@ public:
 <p>在回顾一下dp[i]的定义：包括下标i之前的最大连续子序列和为dp[i]。</p>
 <p>那么我们要找最大的连续子序列，就应该找每一个i为终点的连续最大子序列。</p>
 <p>所以在递推公式的时候，可以直接选出最大的dp[i]。</p>
-<h2 id="c解法-171"><a class="header" href="#c解法-171">C++解法</a></h2>
+<h2 id="c解法-174"><a class="header" href="#c解法-174">C++解法</a></h2>
 <p>以上动规五部曲分析完毕，完整代码如下：</p>
 <pre><code class="language-cpp">class Solution {  
 public:  
@@ -29414,7 +29616,7 @@ public:
 <li><code>s</code> and <code>t</code> consist only of lowercase English letters.</li>
 </ul>
 <p><strong>Follow up:</strong> Suppose there are lots of incoming <code>s</code>, say <code>s1, s2, ..., sk</code> where <code>k &gt;= 109</code>, and you want to check one by one to see if <code>t</code> has its subsequence. In this scenario, how would you change your code?</p>
-<h2 id="思路-189"><a class="header" href="#思路-189">思路</a></h2>
+<h2 id="思路-192"><a class="header" href="#思路-192">思路</a></h2>
 <p>（这道题也可以用双指针的思路来实现，时间复杂度也是O(n)）</p>
 <p>这道题应该算是编辑距离的入门题目，因为从题意中我们也可以发现，只需要计算删除的情况，不用考虑增加和替换的情况。</p>
 <p><strong>所以掌握本题的动态规划解法是对后面要讲解的编辑距离的题目打下基础</strong>。</p>
@@ -29473,7 +29675,7 @@ public:
 <p><img src="https://code-thinking-1253855093.file.myqcloud.com/pics/2021030317364166.jpg" alt="392.判断子序列2" /></p>
 <p><code>dp[i][j]</code>表示以下标i-1为结尾的字符串s和以下标j-1为结尾的字符串t 相同子序列的长度，所以如果<code>dp[s.size()][t.size()]</code> 与 字符串s的长度相同说明：s与t的最长相同子序列就是s，那么s 就是 t 的子序列。</p>
 <p>图中<code>dp[s.size()][t.size()]=3</code>， 而s.size() 也为3。所以s是t 的子序列，返回true。</p>
-<h2 id="c解法-172"><a class="header" href="#c解法-172">C++解法</a></h2>
+<h2 id="c解法-175"><a class="header" href="#c解法-175">C++解法</a></h2>
 <p>动规五部曲分析完毕，C++代码如下：</p>
 <pre><code class="language-cpp">class Solution {  
 public:  
@@ -29494,7 +29696,7 @@ public:
 <li>时间复杂度：O(n × m)</li>
 <li>空间复杂度：O(n × m)</li>
 </ul>
-<h2 id="java解法-126"><a class="header" href="#java解法-126">Java解法</a></h2>
+<h2 id="java解法-128"><a class="header" href="#java解法-128">Java解法</a></h2>
 <pre><code class="language-java">class Solution {  
     public boolean isSubsequence(String s, String t) {  
         int length1 = s.length(); int length2 = t.length();  
@@ -29600,7 +29802,7 @@ As shown below, there are 5 ways you can generate "bag" from s.</p>
 <li><code>1 &lt;= s.length, t.length &lt;= 1000</code></li>
 <li><code>s</code> and <code>t</code> consist of English letters.</li>
 </ul>
-<h2 id="思路-190"><a class="header" href="#思路-190">思路</a></h2>
+<h2 id="思路-193"><a class="header" href="#思路-193">思路</a></h2>
 <p>这道题目如果不是子序列，而是要求连续序列的，那就可以考虑用KMP。</p>
 <p>这道题目相对于72. 编辑距离，简单了不少，因为本题相当于只有删除操作，不用考虑替换增加之类的。</p>
 <p>但相对于刚讲过的<a href="https://programmercarl.com/0392.%E5%88%A4%E6%96%AD%E5%AD%90%E5%BA%8F%E5%88%97.html">动态规划：392.判断子序列</a>就有难度了，这道题目双指针法可就做不了了，来看看动规五部曲分析如下：</p>
@@ -29669,7 +29871,7 @@ for (int j = 1; j &lt;= t.size(); j++) dp[0][j] = 0;
 <p>以s："baegg"，t："bag"为例，推导dp数组状态如下：</p>
 <p><img src="https://code-thinking.cdn.bcebos.com/pics/115.%E4%B8%8D%E5%90%8C%E7%9A%84%E5%AD%90%E5%BA%8F%E5%88%97.jpg" alt="115.不同的子序列" /></p>
 <p>如果写出来的代码怎么改都通过不了，不妨把dp数组打印出来，看一看，是不是这样的。</p>
-<h2 id="c解法-173"><a class="header" href="#c解法-173">C++解法</a></h2>
+<h2 id="c解法-176"><a class="header" href="#c解法-176">C++解法</a></h2>
 <p>动规五部曲分析完毕，代码如下：</p>
 <pre><code class="language-cpp">class Solution {  
 public:  
@@ -29694,7 +29896,7 @@ public:
 <li>时间复杂度: O(n * m)</li>
 <li>空间复杂度: O(n * m)</li>
 </ul>
-<h2 id="java解法-127"><a class="header" href="#java解法-127">Java解法</a></h2>
+<h2 id="java解法-129"><a class="header" href="#java解法-129">Java解法</a></h2>
 <pre><code class="language-cpp">class Solution {  
     public int numDistinct(String s, String t) {  
         int[][] dp = new int[s.length() + 1][t.length() + 1];  
@@ -29731,7 +29933,7 @@ public:
 <li><code>1 &lt;= word1.length, word2.length &lt;= 500</code></li>
 <li><code>word1</code> and <code>word2</code> consist of only lowercase English letters.</li>
 </ul>
-<h2 id="思路-191"><a class="header" href="#思路-191">思路</a></h2>
+<h2 id="思路-194"><a class="header" href="#思路-194">思路</a></h2>
 <p>本题和<a href="https://programmercarl.com/0115.%E4%B8%8D%E5%90%8C%E7%9A%84%E5%AD%90%E5%BA%8F%E5%88%97.html">动态规划：115.不同的子序列</a>相比，其实就是两个字符串都可以删除了，情况虽说复杂一些，但整体思路是不变的。</p>
 <p>这次是两个字符串可以相互删了，这种题目也知道用动态规划的思路来解，动规五部曲，分析如下：</p>
 <ol>
@@ -29774,7 +29976,7 @@ for (int j = 0; j &lt;= word2.size(); j++) dp[0][j] = j;
 </ol>
 <p>以word1:"sea"，word2:"eat"为例，推导dp数组状态图如下：</p>
 <p><img src="https://code-thinking-1253855093.file.myqcloud.com/pics/20210714101750205.png" alt="583.两个字符串的删除操作1" /></p>
-<h2 id="c解法-174"><a class="header" href="#c解法-174">C++解法</a></h2>
+<h2 id="c解法-177"><a class="header" href="#c解法-177">C++解法</a></h2>
 <p>以上分析完毕，代码如下：</p>
 <pre><code class="language-cpp">class Solution {  
 public:  
@@ -29821,7 +30023,7 @@ public:
 <li>时间复杂度: O(n * m)</li>
 <li>空间复杂度: O(n * m)</li>
 </ul>
-<h2 id="java解法-128"><a class="header" href="#java解法-128">Java解法</a></h2>
+<h2 id="java解法-130"><a class="header" href="#java解法-130">Java解法</a></h2>
 <pre><code class="language-java">class Solution {
     public int minDistance(String word1, String word2) {
         int[][] dp = new int[word1.length() + 1][word2.length() + 1];
@@ -29941,7 +30143,7 @@ exection -&gt; execution (insert 'u')</p>
 <li><code>0 &lt;= word1.length, word2.length &lt;= 500</code></li>
 <li><code>word1</code> and <code>word2</code> consist of lowercase English letters.</li>
 </ul>
-<h2 id="思路-192"><a class="header" href="#思路-192">思路</a></h2>
+<h2 id="思路-195"><a class="header" href="#思路-195">思路</a></h2>
 <p>编辑距离是用动规来解决的经典题目，这道题目看上去好像很复杂，但用动规可以很巧妙的算出最少编辑距离。</p>
 <p>接下来我依然使用动规五部曲，对本题做一个详细的分析：</p>
 <ol>
@@ -30036,7 +30238,7 @@ for (int j = 0; j &lt;= word2.size(); j++) dp[0][j] = j;
 </ol>
 <p>以示例1为例，输入：<code>word1 = "horse", word2 = "ros"</code>为例，dp矩阵状态图如下：</p>
 <p><img src="https://code-thinking-1253855093.file.myqcloud.com/pics/20210114162132300.jpg" alt="72.编辑距离1" /></p>
-<h2 id="c解法-175"><a class="header" href="#c解法-175">C++解法</a></h2>
+<h2 id="c解法-178"><a class="header" href="#c解法-178">C++解法</a></h2>
 <p>以上动规五部分析完毕，C++代码如下：</p>
 <pre><code class="language-cpp">class Solution {  
 public:  
@@ -30062,7 +30264,7 @@ public:
 <li>时间复杂度: O(n * m)</li>
 <li>空间复杂度: O(n * m)</li>
 </ul>
-<h2 id="java解法-129"><a class="header" href="#java解法-129">Java解法</a></h2>
+<h2 id="java解法-131"><a class="header" href="#java解法-131">Java解法</a></h2>
 <pre><code class="language-java">public int minDistance(String word1, String word2) {  
     int m = word1.length();  
     int n = word2.length();  
@@ -30139,7 +30341,7 @@ public:
 <li><code>1 &lt;= s.length &lt;= 1000</code></li>
 <li><code>s</code> consists of lowercase English letters.</li>
 </ul>
-<h2 id="思路-193"><a class="header" href="#思路-193">思路</a></h2>
+<h2 id="思路-196"><a class="header" href="#思路-196">思路</a></h2>
 <h3 id="暴力解法-1"><a class="header" href="#暴力解法-1">暴力解法</a></h3>
 <p>两层for循环，遍历区间起始位置和终止位置，然后还需要一层遍历判断这个区间是不是回文。所以时间复杂度：O(n^3)</p>
 <h3 id="动态规划-5"><a class="header" href="#动态规划-5">动态规划</a></h3>
@@ -30218,7 +30420,7 @@ public:
 <p><img src="https://code-thinking-1253855093.file.myqcloud.com/pics/20210121171059951-20230310132153163.jpg" alt="647.回文子串1" /></p>
 <p>图中有6个true，所以就是有6个回文子串。</p>
 <p><strong>注意因为<code>dp[i][j]</code>的定义，所以j一定是大于等于i的，那么在填充<code>dp[i][j]</code>的时候一定是只填充右上半部分</strong>。</p>
-<h2 id="c解法-176"><a class="header" href="#c解法-176">C++解法</a></h2>
+<h2 id="c解法-179"><a class="header" href="#c解法-179">C++解法</a></h2>
 <p>以上分析完毕，C++代码如下：</p>
 <pre><code class="language-cpp">class Solution {  
 public:  
@@ -30297,7 +30499,7 @@ public:
 <li>时间复杂度：O(n^2)</li>
 <li>空间复杂度：O(1)</li>
 </ul>
-<h2 id="java解法-130"><a class="header" href="#java解法-130">Java解法</a></h2>
+<h2 id="java解法-132"><a class="header" href="#java解法-132">Java解法</a></h2>
 <p>动态规划：</p>
 <pre><code class="language-java">class Solution {  
     public int countSubstrings(String s) {  
@@ -30376,13 +30578,13 @@ public:
 <li><code>1 &lt;= s.length &lt;= 1000</code></li>
 <li><code>s</code> consist of only digits and English letters.</li>
 </ul>
-<h2 id="思路-194"><a class="header" href="#思路-194">思路</a></h2>
+<h2 id="思路-197"><a class="header" href="#思路-197">思路</a></h2>
 <p><a href="https://leetcode.com/problems/longest-palindromic-substring/solutions/3598120/longest-palindromic-substring/">Leetcode官方解法</a></p>
 <p>Approach 1: Check All Substrings</p>
 <p>Approach 2: Dynamic Programming</p>
 <p>Approach 3: Expand From Centers</p>
 <p>Approach 4: Manacher's Algorithm</p>
-<h2 id="c解法-177"><a class="header" href="#c解法-177">C++解法</a></h2>
+<h2 id="c解法-180"><a class="header" href="#c解法-180">C++解法</a></h2>
 <p>Approach 4: Manacher's Algorithm</p>
 <p>Believe it or not, this problem can be solved in linear time.</p>
 <p>Manacher's algorithm finds the longest palindromic substring in O(n) time and space.</p>
@@ -30437,7 +30639,7 @@ public:
     }
 };
 </code></pre>
-<h2 id="java解法-131"><a class="header" href="#java解法-131">Java解法</a></h2>
+<h2 id="java解法-133"><a class="header" href="#java解法-133">Java解法</a></h2>
 <p>你的Java代码有一些小错误，导致在构建最长回文子串时无法正确返回结果。主要问题在于以下几点：</p>
 <ol>
 <li><code>StringBuilder result</code> 需要初始化为一个空对象，或者可以使用 <code>String</code> 直接保存最长回文子串。</li>
@@ -30490,7 +30692,7 @@ public:
 <li><code>1 &lt;= s.length &lt;= 1000</code></li>
 <li><code>s</code> consists only of lowercase English letters.</li>
 </ul>
-<h2 id="思路-195"><a class="header" href="#思路-195">思路</a></h2>
+<h2 id="思路-198"><a class="header" href="#思路-198">思路</a></h2>
 <p>我们刚刚做过了 <a href="https://programmercarl.com/0647.%E5%9B%9E%E6%96%87%E5%AD%90%E4%B8%B2.html">动态规划：回文子串</a>，求的是回文子串，而本题要求的是回文子序列， 要搞清楚这两者之间的区别。</p>
 <p><strong>回文子串是要连续的，回文子序列可不是连续的！</strong> 回文子串，回文子序列都是动态规划经典题目。</p>
 <p>回文子串，可以做这两题：</p>
@@ -30555,7 +30757,7 @@ for (int i = 0; i &lt; s.size(); i++) dp[i][i] = 1;
 </ol>
 <p>输入s:"cbbd" 为例，dp数组状态如图：</p>
 <p>红色框即：<code>dp[0][s.size() - 1]</code>; 为最终结果。</p>
-<h2 id="c解法-178"><a class="header" href="#c解法-178">C++解法</a></h2>
+<h2 id="c解法-181"><a class="header" href="#c解法-181">C++解法</a></h2>
 <p>以上分析完毕，C++代码如下：</p>
 <pre><code class="language-cpp">class Solution {  
 public:  
@@ -30579,7 +30781,7 @@ public:
 <li>时间复杂度: O(n^2)</li>
 <li>空间复杂度: O(n^2)</li>
 </ul>
-<h2 id="java解法-132"><a class="header" href="#java解法-132">Java解法</a></h2>
+<h2 id="java解法-134"><a class="header" href="#java解法-134">Java解法</a></h2>
 <pre><code class="language-java">public class Solution {  
     public int longestPalindromeSubseq(String s) {  
         int len = s.length();  

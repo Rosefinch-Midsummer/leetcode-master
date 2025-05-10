@@ -178,10 +178,16 @@
 <li><a href="#java%E8%A7%A3%E6%B3%95-1">Java解法</a></li>
 </ul>
 </li>
-<li><a href="#980-unique-paths-iii%E5%9B%9E%E6%BA%AF">980. Unique Paths III（回溯）</a>
+<li><a href="#64-minimum-path-sum">64. Minimum Path Sum</a>
 <ul>
 <li><a href="#%E6%80%9D%E8%B7%AF-2">思路</a></li>
 <li><a href="#c%E8%A7%A3%E6%B3%95-2">C++解法</a></li>
+</ul>
+</li>
+<li><a href="#980-unique-paths-iii%E5%9B%9E%E6%BA%AF">980. Unique Paths III（回溯）</a>
+<ul>
+<li><a href="#%E6%80%9D%E8%B7%AF-3">思路</a></li>
+<li><a href="#c%E8%A7%A3%E6%B3%95-3">C++解法</a></li>
 <li><a href="#java%E8%A7%A3%E6%B3%95-2">Java解法</a></li>
 </ul>
 </li>
@@ -539,6 +545,57 @@ class Solution {
     }
 }
 </code></pre>
+<h1 id="64-minimum-path-sum"><a class="header" href="#64-minimum-path-sum"><a href="https://leetcode.com/problems/minimum-path-sum/">64. Minimum Path Sum</a></a></h1>
+<p>Given a <code>m x n</code> <code>grid</code> filled with non-negative numbers, find a path from top left to bottom right, which minimizes the sum of all numbers along its path.</p>
+<p><strong>Note:</strong> You can only move either down or right at any point in time.</p>
+<p><strong>Example 1:</strong></p>
+<p><img src="https://assets.leetcode.com/uploads/2020/11/05/minpath.jpg" alt="" /></p>
+<p><strong>Input:</strong> <code>grid = [[1,3,1],[1,5,1],[4,2,1]]</code><br />
+<strong>Output:</strong> 7<br />
+<strong>Explanation:</strong> Because the path 1 → 3 → 1 → 1 → 1 minimizes the sum.</p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> <code>grid = [[1,2,3],[4,5,6]]</code><br />
+<strong>Output:</strong> 12</p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>m == grid.length</code></li>
+<li><code>n == grid[i].length</code></li>
+<li><code>1 &lt;= m, n &lt;= 200</code></li>
+<li><code>0 &lt;= grid[i][j] &lt;= 200</code></li>
+</ul>
+<h2 id="思路-2"><a class="header" href="#思路-2">思路</a></h2>
+<p>二维DP</p>
+<h2 id="c解法-2"><a class="header" href="#c解法-2">C++解法</a></h2>
+<pre><code class="language-cpp">class Solution {  
+public:  
+    int minPathSum(vector&lt;vector&lt;int&gt;&gt;&amp; grid) {  
+        int m = grid.size();  
+        int n = grid[0].size();  
+        vector&lt;vector&lt;int&gt;&gt; dp(m, vector&lt;int&gt;(n, 0));  
+        
+        // 初始化起点  
+        dp[0][0] = grid[0][0];  
+        
+        // 初始化第一列  
+        for (int i = 1; i &lt; m; i++) {  
+            dp[i][0] = dp[i - 1][0] + grid[i][0];  
+        }  
+        // 初始化第一行  
+        for (int j = 1; j &lt; n; j++) {  
+            dp[0][j] = dp[0][j - 1] + grid[0][j];  
+        }  
+        
+        // 计算其他位置的最小路径和  
+        for (int i = 1; i &lt; m; i++) {  
+            for (int j = 1; j &lt; n; j++) {  
+                dp[i][j] = min(dp[i - 1][j], dp[i][j - 1]) + grid[i][j];  
+            }  
+        }  
+        
+        return dp[m - 1][n - 1];  
+    }  
+};  
+</code></pre>
 <h1 id="980-unique-paths-iii回溯"><a class="header" href="#980-unique-paths-iii回溯"><a href="https://leetcode.com/problems/unique-paths-iii/">980. Unique Paths III</a>（回溯）</a></h1>
 <p>You are given an <code>m x n</code> integer array <code>grid</code> where <code>grid[i][j]</code> could be:</p>
 <ul>
@@ -583,7 +640,7 @@ Note that the starting and ending square can be anywhere in the grid.</p>
 <li><code>-1 &lt;= grid[i][j] &lt;= 2</code></li>
 <li>There is exactly one starting cell and one ending cell.</li>
 </ul>
-<h2 id="思路-2"><a class="header" href="#思路-2">思路</a></h2>
+<h2 id="思路-3"><a class="header" href="#思路-3">思路</a></h2>
 <p><strong>Brute Force Backtracking</strong></p>
 <p>First, find out where the start and end points are.</p>
 <p>We also need to know the number of empty cells.</p>
@@ -602,7 +659,7 @@ Note that the starting and ending square can be anywhere in the grid.</p>
 <p>第一步，我们需要确定起点的位置。我们还想知道空单元格的数量。</p>
 <p>接下来，我们遍历网格，计算空单元格的数量，并保存起点 <code>start_x</code> 和 <code>start_y</code>。</p>
 <p>现在，我们执行经典的DFS，标记访问过的单元格为-1，并计算我们经过的单元格数。 如果我们到达终点并经过了指定数量的空单元格，这意味着我们访问了每个非障碍物单元格。</p>
-<h2 id="c解法-2"><a class="header" href="#c解法-2">C++解法</a></h2>
+<h2 id="c解法-3"><a class="header" href="#c解法-3">C++解法</a></h2>
 <pre><code class="language-cpp">class Solution {
 public:
     int res = 0, empty = 1;

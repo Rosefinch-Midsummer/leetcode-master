@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>整数拆分 - 剑指Offer</title>
+        <title>拆分系列 - 剑指Offer</title>
 
 
         <!-- Custom HTML head -->
@@ -156,16 +156,95 @@
                 <div id="content" class="content">
                     <main>
                         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css">
-<h1 id="整数拆分"><a class="header" href="#整数拆分">整数拆分</a></h1>
+<h1 id="拆分系列"><a class="header" href="#拆分系列">拆分系列</a></h1>
 <ul>
-<li><a href="#343-integer-break">343. Integer Break</a>
+<li><a href="#139-word-break">139. Word Break</a>
 <ul>
 <li><a href="#%E6%80%9D%E8%B7%AF">思路</a></li>
 <li><a href="#c%E8%A7%A3%E6%B3%95">C++解法</a></li>
 <li><a href="#java%E8%A7%A3%E6%B3%95">Java解法</a></li>
 </ul>
 </li>
+<li><a href="#343-integer-break">343. Integer Break</a>
+<ul>
+<li><a href="#%E6%80%9D%E8%B7%AF-1">思路</a></li>
+<li><a href="#c%E8%A7%A3%E6%B3%95-1">C++解法</a></li>
+<li><a href="#java%E8%A7%A3%E6%B3%95-1">Java解法</a></li>
 </ul>
+</li>
+<li><a href="#279-perfect-squares">279. Perfect Squares</a>
+<ul>
+<li><a href="#%E6%80%9D%E8%B7%AF-2">思路</a></li>
+<li><a href="#c%E8%A7%A3%E6%B3%95-2">C++解法</a></li>
+<li><a href="#java%E8%A7%A3%E6%B3%95-2">Java解法</a></li>
+<li><a href="#go%E8%A7%A3%E6%B3%95">Go解法</a></li>
+</ul>
+</li>
+</ul>
+<h1 id="139-word-break"><a class="header" href="#139-word-break"><a href="https://leetcode.com/problems/word-break/">139. Word Break</a></a></h1>
+<p>Given a string <code>s</code> and a dictionary of strings <code>wordDict</code>, return <code>true</code> if <code>s</code> can be segmented into a space-separated sequence of one or more dictionary words.</p>
+<p><strong>Note</strong> that the same word in the dictionary may be reused multiple times in the segmentation.</p>
+<p><strong>Example 1:</strong></p>
+<p><strong>Input:</strong> s = "leetcode", wordDict = ["leet","code"]<br />
+<strong>Output:</strong> true<br />
+<strong>Explanation:</strong> Return true because "leetcode" can be segmented as "leet code".</p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> s = "applepenapple", wordDict = ["apple","pen"]<br />
+<strong>Output:</strong> true<br />
+<strong>Explanation:</strong> Return true because "applepenapple" can be segmented as "apple pen apple".
+Note that you are allowed to reuse a dictionary word.</p>
+<p><strong>Example 3:</strong></p>
+<p><strong>Input:</strong> s = "catsandog", wordDict = ["cats","dog","sand","and","cat"]<br />
+<strong>Output:</strong> false</p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= s.length &lt;= 300</code></li>
+<li><code>1 &lt;= wordDict.length &lt;= 1000</code></li>
+<li><code>1 &lt;= wordDict[i].length &lt;= 20</code></li>
+<li><code>s</code> and <code>wordDict[i]</code> consist of only lowercase English letters.</li>
+<li>All the strings of <code>wordDict</code> are <strong>unique</strong>.</li>
+</ul>
+<h2 id="思路"><a class="header" href="#思路">思路</a></h2>
+<p>动态规划，字符串拆分，使用布尔型数组</p>
+<h2 id="c解法"><a class="header" href="#c解法">C++解法</a></h2>
+<pre><code class="language-cpp">class Solution {
+public:
+    bool wordBreak(string s, vector&lt;string&gt;&amp; wordDict) {
+        unordered_set&lt;string&gt; wordSet(wordDict.begin(), wordDict.end());
+        vector&lt;bool&gt; dp(s.size() + 1, false);
+        dp[0] = true;
+        for(int j = 1; j &lt;= s.size(); j++){
+            for(int i = 0; i &lt; j; i++){
+                string tempStr = s.substr(i, j - i);
+                if(wordSet.find(tempStr) != wordSet.end() &amp;&amp; dp[i] == true){
+                    dp[j] = true;
+                }
+            }
+        }
+        return dp[s.size()];
+    }
+};
+</code></pre>
+<h2 id="java解法"><a class="header" href="#java解法">Java解法</a></h2>
+<pre><code class="language-java">class Solution {
+    public boolean wordBreak(String s, List&lt;String&gt; wordDict) {
+        HashSet&lt;String&gt; set = new HashSet&lt;&gt;(wordDict);  // 优化：直接用构造函数初始化
+        boolean[] dp = new boolean[s.length() + 1];
+        dp[0] = true;  // 空字符串可以被分割
+        
+        for (int j = 1; j &lt;= s.length(); j++) {
+            for (int i = 0; i &lt; j; i++) {
+                String temp = s.substring(i, j);  // 取子串 s[i, j)
+                if (set.contains(temp) &amp;&amp; dp[i]) {
+                    dp[j] = true;
+                    break;  // 一旦满足条件，跳出内层循环
+                }
+            }
+        }
+        return dp[s.length()];
+    }
+}
+</code></pre>
 <h1 id="343-integer-break"><a class="header" href="#343-integer-break"><a href="https://leetcode.com/problems/integer-break/">343. Integer Break</a></a></h1>
 <p>Given an integer <code>n</code>, break it into the sum of <code>k</code> <strong>positive integers</strong>, where <code>k &gt;= 2</code>, and maximize the product of those integers.</p>
 <p>Return <em>the maximum product you can get</em>.</p>
@@ -181,7 +260,7 @@
 <ul>
 <li><code>2 &lt;= n &lt;= 58</code></li>
 </ul>
-<h2 id="思路"><a class="header" href="#思路">思路</a></h2>
+<h2 id="思路-1"><a class="header" href="#思路-1">思路</a></h2>
 <p>看到这道题目，都会想拆成两个呢，还是三个呢，还是四个....</p>
 <p>我们来看一下如何使用动态规划来解决。</p>
 <p>动规五部曲，分析如下：</p>
@@ -243,7 +322,7 @@
 <ol start="5">
 <li>举例推导dp数组</li>
 </ol>
-<h2 id="c解法"><a class="header" href="#c解法">C++解法</a></h2>
+<h2 id="c解法-1"><a class="header" href="#c解法-1">C++解法</a></h2>
 <p>以上动规五部曲分析完毕，C++代码如下：</p>
 <pre><code class="language-cpp">class Solution {  
 public:  
@@ -263,7 +342,7 @@ public:
 <li>时间复杂度：O(n^2)</li>
 <li>空间复杂度：O(n)</li>
 </ul>
-<h2 id="java解法"><a class="header" href="#java解法">Java解法</a></h2>
+<h2 id="java解法-1"><a class="header" href="#java解法-1">Java解法</a></h2>
 <pre><code class="language-java">class Solution {
     public int integerBreak(int n) {
         //dp[i] 为正整数 i 拆分后的结果的最大乘积
@@ -281,6 +360,72 @@ public:
         }
         return dp[n];
     }
+}
+</code></pre>
+<h1 id="279-perfect-squares"><a class="header" href="#279-perfect-squares"><a href="https://leetcode.com/problems/perfect-squares/">279. Perfect Squares</a></a></h1>
+<p>Given an integer <code>n</code>, return <em>the least number of perfect square numbers that sum to</em> <code>n</code>.</p>
+<p>A <strong>perfect square</strong> is an integer that is the square of an integer; in other words, it is the product of some integer with itself. For example, <code>1</code>, <code>4</code>, <code>9</code>, and <code>16</code> are perfect squares while <code>3</code> and <code>11</code> are not.</p>
+<p><strong>Example 1:</strong></p>
+<p><strong>Input:</strong> n = 12<br />
+<strong>Output:</strong> 3<br />
+<strong>Explanation:</strong> 12 = 4 + 4 + 4.</p>
+<p><strong>Example 2:</strong></p>
+<p><strong>Input:</strong> n = 13<br />
+<strong>Output:</strong> 2<br />
+<strong>Explanation:</strong> 13 = 4 + 9.</p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><code>1 &lt;= n &lt;= 10^4</code></li>
+</ul>
+<h2 id="思路-2"><a class="header" href="#思路-2">思路</a></h2>
+<p>动态规划，拆分数字，递推公式为<code>dp[j] = min(dp[j], dp[j - i * i] + 1);</code></p>
+<h2 id="c解法-2"><a class="header" href="#c解法-2">C++解法</a></h2>
+<pre><code class="language-cpp">class Solution {
+public:
+    int numSquares(int n) {
+        vector&lt;int&gt; dp(n + 1, INT_MAX);
+        dp[0] = 0;
+        for(int i = 1; i &lt;= sqrt(n); i++){
+            for(int j = i * i; j &lt;= n; j++){
+                if((dp[j - i * i] + i * i) != INT_MAX){
+                    dp[j] = min(dp[j], dp[j - i * i] + 1);
+                }
+            }
+        }
+        return dp[n];
+    }
+};
+</code></pre>
+<h2 id="java解法-2"><a class="header" href="#java解法-2">Java解法</a></h2>
+<pre><code class="language-java">class Solution {
+    public int numSquares(int n) {
+        int[] dp = new int[n + 1];
+        Arrays.fill(dp, Integer.MAX_VALUE);
+        dp[0] = 0;
+
+        for (int i = 1; i &lt;= n; i++) {
+            for (int j = 1; j * j &lt;= i; j++) {
+                dp[i] = Math.min(dp[i], dp[i - j * j] + 1);
+            }
+        }
+
+        return dp[n];
+    }
+}
+</code></pre>
+<h2 id="go解法"><a class="header" href="#go解法">Go解法</a></h2>
+<pre><code class="language-go">func numSquares(amount int) int {
+    dp := make([]int, amount + 1);
+    for i := 0; i &lt; len(dp); i++ {
+        dp[i] = math.MaxInt32;
+    }
+    dp[0] = 0;
+    for j := 1; j &lt;= amount; j++ {
+        for i := 1; i * i &lt;= j; i++ {
+            dp[j] = min(dp[j], dp[j - i * i] + 1);
+        }
+    }
+    return dp[amount];
 }
 </code></pre>
 
